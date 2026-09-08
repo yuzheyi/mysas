@@ -1,0 +1,33 @@
+{
+  "gas": {
+    "R": 287.05,
+    "gamma": 1.4,
+    "T0_default": 600.0,
+    "mu": 1.8e-5
+  },
+  "nodes": [
+    { "id": 0, "boundary": true,  "p0": 3.0e5, "T0": 600.0 },
+    { "id": 1, "boundary": false },
+    { "id": 2, "boundary": true,  "p0": 1.0e5, "T0": 600.0 }
+  ],
+  "comps": [
+    {
+      "id": 0,
+      "type": "PIPE",
+      "ports": [
+        { "area": 3.1416e-4, "node": 0 },
+        { "area": 3.1416e-4, "node": 1 }
+      ],
+      "params": [0.5, 0.02, 1.0e-5]
+    },
+    {
+      "id": 1,
+      "type": "PIPE",
+      "ports": [
+        { "area": 3.1416e-4, "node": 1 },
+        { "area": 3.1416e-4, "node": 2 }
+      ],
+      "params": [0.5, 0.02, 1.0e-5]
+    }
+  ]
+}

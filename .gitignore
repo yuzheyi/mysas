@@ -1,0 +1,19 @@
+# 库源码（deal.II 整树，几百 MB）
+dealii/
+# 构建产物
+build-test/
+build-msvc/
+grid-demo/build-test/
+sasmodel/build/
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+# 大文件（图纸、数据）
+*.dwg
+*.vtu
+*.svg
+# IDE / 系统
+.vscode/
+.idea/
+Thumbs.db
