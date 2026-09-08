@@ -17,3 +17,5 @@ __pycache__/
 .vscode/
 .idea/
 Thumbs.db
+# 参考论文/
+papers/
