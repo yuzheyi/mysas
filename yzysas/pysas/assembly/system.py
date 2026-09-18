@@ -78,14 +78,16 @@ class NetworkSystem:
                 self.ports_on_node.setdefault(port.node_id, []).append(
                     (comp.comp_id, j))
 
-        # 适定性断言：至少 1 个压力边界锚定绝对压力水平
-        # （全流量边界 → J 零空间：管网只感知压差，压力水平浮动）
-        n_pb = sum(1 for c in net.comps
-                   if c.elem_type == ElemType.PRESSURE_BOUNDARY)
-        if n_pb == 0:
+        # 适定性断言：至少 1 个压力锚定元件——绝对压力水平必须有元件规定
+        # （纯压差/全流量元件的网络 → J 零空间：只感知压差，水平浮动）。
+        # 锚定能力由元件自报（model.anchors_pressure，见 base.py），
+        # 新元件（TANK 等）声明能力即可，此处零改动。
+        n_anchor = sum(1 for m in self.models.values() if m.anchors_pressure)
+        if n_anchor == 0:
             raise ValueError(
-                "网络无 PRESSURE_BOUNDARY 元件：绝对压力水平无锚定，"
-                "方程组奇异（全流量边界）。至少挂 1 个压力边界元件")
+                "网络无压力锚定元件（无元件声明 anchors_pressure）：绝对压力"
+                "水平无锚定，方程组奇异（纯压差/全流量网络）。"
+                "至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）")
 
     # ---------- 残差 ----------
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:

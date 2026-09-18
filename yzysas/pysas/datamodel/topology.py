@@ -20,7 +20,7 @@ class ElemType(enum.IntEnum):
     VOLUME = 4           # 纯容腔：params = [体积]
     PRESSURE_BOUNDARY = 5  # 压力边界（单口）：params = [p0_spec Pa, T0_spec K]
     MASS_SOURCE = 6        # 流量边界/源（单口）：params = [ṁ_spec kg/s(>0注入), T0_spec K]
-    BOOSTER = 7            # 升压元件（风机/泵，两口）：params = [压力升 Δp Pa, T0_spec K]
+    BOOSTER = 7            # 升压/压力源（两口，锚定型）：params = [p_in_spec, p_out_spec]
 
 
 class CompType(enum.IntEnum):

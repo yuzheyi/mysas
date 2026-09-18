@@ -33,10 +33,14 @@ from pysas.elements.base import ElementModel
 class PressureBoundaryModel(ElementModel):
     """压力边界：规定所连节点的总压（经典边界条件）。params=[p0_spec, T0_spec]"""
     elem_type = 5  # ElemType.PRESSURE_BOUNDARY
+    anchors_pressure = True  # p−p_spec 含绝对压力，锚定压力水平
 
     def __init__(self, comp):
         super().__init__(comp)
         self.p0_spec, self.T0_spec = comp.params
+
+    def anchor_values(self) -> dict[int, float]:
+        return {self._node_ids[0]: self.p0_spec}
 
     @property
     def row_is_pressure(self) -> list[bool]:

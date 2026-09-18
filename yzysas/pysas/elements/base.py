@@ -29,6 +29,16 @@ class ElementModel(ABC):
     #: 对应的 ElemType，由子类声明
     elem_type: int = -1
 
+    #: 能力声明：残差是否含绝对压力（能锚定压力水平）。默认 False；
+    #: PRESSURE_BOUNDARY / 锚定型 BOOSTER / 将来的 TANK 等覆盖为 True。
+    #: assembly 适定性断言只查此属性——新元件声明能力，组装层零改动。
+    anchors_pressure: bool = False
+
+    def anchor_values(self) -> dict[int, float]:
+        """本元件规定的绝对压力（node_id → p_spec），供初值/诊断用。
+        默认空（未锚定或无显式值）；锚定元件覆盖此方法。"""
+        return {}
+
     def __init__(self, comp):
         self.comp = comp
 

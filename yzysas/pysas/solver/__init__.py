@@ -49,19 +49,18 @@ class SolveResult:
 
 
 def default_guess(system, ctx) -> np.ndarray:
-    """缺省初值：压力边界元件所连节点 p0 = p0_spec，其余节点取全部
-    p0_spec 均值（无 → 1e5 Pa），各口 ṁ = 0。
+    """缺省初值：锚定节点 p0 = 自报锚定值，其余节点取均值（无 → 1e5 Pa），
+    各口 ṁ = 0。
 
-    为什么边界节点要钉真值：若边界节点也取均值，孔板会恰好落在 β=1、
-    管落在 Δp=0 的导数奇异点，牛顿方向失真（C 算例迭代 0 步即失败的
-    实证）。钉住后等价于旧“边界代入”行为的初值质量。
+    锚定值由元件自报（model.anchor_values()，见 base.py）——新元件
+    （TANK 等）实现接口即可，此处零改动。为什么边界节点要钉真值：
+    若也取均值，孔板起点恰在 β=1、管在 Δp=0 的导数奇异点，牛顿方向
+    失真（C 算例迭代 0 步即死的实证）。
     """
-    from pysas.datamodel import ElemType
     x0 = np.zeros(system.n)
     specs = {}
-    for c in system.net.comps:
-        if c.elem_type == ElemType.PRESSURE_BOUNDARY:
-            specs[c.ports[0].node_id] = c.params[0]
+    for model in system.models.values():
+        specs.update(model.anchor_values())
     p0s = [v for v in specs.values() if v > 0.0]
     mean_p = float(np.mean(p0s)) if p0s else 1.0e5
     for i, nid in enumerate(system.interior_ids):

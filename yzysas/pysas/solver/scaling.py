@@ -81,15 +81,18 @@ def make_scaling(system, ctx, p_ref: float | None = None,
                  m_ref: float | None = None) -> Scaling:
     """从网络与物性自估参考量（显式给定 p_ref/m_ref 则覆盖自估）。
 
-    p_ref 取压力边界元件 p0_spec 的最大值；m_ref 取全网最大口壅塞容量
-    与流量边界 |ṁ_spec| 的最大值。行量纲标记从 system.row_is_pressure 取。
+    p_ref 取全部元件自报锚定压力的最大值（anchor_values，新元件零改动）；
+    m_ref 取全网最大口壅塞容量与流量边界 |ṁ_spec| 的最大值
+    （MASS_SOURCE 枚举——流量规定暂无通用能力接口，元件库扩充时再看）。
+    行量纲标记从 system.row_is_pressure 取。
     """
     from pysas.datamodel import ElemType
 
-    pb = [c.params[0] for c in system.net.comps
-          if c.elem_type == ElemType.PRESSURE_BOUNDARY]
     if p_ref is None:
-        pressures = [v for v in pb if v > 0.0]
+        specs = {}
+        for model in system.models.values():
+            specs.update(model.anchor_values())
+        pressures = [v for v in specs.values() if v > 0.0]
         p_ref = max(pressures) if pressures else 1.0e5
 
     if m_ref is None:
