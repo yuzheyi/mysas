@@ -18,6 +18,9 @@ class ElemType(enum.IntEnum):
     PIPE = 2             # 圆柱直管：params = [长度, 直径, 粗糙度]
     PRESWIRL_NOZZLE = 3  # 预旋喷嘴：params = [半径, 角度, Cd]
     VOLUME = 4           # 纯容腔：params = [体积]
+    PRESSURE_BOUNDARY = 5  # 压力边界（单口）：params = [p0_spec Pa, T0_spec K]
+    MASS_SOURCE = 6        # 流量边界/源（单口）：params = [ṁ_spec kg/s(>0注入), T0_spec K]
+    BOOSTER = 7            # 升压元件（风机/泵，两口）：params = [压力升 Δp Pa, T0_spec K]
 
 
 class CompType(enum.IntEnum):
@@ -45,11 +48,10 @@ class NodeLink:
 
 @dataclass
 class Node:
-    """节点：内部节点 p0/T0 是未知量；边界节点是给定边界条件。"""
+    """节点：统一为内部节点——p0 全部进解向量 x（2026-09-15 边界元件化）。
+    边界条件由挂在节点上的单口边界元件（PRESSURE_BOUNDARY / MASS_SOURCE）
+    规定，节点本身不再有边界/内部之分。"""
     node_id: int = -1
-    is_boundary: bool = False
-    total_pressure: float = 0.0      # 总压 Pa
-    total_temperature: float = 0.0   # 总温 K
     volume: float = 0.0              # 节点自身容腔 m³（0 = 无）
     links: list[NodeLink] = field(default_factory=list)
 
@@ -74,5 +76,4 @@ class Network:
     """网络总装：只存结构，不存解。要求 node_id/comp_id 从 0 连续编号。"""
     nodes: list[Node] = field(default_factory=list)
     comps: list[Comp] = field(default_factory=list)
-    n_interior: int = 0   # 内部节点数 = 方程组未知量个数（拓扑校验后填）
-    n_boundary: int = 0
+    n_interior: int = 0   # 节点总数 = 压力未知量个数（统一后皆为内部节点）

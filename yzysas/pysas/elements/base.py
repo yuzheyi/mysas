@@ -38,9 +38,8 @@ class ElementModel(ABC):
     # 元件的局部未知量下标由 assembly 注入（set_indices），元件不自己找。
 
     def set_indices(self, p_node_ids: Sequence[int], m_port_ids: Sequence[int]):
-        """assembly 建索引时调用：p_node_ids[i] 是 ports[i] 所连【内部】节点
-        的 p0 在 x 里的下标（边界节点给 -1）；m_port_ids[i] 是 ports[i] 的
-        ṁ 在 x 里的下标。另存各口 node_id 供查边界值。"""
+        """assembly 建索引时调用：p_node_ids[i] 是 ports[i] 所连节点的
+        p0 在 x 里的下标；m_port_ids[i] 是 ports[i] 的 ṁ 在 x 里的下标。"""
         self._p_idx = list(p_node_ids)
         self._m_idx = list(m_port_ids)
         self._node_ids = [port.node_id for port in self.comp.ports]
@@ -51,6 +50,14 @@ class ElementModel(ABC):
         由 residual 的排布决定）。二口元件 = 2。"""
         return len(self.comp.ports)
 
+    @property
+    def row_is_pressure(self) -> list[bool]:
+        """残差块各行量纲标记（长度 = n_equations；默认全流量纲 kg/s）。
+        压力量的行（如 PressureBoundary 的 p−p_spec、Booster 的 Δp 特性行）
+        由子类覆盖。assembly 层逐块收集成全局表供缩放层分行取值
+        （scaling.row_scales）；M3 能量行接入时在此扩档。"""
+        return [False] * self.n_equations
+
     @abstractmethod
     def residual(self, x: np.ndarray, ctx: "SolveContext") -> np.ndarray:
         """返回本元件的残差块（长度 n_equations = n_ports）。
@@ -58,13 +65,13 @@ class ElementModel(ABC):
         p0 取值助手：self._p(x, ctx, i) 返回第 i 口的节点总压。"""
 
     def _p(self, x, ctx, i: int) -> float:
-        """第 i 口所连节点的总压：内部节点取 x，边界节点取 ctx。"""
-        idx = self._p_idx[i]
-        return x[idx] if idx >= 0 else ctx.boundary_p0[self._node_ids[i]]
+        """第 i 口所连节点的总压：统一从解向量取（边界元件化后全节点在 x）。"""
+        return x[self._p_idx[i]]
 
     def _T0_of(self, ctx, i: int) -> float:
-        """第 i 口所连节点的总温：边界取 ctx，内部回退 T0_default。
-        （能量方程接入后，内部节点 T0 将成为未知量，此助手届时改读解向量。）"""
+        """第 i 口所连节点的总温：查 ctx.boundary_T0（边界元件填），
+        内部回退 T0_default。（能量方程接入后，内部节点 T0 将成为未知量，
+        此助手届时改读解向量。）"""
         return ctx.boundary_T0.get(self._node_ids[i], ctx.T0_default)
 
     # 解析雅可比可选：不实现则 assembly 用差分（离散牛顿天然支持）。
@@ -77,8 +84,8 @@ class SolveContext:
     """求解上下文：元件方程需要但不在解向量里的量。"""
 
     def __init__(self):
-        self.boundary_p0 = {}      # node_id → 边界总压 Pa（常数）
-        self.boundary_T0 = {}      # node_id → 边界总温 K
+        self.boundary_T0 = {}      # node_id → 边界总温 K（边界元件参数填；
+                                   # p0 已元件化进 x，boundary_p0 退役）
         self.T0_default = 288.15   # 无边界信息时的默认总温 K（能量方程接入前的过渡）
         self.gas_R = 287.05        # 气体常数 J/(kg·K)
         self.gamma = 1.4           # 比热比

@@ -1,13 +1,19 @@
 """system — NetworkSystem：拓扑 → 方程组索引 → 残差 F(x)。
 
 未知量排布（整个 pysas 统一约定）:
-  x = [p0 内部节点 Nint 个 | ṁ 每口一个，M 个]      Nint + M = n
+  x = [p0 全部节点 N 个 | ṁ 每口一个，M 个]      N + M = n
+      （2026-09-15 边界元件化：节点统一为内部节点，边界条件由单口
+        边界元件规定，不再有 boundary/interior 分叉）
 方程排布:
-  F = [节点连续性 Nint 个 | 元件方程块 Σn_ports = M 个]   ← 方阵 ✓
+  F = [节点连续性 N 个 | 元件方程块 Σn_ports = M 个]   ← 方阵 ✓
 
 符号约定（见 base.py）:
   ṁᵢ > 0 = 流体经端口 i 流入组件
   → 节点连续性 = 挂在该节点上所有口的 ṁ 直接求和（无需方向标志）
+
+行量纲登记（缩放层用，scaling.py 行缩放分档）:
+  前 N 行（连续性）与绝大多数元件行是流量纲 kg/s；
+  PRESSURE_BOUNDARY 行是压力纲 Pa → self.row_is_pressure 标记。
 """
 from __future__ import annotations
 
@@ -15,6 +21,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
+from pysas.datamodel import ElemType
 from pysas.elements.base import ElementModel
 
 if TYPE_CHECKING:
@@ -32,13 +39,12 @@ class NetworkSystem:
     # ---------- 索引 ----------
     def _build_indices(self):
         net = self.net
-        # 内部节点 p0 → x[0..Nint-1]（按 node_id 升序）
-        self.interior_ids = sorted(
-            n.node_id for n in net.nodes if not n.is_boundary)
+        # 全部节点 p0 → x[0..N-1]（按 node_id 升序）
+        self.interior_ids = sorted(n.node_id for n in net.nodes)
         self.p_idx_of_node = {nid: i for i, nid in enumerate(self.interior_ids)}
-        self.n_interior = len(self.interior_ids)
+        self.n_interior = len(self.interior_ids)  # = 全部节点数（命名沿用）
 
-        # 端口 ṁ → x[Nint..Nint+M-1]（按 comp_id、port 顺序展平）
+        # 端口 ṁ → x[N..N+M-1]（按 comp_id、port 顺序展平）
         self.m_idx_of_port: dict[tuple[int, int], int] = {}
         k = self.n_interior
         for comp in sorted(net.comps, key=lambda c: c.comp_id):
@@ -48,10 +54,19 @@ class NetworkSystem:
         self.n_m = k - self.n_interior
         self.n = self.n_interior + self.n_m
 
-        # 注入元件局部索引
+        # 行量纲登记：True = 压力纲（Pa），False = 流量纲（kg/s）
+        # 排布与 residual ①②一致：N 个连续性行 + 各元件块（按 comp_id 排序；
+        # 各块行量纲由元件自报：model.row_is_pressure，默认全流量纲，
+        # PressureBoundary/Booster 等含压力行的元件覆盖此属性）
+        units = [False] * self.n_interior
+        for comp in sorted(net.comps, key=lambda c: c.comp_id):
+            units.extend(self.models[comp.comp_id].row_is_pressure)
+        self.row_is_pressure = units  # len = n
+
+        # 注入元件局部索引（全节点在 x，无 -1 特判）
         for comp in net.comps:
             model = self.models[comp.comp_id]
-            p_ids = [self.p_idx_of_node.get(p.node_id, -1) for p in comp.ports]
+            p_ids = [self.p_idx_of_node[p.node_id] for p in comp.ports]
             m_ids = [self.m_idx_of_port[(comp.comp_id, j)]
                      for j in range(len(comp.ports))]
             model.set_indices(p_ids, m_ids)
@@ -62,6 +77,15 @@ class NetworkSystem:
             for j, port in enumerate(comp.ports):
                 self.ports_on_node.setdefault(port.node_id, []).append(
                     (comp.comp_id, j))
+
+        # 适定性断言：至少 1 个压力边界锚定绝对压力水平
+        # （全流量边界 → J 零空间：管网只感知压差，压力水平浮动）
+        n_pb = sum(1 for c in net.comps
+                   if c.elem_type == ElemType.PRESSURE_BOUNDARY)
+        if n_pb == 0:
+            raise ValueError(
+                "网络无 PRESSURE_BOUNDARY 元件：绝对压力水平无锚定，"
+                "方程组奇异（全流量边界）。至少挂 1 个压力边界元件")
 
     # ---------- 残差 ----------
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
@@ -83,13 +107,9 @@ class NetworkSystem:
 
     # ---------- 辅助 ----------
     def make_ctx(self, general=None) -> "SolveContext":
-        """从 Network 的边界节点构造 SolveContext（load_netinf 已建 ctx 时不必调）。"""
+        """空 ctx（物性可选注入）。边界元件参数自带 p0/T0，不再从此填。"""
         from pysas.elements.base import SolveContext
         ctx = SolveContext()
-        for node in self.net.nodes:
-            if node.is_boundary:
-                ctx.boundary_p0[node.node_id] = node.total_pressure
-                ctx.boundary_T0[node.node_id] = node.total_temperature
         if general is not None:
             ctx.gas_R = general.gas_R
             ctx.gamma = general.gamma

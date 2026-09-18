@@ -35,7 +35,7 @@ class OrificeModel(ElementModel):
         factor = self.cd * self.area * p01 / np.sqrt(T01)
         if beta <= beta_crit:  # 超临界
             return factor * np.sqrt(gamma / R) \
-                * beta_crit ** ((gamma + 1.0) / (2.0 * (gamma - 1.0)))
+                * (2.0 / (gamma + 1.0)) ** ((gamma + 1.0) / (2.0 * (gamma - 1.0)))
         return factor * np.sqrt(2.0 * gamma / (R * (gamma - 1.0))) \
             * beta ** (1.0 / gamma) \
             * np.sqrt(max(1.0 - beta ** ((gamma - 1.0) / gamma), 0.0))

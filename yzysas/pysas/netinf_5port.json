@@ -1,0 +1,93 @@
+{
+  "gas": {
+    "R": 287.05,
+    "gamma": 1.4,
+    "T0_default": 600.0,
+    "mu": 1.8e-5
+  },
+  "nodes": [
+    { "id": 0 },
+    { "id": 1 },
+    { "id": 2 },
+    { "id": 3 },
+    { "id": 4 },
+    { "id": 5 }
+  ],
+  "comps": [
+    {
+      "id": 0,
+      "type": "PRESSURE_BOUNDARY",
+      "ports": [ { "area": 0.0, "node": 1 } ],
+      "params": [5.0e5, 600.0]
+    },
+    {
+      "id": 1,
+      "type": "PIPE",
+      "ports": [
+        { "area": 7.0686e-4, "node": 1 },
+        { "area": 7.0686e-4, "node": 0 }
+      ],
+      "params": [0.5, 0.03, 1.0e-5]
+    },
+    {
+      "id": 2,
+      "type": "PIPE",
+      "ports": [
+        { "area": 3.1416e-4, "node": 0 },
+        { "area": 3.1416e-4, "node": 2 }
+      ],
+      "params": [0.5, 0.02, 1.0e-5]
+    },
+    {
+      "id": 3,
+      "type": "PIPE",
+      "ports": [
+        { "area": 3.1416e-4, "node": 0 },
+        { "area": 3.1416e-4, "node": 3 }
+      ],
+      "params": [1.0, 0.02, 1.0e-5]
+    },
+    {
+      "id": 4,
+      "type": "PIPE",
+      "ports": [
+        { "area": 1.7671e-4, "node": 0 },
+        { "area": 1.7671e-4, "node": 4 }
+      ],
+      "params": [0.5, 0.015, 1.0e-5]
+    },
+    {
+      "id": 5,
+      "type": "PIPE",
+      "ports": [
+        { "area": 3.1416e-4, "node": 0 },
+        { "area": 3.1416e-4, "node": 5 }
+      ],
+      "params": [2.0, 0.02, 1.0e-5]
+    },
+    {
+      "id": 6,
+      "type": "PRESSURE_BOUNDARY",
+      "ports": [ { "area": 0.0, "node": 2 } ],
+      "params": [1.5e5, 600.0]
+    },
+    {
+      "id": 7,
+      "type": "PRESSURE_BOUNDARY",
+      "ports": [ { "area": 0.0, "node": 3 } ],
+      "params": [1.0e5, 600.0]
+    },
+    {
+      "id": 8,
+      "type": "PRESSURE_BOUNDARY",
+      "ports": [ { "area": 0.0, "node": 4 } ],
+      "params": [1.0e5, 600.0]
+    },
+    {
+      "id": 9,
+      "type": "PRESSURE_BOUNDARY",
+      "ports": [ { "area": 0.0, "node": 5 } ],
+      "params": [0.8e5, 600.0]
+    }
+  ]
+}

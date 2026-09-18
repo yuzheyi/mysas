@@ -1,9 +1,11 @@
 """netinf — JSON 拓扑文件读入与元件工厂。
 
-文件格式见 netinf.json：
+文件格式见 netinf.json（2026-09-15 边界元件化，旧 boundary 字段已不支持）:
   gas   { R, gamma, T0_default, mu }
-  nodes [ { id, boundary, p0, T0 } ]
+  nodes [ { id } ]                        ← 全部内部节点，无 boundary 字段
   comps [ { id, type, ports: [{area, node}], params: [...] } ]
+    边界条件 = 单口元件：PRESSURE_BOUNDARY params=[p0, T0]、
+                          MASS_SOURCE params=[ṁ_spec(>0注入), T0]
 """
 from __future__ import annotations
 
@@ -15,10 +17,16 @@ from pysas.datamodel import Comp, ElemType, Network, Node, Port
 
 # ---------- 读入 ----------
 def load_netinf(path: str) -> tuple[Network, SolveContext]:
-    """读 JSON → (Network, SolveContext)。边界条件与物性进 ctx。"""
+    """读 JSON 文件 → (Network, SolveContext)。物性进 ctx，边界在元件。"""
     with open(path, encoding="utf-8") as f:
-        data = json.load(f)
+        return netinf_from_dict(json.load(f))
 
+
+def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
+    """netinf 字典（JSON 等价）→ (Network, SolveContext)。
+
+    独立于文件 IO 暴露，便于测试脚本内联定义算例（格式仍与 netinf.json 一致）。
+    """
     # 物性 → ctx
     ctx = SolveContext()
     gas = data.get("gas", {})
@@ -27,19 +35,8 @@ def load_netinf(path: str) -> tuple[Network, SolveContext]:
     ctx.T0_default = gas.get("T0_default", 288.15)
     ctx.mu = gas.get("mu", 1.8e-5)
 
-    # 节点
-    nodes = []
-    for n in data["nodes"]:
-        node = Node(
-            node_id=n["id"],
-            is_boundary=n.get("boundary", False),
-            total_pressure=n.get("p0", 0.0),
-            total_temperature=n.get("T0", 0.0),
-        )
-        if node.is_boundary:
-            ctx.boundary_p0[node.node_id] = node.total_pressure
-            ctx.boundary_T0[node.node_id] = node.total_temperature
-        nodes.append(node)
+    # 节点（统一内部）
+    nodes = [Node(node_id=n["id"]) for n in data["nodes"]]
 
     # 组件
     comps = []
@@ -53,8 +50,12 @@ def load_netinf(path: str) -> tuple[Network, SolveContext]:
         ))
 
     net = Network(nodes=nodes, comps=comps)
-    net.n_interior = sum(1 for n in nodes if not n.is_boundary)
-    net.n_boundary = sum(1 for n in nodes if n.is_boundary)
+    net.n_interior = len(nodes)
+
+    # 边界元件的 T0 → ctx.boundary_T0（等温期特征温度，M3 后退役）
+    for c in comps:
+        if c.elem_type in (ElemType.PRESSURE_BOUNDARY, ElemType.MASS_SOURCE):
+            ctx.boundary_T0[c.ports[0].node_id] = c.params[1]
     return net, ctx
 
 
@@ -72,11 +73,17 @@ def _default_registry():
     """惰性注册自带元件（避免 import 环：io 不顶层依赖 elements 子模块）。"""
     if _MODEL_REGISTRY:
         return
+    from pysas.elements.booster import BoosterModel
+    from pysas.elements.boundary import (
+        MassSourceModel, PressureBoundaryModel)
     from pysas.elements.orifice import OrificeModel
     from pysas.elements.pipe import PipeModel
 
     register_model(OrificeModel)
     register_model(PipeModel)
+    register_model(PressureBoundaryModel)
+    register_model(MassSourceModel)
+    register_model(BoosterModel)
 
 
 def build_models(net: Network) -> dict[int, ElementModel]:
