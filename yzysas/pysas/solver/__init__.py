@@ -49,22 +49,30 @@ class SolveResult:
 
 
 def default_guess(system, ctx) -> np.ndarray:
-    """缺省初值：锚定节点 p0 = 自报锚定值，其余节点取均值（无 → 1e5 Pa），
-    各口 ṁ = 0。
+    """缺省初值：锚定节点 p0/T0 = 自报锚定值，其余取均值（压力无锚 →
+    1e5 Pa，温度无锚 → T0_default），各口 ṁ = 0。
 
-    锚定值由元件自报（model.anchor_values()，见 base.py）——新元件
-    （TANK 等）实现接口即可，此处零改动。为什么边界节点要钉真值：
+    锚定值由元件自报（anchor_P_values/anchor_T_values，见 base.py）——
+    新元件实现接口即可，此处零改动。为什么边界节点要钉真值：
     若也取均值，孔板起点恰在 β=1、管在 Δp=0 的导数奇异点，牛顿方向
     失真（C 算例迭代 0 步即死的实证）。
     """
     x0 = np.zeros(system.n)
     specs = {}
     for model in system.models.values():
-        specs.update(model.anchor_values())
+        specs.update(model.anchor_P_values())
     p0s = [v for v in specs.values() if v > 0.0]
     mean_p = float(np.mean(p0s)) if p0s else 1.0e5
     for i, nid in enumerate(system.interior_ids):
         x0[i] = specs.get(nid, mean_p)
+    # T 区：未锚温节点取锚温均值（无锚 → T0_default）
+    T_specs = {}
+    for model in system.models.values():
+        T_specs.update(model.anchor_T_values())
+    mean_T = (float(np.mean(list(T_specs.values())))
+              if T_specs else ctx.T0_default)
+    for nid in system.T_ids:
+        x0[system.T_idx_of_node[nid]] = mean_T
     return x0
 
 

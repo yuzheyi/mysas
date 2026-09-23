@@ -40,31 +40,47 @@ def _choked_orifice_flow(area: float, p0: float, T0: float,
 
 @dataclass
 class Scaling:
-    """缩放层：列缩放 S（变量）与行缩放 R（方程）的对角参考量。"""
+    """缩放层：列缩放 S（变量）与行缩放 R（方程）的对角参考量。
+
+    列分段（M3 起 x = [p×N | T×N_T | m×M]）:
+      压力列 p_ref、温度列 T_ref、流量列 m_ref
+    行分档 row_units（元件自报，assembly 汇总）:
+      0=流量纲 kg/s → 1/m_ref
+      1=压力纲 Pa   → 1/p_ref
+      2=能量纲 W    → 1/(m_ref·cp·T_ref)（M3 节点能量平衡行；
+                       残差 ~ ṁ·cp·ΔT 量级，除以典型值归一 O(1)）
+    """
 
     p_ref: float           # 压力变量缩放 Pa
     m_ref: float           # 流量变量 / 残差行缩放 kg/s
-    n: int                 # 方程组规模 N + M
-    n_interior: int        # 前 n_interior 个变量是节点压力（统一后=全部节点）
-    row_is_pressure: list = field(default_factory=list)
-                           # 残差行量纲标记（True=压力 Pa，False=流量 kg/s）
+    T_ref: float = 288.15  # 温度变量缩放 K（M3；现取锚温/默认值最大）
+    cp: float = 1004.7     # 定压比热 J/(kg·K)（能量行缩放用；γR/(γ−1) 派生）
+    n: int = 0             # 方程组规模 N + N_T + M
+    n_interior: int = 0    # 前 n_interior 个变量是节点压力
+    n_T: int = 0           # 温度未知量个数（M3；锚温节点不进 x，当前=0）
+    row_units: list = field(default_factory=list)
+                           # 残差行量纲档（0流量/1压力/2能量；len = n）
 
     # ---------- S / R ----------
     @property
     def col_scales(self) -> np.ndarray:
-        """S 对角元：x = S·x̃（压力列 p_ref，流量列 m_ref）。"""
+        """S 对角元：x = S·x̃（压力 p_ref | 温度 T_ref | 流量 m_ref）。"""
         s = np.empty(self.n)
         s[: self.n_interior] = self.p_ref
-        s[self.n_interior:] = self.m_ref
+        s[self.n_interior: self.n_interior + self.n_T] = self.T_ref
+        s[self.n_interior + self.n_T:] = self.m_ref
         return s
 
     @property
     def row_scales(self) -> np.ndarray:
-        """R 对角元：F̃ = R·F（流量行 1/m_ref，压力行 1/p_ref——行分档）。"""
+        """R 对角元：F̃ = R·F（按行量纲分档取参考量）。"""
         r = np.full(self.n, 1.0 / self.m_ref)
-        for i, is_p in enumerate(self.row_is_pressure):
-            if is_p:
+        e_scale = 1.0 / (self.m_ref * self.cp * self.T_ref)
+        for i, u in enumerate(self.row_units):
+            if u == 1:
                 r[i] = 1.0 / self.p_ref
+            elif u == 2:
+                r[i] = e_scale
         return r
 
     # ---------- 坐标变换 ----------
@@ -81,7 +97,7 @@ def make_scaling(system, ctx, p_ref: float | None = None,
                  m_ref: float | None = None) -> Scaling:
     """从网络与物性自估参考量（显式给定 p_ref/m_ref 则覆盖自估）。
 
-    p_ref 取全部元件自报锚定压力的最大值（anchor_values，新元件零改动）；
+    p_ref 取全部元件自报锚定压力的最大值（anchor_P_values，新元件零改动）；
     m_ref 取全网最大口壅塞容量与流量边界 |ṁ_spec| 的最大值
     （MASS_SOURCE 枚举——流量规定暂无通用能力接口，元件库扩充时再看）。
     行量纲标记从 system.row_is_pressure 取。
@@ -91,7 +107,7 @@ def make_scaling(system, ctx, p_ref: float | None = None,
     if p_ref is None:
         specs = {}
         for model in system.models.values():
-            specs.update(model.anchor_values())
+            specs.update(model.anchor_P_values())
         pressures = [v for v in specs.values() if v > 0.0]
         p_ref = max(pressures) if pressures else 1.0e5
 
@@ -106,9 +122,15 @@ def make_scaling(system, ctx, p_ref: float | None = None,
         if m_ref <= 0.0:
             m_ref = 1.0  # 全零面积等退化拓扑的兑底（缩放失去意义但不崩溃）
 
-    return Scaling(p_ref=p_ref, m_ref=m_ref,
+    from pysas.fluids import cp_ideal_gas
+    cp = cp_ideal_gas(ctx.gas_R, ctx.gamma)  # 能量行缩放参考量（与
+    # assembly._cp 同源——都走 fluids.properties，将来换变比热只改一处）
+    return Scaling(p_ref=p_ref, m_ref=m_ref, T_ref=T_ref, cp=cp,
                    n=system.n, n_interior=system.n_interior,
-                   row_is_pressure=list(system.row_is_pressure))
+                   n_T=getattr(system, "n_T", 0),
+                   row_units=list(getattr(system, "row_units",
+                                          getattr(system, "row_is_pressure",
+                                                  [0] * system.n))))
 
 
 class ScaledProblem:

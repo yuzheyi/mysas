@@ -21,6 +21,8 @@ class ElemType(enum.IntEnum):
     PRESSURE_BOUNDARY = 5  # 压力边界（单口）：params = [p0_spec Pa, T0_spec K]
     MASS_SOURCE = 6        # 流量边界/源（单口）：params = [ṁ_spec kg/s(>0注入), T0_spec K]
     BOOSTER = 7            # 升压/压力源（两口，锚定型）：params = [p_in_spec, p_out_spec]
+    HEATER = 8             # 发热元件（两口，恒功率）：params = [q W(>0加热)]
+    JUNCTION = 9           # 理想三通（三口，零压差绝热混合）：params = []
 
 
 class CompType(enum.IntEnum):

@@ -7,6 +7,7 @@
 
   isentropic.py   理想气体等熵关系：q(Ma)/total_to_static
                   （空气侧核心：总参数 → 静参数）
+  properties.py    理想气体常比热物性：cp/cv（Sutherland/变比热将来到此）
   viscosity.py    （预留）Sutherland μ(T)，篦齿 Re 修正用
   incompressible.py（预留）液体：密度常物性 + Bernoulli/损失模型
 
@@ -19,5 +20,7 @@ from pysas.fluids.isentropic import (
     q_of_mach,
     total_to_static,
 )
+from pysas.fluids.properties import cp_ideal_gas, cv_ideal_gas
 
-__all__ = ["StaticState", "q_of_mach", "mach_from_q", "total_to_static"]
+__all__ = ["StaticState", "q_of_mach", "mach_from_q", "total_to_static",
+           "cp_ideal_gas", "cv_ideal_gas"]

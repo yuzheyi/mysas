@@ -52,10 +52,15 @@ def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
     net = Network(nodes=nodes, comps=comps)
     net.n_interior = len(nodes)
 
-    # 边界元件的 T0 → ctx.boundary_T0（等温期特征温度，M3 后退役）
+    # 锚温从元件自报来源预填（PB/MASS_SOURCE 的 params[1]、booster 的
+    # params[2]；assembly 组装时会再自报一遍——此处先填保证 load 后
+    # ctx 即完备，元件残差的 _T0_of 锚温回退直接可用）
     for c in comps:
         if c.elem_type in (ElemType.PRESSURE_BOUNDARY, ElemType.MASS_SOURCE):
             ctx.boundary_T0[c.ports[0].node_id] = c.params[1]
+        elif c.elem_type == ElemType.BOOSTER and len(c.params) > 2:
+            for p in c.ports:   # 两口同锚 T_spec
+                ctx.boundary_T0[p.node_id] = c.params[2]
     return net, ctx
 
 
@@ -76,6 +81,8 @@ def _default_registry():
     from pysas.elements.booster import BoosterModel
     from pysas.elements.boundary import (
         MassSourceModel, PressureBoundaryModel)
+    from pysas.elements.heater import HeaterModel
+    from pysas.elements.junction import JunctionModel
     from pysas.elements.orifice import OrificeModel
     from pysas.elements.pipe import PipeModel
 
@@ -84,6 +91,8 @@ def _default_registry():
     register_model(PressureBoundaryModel)
     register_model(MassSourceModel)
     register_model(BoosterModel)
+    register_model(HeaterModel)
+    register_model(JunctionModel)
 
 
 def build_models(net: Network) -> dict[int, ElementModel]:

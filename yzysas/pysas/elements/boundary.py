@@ -31,33 +31,46 @@ from pysas.elements.base import ElementModel
 
 
 class PressureBoundaryModel(ElementModel):
-    """压力边界：规定所连节点的总压（经典边界条件）。params=[p0_spec, T0_spec]"""
+    """压力边界：规定所连节点的总压与总温。params=[p0_spec, T0_spec]"""
     elem_type = 5  # ElemType.PRESSURE_BOUNDARY
-    anchors_pressure = True  # p−p_spec 含绝对压力，锚定压力水平
+    # 锚定能力由 anchor_P_values/anchor_T_values 非空推导（报值即能力）
 
     def __init__(self, comp):
         super().__init__(comp)
         self.p0_spec, self.T0_spec = comp.params
 
-    def anchor_values(self) -> dict[int, float]:
+    def anchor_P_values(self) -> dict[int, float]:
         return {self._node_ids[0]: self.p0_spec}
 
+    def anchor_T_values(self) -> dict[int, float]:
+        return {self.comp.ports[0].node_id: self.T0_spec}
+
+    def T_supply(self, ctx) -> float:
+        return self.T0_spec
+
     @property
-    def row_is_pressure(self) -> list[bool]:
-        return [True]  # p_node − p0_spec 是压力纲
+    def row_units(self) -> list[int]:
+        return [1]  # p_node − p0_spec 是压力纲 Pa
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
         """F = p_node − p0_spec（压力量纲 → assembly 登记压力行缩放）。"""
-        return np.array([self._p(x, ctx, 0) - self.p0_spec])
+        return np.array([self._total_p(x, ctx, 0) - self.p0_spec])
 
 
 class MassSourceModel(ElementModel):
     """流量边界：规定注入(>0)/抽取(<0)网络的流量。params=[ṁ_spec, T0_spec]"""
     elem_type = 6  # ElemType.MASS_SOURCE
+    # 锚温能力由 anchor_T_values 非空推导（报值即能力）
 
     def __init__(self, comp):
         super().__init__(comp)
         self.m_spec, self.T0_spec = comp.params
+
+    def anchor_T_values(self) -> dict[int, float]:
+        return {self.comp.ports[0].node_id: self.T0_spec}
+
+    def T_supply(self, ctx) -> float:
+        return self.T0_spec
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
         """F = ṁ_port + ṁ_spec（ṁ>0=流入组件；注入 → 端口流量 = −ṁ_spec）。"""

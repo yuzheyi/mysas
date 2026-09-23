@@ -1,6 +1,9 @@
 """booster — 升压/压力源元件（锚定型，两口，2026-09-18 重定义）。
 
-params = [p_in_spec Pa, p_out_spec Pa]
+params = [p_in_spec, p_out_spec] 或 [p_in_spec, p_out_spec, T_spec]
+（第三参数可选：环路温度锚——锚定型无上游节点，闭式环能量平衡
+需要至少一个绝对温度源，T_spec 同时供两口；缺省则不锚温，
+温度由网络上下文定）
 
 隐式形式（两口，每口 1 方程）:
   f1 = p_in  − p_in_spec     进口节点压力直接锚定（压力纲）
@@ -27,22 +30,31 @@ from pysas.elements.base import ElementModel
 class BoosterModel(ElementModel):
     """锚定型压力源：两口各自规定所连节点的绝对总压。"""
     elem_type = 7  # ElemType.BOOSTER
-    anchors_pressure = True  # 两口绝对压力锚定
+    # 锚定能力由 anchor_P_values/anchor_T_values 非空推导（报值即能力）
 
     def __init__(self, comp):
         super().__init__(comp)
-        self.p_in_spec, self.p_out_spec = comp.params
+        self.p_in_spec, self.p_out_spec = comp.params[:2]
+        self.T_spec = comp.params[2] if len(comp.params) > 2 else None
 
-    def anchor_values(self) -> dict[int, float]:
-        return {self._node_ids[0]: self.p_in_spec,
-                self._node_ids[1]: self.p_out_spec}
+    def anchor_P_values(self) -> dict[int, float]:
+        return {self.comp.ports[0].node_id: self.p_in_spec,
+                self.comp.ports[1].node_id: self.p_out_spec}
+
+    def anchor_T_values(self) -> dict[int, float]:
+        return ({self.comp.ports[0].node_id: self.T_spec,
+                 self.comp.ports[1].node_id: self.T_spec}
+                if self.T_spec is not None else {})
+
+    def T_supply(self, ctx) -> float:
+        return self.T_spec if self.T_spec is not None else ctx.T0_default
 
     @property
-    def row_is_pressure(self) -> list[bool]:
-        return [True, True]  # 两行全是压力纲
+    def row_units(self) -> list[int]:
+        return [1, 1]  # 两行全是压力纲 Pa
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
         return np.array([
-            self._p(x, ctx, 0) - self.p_in_spec,   # f1 进口锚定
-            self._p(x, ctx, 1) - self.p_out_spec,  # f2 出口锚定
+            self._total_p(x, ctx, 0) - self.p_in_spec,   # f1 进口锚定
+            self._total_p(x, ctx, 1) - self.p_out_spec,  # f2 出口锚定
         ])

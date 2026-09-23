@@ -40,21 +40,18 @@ class OrificeModel(ElementModel):
             * beta ** (1.0 / gamma) \
             * np.sqrt(max(1.0 - beta ** ((gamma - 1.0) / gamma), 0.0))
 
-    def _T0_of(self, ctx, i: int) -> float:
-        """第 i 口上游总温（先用 ctx 边界/默认，能量方程接入后细化）。"""
-        return ctx.boundary_T0.get(self._node_ids[i], ctx.T0_default)
-
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
-        p1 = self._p(x, ctx, 0)
-        p2 = self._p(x, ctx, 1)
+        p1 = self._total_p(x, ctx, 0)
+        p2 = self._total_p(x, ctx, 1)
         m1 = x[self._m_idx[0]]
         m2 = x[self._m_idx[1]]
 
-        # 高压侧为上游：流体从高压侧口流入组件（ṁ_high > 0）
+        # 高压侧为上游：流体从高压侧口流入组件（ṁ_high > 0），
+        # 上游总温 = 高压侧节点总温
         if p1 >= p2:
-            k, p_hi, p_lo, T_hi = 0, p1, p2, self._T0_of(ctx, 0)
+            k, p_hi, p_lo, T_hi = 0, p1, p2, self._total_t(x, ctx, 0)
         else:
-            k, p_hi, p_lo, T_hi = 1, p2, p1, self._T0_of(ctx, 1)
+            k, p_hi, p_lo, T_hi = 1, p2, p1, self._total_t(x, ctx, 1)
 
         m_ideal = self._ideal_mass_flow(p_hi, p_lo, T_hi, ctx.gas_R, ctx.gamma)
         return np.array([

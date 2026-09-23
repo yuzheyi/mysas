@@ -83,18 +83,18 @@ class PipeModel(ElementModel):
         return (1.0 - w) * m_lam + w * m_turb
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
-        p1 = self._p(x, ctx, 0)
-        p2 = self._p(x, ctx, 1)
+        p1 = self._total_p(x, ctx, 0)
+        p2 = self._total_p(x, ctx, 1)
         m1 = x[self._m_idx[0]]
         m2 = x[self._m_idx[1]]
 
         # 上游 = 高压侧；流体从高压侧口流入组件（ṁ_high > 0）
         if p1 >= p2:
-            T_up = self._T0_of(ctx, 0)
+            T_up = self._total_t(x, ctx, 0)
             m_ideal = self.mass_flow(p1, p2, T_up, m1, ctx)
             k = 0  # 高压口编号（0→1 方向流动）
         else:
-            T_up = self._T0_of(ctx, 1)
+            T_up = self._total_t(x, ctx, 1)
             m_ideal = self.mass_flow(p2, p1, T_up, m2, ctx)
             k = 1
 

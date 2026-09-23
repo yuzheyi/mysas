@@ -29,15 +29,64 @@ class ElementModel(ABC):
     #: 对应的 ElemType，由子类声明
     elem_type: int = -1
 
-    #: 能力声明：残差是否含绝对压力（能锚定压力水平）。默认 False；
-    #: PRESSURE_BOUNDARY / 锚定型 BOOSTER / 将来的 TANK 等覆盖为 True。
-    #: assembly 适定性断言只查此属性——新元件声明能力，组装层零改动。
-    anchors_pressure: bool = False
+    #: 能力声明（推导式，不单独设 bool）：anchor_P_values()/anchor_T_values()
+    #: 返回非空 = 能锚定压力/温度。报值即能力，消除"True+空 dict"
+    #: 的矛盾态；assembly 适定性断言、default_guess、缩放层全部直接
+    #: 查 dict——新元件只覆盖这两个方法，组装层零改动。
 
-    def anchor_values(self) -> dict[int, float]:
-        """本元件规定的绝对压力（node_id → p_spec），供初值/诊断用。
-        默认空（未锚定或无显式值）；锚定元件覆盖此方法。"""
+    def anchor_P_values(self) -> dict[int, float]:
+        """本元件规定的绝对压力（node_id → p_spec），供适定性断言/
+        初值/缩放参考量用。默认空（= 不锚定）；锚定元件覆盖。"""
         return {}
+
+    def anchor_T_values(self) -> dict[int, float]:
+        """本元件规定的总温（node_id → T_spec K），能量方程锚温用
+        （非空节点的 T 消元不进 x，值进 ctx.boundary_T0）。默认空。"""
+        return {}
+
+    def T_supply(self, ctx) -> float:
+        """源元件供气总温 K（向网络注入流体时的源项温度）。
+        默认 T0_default；PB/MASS_SOURCE/锚温 BOOSTER 覆盖。
+        节点能量平衡的源项用——内部元件不用（走上游节点温度）。"""
+        return ctx.T0_default
+
+    def heat_input(self, x, ctx) -> float:
+        """元件给流体的加热功率 W（发热/冷却元件用；默认 0）。
+        物理上 ΔT = q/(ṁ·cp)，但接口报 q——port_T_out 默认实现以
+        q/((ṁ+ε_q)·cp) 并入温升，ṁ 被代数约去，零流量处无除法
+        奇点（见开发日志想法 16）。增量型元件只写这一个方法。"""
+        return 0.0
+
+    #: 零流量发热兜底流量 kg/s（ṁ→0 时温升封顶 q/(ε_q·cp)，防发散；
+    #: 物理语义=热量暂存等流动带走，收敛后近零流量发热应报表警告）
+    EPS_Q = 1.0e-6
+
+    def port_T_out(self, x, ctx, j: int) -> float:
+        """流体经口 j 离开元件时的输运总温 K（节点能量平衡的注入项）。
+
+        默认实现 = 两口件（绝热直通 + heat_input 温升）：
+          T_out = 另一口所连节点温度 + q/((ṁ+ε_q)·cp)
+        增量型发热元件（heater 等）只需写 heat_input，本方法零改动；
+        多口混合元件（T 型/盘腔等）必须覆盖——进料集合由解出的 ṁ
+        符号决定，混合物理没有"另一口"，框架不猜（raise 逼作者写明）。
+        口 j 应为出料口（ṁ_j < 0，assembly 调用约定）；对出料口问
+        进料口流量取温升（连续性保证两者绝对值相等，进料口符号更直白）。
+        """
+        n_ports = len(self.comp.ports)
+        if n_ports != 2:
+            raise NotImplementedError(
+                f"{type(self).__name__} 是 {n_ports} 口元件，"
+                f"必须覆盖 port_T_out（多口元件的出流温度是元件物理，"
+                f"无默认可猜——见 elements/base.py docstring）")
+        j_other = 1 - j
+        T_up = self._total_t(x, ctx, j_other)
+        q = self.heat_input(x, ctx)
+        if q == 0.0:
+            return T_up
+        from pysas.fluids import cp_ideal_gas
+        cp = cp_ideal_gas(ctx.gas_R, ctx.gamma)
+        m_in = abs(x[self._m_idx[j_other]])     # 进料口流量（=出料量）
+        return T_up + q / ((m_in + self.EPS_Q) * cp)
 
     def __init__(self, comp):
         self.comp = comp
@@ -47,11 +96,15 @@ class ElementModel(ABC):
     #   x = [p0_1 … p0_Nint | ṁ_1 … ṁ_M]   （M = 全网端口总数）
     # 元件的局部未知量下标由 assembly 注入（set_indices），元件不自己找。
 
-    def set_indices(self, p_node_ids: Sequence[int], m_port_ids: Sequence[int]):
+    def set_indices(self, p_node_ids: Sequence[int], m_port_ids: Sequence[int],
+                    t_node_ids: Sequence[int]):
         """assembly 建索引时调用：p_node_ids[i] 是 ports[i] 所连节点的
-        p0 在 x 里的下标；m_port_ids[i] 是 ports[i] 的 ṁ 在 x 里的下标。"""
+        p0 在 x 里的下标；m_port_ids[i] 是 ports[i] 的 ṁ 下标；
+        t_node_ids[i] 是所连节点 T0 下标（未锚温节点在 x 里，
+        锚温节点给 -1——查 ctx.boundary_T0）。"""
         self._p_idx = list(p_node_ids)
         self._m_idx = list(m_port_ids)
+        self._t_idx = list(t_node_ids)
         self._node_ids = [port.node_id for port in self.comp.ports]
 
     @property
@@ -61,28 +114,30 @@ class ElementModel(ABC):
         return len(self.comp.ports)
 
     @property
-    def row_is_pressure(self) -> list[bool]:
-        """残差块各行量纲标记（长度 = n_equations；默认全流量纲 kg/s）。
-        压力量的行（如 PressureBoundary 的 p−p_spec、Booster 的 Δp 特性行）
-        由子类覆盖。assembly 层逐块收集成全局表供缩放层分行取值
-        （scaling.row_scales）；M3 能量行接入时在此扩档。"""
-        return [False] * self.n_equations
+    def row_units(self) -> list[int]:
+        """残差块各行量纲档（长度 = n_equations；默认全 0=流量纲 kg/s）。
+        1=压力 Pa（PressureBoundary 的 p−p_spec、锚定 booster）、
+        2=能量 W（M3 节点能量行）由子类覆盖。assembly 逐块收集成
+        全局表供缩放层分行取值（scaling.row_scales）——行分档。"""
+        return [0] * self.n_equations
 
     @abstractmethod
     def residual(self, x: np.ndarray, ctx: "SolveContext") -> np.ndarray:
         """返回本元件的残差块（长度 n_equations = n_ports）。
-        x 是全局解向量；ctx 提供边界 p0/T0、物性(R, γ)、时间等。
-        p0 取值助手：self._p(x, ctx, i) 返回第 i 口的节点总压。"""
+        x 是全局解向量；ctx 提供物性(R, γ)、锚温、时间等。
+        取值助手：self._total_p(x, ctx, i) 返回第 i 口所连节点的总压，
+        self._total_t(x, ctx, i) 返回总温（未锚温取 x，锚温查 ctx）。"""
 
-    def _p(self, x, ctx, i: int) -> float:
-        """第 i 口所连节点的总压：统一从解向量取（边界元件化后全节点在 x）。"""
+    def _total_p(self, x, ctx, i: int) -> float:
+        """第 i 口所连节点的总压（全部节点都在 x，直接取）。"""
         return x[self._p_idx[i]]
 
-    def _T0_of(self, ctx, i: int) -> float:
-        """第 i 口所连节点的总温：查 ctx.boundary_T0（边界元件填），
-        内部回退 T0_default。（能量方程接入后，内部节点 T0 将成为未知量，
-        此助手届时改读解向量。）"""
-        return ctx.boundary_T0.get(self._node_ids[i], ctx.T0_default)
+    def _total_t(self, x, ctx, i: int) -> float:
+        """第 i 口所连节点的总温：未锚温节点取 x，锚温节点查
+        ctx.boundary_T0，无信息回退 T0_default（健壮性兑底）。"""
+        idx = self._t_idx[i]
+        return x[idx] if idx >= 0 \
+            else ctx.boundary_T0.get(self._node_ids[i], ctx.T0_default)
 
     # 解析雅可比可选：不实现则 assembly 用差分（离散牛顿天然支持）。
     def jacobian(self, x: np.ndarray, ctx) -> np.ndarray:
