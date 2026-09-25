@@ -112,9 +112,9 @@ def make_scaling(system, ctx, p_ref: float | None = None,
         p_ref = max(pressures) if pressures else 1.0e5
 
     if m_ref is None:
-        T_ref = max([*ctx.boundary_T0.values(), ctx.T0_default])
+        T_ref = ctx.T0_default
         caps = [_choked_orifice_flow(port.area, p_ref, T_ref,
-                                     ctx.gas_R, ctx.gamma)
+                                     ctx.gas.R, ctx.gas.gamma)
                 for comp in system.net.comps for port in comp.ports]
         ms = [abs(c.params[0]) for c in system.net.comps
               if c.elem_type == ElemType.MASS_SOURCE]  # 规定流量纳入估计
@@ -122,9 +122,8 @@ def make_scaling(system, ctx, p_ref: float | None = None,
         if m_ref <= 0.0:
             m_ref = 1.0  # 全零面积等退化拓扑的兑底（缩放失去意义但不崩溃）
 
-    from pysas.fluids import cp_ideal_gas
-    cp = cp_ideal_gas(ctx.gas_R, ctx.gamma)  # 能量行缩放参考量（与
-    # assembly._cp 同源——都走 fluids.properties，将来换变比热只改一处）
+    cp = ctx.gas.cp()  # 能量行缩放参考量（与 assembly._cp 同源——同一
+    # 实例保证数值一致；变比热时只改 IdealGas 子类）
     return Scaling(p_ref=p_ref, m_ref=m_ref, T_ref=T_ref, cp=cp,
                    n=system.n, n_interior=system.n_interior,
                    n_T=getattr(system, "n_T", 0),

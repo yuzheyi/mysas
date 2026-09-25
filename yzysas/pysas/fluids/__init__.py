@@ -13,14 +13,11 @@
 
 依赖方向: 本包不 import pysas 其他模块（叶子包）；
 调用方: 元件残差内部 / 后处理 / 互相独立的物性家族。
+公开出口（2026-09-25 类化收口）: IdealGas 门面类——物性定律 +
+气动关系；纯函数算法体（isentropic/properties）降为内部实现，
+不再导出（变比热子类重写 cp(T)/total_to_static 即策略模式扩展）。
 """
-from pysas.fluids.isentropic import (
-    StaticState,
-    mach_from_q,
-    q_of_mach,
-    total_to_static,
-)
-from pysas.fluids.properties import cp_ideal_gas, cv_ideal_gas
+from pysas.fluids.gas import IdealGas
+from pysas.fluids.isentropic import StaticState
 
-__all__ = ["StaticState", "q_of_mach", "mach_from_q", "total_to_static",
-           "cp_ideal_gas", "cv_ideal_gas"]
+__all__ = ["IdealGas", "StaticState"]

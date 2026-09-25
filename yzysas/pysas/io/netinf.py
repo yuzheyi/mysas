@@ -27,13 +27,16 @@ def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
 
     独立于文件 IO 暴露，便于测试脚本内联定义算例（格式仍与 netinf.json 一致）。
     """
-    # 物性 → ctx
+    # 物性 → ctx（gas 对象；显式 mu → 常数粘度旧口径，缺省 Sutherland 空气）
+    from pysas.fluids import IdealGas
     ctx = SolveContext()
     gas = data.get("gas", {})
-    ctx.gas_R = gas.get("R", 287.05)
-    ctx.gamma = gas.get("gamma", 1.4)
+    ctx.gas = IdealGas(
+        R=gas.get("R", 287.05),
+        gamma=gas.get("gamma", 1.4),
+        mu=gas.get("mu", None),       # None → 空气 Sutherland
+    )
     ctx.T0_default = gas.get("T0_default", 288.15)
-    ctx.mu = gas.get("mu", 1.8e-5)
 
     # 节点（统一内部）
     nodes = [Node(node_id=n["id"]) for n in data["nodes"]]
@@ -52,15 +55,9 @@ def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
     net = Network(nodes=nodes, comps=comps)
     net.n_interior = len(nodes)
 
-    # 锚温从元件自报来源预填（PB/MASS_SOURCE 的 params[1]、booster 的
-    # params[2]；assembly 组装时会再自报一遍——此处先填保证 load 后
-    # ctx 即完备，元件残差的 _T0_of 锚温回退直接可用）
-    for c in comps:
-        if c.elem_type in (ElemType.PRESSURE_BOUNDARY, ElemType.MASS_SOURCE):
-            ctx.boundary_T0[c.ports[0].node_id] = c.params[1]
-        elif c.elem_type == ElemType.BOOSTER and len(c.params) > 2:
-            for p in c.ports:   # 两口同锚 T_spec
-                ctx.boundary_T0[p.node_id] = c.params[2]
+    # 锚温预填已移除（想法 22，2026-09-25）：PB/MASS_SOURCE 退锚，
+    # 其节点 T 是未知量由能量行解出（T_spec 只作倒流 T_supply）；
+    # booster 的真锚定在 assembly 组装时自报，无需 io 层预填。
     return net, ctx
 
 
@@ -78,6 +75,7 @@ def _default_registry():
     """惰性注册自带元件（避免 import 环：io 不顶层依赖 elements 子模块）。"""
     if _MODEL_REGISTRY:
         return
+    from pysas.elements.areachange import AreaChangeModel
     from pysas.elements.booster import BoosterModel
     from pysas.elements.boundary import (
         MassSourceModel, PressureBoundaryModel)
@@ -91,6 +89,7 @@ def _default_registry():
     register_model(PressureBoundaryModel)
     register_model(MassSourceModel)
     register_model(BoosterModel)
+    register_model(AreaChangeModel)
     register_model(HeaterModel)
     register_model(JunctionModel)
 

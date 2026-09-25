@@ -17,6 +17,8 @@ class PortState:
     static_temperature: float = 0.0
     total_pressure: float = 0.0
     total_temperature: float = 0.0
+    density: float = 0.0        # ρ = p/(R·T)
+    velocity: float = 0.0        # m/s
     mach_number: float = 0.0   # 派生量
     choked: bool = False       # 临界标志（亚/超临界方程分支用）
 

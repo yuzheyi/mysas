@@ -24,8 +24,11 @@ Darcy-Weisbach:  Δp = (f·L/D) · ρv²/2,  v = ṁ/(ρA)
   收敛点自洽：层流根 Re≤2000 → w=0；湍流根 Re≥4000 → w=1；
   过渡带内 w 连续变化，物理上过渡区本就不唯一（经验区间），原型可接受。
 
-注意：管内 ρ 取上游节点 p0/T0 的理想气体密度（短管小压降下足够，
-可压修正留给后续）。
+注意：管内 ρ 取上游口截面的恢复静密度 ρs = ps/(R·Ts)（白板
+_static_state，等熵关系由上游总态+流量反算；2026-09-25 口径升级——
+原为滞止密度 p0/(RT0)，那是 v=0 假想态，流动密度应为静密度，
+低 Ma 时两者相差 O(Ma²) 可忽略，高 Ma 时开始修正）。零流量时
+ρs=ρ0（滞止），Hagen-Poiseuille 线性律的雅可比性质不变。
 """
 from __future__ import annotations
 
@@ -46,13 +49,11 @@ class PipeModel(ElementModel):
         self.area = comp.ports[0].area
 
     # ---------- 物性 ----------
-    def _density(self, p0, T0, ctx):
-        """上游总态理想气体密度 kg/m³。"""
-        return p0 / (ctx.gas_R * T0)
-
-    def _re(self, mdot, ctx):
-        """雷诺数（|ṁ| 无关符号）。"""
-        return abs(mdot) * self.diameter / (ctx.mu * self.area)
+    def _re(self, mdot, rho, mu):
+        """雷诺数 Re = |ṁ|·D/(μ·A) = ρ·v·D/μ（μ 取上游口静温的 Sutherland
+        值——与 ρs 同口径，2026-09-25 随 IdealGas 类化升级；旧算例显式
+        给 mu 常数则数值不变）。"""
+        return abs(mdot) * self.diameter / (mu * self.area)
 
     def _friction(self, Re):
         """Swanee-Jain 摩擦系数（仅湍流段调用）。"""
@@ -60,20 +61,21 @@ class PipeModel(ElementModel):
         return 0.25 / (np.log10(max(term, 1.0e-12)) ** 2)
 
     # ---------- 特性 ----------
-    def mass_flow(self, p_up, p_down, T0, mdot_guess, ctx):
-        """给定两端总压，返回管流量（≥0，方向高压→低压）。
+    def mass_flow(self, p_up, p_down, rho_up, mu_up, mdot_guess, ctx):
+        """给定两端总压与上游静参数（ρs、μ(Ts)），返回管流量。
 
-        mdot_guess 只用于湍流/过渡段的 f(Re) 估计（Swanee-Jain 对 f 灵敏度
-        低，f 误差 5% 只带来 ṁ 误差 ~2.5%）；层流段完全不用它。
+        rho_up/mu_up = 上游口恢复静密度与静温粘度（调用方从白板
+        _static_state 取）；mdot_guess 只用于湍流/过渡段的 f(Re) 估计
+        （Swanee-Jain 对 f 灵敏度低）；层流段完全不用它。
         """
         dp = p_up - p_down
         if dp <= 0.0:
             return 0.0
-        rho = self._density(p_up, T0, ctx)
+        rho = rho_up
         A, D, L = self.area, self.diameter, self.length
 
-        m_lam = rho * dp * A * D * D / (32.0 * ctx.mu * L)  # Hagen-Poiseuille
-        re_guess = self._re(mdot_guess, ctx)
+        m_lam = rho * dp * A * D * D / (32.0 * mu_up * L)  # Hagen-Poiseuille
+        re_guess = self._re(mdot_guess, rho, mu_up)
         if re_guess <= RE_LAM:
             return m_lam
 
@@ -88,15 +90,18 @@ class PipeModel(ElementModel):
         m1 = x[self._m_idx[0]]
         m2 = x[self._m_idx[1]]
 
-        # 上游 = 高压侧；流体从高压侧口流入组件（ṁ_high > 0）
+        # 上游 = 高压侧；流体从高压侧口流入组件（ṁ_high > 0）。
+        # ρs/μ(Ts) 取上游口恢复静参数（白板查表；μ 用同口静温的 Sutherland）
         if p1 >= p2:
-            T_up = self._total_t(x, ctx, 0)
-            m_ideal = self.mass_flow(p1, p2, T_up, m1, ctx)
-            k = 0  # 高压口编号（0→1 方向流动）
+            k = 0
+            st_up = self._static_state(x, ctx, 0)
+            m_ideal = self.mass_flow(p1, p2, st_up.rho,
+                                     ctx.gas.mu(st_up.T), m1, ctx)
         else:
-            T_up = self._total_t(x, ctx, 1)
-            m_ideal = self.mass_flow(p2, p1, T_up, m2, ctx)
             k = 1
+            st_up = self._static_state(x, ctx, 1)
+            m_ideal = self.mass_flow(p2, p1, st_up.rho,
+                                     ctx.gas.mu(st_up.T), m2, ctx)
 
         return np.array([
             m1 + m2,

@@ -53,7 +53,8 @@ class OrificeModel(ElementModel):
         else:
             k, p_hi, p_lo, T_hi = 1, p2, p1, self._total_t(x, ctx, 1)
 
-        m_ideal = self._ideal_mass_flow(p_hi, p_lo, T_hi, ctx.gas_R, ctx.gamma)
+        m_ideal = self._ideal_mass_flow(p_hi, p_lo, T_hi,
+                                        ctx.gas.R, ctx.gas.gamma)
         return np.array([
             m1 + m2,                       # f1 连续性
             x[self._m_idx[k]] - m_ideal,   # f2 特性：高压口流入 = +ṁ_ideal

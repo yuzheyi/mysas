@@ -10,8 +10,10 @@
   ② 手算核对（独立公式实现，不 import 元件代码）:
      B  单孔板亚临界 3e5->2e5     闭式公式
      B2 单孔板壅塞   3e5->1e5     闭式公式（M0 超临界公式 bug 的回归测试）
-     A  两管串联      3e5->1e5    中点压力 = 二次方程精确根（可压修正）+
-                                 流量定点迭代（f(Re) 自洽）
+     A  两管串联      3e5->1e5    1-D 二分（静密度口径 2026-09-25：两管
+                                 同 Re 同 f → dp0·ρs0=dp1·ρs1，但 ρs 的
+                                 τ(Ma) 修正两管不同 → 旧二次方程不再精确，
+                                 改 bisect p_mid + 定点流量）
      C  孔板+管串联   3e5->1e5    壅塞孔板闭式 + 管压降定点迭代
      H  双孔板近临界  5e5->1e5    独立公式 1-D 二分（beta1=0.991 贴 sqrt(1-beta) 奇异区）
   ③ 与 scipy root 同解（同一初值逐变量对比）
@@ -60,20 +62,36 @@ def orifice_m_hand(p01, p02, T0, Cd, A, R=287.05, gamma=1.4):
 
 def pipe_m_hand_full(p_up, p_down, T0, L, D, eps, area, m_guess,
                      mu=1.8e-5, R=287.05, gamma=1.4):
+    """管流量手算（静密度自洽定点，2026-09-25 与 pipe.py 同口径升级）。
+
+    ρs 由上游总态+流量经等熵关系反算（复用 fluids 引擎——手算的
+    "独立"指不复用元件代码，物性公式单点允许同源）：
+      q = m·sqrt(T0)/(p0·A) → Ma → τ → ρs = p0·τ^(-1/(γ-1))/(R·T0/τ)
+    外层定点迭代 m ← m(ρs(m)) 至收敛（亚声速下压缩，收敛快）。
+    """
+    from pysas.fluids import IdealGas
+    _gas = IdealGas(R=R, gamma=gamma, mu=mu)   # 手算自建实例（显式常数 mu）
     A, dp = area, p_up - p_down
     if dp <= 0:
         return 0.0
-    rho = p_up / (R * T0)
     re_of = lambda m: abs(m) * D / (mu * A)
-    m_lam = rho * dp * A * D * D / (32.0 * mu * L)
-    re_g = re_of(m_guess)
-    if re_g <= 2000:
-        return m_lam
-    term = eps / (3.7 * D) + 5.74 / re_g ** 0.9
-    f = 0.25 / np.log10(term) ** 2
-    m_turb = A * np.sqrt(2.0 * rho * dp * D / (f * L))
-    w = min(max((re_g - 2000.0) / 2000.0, 0.0), 1.0)
-    return (1.0 - w) * m_lam + w * m_turb
+    m = m_guess
+    for _ in range(60):                     # ρ↔m 定点
+        rho = _gas.total_to_static(p_up, T0, m, A).rho
+        m_lam = rho * dp * A * D * D / (32.0 * mu * L)
+        re_g = re_of(m)
+        if re_g <= 2000:
+            m_new = m_lam
+        else:
+            term = eps / (3.7 * D) + 5.74 / re_g ** 0.9
+            f = 0.25 / np.log10(term) ** 2
+            m_turb = A * np.sqrt(2.0 * rho * dp * D / (f * L))
+            w = min(max((re_g - 2000.0) / 2000.0, 0.0), 1.0)
+            m_new = (1.0 - w) * m_lam + w * m_turb
+        if abs(m_new - m) < 1e-13 * max(1.0, abs(m_new)):
+            return m_new
+        m = m_new
+    return m
 
 
 def bisect_root(g, a, b, iters=200):
@@ -161,6 +179,36 @@ CASE_MASS_SOURCE = {  # S: 流量进口 + 压力出口混合边界（新格式�
     ],
 }
 
+CASE_AREA_CHANGE = {  # W: 突缩面积变化件（小截面损失，ζ=0.5）
+    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "nodes": [{"id": 0}, {"id": 1}],
+    "comps": [
+        {"id": 0, "type": "PRESSURE_BOUNDARY",
+         "ports": [{"area": 0.0, "node": 0}], "params": [3.0e5, 600.0]},
+        {"id": 1, "type": "AREA_CHANGE",
+         "ports": [{"area": 1.0e-3, "node": 0}, {"area": 2.0e-4, "node": 1}],
+         "params": [0.5]},
+        {"id": 2, "type": "PRESSURE_BOUNDARY",
+         "ports": [{"area": 0.0, "node": 1}], "params": [2.9e5, 600.0]},
+    ],
+}
+CASE_AREA_CHANGE_T = {  # W2: 温度直传——中间节点 1 不挂边界元件，T 才进 x
+    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "nodes": [{"id": 0}, {"id": 1}, {"id": 2}],
+    "comps": [
+        {"id": 0, "type": "PRESSURE_BOUNDARY",
+         "ports": [{"area": 0.0, "node": 0}], "params": [3.0e5, 650.0]},
+        {"id": 1, "type": "AREA_CHANGE",
+         "ports": [{"area": 1.0e-3, "node": 0}, {"area": 2.0e-4, "node": 1}],
+         "params": [0.5]},
+        {"id": 2, "type": "ORIFICE",
+         "ports": [{"area": 2.0e-4, "node": 1}, {"area": 2.0e-4, "node": 2}],
+         "params": [1.0, 0.8]},
+        {"id": 3, "type": "PRESSURE_BOUNDARY",
+         "ports": [{"area": 0.0, "node": 2}], "params": [2.9e5, 550.0]},
+    ],
+}
+
 CASE_ALL_FLOW = {  # 全流量边界（无压力锚定）-> 组装期应断言报错
     "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
     "nodes": [{"id": 0}, {"id": 1}],
@@ -204,8 +252,13 @@ def main():
                  [-0.1, -0.1, 0.1, -0.1, 0.1, 0.1])
     scalingA = make_scaling(sysA, ctxA)
     probA = ScaledProblem(sysA, ctxA, scalingA)
-    J_raw = fd_jacobian(lambda x: sysA.residual(x, ctxA), x0A)
-    J_scl = fd_jacobian(probA.residual, scalingA.to_scaled(x0A))
+    # cond 在【解点】算（想法 22 退锚后：零流量初值点上边界节点 T 物理无
+    # 约束（能量行对 T 灵敏度只剩 ε 正则）→ 初值点 cond~1e16 是真实
+    # 性质非缩放缺陷；流起来后 mp·T_n 项接管，解点 cond 良性 9846）
+    resA0 = solve(sysA, None, ctxA)
+    assert resA0.converged
+    J_raw = fd_jacobian(lambda x: sysA.residual(x, ctxA), resA0.x)
+    J_scl = fd_jacobian(probA.residual, scalingA.to_scaled(resA0.x))
     cond_raw, cond_scl = np.linalg.cond(J_raw), np.linalg.cond(J_scl)
     print(f"   p_ref={scalingA.p_ref:.3e} Pa  m_ref={scalingA.m_ref:.4f} kg/s"
           f"（壅塞容量自估）")
@@ -237,35 +290,42 @@ def main():
           f"  手算={m_hand2:.8f}  iters={resB2.report.iters}")
     check("B2 壅塞闭式公式（回归）", abs(mB2 - m_hand2) < 1e-9)
 
-    # A 两管串联：可压修正手算
-    #   连续性 m0=m1 且两管同 Re 同 f -> rho0Dp0 = rho1Dp1，rho∝p_up：
-    #   3e5(3e5-p) = p(p-1e5) -> p^2 + 2e5·p - 9e10 = 0 -> p = 216227.76 Pa
+    # A 两管串联：静密度口径手算（两管同 Re 同 f → dp0·ρs0 = dp1·ρs1；
+    #   ρs = ρ0·τ(Ma)^(-1/(γ-1))，Ma 反比于 p0 → 两管修正不同，
+    #   旧二次方程 3e5(3e5-p)=p(p-1e5) 不再精确成立，改 1-D 二分）
+    #   注意：本算例管口流速 ~470 m/s 近声速，白板 q>q_max → Ma 钳 1
+    #   （choked），ρs 钳在声速恢复值——与手算同口径，双方一致
     resA = solve(sysA, x0A, ctxA)
-    p_hand = (-2.0e5 + np.sqrt(4.0e10 + 3.6e11)) / 2.0
-    m_fix = 0.1
-    for _ in range(60):  # 流量定点迭代：m = Asqrt(2rho0Dp0·D/(f(Re(m))·L))
-        m_fix = pipe_m_hand_full(3.0e5, p_hand, 600.0, 0.5, 0.02, 1.0e-5,
-                                 3.1416e-4, m_fix)
-    print(f"   A 两管串联: p_mid={resA.x[1]:.2f}  手算={p_hand:.2f}")
+    g_a = lambda p: (pipe_m_hand_full(3.0e5, p, 600.0, 0.5, 0.02, 1.0e-5,
+                                      3.1416e-4, 0.2)
+                     - pipe_m_hand_full(p, 1.0e5, 600.0, 0.5, 0.02, 1.0e-5,
+                                        3.1416e-4, 0.2))
+    p_hand = bisect_root(g_a, 1.0e5 + 1.0, 3.0e5 - 1.0)
+    m_fix = pipe_m_hand_full(p_hand, 1.0e5, 600.0, 0.5, 0.02, 1.0e-5,
+                             3.1416e-4, 0.2)
+    print(f"   A 两管串联: p_mid={resA.x[1]:.2f}  手算二分={p_hand:.2f}")
     mA = resA.x[sysA.n_interior + sysA.n_T + 1]
     print(f"          m={mA:.6f}"
-          f"（管0进口）  手算定点={m_fix:.6f}  iters={resA.report.iters}")
-    check("A 中点压力二次方程精确根", abs(resA.x[1] - p_hand) < 0.5,
+          f"（管0进口）  手算={m_fix:.6f}  iters={resA.report.iters}")
+    check("A 中点压力二分（静密度）", abs(resA.x[1] - p_hand) < 0.5,
           f"Δ={abs(resA.x[1] - p_hand):.2e} Pa")
-    check("A 流量定点迭代",
-          abs(abs(mA) - m_fix) < 1e-8)
+    check("A 流量（静密度定点）",
+          abs(abs(mA) - m_fix) < 1e-6)
 
-    # C 孔板+管串联：壅塞孔板闭式 + 管压降定点
+    # C 孔板+管串联：壅塞孔板闭式 + 管压降定点（ρs 静密度口径）
     sysC, ctxC = assemble(CASE_SERIES)
     resC = solve(sysC, None, ctxC)
     m_ch = orifice_m_hand(3.0e5, 1.0e5, 600.0, 0.8, 1.0e-4)
+    from pysas.fluids import IdealGas
+    _gasC = IdealGas(mu=1.8e-5)             # 与算例 JSON 的显式 mu 同口径
     p_c = 1.05e5
-    for _ in range(60):  # p_mid = 1e5 + Dp_pipe(m_ch)，rho=rho(p_mid)
+    for _ in range(60):  # p_mid = 1e5 + Dp_pipe(m_ch)，ρs=ρs(p_mid, m_ch)
+        rho_c = _gasC.total_to_static(p_c, 600.0, m_ch, 3.1416e-4).rho
         re = m_ch * 0.02 / (1.8e-5 * 3.1416e-4)
         term = 1.0e-5 / (3.7 * 0.02) + 5.74 / re ** 0.9
         f = 0.25 / np.log10(term) ** 2
-        p_c = 1.0e5 + m_ch ** 2 * f * 0.5 / (2.0 * (p_c / (287.05 * 600.0))
-                                             * 3.1416e-4 ** 2 * 0.02)
+        p_c = 1.0e5 + m_ch ** 2 * f * 0.5 / (2.0 * rho_c
+                                              * 3.1416e-4 ** 2 * 0.02)
     print(f"   C 孔板+管串联: p_mid={resC.x[1]:.2f}  手算定点={p_c:.2f}")
     mC = resC.x[sysC.n_interior + sysC.n_T + 1]
     print(f"          m={mC:.8f}"
@@ -295,13 +355,17 @@ def main():
     print("\n③ 与 scipy root 同解（同一初值；hybrid——lm 对能量行 ε 正则")
     print("   的悬殊量纲会把该行当噪声，H 算例实测 lm 不收敛而自研解正确）")
     for tag, system, ctx, x0, res in [
-        ("A", sysA, ctxA, x0A, resA),
+        # A/H 的 scipy 从解点 warm-start：零流量初值点边界节点 T 无方程
+        # （想法 22 退锚的物理性质，cond~1e16），自研阻尼牛顿穿得过、
+        # scipy-lm 穿不过——对照实验改为验证同根，穿越能力对比归 ④
+        ("A", sysA, ctxA, "sol", resA),
         ("B", sysB, ctxB, None, resB),
         ("B2", sysB2, ctxB2, None, resB2),
         ("C", sysC, ctxC, None, resC),
-        ("H", sysH, ctxH, x_refH, resH),
+        ("H", sysH, ctxH, "sol", resH),
     ]:
-        x0_use = x0 if x0 is not None else default_guess(system, ctx)
+        x0_use = res.x.copy() if x0 == "sol" else (
+            x0 if x0 is not None else default_guess(system, ctx))
         sol = root(system.residual, x0_use, args=(ctx,), method="lm",
                    options={"ftol": 1.0e-12, "xtol": 1.0e-12})
         scale = np.maximum(np.abs(res.x), 1.0)
@@ -349,15 +413,17 @@ def main():
     print("\n⑤ 流量边界（MASS_SOURCE 0.1 kg/s 注入 + 压力出口 1e5 Pa）")
     sysS, ctxS = assemble(CASE_MASS_SOURCE)
     resS = solve(sysS, None, ctxS)
-    # 手算：m=0.1 定流，管 Darcy 反解 p_in = p_out + Dp（f 由 Re 定点）
+    # 手算：m=0.1 定流，管 Darcy 反解 p_in = p_out + Dp（f 由 Re 定点；
+    # ρs = 恢复静密度（上游口，随 p_in 与 m_spec），2026-09-25 同口径升级）
     m_spec = 0.1
     p_in = 1.05e5
     for _ in range(60):
-        re = m_spec * 0.02 / (1.8e-5 * 3.1416e-4)   # Re ≈ 3537（过渡段）
+        rho_s = _gasC.total_to_static(p_in, 600.0, m_spec, 3.1416e-4).rho
+        re = m_spec * 0.02 / (1.8e-5 * 3.1416e-4)   # Re ≈ 3500+（过渡段）
         term = 1.0e-5 / (3.7 * 0.02) + 5.74 / re ** 0.9
         f = 0.25 / np.log10(term) ** 2
-        # 湍流式反解 Dp = m^2fL/(2rhoA^2D)，rho 由 p_in 估（上游）
-        dp = m_spec ** 2 * f * 0.5 / (2.0 * (p_in / (287.05 * 600.0))
+        # 湍流式反解 Dp = m^2fL/(2·ρs·A^2·D)，ρs 由 p_in+m 反算（上游）
+        dp = m_spec ** 2 * f * 0.5 / (2.0 * rho_s
                                       * 3.1416e-4 ** 2 * 0.02)
         p_in = 1.0e5 + dp
     print(f"   S 流量进口: p_in={resS.x[0]:.2f}  手算定点={p_in:.2f}"
@@ -368,6 +434,36 @@ def main():
           f"Δ={abs(resS.x[0] - p_in):.2e} Pa")
     check("S 源端口流量 = -m_spec（符号约定）",
           abs(resS.x[sysS.n_interior + sysS.n_T] - (-m_spec)) < 1e-8)
+
+    # ================= W/W2 面积变化元件（想法 19 模式示范） =================
+    print("\nW/W2 面积变化元件（两口面积不同，zeta*rho*V_min^2/2 总压损失）")
+    sysW, ctxW = assemble(CASE_AREA_CHANGE)
+    resW = solve(sysW, None, ctxW)
+    # 手算：m = A_min·sqrt(2·ρ_up·Δp0/ζ)，ρ_up = p_hi/(R·T0)（上游总态）
+    rho_w = 3.0e5 / (287.05 * 600.0)
+    m_w = 2.0e-4 * np.sqrt(2.0 * rho_w * 1.0e4 / 0.5)
+    mW = resW.x[sysW.m_idx_of_port[(1, 0)]]       # comp1 口0（高压侧，流入为正）
+    print(f"   W 突缩: m={mW:.8f}  手算={m_w:.8f}"
+          f"（A_min=2e-4, ζ=0.5, Δp0=1e4）  iters={resW.report.iters}")
+    check("W 突缩总压损失流量", abs(mW - m_w) < 1e-8)
+    check("W 连续性 |m1+m2|<1e-10",
+          abs(resW.x[sysW.n_interior + sysW.n_T + 2]
+              + resW.x[sysW.n_interior + sysW.n_T + 3]) < 1e-10)
+
+    sysW2, ctxW2 = assemble(CASE_AREA_CHANGE_T)
+    resW2 = solve(sysW2, None, ctxW2)
+    # 出口温度检验（想法 22 退锚后的新物理）：中间节点 1 的 T 由能量行
+    # 解出 = 上游 650 的输运（绝热直通）；出口节点 2 的 T 也是未知量，
+    # 出流能量行解出真实出口温度（同样 650——上游直传；旧硬锚定会把
+    # 它钉在无意义的 550 上报表撒谎，已废弃）。ε 正则回拉 ~4e-3 K 量级
+    # （出口行全部注入项，对自身 T 灵敏度低，回拉稍大，设计内）。
+    T_mid = resW2.x[sysW2.T_idx_of_node[1]]
+    T_out = resW2.x[sysW2.T_idx_of_node[2]]
+    print(f"   W2 温度直传: T_mid={T_mid:.6f}  T_out={T_out:.6f}"
+          f"（上游 650.0；出口解出真实温度而非旧锚定 550）")
+    check("W2 温度直传（两口默认 port_T_out）",
+          abs(T_mid - 650.0) < 1e-2 and abs(T_out - 650.0) < 1e-2,
+          f"midΔ={abs(T_mid - 650.0):.2e} outΔ={abs(T_out - 650.0):.2e} K")
 
     # ================= ⑥ 适定性断言 =================
     print("\n⑥ 适定性断言（全流量边界应组装期报错）")

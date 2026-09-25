@@ -45,7 +45,7 @@ class StaticState:
 
 
 def q_of_mach(ma: float, R: float, gamma: float) -> float:
-    """流量函数 q(Ma)（无量纲）。"""
+    """流量参数 q(Ma)；其量纲为 sqrt(K)·s/m。"""
     tau = 1.0 + 0.5 * (gamma - 1.0) * ma * ma
     return np.sqrt(gamma / R) * ma * tau ** (-(gamma + 1.0) / (2.0 * (gamma - 1.0)))
 
@@ -68,6 +68,31 @@ def mach_from_q(q: float, R: float, gamma: float) -> tuple[float, bool]:
     return 0.5 * (lo + hi), False
 
 
+def mach_from_q_arr(q: np.ndarray, R: float, gamma: float
+                     ) -> tuple[np.ndarray, np.ndarray]:
+    """向量化反解：一批 q 同时二分 → (Ma, choked)。
+
+    与标量版 mach_from_q 逐位同语义（同时 60 轮整组二分；掩码处理
+    边界：q>=q_max 夹 Ma=1 标 choked；q=0 直接 Ma=0 不参与二分）。
+    用途：assembly 静参数白板 prime（每残差评估一次）——M 个口从
+    60×M 次 Python 循环降为 60 次整组 numpy 运算；也是将来按类型
+    批核（③ 段向量化）的地基。
+    """
+    q = np.asarray(q, dtype=float)
+    q_max = q_of_mach(1.0, R, gamma)
+    choked = q >= q_max
+    qq = np.where(choked, q_max, q)       # 夹住再二分（壅塞口免白算）
+    lo = np.zeros_like(qq)
+    hi = np.where(qq > 0.0, 1.0, 0.0)    # 零流量口：区间空，Ma≡0
+    act = qq > 0.0                        # 活跃口掩码（参与二分）
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        below = q_of_mach(mid, R, gamma) < qq   # 纯算术，数组安全
+        lo = np.where(below & act, mid, lo)
+        hi = np.where((~below | ~act) & act, mid, hi)
+    return 0.5 * (lo + hi), choked
+
+
 def total_to_static(p0: float, T0: float, mdot: float, area: float,
                     R: float = 287.05, gamma: float = 1.4) -> StaticState:
     """端口四件套 (p0, T0, |mdot|, A) → 静参数（等熵关系）。
@@ -75,6 +100,8 @@ def total_to_static(p0: float, T0: float, mdot: float, area: float,
     mdot 取绝对值定马赫数（符号只表方向，不影响气动状态量大小）；
     返回的 v 恒为正，实际方向由调用方结合端口流向给出。
     """
+    if R <= 0.0 or gamma <= 1.0:
+        raise ValueError(f"气体参数非物理: R={R}, gamma={gamma}")
     if p0 <= 0.0 or T0 <= 0.0:
         raise ValueError(f"总参数非物理: p0={p0}, T0={T0}")
     if area <= 0.0:
@@ -149,9 +176,28 @@ if __name__ == "__main__":
         ok5 = True
     print(f"\n⑤ area=0 报错: {'OK' if ok5 else 'FAIL'}")
 
-    all_ok = ok1 and ok2 and ok3 and ok4 and ok5
+    # ⑥ 向量化 vs 标量逐位对拍（白板 prime 的地基，2026-09-25）
+    rng = np.random.default_rng(42)
+    q_test = np.concatenate([
+        rng.uniform(0.0, q_of_mach(1.0, R, GAM), 200),   # 亚声速随机
+        [0.0, q_of_mach(1.0, R, GAM), 5.0],             # 零流量/恰临界/壅塞
+    ])
+    ma_a, ch_a = mach_from_q_arr(q_test, R, GAM)
+    ma_s = np.empty_like(q_test)
+    ch_s = np.empty_like(q_test, dtype=bool)
+    for i_, qi in enumerate(q_test):
+        ma_s[i_], ch_s[i_] = mach_from_q(float(qi), R, GAM)
+    print(f"\n⑥ 向量化 vs 标量对拍: max|dMa|={np.abs(ma_a - ma_s).max():.2e}"
+          f"  choked 一致={np.array_equal(ch_a, ch_s)}")
+    # 阈值 1e-7：两版二分的最后几轮在中点选取上差一个舍入（标量版
+    # 从 (0,1) 起步、数组版零流量口区间起点不同），60 轮后残差 ~2^-53
+    # 的量级差是浮点路径差不是语义差；对物理量（ΔMa<1e-8）完全无害
+    ok6 = (np.abs(ma_a - ma_s).max() < 1e-7
+           and np.array_equal(ch_a, ch_s))
+
+    all_ok = ok1 and ok2 and ok3 and ok4 and ok5 and ok6
     print("\n" + "=" * 60)
     print("OK fluids.isentropic 全部验证通过" if all_ok else
           f"FAIL 未通过项: "
-          f"{[n for n, o in zip('12345', [ok1, ok2, ok3, ok4, ok5]) if not o]}")
+          f"{[n for n, o in zip('123456', [ok1, ok2, ok3, ok4, ok5, ok6]) if not o]}")
     raise SystemExit(0 if all_ok else 1)

@@ -29,19 +29,16 @@ class ElementModel(ABC):
     #: 对应的 ElemType，由子类声明
     elem_type: int = -1
 
-    #: 能力声明（推导式，不单独设 bool）：anchor_P_values()/anchor_T_values()
-    #: 返回非空 = 能锚定压力/温度。报值即能力，消除"True+空 dict"
-    #: 的矛盾态；assembly 适定性断言、default_guess、缩放层全部直接
-    #: 查 dict——新元件只覆盖这两个方法，组装层零改动。
+    #: 能力声明（推导式，不单独设 bool）：anchor_P_values() 返回非空
+    #: = 能锚定压力。报值即能力，消除"True+空 dict"的矛盾态；
+    #: assembly 适定性断言、default_guess、缩放层全部直接查 dict——
+    #: 新元件只覆盖这一个方法，组装层零改动。
+    #: （锚温能力已退役，想法 22 完成态：所有节点 T 都是未知量由
+    #:   能量方程解出；源温度一律走 T_supply/port_T_out 输运语义。）
 
     def anchor_P_values(self) -> dict[int, float]:
         """本元件规定的绝对压力（node_id → p_spec），供适定性断言/
         初值/缩放参考量用。默认空（= 不锚定）；锚定元件覆盖。"""
-        return {}
-
-    def anchor_T_values(self) -> dict[int, float]:
-        """本元件规定的总温（node_id → T_spec K），能量方程锚温用
-        （非空节点的 T 消元不进 x，值进 ctx.boundary_T0）。默认空。"""
         return {}
 
     def T_supply(self, ctx) -> float:
@@ -83,8 +80,7 @@ class ElementModel(ABC):
         q = self.heat_input(x, ctx)
         if q == 0.0:
             return T_up
-        from pysas.fluids import cp_ideal_gas
-        cp = cp_ideal_gas(ctx.gas_R, ctx.gamma)
+        cp = ctx.gas.cp()
         m_in = abs(x[self._m_idx[j_other]])     # 进料口流量（=出料量）
         return T_up + q / ((m_in + self.EPS_Q) * cp)
 
@@ -100,8 +96,7 @@ class ElementModel(ABC):
                     t_node_ids: Sequence[int]):
         """assembly 建索引时调用：p_node_ids[i] 是 ports[i] 所连节点的
         p0 在 x 里的下标；m_port_ids[i] 是 ports[i] 的 ṁ 下标；
-        t_node_ids[i] 是所连节点 T0 下标（未锚温节点在 x 里，
-        锚温节点给 -1——查 ctx.boundary_T0）。"""
+        t_node_ids[i] 是所连节点 T0 在 x 温度段的下标（全部节点都有）。"""
         self._p_idx = list(p_node_ids)
         self._m_idx = list(m_port_ids)
         self._t_idx = list(t_node_ids)
@@ -128,16 +123,38 @@ class ElementModel(ABC):
         取值助手：self._total_p(x, ctx, i) 返回第 i 口所连节点的总压，
         self._total_t(x, ctx, i) 返回总温（未锚温取 x，锚温查 ctx）。"""
 
+    def _static_state(self, x, ctx, i: int):
+        """第 i 口的局部静参数（StaticState）——统一读入口（2026-09-25）。
+
+        优先读白板：assembly 每次 residual(x) 开头对全部有效口向量化
+        反算一次（ctx._static_table，身份键 x is x 保证同源），元件在
+        ③ 段循环内查表零成本；未命中（单元测试直调元件残差/表未建）
+        回退标量现算，口径与 clamp 纪律完全一致（想法 19 纪律一）。
+        静参数是元件私有量——不跨元件共享，白板只是免除重复的 60 轮
+        二分，不引入任何元件间依赖（过度设计否决记：不做全局重建
+        协议，白板只在单次残差评估生命周期内有效）。
+        """
+        table = getattr(ctx, "_static_table", None)
+        if table is not None and table.x is x:
+            st = table.entry(self._m_idx[i] - self._off_m)
+            if st is not None:
+                return st            # 白板命中（有效口）
+        # 回退：表未建 / 单元测试直调 / 非有效口（area=0 无动通量）
+        from pysas.fluids import total_to_static
+        p0 = max(self._total_p(x, ctx, i), 1.0)
+        T0 = max(self._total_t(x, ctx, i), 10.0)
+        return total_to_static(p0, T0, x[self._m_idx[i]],
+                               self.comp.ports[i].area,
+                               ctx.gas.R, ctx.gas.gamma)
+
     def _total_p(self, x, ctx, i: int) -> float:
         """第 i 口所连节点的总压（全部节点都在 x，直接取）。"""
         return x[self._p_idx[i]]
 
     def _total_t(self, x, ctx, i: int) -> float:
-        """第 i 口所连节点的总温：未锚温节点取 x，锚温节点查
-        ctx.boundary_T0，无信息回退 T0_default（健壮性兑底）。"""
-        idx = self._t_idx[i]
-        return x[idx] if idx >= 0 \
-            else ctx.boundary_T0.get(self._node_ids[i], ctx.T0_default)
+        """第 i 口所连节点的总温（全部节点 T 都在 x 的温度段，直接取；
+        锚温消元已退役——想法 22 完成态）。"""
+        return x[self._t_idx[i]]
 
     # 解析雅可比可选：不实现则 assembly 用差分（离散牛顿天然支持）。
     def jacobian(self, x: np.ndarray, ctx) -> np.ndarray:
@@ -149,11 +166,8 @@ class SolveContext:
     """求解上下文：元件方程需要但不在解向量里的量。"""
 
     def __init__(self):
-        self.boundary_T0 = {}      # node_id → 边界总温 K（边界元件参数填；
-                                   # p0 已元件化进 x，boundary_p0 退役）
+        self.gas = None            # IdealGas 实例（物性载体；netinf 读入时注入，
+                                   # 直调残差的单元测试需自建后赋值）
         self.T0_default = 288.15   # 无边界信息时的默认总温 K（能量方程接入前的过渡）
-        self.gas_R = 287.05        # 气体常数 J/(kg·K)
-        self.gamma = 1.4           # 比热比
-        self.mu = 1.8e-5           # 动力粘度 Pa·s（管摩擦 Re 用）
         self.time = 0.0            # 当前物理时间 s（非定常推进用）
         self.dt = 0.0              # 当前时间步长 s（0 = 定常）

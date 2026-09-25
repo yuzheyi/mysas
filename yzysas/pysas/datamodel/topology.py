@@ -23,6 +23,7 @@ class ElemType(enum.IntEnum):
     BOOSTER = 7            # 升压/压力源（两口，锚定型）：params = [p_in_spec, p_out_spec]
     HEATER = 8             # 发热元件（两口，恒功率）：params = [q W(>0加热)]
     JUNCTION = 9           # 理想三通（三口，零压差绝热混合）：params = []
+    AREA_CHANGE = 10       # 突扩/突缩（两口，总压损失 ζ·½ρV_min²）：params = [ζ]
 
 
 class CompType(enum.IntEnum):

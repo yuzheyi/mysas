@@ -65,12 +65,15 @@ def default_guess(system, ctx) -> np.ndarray:
     mean_p = float(np.mean(p0s)) if p0s else 1.0e5
     for i, nid in enumerate(system.interior_ids):
         x0[i] = specs.get(nid, mean_p)
-    # T 区：未锚温节点取锚温均值（无锚 → T0_default）
-    T_specs = {}
-    for model in system.models.values():
-        T_specs.update(model.anchor_T_values())
-    mean_T = (float(np.mean(list(T_specs.values())))
-              if T_specs else ctx.T0_default)
+    # T 区初值（想法 22 完成态：全部节点 T 是未知量）：取源元件
+    # T_supply 均值（PB/MASS_SOURCE/booster 供温），无源 = T0_default。
+    # 关键：零流量初值点上能量行对 T 的灵敏度只剩 ε 正则（1e-8）
+    # → J 在初值点结构性病态（cond~1e16，边界节点 T 物理无约束是
+    # 出流方向的真实性质）——但流起来后 mp·T_n 项生效行即良性，自研
+    # 牛顿照常收敛（实证 4 步）。给接近物理的 T 初值让初值敏感法能走。
+    supplies = [m.T_supply(ctx) for m in system.models.values()
+                if len(m.comp.ports) == 1]
+    mean_T = (float(np.mean(supplies)) if supplies else ctx.T0_default)
     for nid in system.T_ids:
         x0[system.T_idx_of_node[nid]] = mean_T
     return x0

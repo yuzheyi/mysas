@@ -28,9 +28,14 @@ from pysas.elements.base import ElementModel
 
 
 class BoosterModel(ElementModel):
-    """锚定型压力源：两口各自规定所连节点的绝对总压。"""
+    """锚定型压力源：两口各自规定所连节点的绝对总压。
+
+    params = [p_in_spec, p_out_spec, (可选) T_spec]
+    T_spec 语义（想法 22 完成态）：不再锚定节点 T，改为输运温度——
+    经 booster 的流体出流温度 = T_spec（等温升压源）；节点 T 由能量
+    方程解出。未给 T_spec 时走两口默认 port_T_out（绝热直通）。
+    """
     elem_type = 7  # ElemType.BOOSTER
-    # 锚定能力由 anchor_P_values/anchor_T_values 非空推导（报值即能力）
 
     def __init__(self, comp):
         super().__init__(comp)
@@ -41,10 +46,11 @@ class BoosterModel(ElementModel):
         return {self.comp.ports[0].node_id: self.p_in_spec,
                 self.comp.ports[1].node_id: self.p_out_spec}
 
-    def anchor_T_values(self) -> dict[int, float]:
-        return ({self.comp.ports[0].node_id: self.T_spec,
-                 self.comp.ports[1].node_id: self.T_spec}
-                if self.T_spec is not None else {})
+    def port_T_out(self, x, ctx, j: int) -> float:
+        """经 booster 的出流温度：给了 T_spec = 等温源；否则绝热直通。"""
+        if self.T_spec is not None:
+            return self.T_spec
+        return self._total_t(x, ctx, 1 - j)
 
     def T_supply(self, ctx) -> float:
         return self.T_spec if self.T_spec is not None else ctx.T0_default
