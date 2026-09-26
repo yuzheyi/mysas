@@ -139,13 +139,12 @@ class ElementModel(ABC):
             st = table.entry(self._m_idx[i] - self._off_m)
             if st is not None:
                 return st            # 白板命中（有效口）
-        # 回退：表未建 / 单元测试直调 / 非有效口（area=0 无动通量）
-        from pysas.fluids import total_to_static
+        # 回退：表未建 / 单元测试直调 / 非有效口（area=0 无动通量）。
+        # 走 gas 对象（不再散参数调纯函数——换气体模型时回退路径同源）
         p0 = max(self._total_p(x, ctx, i), 1.0)
         T0 = max(self._total_t(x, ctx, i), 10.0)
-        return total_to_static(p0, T0, x[self._m_idx[i]],
-                               self.comp.ports[i].area,
-                               ctx.gas.R, ctx.gas.gamma)
+        return ctx.gas.total_to_static(
+            p0, T0, x[self._m_idx[i]], self.comp.ports[i].area)
 
     def _total_p(self, x, ctx, i: int) -> float:
         """第 i 口所连节点的总压（全部节点都在 x，直接取）。"""
@@ -166,8 +165,10 @@ class SolveContext:
     """求解上下文：元件方程需要但不在解向量里的量。"""
 
     def __init__(self):
-        self.gas = None            # IdealGas 实例（物性载体；netinf 读入时注入，
+        self.gas = None            # GasModel 实例（物性载体；netinf 读入时注入，
                                    # 直调残差的单元测试需自建后赋值）
-        self.T0_default = 288.15   # 无边界信息时的默认总温 K（能量方程接入前的过渡）
+        self.T0_default = 288.15   # 源缺省供气总温 K（无任何源元件报温时的
+                                   # T_supply 回落值；netinf 的 gas.T0_default
+                                   # 可覆盖——288.15 只在此一处定义）
         self.time = 0.0            # 当前物理时间 s（非定常推进用）
         self.dt = 0.0              # 当前时间步长 s（0 = 定常）

@@ -19,3 +19,6 @@ __pycache__/
 Thumbs.db
 # 参考论文/
 papers/
+
+yzysas/tmp_*.txt
+yzysas/pysas/out/

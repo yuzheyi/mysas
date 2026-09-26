@@ -48,8 +48,12 @@ def check(name, ok, detail=""):
 
 
 # ---------------- 独立手算公式（不复用元件代码，防"自己验证自己"） ----------------
-def orifice_m_hand(p01, p02, T0, Cd, A, R=287.05, gamma=1.4):
-    """孔板流量手算公式（亚/超临界，与 orifice.py docstring 同源）。"""
+def orifice_m_hand(p01, p02, T0, Cd, A):
+    """孔板流量手算公式（亚/超临界，与 orifice.py docstring 同源）。
+    物性数值从气体类取（缺省 IdealGas，与算例同气体——数值单点在类）。"""
+    from pysas.fluids import make_gas
+    _g = make_gas()
+    R, gamma = _g.R, _g.gamma
     beta = min(max(p02 / p01, 1e-8), 1.0)
     crit = (2.0 / (gamma + 1.0)) ** (gamma / (gamma - 1.0))
     factor = Cd * A * p01 / np.sqrt(T0)
@@ -60,26 +64,25 @@ def orifice_m_hand(p01, p02, T0, Cd, A, R=287.05, gamma=1.4):
         * beta ** (1.0 / gamma) * np.sqrt(1.0 - beta ** ((gamma - 1.0) / gamma))
 
 
-def pipe_m_hand_full(p_up, p_down, T0, L, D, eps, area, m_guess,
-                     mu=1.8e-5, R=287.05, gamma=1.4):
+def pipe_m_hand_full(p_up, p_down, T0, L, D, eps, area, m_guess):
     """管流量手算（静密度自洽定点，2026-09-25 与 pipe.py 同口径升级）。
 
-    ρs 由上游总态+流量经等熵关系反算（复用 fluids 引擎——手算的
+    ρs/μ(Ts) 由上游总态+流量经等熵关系反算（复用 fluids 引擎——手算的
     "独立"指不复用元件代码，物性公式单点允许同源）：
-      q = m·sqrt(T0)/(p0·A) → Ma → τ → ρs = p0·τ^(-1/(γ-1))/(R·T0/τ)
-    外层定点迭代 m ← m(ρs(m)) 至收敛（亚声速下压缩，收敛快）。
+      q = m·sqrt(T0)/(p0·A) → Ma → τ → ρs，μ = Sutherland(Ts)
+    外层定点迭代 m ← m(ρs(m), μ(Ts(m))) 至收敛（亚声速下压缩，收敛快）。
     """
-    from pysas.fluids import IdealGas
-    _gas = IdealGas(R=R, gamma=gamma, mu=mu)   # 手算自建实例（显式常数 mu）
+    from pysas.fluids import make_gas
+    _gas = make_gas()                       # 缺省 IdealGas（数值由类赋予）
     A, dp = area, p_up - p_down
     if dp <= 0:
         return 0.0
-    re_of = lambda m: abs(m) * D / (mu * A)
     m = m_guess
-    for _ in range(60):                     # ρ↔m 定点
-        rho = _gas.total_to_static(p_up, T0, m, A).rho
+    for _ in range(60):                     # ρ,μ↔m 定点
+        st = _gas.total_to_static(p_up, T0, m, A)
+        rho, mu = st.rho, _gas.mu(st.T)     # 同源静参数：密度与粘度同口径
         m_lam = rho * dp * A * D * D / (32.0 * mu * L)
-        re_g = re_of(m)
+        re_g = abs(m) * D / (mu * A)
         if re_g <= 2000:
             m_new = m_lam
         else:
@@ -108,7 +111,7 @@ def bisect_root(g, a, b, iters=200):
 
 # ---------------- 算例定义（边界元件化新格式） ----------------
 CASE_ORIFICE_SUB = {   # B: 单孔板亚临界（新格式：边界元件）
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}],
     "comps": [
         {"id": 0, "type": "PRESSURE_BOUNDARY",
@@ -121,7 +124,7 @@ CASE_ORIFICE_SUB = {   # B: 单孔板亚临界（新格式：边界元件）
     ],
 }
 CASE_ORIFICE_CHOKED = {  # B2: 单孔板壅塞（新格式）
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}],
     "comps": [
         {"id": 0, "type": "PRESSURE_BOUNDARY",
@@ -134,7 +137,7 @@ CASE_ORIFICE_CHOKED = {  # B2: 单孔板壅塞（新格式）
     ],
 }
 CASE_SERIES = {  # C: 孔板 + 管串联（新格式）
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}, {"id": 2}],
     "comps": [
         {"id": 0, "type": "PRESSURE_BOUNDARY",
@@ -150,7 +153,7 @@ CASE_SERIES = {  # C: 孔板 + 管串联（新格式）
     ],
 }
 CASE_TWIN_ORIFICE = {  # H: 串联双孔板，beta1=0.991 近 sqrt(1-beta) 奇异区（新格式）
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}, {"id": 2}],
     "comps": [
         {"id": 0, "type": "PRESSURE_BOUNDARY",
@@ -166,7 +169,7 @@ CASE_TWIN_ORIFICE = {  # H: 串联双孔板，beta1=0.991 近 sqrt(1-beta) 奇�
     ],
 }
 CASE_MASS_SOURCE = {  # S: 流量进口 + 压力出口混合边界（新格式）
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}],
     "comps": [
         {"id": 0, "type": "MASS_SOURCE",
@@ -180,7 +183,7 @@ CASE_MASS_SOURCE = {  # S: 流量进口 + 压力出口混合边界（新格式�
 }
 
 CASE_AREA_CHANGE = {  # W: 突缩面积变化件（小截面损失，ζ=0.5）
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}],
     "comps": [
         {"id": 0, "type": "PRESSURE_BOUNDARY",
@@ -193,7 +196,7 @@ CASE_AREA_CHANGE = {  # W: 突缩面积变化件（小截面损失，ζ=0.5）
     ],
 }
 CASE_AREA_CHANGE_T = {  # W2: 温度直传——中间节点 1 不挂边界元件，T 才进 x
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}, {"id": 2}],
     "comps": [
         {"id": 0, "type": "PRESSURE_BOUNDARY",
@@ -210,7 +213,7 @@ CASE_AREA_CHANGE_T = {  # W2: 温度直传——中间节点 1 不挂边界元�
 }
 
 CASE_ALL_FLOW = {  # 全流量边界（无压力锚定）-> 组装期应断言报错
-    "gas": {"R": 287.05, "gamma": 1.4, "T0_default": 600.0, "mu": 1.8e-5},
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
     "nodes": [{"id": 0}, {"id": 1}],
     "comps": [
         {"id": 0, "type": "MASS_SOURCE",
@@ -316,12 +319,13 @@ def main():
     sysC, ctxC = assemble(CASE_SERIES)
     resC = solve(sysC, None, ctxC)
     m_ch = orifice_m_hand(3.0e5, 1.0e5, 600.0, 0.8, 1.0e-4)
-    from pysas.fluids import IdealGas
-    _gasC = IdealGas(mu=1.8e-5)             # 与算例 JSON 的显式 mu 同口径
+    from pysas.fluids import make_gas
+    _gasC = make_gas()    # 缺省 IdealGas（Sutherland；与算例同气体）
     p_c = 1.05e5
     for _ in range(60):  # p_mid = 1e5 + Dp_pipe(m_ch)，ρs=ρs(p_mid, m_ch)
-        rho_c = _gasC.total_to_static(p_c, 600.0, m_ch, 3.1416e-4).rho
-        re = m_ch * 0.02 / (1.8e-5 * 3.1416e-4)
+        st_c = _gasC.total_to_static(p_c, 600.0, m_ch, 3.1416e-4)
+        rho_c, mu_c = st_c.rho, _gasC.mu(st_c.T)   # 静参数同源（pipe 同口径）
+        re = m_ch * 0.02 / (mu_c * 3.1416e-4)
         term = 1.0e-5 / (3.7 * 0.02) + 5.74 / re ** 0.9
         f = 0.25 / np.log10(term) ** 2
         p_c = 1.0e5 + m_ch ** 2 * f * 0.5 / (2.0 * rho_c
@@ -418,8 +422,9 @@ def main():
     m_spec = 0.1
     p_in = 1.05e5
     for _ in range(60):
-        rho_s = _gasC.total_to_static(p_in, 600.0, m_spec, 3.1416e-4).rho
-        re = m_spec * 0.02 / (1.8e-5 * 3.1416e-4)   # Re ≈ 3500+（过渡段）
+        st_s = _gasC.total_to_static(p_in, 600.0, m_spec, 3.1416e-4)
+        rho_s, mu_s = st_s.rho, _gasC.mu(st_s.T)   # 静参数同源（pipe 同口径）
+        re = m_spec * 0.02 / (mu_s * 3.1416e-4)   # Re ≈ 2100（过渡段）
         term = 1.0e-5 / (3.7 * 0.02) + 5.74 / re ** 0.9
         f = 0.25 / np.log10(term) ** 2
         # 湍流式反解 Dp = m^2fL/(2·ρs·A^2·D)，ρs 由 p_in+m 反算（上游）
@@ -440,7 +445,7 @@ def main():
     sysW, ctxW = assemble(CASE_AREA_CHANGE)
     resW = solve(sysW, None, ctxW)
     # 手算：m = A_min·sqrt(2·ρ_up·Δp0/ζ)，ρ_up = p_hi/(R·T0)（上游总态）
-    rho_w = 3.0e5 / (287.05 * 600.0)
+    rho_w = _gasC.rho_from_pT(3.0e5, 600.0)   # 物性从气体类取（单点）
     m_w = 2.0e-4 * np.sqrt(2.0 * rho_w * 1.0e4 / 0.5)
     mW = resW.x[sysW.m_idx_of_port[(1, 0)]]       # comp1 口0（高压侧，流入为正）
     print(f"   W 突缩: m={mW:.8f}  手算={m_w:.8f}"

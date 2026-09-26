@@ -183,7 +183,7 @@ def main():
           f"  （两者一致 = scipy 假收敛实锤）")
 
     # 手算核对：主管 D30、L0.5、总压降 5bar->3.55bar 量级的 Darcy 流量
-    rho = 3.5e5 / (ctx.gas.R * ctx.T0_default)
+    rho = ctx.gas.rho_from_pT(3.5e5, ctx.T0_default)   # 物性从气体类取
     f = 0.02
     A, D, L = 7.0686e-4, 0.03, 0.5
     m_hand = A * np.sqrt(2 * rho * 1.45e5 * D / (f * L))

@@ -93,8 +93,21 @@ def mach_from_q_arr(q: np.ndarray, R: float, gamma: float
     return 0.5 * (lo + hi), choked
 
 
+def statics_from_mach(ma, p0, T0, R, gamma):
+    """等熵闭式：Ma + 总参数 → (T, p, rho, v)。标量/数组通用（numpy
+    广播）——total_to_static（标量）与白板 prime（数组）单点共用的
+    物理尾部；真实气体子类重写自己的闭式（2026-09-26 从两处重复
+    收敛到此）。"""
+    tau = 1.0 + 0.5 * (gamma - 1.0) * ma * ma
+    T = T0 / tau
+    p = p0 * tau ** (-gamma / (gamma - 1.0))
+    rho = p / (R * T)
+    v = ma * np.sqrt(R * gamma * T)
+    return T, p, rho, v
+
+
 def total_to_static(p0: float, T0: float, mdot: float, area: float,
-                    R: float = 287.05, gamma: float = 1.4) -> StaticState:
+                    R: float, gamma: float) -> StaticState:
     """端口四件套 (p0, T0, |mdot|, A) → 静参数（等熵关系）。
 
     mdot 取绝对值定马赫数（符号只表方向，不影响气动状态量大小）；
@@ -114,12 +127,7 @@ def total_to_static(p0: float, T0: float, mdot: float, area: float,
 
     q = m * np.sqrt(T0) / (p0 * area)
     ma, choked = mach_from_q(q, R, gamma)
-
-    tau = 1.0 + 0.5 * (gamma - 1.0) * ma * ma
-    T = T0 / tau
-    p = p0 * tau ** (-gamma / (gamma - 1.0))
-    rho = p / (R * T)
-    v = ma * np.sqrt(gamma * R * T)
+    T, p, rho, v = statics_from_mach(ma, p0, T0, R, gamma)
     return StaticState(ma, p, T, rho, v, choked)
 
 

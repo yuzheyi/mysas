@@ -160,22 +160,19 @@ class NetworkSystem:
         可能踩负压）；区域外回退静=总（滞止）。①②段不消费静参数，
         但 prime 放函数开头统一入口（将来能量段若需也可查）。
         """
-        from dataclasses import dataclass, field as dc_field
+        from dataclasses import dataclass
         gas = ctx.gas
 
         d = self._port_dyn                     # 有效口掩码（压缩存储）
         p0 = np.maximum(x[self._port_p_idx[d]], 1.0)
         t0 = np.maximum(x[self._port_t_idx[d]], 10.0)
-        md = np.abs(x[self.n_interior + self.n_T:][d])   # 流量段切片免 gather
+        md = x[self.n_interior + self.n_T:][d]  # 流量段切片免 gather（abs 归 gas）
         with np.errstate(divide="ignore", invalid="ignore"):
-            q = md * np.sqrt(t0) / (p0 * self._port_area[d])
+            q = gas.q_of_flow(md, p0, t0, self._port_area[d])
         ma, choked = gas.mach_from_q_arr(q)
-
-        tau = 1.0 + 0.5 * (gas.gamma - 1.0) * ma * ma
-        T = t0 / tau
-        p = p0 * tau ** (-gas.gamma / (gas.gamma - 1.0))
-        rho = p / (gas.R * T)
-        v = ma * np.sqrt(gas.R * gas.gamma * T)
+        # 等熵闭式归 gas（想法 23）：assembly 只负责 gather/clamp/存表，
+        # 换气体模型（变比热/真实气体）时此函数零改动
+        T, p, rho, v = gas.statics_from_mach(ma, p0, t0)
 
         @dataclass
         class _Table:
@@ -248,12 +245,3 @@ class NetworkSystem:
         """定压比热（能量方程 q/cp 项；物性归 ctx.gas，与缩放层能量行
         参考量同源——同一实例保证数值一致）。"""
         return ctx.gas.cp()
-
-    # ---------- 辅助 ----------
-    def make_ctx(self, general=None) -> "SolveContext":
-        """空 ctx（物性可选注入）。边界元件参数自带 p0/T0，不再从此填。"""
-        from pysas.elements.base import SolveContext
-        ctx = SolveContext()
-        if general is not None:
-            ctx.gas = general
-        return ctx

@@ -29,15 +29,6 @@ from dataclasses import dataclass, field
 import numpy as np
 
 
-def _choked_orifice_flow(area: float, p0: float, T0: float,
-                         R: float, gamma: float) -> float:
-    """壅塞孔板流量上限：面积 area 在上游总压 p0 下的物理天花板（Cd=1）。"""
-    if area <= 0.0 or p0 <= 0.0:
-        return 0.0
-    return (area * p0 / np.sqrt(T0) * np.sqrt(gamma / R)
-            * (2.0 / (gamma + 1.0)) ** ((gamma + 1.0) / (2.0 * (gamma - 1.0))))
-
-
 @dataclass
 class Scaling:
     """缩放层：列缩放 S（变量）与行缩放 R（方程）的对角参考量。
@@ -113,8 +104,7 @@ def make_scaling(system, ctx, p_ref: float | None = None,
 
     if m_ref is None:
         T_ref = ctx.T0_default
-        caps = [_choked_orifice_flow(port.area, p_ref, T_ref,
-                                     ctx.gas.R, ctx.gas.gamma)
+        caps = [ctx.gas.choked_flow(port.area, p_ref, T_ref)
                 for comp in system.net.comps for port in comp.ports]
         ms = [abs(c.params[0]) for c in system.net.comps
               if c.elem_type == ElemType.MASS_SOURCE]  # 规定流量纳入估计

@@ -1,9 +1,7 @@
 {
   "gas": {
-    "R": 287.05,
-    "gamma": 1.4,
-    "T0_default": 600.0,
-    "mu": 1.8e-5
+    "type": "IdealGas",
+    "T0_default": 600.0
   },
   "nodes": [
     { "id": 0 },

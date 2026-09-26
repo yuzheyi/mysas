@@ -18,5 +18,5 @@ class General:
     max_iterations: int = 50      # 非线性迭代上限
     tolerance: float = 1.0e-6     # 节点质量不平衡收敛容差 kg/s
     relaxation: float = 1.0       # 亚松弛因子
-    gas_constant: float = 287.05  # R，J/(kg·K)，默认空气
-    gamma: float = 1.4            # 比热比 γ
+    # （气体参数字段已删，2026-09-26：物性归 fluids 家族，JSON 只选
+    #   gas.type，数值由气体类构造器赋予——General 只留求解设置）

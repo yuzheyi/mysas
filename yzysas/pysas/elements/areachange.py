@@ -64,7 +64,7 @@ class AreaChangeModel(ElementModel):
             k, p_hi, p_lo = 1, p2, p1
 
         T_hi = self._total_t(x, ctx, k)
-        rho_up = p_hi / (ctx.gas.R * T_hi)     # 上游总态密度（不可压口径）
+        rho_up = ctx.gas.rho_from_pT(p_hi, T_hi)  # 上游总态密度（不可压口径）
         dp0 = max(p_hi - p_lo, 0.0)
         m_ideal = self.a_ref * np.sqrt(2.0 * rho_up * dp0 / self.zeta)
         return np.array([

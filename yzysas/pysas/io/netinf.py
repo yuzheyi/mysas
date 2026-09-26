@@ -1,11 +1,15 @@
 """netinf — JSON 拓扑文件读入与元件工厂。
 
 文件格式见 netinf.json（2026-09-15 边界元件化，旧 boundary 字段已不支持）:
-  gas   { R, gamma, T0_default, mu }
-  nodes [ { id } ]                        ← 全部内部节点，无 boundary 字段
-  comps [ { id, type, ports: [{area, node}], params: [...] } ]
-    边界条件 = 单口元件：PRESSURE_BOUNDARY params=[p0, T0]、
-                          MASS_SOURCE params=[ṁ_spec(>0注入), T0]
+    gas   { type, T0_default }
+    nodes [ { id } ]                        ← 全部内部节点，无 boundary 字段
+    comps [ { id, type, ports: [{area, node}], params: [...] } ]
+      边界条件 = 单口元件：PRESSURE_BOUNDARY params=[p0, T0]、
+                            MASS_SOURCE params=[ṁ_spec(>0注入), T0]
+
+    气体数值参数（R/gamma/mu/...）不再是 JSON 字段：gas.type 选类
+    （缺省 IdealGas），数值一律由 fluid 类构造器赋予——JSON 只选身份，
+    不传数值（2026-09-26 口径，与元件 params 不携带物性同理）。
 """
 from __future__ import annotations
 
@@ -27,16 +31,19 @@ def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
 
     独立于文件 IO 暴露，便于测试脚本内联定义算例（格式仍与 netinf.json 一致）。
     """
-    # 物性 → ctx（gas 对象；显式 mu → 常数粘度旧口径，缺省 Sutherland 空气）
-    from pysas.fluids import IdealGas
+    # 物性 → ctx。gas 块两类键分家：T0_default 是求解缺省温度（ctx 层），
+    # type 选气体类；数值参数（R/gamma/mu/...）由所选类的构造器赋予，
+    # JSON 不携带（2026-09-26 口径——选身份不传数值；旧算例若仍写
+    # R/gamma/mu 数值键将被忽略并提示）
+    from pysas.fluids import make_gas
     ctx = SolveContext()
     gas = data.get("gas", {})
-    ctx.gas = IdealGas(
-        R=gas.get("R", 287.05),
-        gamma=gas.get("gamma", 1.4),
-        mu=gas.get("mu", None),       # None → 空气 Sutherland
-    )
-    ctx.T0_default = gas.get("T0_default", 288.15)
+    _legacy = [k for k in gas if k not in ("type", "T0_default")]
+    if _legacy:
+        print(f"[netinf] 提示：gas 块数值键 {_legacy} 已退役（数值由"
+              f"气体类构造器赋予），已忽略")
+    ctx.gas = make_gas({"type": gas.get("type", "IdealGas")})
+    ctx.T0_default = gas.get("T0_default", ctx.T0_default)
 
     # 节点（统一内部）
     nodes = [Node(node_id=n["id"]) for n in data["nodes"]]
