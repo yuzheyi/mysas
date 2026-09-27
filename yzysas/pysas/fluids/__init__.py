@@ -3,6 +3,8 @@
 包内分工（与 elements 同构，2026-09-26 定稿）：
   base.py        GasModel 薄基类（消费方契约 + register_gas）
   isentropic.py  理想气体等熵物理文档 + 算法体（StaticState/q_of_mach/...）
+  incompressible.py  不可压 Bernoulli 算法体（isentropic 的液体对偶；
+                 免反解直算，空化=壅塞的结构对偶；LiquidWater 落地时启用）
   ideal_gas.py   IdealGas：常比热子类（@register_gas）+ _selftest
   本文件         make_gas 工厂（JSON gas.type → 类名分发）
 

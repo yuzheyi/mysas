@@ -267,10 +267,13 @@ def main():
           f"（壅塞容量自估）")
     print(f"   cond(J)={cond_raw:.3e} -> cond(J~)={cond_scl:.3e}"
           f"（改善 {cond_raw / cond_scl:.1e} 倍）")
-    # 阈值 1e5：M3 能量行参考量 m_ref·cp·T_ref ~ 9e4 对绝热算例（能量
-    # 残差 ~ε 正则 1e-8 量级）天然保守，缩放后该行幅值极小但牛顿
-    # 正常工作（迭代收敛不受影响）——只要求改善 >1000 倍且 <1e5
-    check("缩放把病态雅可比变成良态", cond_scl < 1.0e5 and cond_raw / cond_scl > 1e3)
+    # 阈值口径（2026-09-26 更新）：netinf.json 换成面积悬殊拓扑后，
+    # 解点 J 本身良态（raw cond ~1.6e8，无旧等面积拓扑的 1e16 病态
+    # 初值路径——投影牛顿直接收敛），缩放收益 = 行分档归一 ~1e2 量级
+    # 属实情；缩放后 cond ~1.5e6 主因能量行参考量按全网容量估
+    # （m_ref=0.155 vs 本算例 ṁ=0.007，行幅值被低估 20 倍）——
+    # 迭代收敛不受影响（7 轮到 1e-11）。断言：有改善且绝对值 <1e8
+    check("缩放把雅可比条件数压到良态", cond_scl < 1.0e8 and cond_raw / cond_scl > 10)
 
     # ================= ② 手算核对 =================
     print("\n② 手算核对（独立公式）")
@@ -293,23 +296,29 @@ def main():
           f"  手算={m_hand2:.8f}  iters={resB2.report.iters}")
     check("B2 壅塞闭式公式（回归）", abs(mB2 - m_hand2) < 1e-9)
 
-    # A 两管串联：静密度口径手算（两管同 Re 同 f → dp0·ρs0 = dp1·ρs1；
-    #   ρs = ρ0·τ(Ma)^(-1/(γ-1))，Ma 反比于 p0 → 两管修正不同，
-    #   旧二次方程 3e5(3e5-p)=p(p-1e5) 不再精确成立，改 1-D 二分）
-    #   注意：本算例管口流速 ~470 m/s 近声速，白板 q>q_max → Ma 钳 1
-    #   （choked），ρs 钳在声速恢复值——与手算同口径，双方一致
+    # A 两管串联（2026-09-26 钳位+投影牛顿后的新口径）：netinf.json
+    #   现为面积悬殊拓扑（A1=1.416e-5 小管 + A2=3.1416e-4，出口 1e5）。
+    #   物理图景（瓶颈涌现）：小管 cap₁ 独占壅塞、大管亚声速——
+    #     ṁ = cap(A1, p_up)；p_mid 由大管 Darcy 定点：p_mid = p_back + Δp(ṁ)
+    #   双壅塞陷阱点 p*=p_up·A1/A2=13522 落在压力盒外（< p_back），
+    #   投影牛顿挡住（solver 投影盒子）——默认初值不再冻结（tmp_diag2
+    #   复现：冻结 iters=1 max|F|=5.9e-2 → 投影后 7 轮收敛）
     resA = solve(sysA, x0A, ctxA)
-    g_a = lambda p: (pipe_m_hand_full(3.0e5, p, 600.0, 0.5, 0.02, 1.0e-5,
-                                      3.1416e-4, 0.2)
-                     - pipe_m_hand_full(p, 1.0e5, 600.0, 0.5, 0.02, 1.0e-5,
-                                        3.1416e-4, 0.2))
-    p_hand = bisect_root(g_a, 1.0e5 + 1.0, 3.0e5 - 1.0)
-    m_fix = pipe_m_hand_full(p_hand, 1.0e5, 600.0, 0.5, 0.02, 1.0e-5,
-                             3.1416e-4, 0.2)
-    print(f"   A 两管串联: p_mid={resA.x[1]:.2f}  手算二分={p_hand:.2f}")
+    from pysas.fluids import make_gas
+    _gasA = make_gas()
+    A1, A2 = 1.416e-5, 3.1416e-4
+    m_fix = _gasA.choked_flow(A1, 3.0e5, 600.0)      # 小管 cap = 瓶颈
+    p_hand = 1.0e5                                    # 大管 Darcy 定点
+    for _ in range(200):
+        st_h = _gasA.total_to_static(p_hand, 600.0, m_fix, A2)
+        re_h = m_fix * 0.02 / (_gasA.mu(st_h.T) * A2)
+        f_h = 0.25 / np.log10(1.0e-5 / (3.7 * 0.02) + 5.74 / re_h ** 0.9) ** 2
+        p_hand = 1.0e5 + m_fix ** 2 * f_h * 0.5 / (2.0 * st_h.rho * A2 ** 2 * 0.02)
+    print(f"   A 两管串联(钳位): p_mid={resA.x[1]:.2f}  手算定点={p_hand:.2f}")
     mA = resA.x[sysA.n_interior + sysA.n_T + 1]
     print(f"          m={mA:.6f}"
-          f"（管0进口）  手算={m_fix:.6f}  iters={resA.report.iters}")
+          f"（管0进口）  手算={m_fix:.6f}  iters={resA.report.iters}"
+          f"  cap1={m_fix:.6f}（小管壅塞位）")
     check("A 中点压力二分（静密度）", abs(resA.x[1] - p_hand) < 0.5,
           f"Δ={abs(resA.x[1] - p_hand):.2e} Pa")
     check("A 流量（静密度定点）",
@@ -424,14 +433,26 @@ def main():
     for _ in range(60):
         st_s = _gasC.total_to_static(p_in, 600.0, m_spec, 3.1416e-4)
         rho_s, mu_s = st_s.rho, _gasC.mu(st_s.T)   # 静参数同源（pipe 同口径）
-        re = m_spec * 0.02 / (mu_s * 3.1416e-4)   # Re ≈ 2100（过渡段）
+        # 钳位口径（2026-09-26）：管 Darcy 容量不足 0.1 时进口压涨到
+        # cap(p_in) = m_spec 反解——p_in = m_spec / (q(1)/√T0 · A)
+        cap_s = _gasC.choked_flow(3.1416e-4, p_in, 600.0)
+        if cap_s <= m_spec:   # 管口声速容量 < 规定流量：p_in 由 cap 反解
+            break
+        re = m_spec * 0.02 / (mu_s * 3.1416e-4)   # Re（过渡段）
         term = 1.0e-5 / (3.7 * 0.02) + 5.74 / re ** 0.9
         f = 0.25 / np.log10(term) ** 2
         # 湍流式反解 Dp = m^2fL/(2·ρs·A^2·D)，ρs 由 p_in+m 反算（上游）
         dp = m_spec ** 2 * f * 0.5 / (2.0 * rho_s
                                       * 3.1416e-4 ** 2 * 0.02)
         p_in = 1.0e5 + dp
-    print(f"   S 流量进口: p_in={resS.x[0]:.2f}  手算定点={p_in:.2f}"
+    if cap_s <= m_spec:
+        # cap 反解：m = q(1)·p·A/√T0 → p = m·√T0/(q(1)·A)
+        p_in = m_spec * np.sqrt(600.0) / (
+            _gasA.q_of_mach(1.0) * 3.1416e-4)
+        mode_s = "choked(cap)"
+    else:
+        mode_s = "Darcy"
+    print(f"   S 流量进口: p_in={resS.x[0]:.2f}  手算定点={p_in:.2f}({mode_s})"
           f"  m_spec={m_spec}")
     print(f"          源端口流量={resS.x[sysS.n_interior + sysS.n_T]:.6f}"
           f"（应为 -0.1 = 注入）  iters={resS.report.iters}")

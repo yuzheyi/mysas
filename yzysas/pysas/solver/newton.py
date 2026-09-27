@@ -31,16 +31,24 @@ def _res_norm(F: np.ndarray) -> float:
 
 def damped_newton(f, jac, x0: np.ndarray, opts: NewtonOptions,
                   on_step: Optional[Callable[[int, float, float], None]] = None,
+                  project: Optional[Callable[[np.ndarray], np.ndarray]] = None,
                   ) -> tuple[np.ndarray, NewtonReport]:
     """阻尼牛顿主循环。
 
     f   : x̃ → F̃   缩放坐标残差（纯函数，见 ScaledProblem）
     jac : x̃ → J̃   缩放坐标雅可比（差分由 discrete.py 提供）
     on_step(it, alpha, resid)  每接受一步回调一次（诊断/轨迹打印用）
+    project : x̃ → x̃  可选投影（可行域约束，2026-09-26 投影牛顿）。
+              作用在选代点几何上（初值与每个线搜索试探点），
+              **不进残差**——若夹残差入口会遗成本次陷阱同款死列
+              （盒内残差对被夹变量变平坦）。被接受的选代点永远在
+              盒内，雅可比/残差全部在可行点评估。
 
     返回 (x̃, report)。report.final_residual 是缩放坐标 max|F̃|（判据本身）。
     """
     x = np.asarray(x0, dtype=float).copy()
+    if project is not None:
+        x = project(x)               # 初值先拉回可行域
     report = NewtonReport(final_relax=opts.relax_init)
 
     F = f(x)
@@ -62,11 +70,15 @@ def damped_newton(f, jac, x0: np.ndarray, opts: NewtonOptions,
         if not np.all(np.isfinite(dx)):
             return x, report
 
-        # ③ 线搜索：残差下降准则，α 减半回退（裸牛顿 α≡1 直接接受）
+        # ③ 线搜索：残差下降准则，α 减半回退（裸牛顿 α≡1 直接接受）。
+        #    投影牛顿：试探点先拉回可行域再评残差（约束活在几何上）
         alpha = opts.relax_init
         F_new, r_new, accept = None, np.inf, False
         while alpha >= opts.relax_min:
-            F_new = f(x + alpha * dx)
+            x_trial = x + alpha * dx
+            if project is not None:
+                x_trial = project(x_trial)
+            F_new = f(x_trial)
             r_new = _res_norm(F_new)
             if (not opts.damped) or r_new < r:
                 accept = True
@@ -76,12 +88,13 @@ def damped_newton(f, jac, x0: np.ndarray, opts: NewtonOptions,
             report.final_relax = alpha
             return x, report  # α 触底仍不降 → 牛顿方向不可信
 
-        # ④ 接受
-        x = x + alpha * dx
+        # ④ 接受（接受的是投影后的试探点）
+        x = x_trial
         F, r = F_new, r_new
         report.iters += 1
         report.final_residual = r
         report.final_relax = alpha
+        print(f"residual: it={report.iters}  alpha={alpha:.3f}  max|F|={np.abs(F).max():.2e}")
         if on_step is not None:
             on_step(report.iters, alpha, r)
 

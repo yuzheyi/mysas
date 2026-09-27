@@ -106,7 +106,35 @@ def solve(system, x0, ctx, settings: SolverSettings | None = None, *,
         x0 = default_guess(system, ctx)
     x0_t = scaling.to_scaled(np.asarray(x0, dtype=float))
 
-    x_t, report = discrete_newton(problem.residual, x0_t, opts, on_step=on_step)
+    # ---------- 投影牛顿：压力可行域下界（2026-09-26） ----------
+    # 物理依据（被动网络极大值原理）：无抽出源时，稳态解的全局总压
+    # 不低于最小锚定压力——双壅塞陷阱点 p*=p_up·A_min/A_max 恰落在
+    # 盒外（面积悬殊时被拉到低于下游锚点），投影把选代点按在可行域
+    # 边界滑行：盒边界处 dp=0 → 钳位元件回 Darcy 支 → 死列复活
+    # （tmp_diag2 实证：冻结点 J 的 p_mid 列恒零）。保险丝：抽出型
+    # MASS_SOURCE（ṁ_spec<0，泵抽真空）可合法把节点拉到盒外——
+    # 检测到则摘掉盒子。投影只夹压力段，且不进残差（否则重造死列，
+    # 见 newton.py docstring）。
+    project = None
+    from pysas.datamodel import ElemType   # 保险丝判据用（抽出源检测）
+    anchors = {}
+    for model in system.models.values():
+        anchors.update(model.anchor_P_values())
+    p_anchors = [v for v in anchors.values() if v > 0.0]
+    has_extract = any(
+        c.elem_type == ElemType.MASS_SOURCE and c.params[0] < 0.0
+        for c in system.net.comps)
+    if p_anchors and not has_extract:
+        p_lo = min(p_anchors)
+        lo_t = p_lo / scaling.p_ref    # 缩放坐标下界（压力列刻度 p_ref）
+        n_p = system.n_interior
+
+        def project(xt: np.ndarray) -> np.ndarray:
+            xt[:n_p] = np.maximum(xt[:n_p], lo_t)
+            return xt
+
+    x_t, report = discrete_newton(problem.residual, x0_t, opts,
+                                  on_step=on_step, project=project)
 
     x = scaling.to_raw(x_t)
     F_raw = system.residual(x, ctx)

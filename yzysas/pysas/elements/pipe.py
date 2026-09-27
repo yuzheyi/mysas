@@ -1,4 +1,4 @@
-"""pipe — 圆柱直管元件（Darcy 摩阻，层流/过渡/湍流三段流量特性）。
+"""pipe — 圆柱直管元件（Darcy 摩阻，层流/过渡/湍流三段 + 壅塞钳位）。
 
 params = [长度 L m, 直径 D m, 粗糙度 eps m]（见 ElemType.PIPE docstring）
 
@@ -10,6 +10,15 @@ Darcy-Weisbach:  Δp = (f·L/D) · ρv²/2,  v = ṁ/(ρA)
   →  湍流  ṁ = ρA·√( 2ρΔp·D / (f·L) )   （f 依赖 Re → 依赖 ṁ 本身）
   →  层流  f = 64/Re 代回得线性律（Hagen-Poiseuille）:
           Δp = 32μLv/D²  →  ṁ = Δp·ρA·D²/(32μL)   【无 ṁ 依赖】
+
+壅塞钳位（2026-09-26，动力学壅塞）:
+  ṁ = min(ṁ_Darcy, ṁ_cap)，ṁ_cap = gas.choked_flow(A, p0_up, T0_up)
+  管口截面声速容量上限——Darcy 需要的流量超过物理容量时钳在 cap，
+  流量与下游压力解耦（下游扰动不再回传上游；串联支路瓶颈自动涌现，
+  详见开发日志想法 27 讨论）。cap 是理想喷嘴口径（Fanno 上界），
+  管件真壅塞流量更低——网络级经验式口径，M5+ 可升级 Fanno 关系。
+  判据自洽：cap 只看上游总参数，与白板 st_up.choked（运动学钳位）
+  同源；min 结构分支点连续（kink，差分雅可比可处理）。
 
 为什么层流段必须写显式线性律、不能沿用 "f=64/Re 代入湍流式"：
   后者是 ṁ 的隐式函数，在 ṁ→0 处 ∂ṁ_ideal/∂ṁ_guess ∝ √(1/ṁ) → ∞，
@@ -36,8 +45,8 @@ import numpy as np
 
 from pysas.elements.base import ElementModel
 
-RE_LAM = 2000   # 层流上限 Re（工程惯例 2000~2300，取整便于插值分档）
-RE_TURB = 4000  # 过渡区上限 Re
+RE_LAM = 2300   # 层流上限 Re（工程惯例 2000~2300，取整便于插值分档）
+RE_TURB = 3000  # 过渡区上限 Re
 
 
 class PipeModel(ElementModel):
@@ -61,12 +70,19 @@ class PipeModel(ElementModel):
         return 0.25 / (np.log10(max(term, 1.0e-12)) ** 2)
 
     # ---------- 特性 ----------
-    def mass_flow(self, p_up, p_down, rho_up, mu_up, mdot_guess, ctx):
+    def mass_flow(self, p_up, p_down, rho_up, mu_up, mdot_guess, ctx, t0_up=None):
         """给定两端总压与上游静参数（ρs、μ(Ts)），返回管流量。
 
         rho_up/mu_up = 上游口恢复静密度与静温粘度（调用方从白板
         _static_state 取）；mdot_guess 只用于湍流/过渡段的 f(Re) 估计
         （Swanee-Jain 对 f 灵敏度低）；层流段完全不用它。
+
+        壅塞支（2026-09-26）：ṁ = min(Darcy, ṁ_cap)——管口截面的声速
+        容量上限（gas.choked_flow，理想喷嘴口径 = Fanno 的上界）。
+        Darcy 需要的流量超过截面物理容量时钳在 cap，下游压力从流量
+        公式退场（只留连续性传递）；min 结构保证分支点连续（kink，
+        差分雅可比可处理，与 orifice β 夹断同族）。t0_up=None 退回
+        旧口径（不钳，兼容旧调用）。"
         """
         dp = p_up - p_down
         if dp <= 0.0:
@@ -77,12 +93,17 @@ class PipeModel(ElementModel):
         m_lam = rho * dp * A * D * D / (32.0 * mu_up * L)  # Hagen-Poiseuille
         re_guess = self._re(mdot_guess, rho, mu_up)
         if re_guess <= RE_LAM:
-            return m_lam
+            m_darcy = m_lam
+        else:
+            f = self._friction(re_guess)
+            m_turb = A * np.sqrt(2.0 * rho * dp * D / (f * L))
+            w = min(max((re_guess - RE_LAM) / (RE_TURB - RE_LAM), 0.0), 1.0)
+            m_darcy = (1.0 - w) * m_lam + w * m_turb
 
-        f = self._friction(re_guess)
-        m_turb = A * np.sqrt(2.0 * rho * dp * D / (f * L))
-        w = min(max((re_guess - RE_LAM) / (RE_TURB - RE_LAM), 0.0), 1.0)
-        return (1.0 - w) * m_lam + w * m_turb
+        if t0_up is None:
+            return m_darcy          # 旧口径（无总温不上限）
+        m_cap = ctx.gas.choked_flow(A, p_up, t0_up)   # 截面声速容量（理想喷嘴上界）
+        return min(m_darcy, m_cap)                    # 钳位：分支点连续
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
         p1 = self._total_p(x, ctx, 0)
@@ -91,17 +112,20 @@ class PipeModel(ElementModel):
         m2 = x[self._m_idx[1]]
 
         # 上游 = 高压侧；流体从高压侧口流入组件（ṁ_high > 0）。
-        # ρs/μ(Ts) 取上游口恢复静参数（白板查表；μ 用同口静温的 Sutherland）
+        # ρs/μ(Ts) 取上游口恢复静参数（白板查表；μ 用同口静温的 Sutherland）；
+        # t0_up 进壅塞支（ṁ_cap 只看上游总参数）
         if p1 >= p2:
             k = 0
             st_up = self._static_state(x, ctx, 0)
+            t0_up = self._total_t(x, ctx, 0)
             m_ideal = self.mass_flow(p1, p2, st_up.rho,
-                                     ctx.gas.mu(st_up.T), m1, ctx)
+                                     ctx.gas.mu(st_up.T), m1, ctx, t0_up)
         else:
             k = 1
             st_up = self._static_state(x, ctx, 1)
+            t0_up = self._total_t(x, ctx, 1)
             m_ideal = self.mass_flow(p2, p1, st_up.rho,
-                                     ctx.gas.mu(st_up.T), m2, ctx)
+                                     ctx.gas.mu(st_up.T), m2, ctx, t0_up)
 
         return np.array([
             m1 + m2,

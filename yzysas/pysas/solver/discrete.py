@@ -43,8 +43,10 @@ def fd_jacobian(f, x: np.ndarray, eps_rel: float = 1.0e-7) -> np.ndarray:
 def discrete_newton(f, x0: np.ndarray,
                     opts: Optional[DiscreteNewtonOptions] = None,
                     on_step: Optional[Callable[[int, float, float], None]] = None,
+                    project: Optional[Callable[[np.ndarray], np.ndarray]] = None,
                     ) -> tuple[np.ndarray, NewtonReport]:
-    """离散牛顿 = 差分雅可比 + 阻尼牛顿内核。f: 缩放坐标残差。"""
+    """离散牛顿 = 差分雅可比 + 阻尼牛顿内核。f: 缩放坐标残差。
+    project: 可选投影（透传给内核，见 newton.damped_newton）。"""
     if opts is None:
         opts = DiscreteNewtonOptions()
     if opts.use_coloring:
@@ -54,4 +56,5 @@ def discrete_newton(f, x0: np.ndarray,
     def jac(x: np.ndarray) -> np.ndarray:
         return fd_jacobian(f, x, opts.fd_eps_rel)
 
-    return damped_newton(f, jac, x0, opts.newton, on_step=on_step)
+    return damped_newton(f, jac, x0, opts.newton, on_step=on_step,
+                         project=project)

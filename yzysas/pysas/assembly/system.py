@@ -239,9 +239,47 @@ class NetworkSystem:
             block = self.models[comp.comp_id].residual(x, ctx)
             F[off:off + len(block)] = block
             off += len(block)
+        
+        
+        # print(f"residual: max|F|={np.abs(F).max():.2e}")
         return F
 
     def _cp(self, ctx) -> float:
         """定压比热（能量方程 q/cp 项；物性归 ctx.gas，与缩放层能量行
         参考量同源——同一实例保证数值一致）。"""
         return ctx.gas.cp()
+
+    # ---------- 解后处理：端口静参数持久化 ----------
+    def port_states(self, x: np.ndarray, ctx) -> list:
+        """解向量 x → 每口一份 PortState（发号序 = 流量段排布序）。
+
+        报表/后处理用：求解中白板生命周期只有单次残差评估，此方法
+        解后重建一次（prime + 查表），把静参数六件套（ps/Ts/ρs/v/
+        Ma/choked）连同总参数与 ṁ 持久化进 datamodel.PortState。
+        A=0 边界口无动通量：静=总（滞止）、v=Ma=0、ρ=ρ0。
+        """
+        from pysas.datamodel import PortState
+        self._prime_static(x, ctx)          # 重建白板（纯函数，无副作用风险）
+        states = []
+        k = 0
+        for comp in sorted(self.net.comps, key=lambda c: c.comp_id):
+            model = self.models[comp.comp_id]
+            for j, port in enumerate(comp.ports):
+                mdot = x[self.m_idx_of_port[(comp.comp_id, j)]]
+                p0 = x[self.p_idx_of_node[port.node_id]]
+                t0 = x[self.T_idx_of_node[port.node_id]]
+                if port.area > 0.0:
+                    st = model._static_state(x, ctx, j)   # 白板查表
+                    states.append(PortState(
+                        mass_flow=mdot, static_pressure=st.p,
+                        static_temperature=st.T, total_pressure=p0,
+                        total_temperature=t0, density=st.rho,
+                        velocity=st.v, mach_number=st.ma, choked=st.choked))
+                else:   # 边界口：滞止态（无动通量）
+                    states.append(PortState(
+                        mass_flow=mdot, static_pressure=p0,
+                        static_temperature=t0, total_pressure=p0,
+                        total_temperature=t0,
+                        density=ctx.gas.rho_from_pT(p0, t0)))
+                k += 1
+        return states
