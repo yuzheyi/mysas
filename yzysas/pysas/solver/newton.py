@@ -19,6 +19,8 @@ from __future__ import annotations
 from typing import Callable, Optional
 
 import numpy as np
+import scipy.sparse
+import scipy.sparse.linalg
 
 from pysas.datamodel.solver import NewtonOptions, NewtonReport
 
@@ -63,8 +65,15 @@ def damped_newton(f, jac, x0: np.ndarray, opts: NewtonOptions,
             return x, report
 
         # ② 线性求解（奇异/非有限雅可比 → 失败退出）
+        #    按雅可比类型自动分发: 稠密 ndarray → LAPACK；稀疏 → SuperLU
+        #    （cosim 整体耦合的雅可比是 scipy.sparse.bmat 拼的，万级 FE
+        #     DOF 稠密不可行；纯网络路径 jac 返回 ndarray，数值零变化）
         try:
-            dx = np.linalg.solve(jac(x), -F)
+            J = jac(x)
+            if scipy.sparse.issparse(J):
+                dx = scipy.sparse.linalg.spsolve(J, -F)
+            else:
+                dx = np.linalg.solve(J, -F)
         except np.linalg.LinAlgError:
             return x, report
         if not np.all(np.isfinite(dx)):

@@ -24,6 +24,9 @@ class ElemType(enum.IntEnum):
     HEATER = 8             # 发热元件（两口，恒功率）：params = [q W(>0加热)]
     JUNCTION = 9           # 理想三通（三口，零压差绝热混合）：params = []
     AREA_CHANGE = 10       # 突扩/突缩（两口，总压损失 ζ·½ρV_min²）：params = [ζ]
+    WALL_FILM = 11         # 壁面换热（单口，cosim 耦合用）：params = [A_ref]
+                           # q 注入能量方程（heat_input），模型在
+                           # cosim/netelem/filmwall.py 外部注册进工厂
 
 
 class CompType(enum.IntEnum):

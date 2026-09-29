@@ -73,11 +73,12 @@ class FilmBC:
     """一段对流换热边界（CalcuLiX *FILM 的等价物）。
 
     facets: skfem 边界 facet 索引（mesh.boundaries[name] 或手选）
-    h:      对流换热系数 W/(m²K)（耦合时来自网络解/关联式）
+    h:      对流换热系数 W/(m²K)——标量（均匀）或节点级数组（h(r)
+            分布，cosim 关联式输出；表单内自动插值到积分点）
     T_gas:  气流恢复温度 K（耦合时来自网络解）
     """
     facets: np.ndarray
-    h: float
+    h: object  # float | np.ndarray
     T_gas: float
     name: str = ""
 
@@ -113,9 +114,36 @@ class AxisymHeat:
         self._T: np.ndarray | None = None
 
     # ---------- 边界条件 ----------
-    def add_film(self, name: str, facets, h: float, T_gas: float):
+    def add_film(self, name: str, facets, h, T_gas: float):
+        """加一段对流换热边界。
+
+        h: 标量（均匀）或节点级数组 (n_nodes,) —— 分布 h(r)，
+           skfem 表单自动插值到积分点（cosim 关联式输出用）。
+           给节点数组时长度必须等于全场节点数（按 mesh.p 排序）。
+        """
+        if np.ndim(h) > 0:
+            h = np.asarray(h, dtype=float)
+            if h.shape[0] != self.mesh.nvertices:
+                raise ValueError(
+                    f"h 数组长度 {h.shape[0]} ≠ 节点数 {self.mesh.nvertices}"
+                    f"（节点级分布，按 mesh.p 排序）")
         self.films.append(FilmBC(facets=np.asarray(facets, dtype=np.int32),
-                                 h=float(h), T_gas=float(T_gas), name=name))
+                                 h=h, T_gas=float(T_gas), name=name))
+
+    def update_film(self, name: str, h=None, T_gas=None):
+        """耦合迭代中更新某段 film 的 h / T_gas（不动 facets）。"""
+        for f in self.films:
+            if f.name == name:
+                if h is not None:
+                    if np.ndim(h) > 0:
+                        h = np.asarray(h, dtype=float)
+                        if h.shape[0] != self.mesh.nvertices:
+                            raise ValueError("h 节点数组长度 ≠ 节点数")
+                    f.h = h
+                if T_gas is not None:
+                    f.T_gas = float(T_gas)
+                return
+        raise KeyError(f"无 film 边界 {name!r}")
 
     def set_dirichlet(self, dofs, values):
         self._dirichlet_dofs = np.asarray(dofs, dtype=np.int64)
