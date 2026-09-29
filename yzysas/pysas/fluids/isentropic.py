@@ -1,4 +1,4 @@
-"""isentropic — 理想气体等熵气动函数（gasprops 时期更名而来，2026-09-18）。
+"""isentropic — 理想气体等熵气动函数 + Fanno 摩擦管变体（gasprops 时期更名而来，2026-09-18；Fanno 段并入 2026-09-29）。
 
 核心：total_to_static —— 端口四件套 (p0, T0, mdot, A) 反解静参数。
   求解器解出的是总压/总温/流量，动量型元件（可压长管、预旋喷嘴、
@@ -25,10 +25,25 @@
   Ma→0 时 q ≈ sqrt(gamma/R)*Ma 线性 → Ma ∝ mdot，静参数对 mdot
   在零点光滑（与管层流 √mdot 奇异相反，安全）；壅塞夹断处导数
   不连续（kink），与孔板 beta 夹断同族，可接受。
+
+────────────────────────────────────────────
+Fanno 摩擦管变体（2026-09-29 并入，原 fluids/fanno.py）
+────────────────────────────────────────────
+等截面绝热有摩擦 = isentropic 的摩擦对偶（熵增沿程累积）。
+同一套气动函数（q(Ma)/τ(Ma)/声速闭合）加一个自由度：摩擦
+耗散把亚声速流挤向 Ma=1（密度掉的比速度涨的快，为维持 ρv
+不变只能提速）。三个函数：
+  fanno_param(M, γ)      最大管长函数 F(M)（熵增积分，(0,1] 单调降）
+  mach_from_fanno(χ, γ)   反解（二分）
+  p0_star_ratio(M, γ)     Fanno 总压比（摩擦耗散总压的闭式）
+管件容量/出口重构的物理都在这里（pipe.py 消费）；f 定点
+（choked_flow_fanno）与出口记账（exit_state）是管件私有逻辑，
+住 elements/pipe.py（元件组内，不归 fluids）。
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 
 import numpy as np
 
@@ -108,24 +123,6 @@ def statics_from_mach(ma, p0, T0, R, gamma):
 
 def sonic_state_from_flow(mdot: float, area: float, t0: float,
                           R: float, gamma: float) -> StaticState:
-    """壅塞截面闭式：(|ṁ|, A, T0) → 声速截面静参数（Ma≡1）。
-
-    壅塞物理（与 mach_from_q 的夹断互补的正确前向）：壅塞截面上
-    连续性 ρ*v*A = |ṁ| 与声速条件 v = a(T) 联立——**不经过任何压力
-    反演**（静压不是输入而是输出）:
-      T* = T0·2/(γ+1)（能量方程，临界温比闭式）
-      ρ* = |ṁ|/(a*·A)，a* = √(γRT*)
-      p* = ρ*RT*（状态方程收尾）
-    白板 prime 的 q≥q_max 夹 Ma=1 是运动学钳位（面积-滞止压力对
-    不上给定流量时的数学兜底）；本函数是热力学前向——给定流量
-    的声速截面必然存在且唯一（ρ*v 连续性单调）。出口报表对
-    壅塞口改用此闭式：静参数由 ṁ 与上游 T0 生成，**不从下游
-    节点总压反推**（壅塞 = 下游压力退场，2026-09-27 用户裁决）。
-    """
-    if R <= 0.0 or gamma <= 1.0:
-        raise ValueError(f"气体参数非物理: R={R}, gamma={gamma}")
-    if t0 <= 0.0:
-        raise ValueError(f"总温非物理: T0={t0}")
     if area <= 0.0:
         raise ValueError(
             f"端口面积 {area} <= 0，无法恢复静参数（边界元件口 area=0 无动通量）")
@@ -162,6 +159,52 @@ def total_to_static(p0: float, T0: float, mdot: float, area: float,
     ma, choked = mach_from_q(q, R, gamma)
     T, p, rho, v = statics_from_mach(ma, p0, T0, R, gamma)
     return StaticState(ma, p, T, rho, v, choked)
+
+
+# ══════════════════════════════════════════════════════════════
+# Fanno 摩擦管变体（2026-09-29 并入，原 fluids/fanno.py 数学层）
+# ══════════════════════════════════════════════════════════════
+def fanno_param(ma: float, gamma: float) -> float:
+    """Fanno 最大管长函数 F(M)（= f_D·L*/D；在 (0,1] 单调降）。
+
+    F(1)=0（临界截面零附加长度）；M→0 时 F→+∞（缓流需无限管长
+    到临界）。第一项 = 动量主部，对数项 = 能量方程焊死 T(v) 的修正
+    ——整个函数是沿程熵增的积分（摩擦把亚声速流挤向 Ma=1）。
+    """
+    m2 = ma * ma
+    tau = 1.0 + 0.5 * (gamma - 1.0) * m2
+    return ((1.0 - m2) / (gamma * m2)
+            + (gamma + 1.0) / (2.0 * gamma)
+            * math.log((gamma + 1.0) * m2 / (2.0 * tau)))
+
+
+def mach_from_fanno(chi: float, gamma: float) -> float:
+    """反解 F(M) = χ → 亚声速支 M∈(0,1]（二分；单调性保根唯一）。
+
+    χ = f_D·L/D ≥ 0：χ=0 → M=1（零长管/理想喷嘴极限）；χ>0 时
+    F 单调降保证根存在唯一。
+    """
+    if chi <= 0.0:
+        return 1.0
+    lo, hi = 1.0e-9, 1.0           # F(lo)~+∞ > χ > 0 = F(hi)
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        if fanno_param(mid, gamma) > chi:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def p0_star_ratio(ma: float, gamma: float) -> float:
+    """Fanno 总压比 p0(M)/p0* = (1/M)·[(2+(γ-1)M²)/(γ+1)]^((γ+1)/(2(γ-1)))。
+
+    亚声速支 >1（摩擦耗散总压）；M=1 处 =1（临界截面）。
+    """
+    m2 = ma * ma
+    tau = 1.0 + 0.5 * (gamma - 1.0) * m2
+    return (1.0 / ma) * (2.0 * tau / (gamma + 1.0)) ** (
+        (gamma + 1.0) / (2.0 * (gamma - 1.0)))
 
 
 # ---------------- 自验证（手算闭式核对，独立于元件代码） ----------------
@@ -236,9 +279,24 @@ if __name__ == "__main__":
     ok6 = (np.abs(ma_a - ma_s).max() < 1e-7
            and np.array_equal(ch_a, ch_s))
 
-    all_ok = ok1 and ok2 and ok3 and ok4 and ok5 and ok6
+    # ⑦ Fanno 变体锚点（2026-09-29 并入，原 fanno.py 自验精华）:
+    #    教科书 F(M) 表 + 反解往返 + 总压比闭式 + L→0/大 χ 极限
+    fv = [fanno_param(m, GAM) for m in (0.4, 0.5, 0.8, 1.0)]
+    ok7 = (abs(fv[0] - 2.3086) < 2e-4 and abs(fv[1] - 1.0691) < 2e-4
+           and abs(fv[2] - 0.0723) < 2e-4 and fv[3] == 0.0)
+    ok7 &= all(abs(mach_from_fanno(fanno_param(m, GAM), GAM) - m) < 1e-10
+               for m in (0.2, 0.4, 0.5, 0.6, 0.8, 0.95, 1.0))
+    r_half = p0_star_ratio(0.5, GAM)
+    ok7 &= (abs(p0_star_ratio(1.0, GAM) - 1.0) < 1e-12
+            and abs(r_half - 1.33984375) < 1e-4)
+    ok7 &= (mach_from_fanno(1.0e-12, GAM) > 0.999999)
+    print(f"\n⑦ Fanno 变体: F(0.4/0.5/0.8/1)={fv[0]:.4f}/{fv[1]:.4f}/"
+          f"{fv[2]:.4f}/{fv[3]:.1e}  反解往返 OK  "
+          f"p0*(0.5)={r_half:.4f}(闭式 1.3398)")
+
+    all_ok = ok1 and ok2 and ok3 and ok4 and ok5 and ok6 and ok7
     print("\n" + "=" * 60)
     print("OK fluids.isentropic 全部验证通过" if all_ok else
           f"FAIL 未通过项: "
-          f"{[n for n, o in zip('123456', [ok1, ok2, ok3, ok4, ok5, ok6]) if not o]}")
+          f"{[n for n, o in zip('1234567', [ok1, ok2, ok3, ok4, ok5, ok6, ok7]) if not o]}")
     raise SystemExit(0 if all_ok else 1)

@@ -45,9 +45,9 @@ from __future__ import annotations
 import numpy as np
 
 from pysas.elements.base import ElementModel
-from pysas.fluids.fanno import (
-    choked_flow_fanno, fanno_param, mach_from_fanno)
-from pysas.fluids.isentropic import StaticState, sonic_state_from_flow
+from pysas.fluids.isentropic import (
+    StaticState, fanno_param, mach_from_fanno, q_of_mach,
+    sonic_state_from_flow)
 
 RE_LAM = 2300   # 层流上限 Re（工程惯例 2000~2300，取整便于插值分档）
 RE_TURB = 3000  # 过渡区上限 Re
@@ -72,6 +72,37 @@ class PipeModel(ElementModel):
         """Swanee-Jain 摩擦系数（仅湍流段调用）。"""
         term = self.roughness / (3.7 * self.diameter) + 5.74 / Re ** 0.9
         return 0.25 / (np.log10(max(term, 1.0e-12)) ** 2)
+
+    def _fanno_cap(self, p0_up: float, t0_up: float, ctx) -> float:
+        """管件 Fanno 容量（管组私有，2026-09-29 归位：定点逻辑住
+        元件、数学住 fluids.isentropic 变体）。
+
+        q* 定点自洽：q* = q(M_in)，M_in = F⁻¹(f(Re(q*))·L/D)，
+        Re = q·p0·D/(μ√T0) 中 A 消去（定点活在无量纲 q 上）。
+        为什么不用 Re(ṁ_guess)：零流量初值处 cap∝√ṁ 导数爆炸
+        （想法 12 拒绝过的同款奇异性）；定点闭合后 cap 是
+        (p0,T0)+几何的纯函数，零初值处有限光滑，雅可比干净。
+        μ 取 μ(T0)（Fanno 沿程 T0 守恒）。非正参数→0；L≤0 退化
+        理想喷嘴（q(1)·p0·A/√T0）。cap 弱依赖 p0（经 Re→f，
+        ~0.2 灵敏度）——不可当 cap∝p0 线性用（S 手算实测坑）。
+        """
+        A, D, L = self.area, self.diameter, self.length
+        gas = ctx.gas
+        if A <= 0.0 or p0_up <= 0.0 or t0_up <= 0.0:
+            return 0.0
+        mu = gas.mu(t0_up)
+        if L <= 0.0 or D <= 0.0:
+            return q_of_mach(1.0, gas.R, gas.gamma) * p0_up * A / np.sqrt(t0_up)
+        q = q_of_mach(1.0, gas.R, gas.gamma)     # 定点起点 = 理想 cap
+        for _ in range(50):
+            re = q * p0_up * D / (mu * np.sqrt(t0_up))
+            f = self._friction(re)
+            q_new = q_of_mach(
+                mach_from_fanno(f * L / D, gas.gamma), gas.R, gas.gamma)
+            if abs(q_new - q) <= 1.0e-14 * q:
+                break
+            q = q_new
+        return q * p0_up * A / np.sqrt(t0_up)
 
     # ---------- 特性 ----------
     def mass_flow(self, p_up, p_down, rho_up, mu_up, mdot_guess, ctx, t0_up=None):
@@ -108,9 +139,7 @@ class PipeModel(ElementModel):
         if t0_up is None:
             return m_darcy          # 旧口径（无总温不上限）
         # Fanno 摩擦管容量（f·L/D 定点自洽；理想喷嘴 = L→0 退化）
-        m_cap = choked_flow_fanno(A, p_up, t0_up, L, D, self.roughness,
-                                  ctx.gas.R, ctx.gas.gamma,
-                                  ctx.gas.mu(t0_up))
+        m_cap = self._fanno_cap(p_up, t0_up, ctx)
         return min(m_darcy, m_cap)                  # 钳位：分支点连续
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
@@ -140,9 +169,14 @@ class PipeModel(ElementModel):
             x[self._m_idx[k]] - m_ideal,
         ])
 
-    # ---------- 出口截面状态重构（报表/后处理用，不进残差） ----------
+    # ---------- 系统出口状态契约（port_states 消费；不进残差） ----------
     def exit_state(self, x, ctx, j: int):
         """口 j 出口截面的静参数（StaticState；j 应为出料口 ṁ_j<0）。
+
+        归属（2026-09-29 用户裁决）：出口状态调度归 system.port_states
+        （它决定"问谁要"），元件只负责"自己的出口物理怎么算"——
+        本方法即管件的实现。与 anchor_P_values/port_T_out 同为
+        "报值即能力"契约族（elements/base.py 统一声明）。
 
         物理依据（2026-09-27，用户裁决"拥塞口静参数不得从下游节点
         总压反推"）：管的出口截面是元件内部物理的终点，其状态由
@@ -170,9 +204,7 @@ class PipeModel(ElementModel):
         t0_up = self._total_t(x, ctx, j_up)     # 上游节点总温（Fanno T0 守恒）
         st_son = sonic_state_from_flow(mdot, A, t0_up, gas.R, gas.gamma)
         # 出口马赫：壅塞口 = 1（临界截面）；亚声速口沿 Fanno 线积分
-        cap = choked_flow_fanno(A, self._total_p(x, ctx, j_up), t0_up,
-                                L, D, self.roughness, gas.R, gas.gamma,
-                                gas.mu(t0_up))
+        cap = self._fanno_cap(self._total_p(x, ctx, j_up), t0_up, ctx)
         if mdot >= cap:
             return st_son                       # 壅塞：出口 = 临界截面
         # 亚声速：F(M_out) = F(M_in) − f·L/D（亚声速沿程加速）；

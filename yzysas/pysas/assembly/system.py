@@ -257,11 +257,17 @@ class NetworkSystem:
         解后重建一次（prime + 查表），把静参数六件套（ps/Ts/ρs/v/
         Ma/choked）连同总参数与 ṁ 持久化进 datamodel.PortState。
         A=0 边界口无动通量：静=总（滞止）、v=Ma=0、ρ=ρ0。
+
+        出料口出口状态调度（2026-09-29 归位裁决：调度归系统、物理归
+        元件、数学归 fluids）：白板对出料口（ṁ<0）是从下游节点滞止
+        态反推的假想等熵腔体态——壅塞时是运动学钳位产物（ρAv≠ṁ
+        恒等式断裂，2026-09-27 用户裁决不得反推）。系统统一调度：
+        出料口先问元件要 exit_state（契约在 elements/base.py），
+        非 None 用之；None 回退白板（短件如 orifice 合理近似）。
         """
         from pysas.datamodel import PortState
         self._prime_static(x, ctx)          # 重建白板（纯函数，无副作用风险）
         states = []
-        k = 0
         for comp in sorted(self.net.comps, key=lambda c: c.comp_id):
             model = self.models[comp.comp_id]
             for j, port in enumerate(comp.ports):
@@ -270,6 +276,10 @@ class NetworkSystem:
                 t0 = x[self.T_idx_of_node[port.node_id]]
                 if port.area > 0.0:
                     st = model._static_state(x, ctx, j)   # 白板查表
+                    if mdot < 0.0:         # 出料口：元件自报优先（契约）
+                        st_exit = model.exit_state(x, ctx, j)
+                        if st_exit is not None:
+                            st = st_exit
                     states.append(PortState(
                         mass_flow=mdot, static_pressure=st.p,
                         static_temperature=st.T, total_pressure=p0,
@@ -281,5 +291,4 @@ class NetworkSystem:
                         static_temperature=t0, total_pressure=p0,
                         total_temperature=t0,
                         density=ctx.gas.rho_from_pT(p0, t0)))
-                k += 1
         return states

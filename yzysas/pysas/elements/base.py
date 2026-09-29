@@ -60,7 +60,6 @@ class ElementModel(ABC):
 
     def port_T_out(self, x, ctx, j: int) -> float:
         """流体经口 j 离开元件时的输运总温 K（节点能量平衡的注入项）。
-
         默认实现 = 两口件（绝热直通 + heat_input 温升）：
           T_out = 另一口所连节点温度 + q/((ṁ+ε_q)·cp)
         增量型发热元件（heater 等）只需写 heat_input，本方法零改动；
@@ -83,6 +82,19 @@ class ElementModel(ABC):
         cp = ctx.gas.cp()
         m_in = abs(x[self._m_idx[j_other]])     # 进料口流量（=出料量）
         return T_up + q / ((m_in + self.EPS_Q) * cp)
+
+    def exit_state(self, x, ctx, j: int):
+        """口 j（出料口 ṁ_j<0）出口截面静参数 → StaticState | None。
+
+        系统出口状态契约（2026-09-29，第三"报值即能力"）：归属裁决
+        ——**调度归 system.port_states**（它决定"问谁要、何时问"），
+        **物理归元件**（自己的出口怎么算自己知道）。默认 None =
+        "无自报出口态，请回退白板"（短件如 orifice：损失集中、出口
+        即入腔，节点滞止态反推是合理近似）；管件等有内部分布物理的
+        元件覆盖（pipe：壅塞口声速闭合 / 亚声速口 Fanno 管长记账）。
+        只在解后报表/后处理路径调用，不进残差。
+        """
+        return None
 
     def __init__(self, comp):
         self.comp = comp
