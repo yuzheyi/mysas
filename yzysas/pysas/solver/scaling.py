@@ -104,6 +104,9 @@ def make_scaling(system, ctx, p_ref: float | None = None,
 
     if m_ref is None:
         T_ref = ctx.T0_default
+        # 逐口容量自估（2026-09-29 裁决：容量契约已删，统一用等熵
+        # Cd=1 + 口面积兜底——缩放只要量级正确，理想口径无害且
+        # 零元件耦合；A=0 边界口 choked_flow 返回 0 自动跳过）
         caps = [ctx.gas.choked_flow(port.area, p_ref, T_ref)
                 for comp in system.net.comps for port in comp.ports]
         ms = [abs(c.params[0]) for c in system.net.comps

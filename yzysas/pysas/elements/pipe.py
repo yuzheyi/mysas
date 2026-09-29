@@ -138,7 +138,8 @@ class PipeModel(ElementModel):
 
         if t0_up is None:
             return m_darcy          # 旧口径（无总温不上限）
-        # Fanno 摩擦管容量（f·L/D 定点自洽；理想喷嘴 = L→0 退化）
+        # Fanno 摩擦管容量（f·L/D 定点自洽；理想喷嘴 = L→0 退化；
+        # 元件私有方法 _fanno_cap——特性钳位与出口重构同源）
         m_cap = self._fanno_cap(p_up, t0_up, ctx)
         return min(m_darcy, m_cap)                  # 钳位：分支点连续
 
