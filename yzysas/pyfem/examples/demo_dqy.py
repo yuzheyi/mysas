@@ -22,10 +22,10 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # yzysas/
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))  # yzysas/
 
-from pyfem.fe.materials import TC11
-from pyfem.fe.meshtools import load_gmsh, report
+from pyfem.materials import TC11
+from pyfem.mesh import load_gmsh, report
 
 # 31project 路径（按需修改）
 DQY_DIR = Path(r"E:\mywork\programDesign\python\31project\0_example\dqy")
@@ -80,16 +80,14 @@ def build_mesh(out_msh: Path) -> "object":
 
 
 def main(plot: bool = False):
-    from pyfem.fe.axisym_heat import AxisymHeat
+    from pyfem.solver.axisym_heat import AxisymHeat
 
-    out_dir = Path(__file__).parent / "out"
+    out_dir = Path(__file__).parent.parent / "out"
     out_dir.mkdir(exist_ok=True)
     msh = out_dir / "dqy_fan_disk.msh"
 
     m = build_mesh(msh) if not msh.exists() else load_gmsh(msh)
     print(report(m))
-
-    from pyfem.fe.axisym_heat import AxisymHeat  # noqa: F811
 
     heat = AxisymHeat(m, TC11)
     for name, (h, Tg, _) in AIRSYS.items():
