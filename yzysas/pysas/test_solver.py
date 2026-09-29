@@ -296,32 +296,44 @@ def main():
           f"  手算={m_hand2:.8f}  iters={resB2.report.iters}")
     check("B2 壅塞闭式公式（回归）", abs(mB2 - m_hand2) < 1e-9)
 
-    # A 两管串联（2026-09-26 钳位+投影牛顿后的新口径）：netinf.json
-    #   现为面积悬殊拓扑（A1=1.416e-5 小管 + A2=3.1416e-4，出口 1e5）。
-    #   物理图景（瓶颈涌现）：小管 cap₁ 独占壅塞、大管亚声速——
-    #     ṁ = cap(A1, p_up)；p_mid 由大管 Darcy 定点：p_mid = p_back + Δp(ṁ)
-    #   双壅塞陷阱点 p*=p_up·A1/A2=13522 落在压力盒外（< p_back），
-    #   投影牛顿挡住（solver 投影盒子）——默认初值不再冻结（tmp_diag2
-    #   复现：冻结 iters=1 max|F|=5.9e-2 → 投影后 7 轮收敛）
+    # A 两管串联（2026-09-27 Fanno cap + 等面积拓扑）：netinf.json 现为
+    #   两管全同（A=3.1416e-4，出口 1e5）。物理图景（瓶颈涌现·等面积版，
+    #   对称几何不产生对称解）：管2 面对 p_mid→1e5 大压比独占壅塞（出口
+    #   Ma=1），管1 亚声速 Darcy 沿程加速——
+    #     ṁ = cap₂(p_mid) = ṁ_Darcy₁(3e5, p_mid)（联立定点，二分）
+    #   cap = fluids.fanno.choked_flow_fanno（f·L/D 定点自洽）
+    #   投影牛顿（压力盒）值守：大面积比拓扑下陷阱点在盒外（想法 27）
     resA = solve(sysA, x0A, ctxA)
     from pysas.fluids import make_gas
+    from pysas.fluids.fanno import choked_flow_fanno as _cap_fanno
     _gasA = make_gas()
-    A1, A2 = 1.416e-5, 3.1416e-4
-    m_fix = _gasA.choked_flow(A1, 3.0e5, 600.0)      # 小管 cap = 瓶颈
-    p_hand = 1.0e5                                    # 大管 Darcy 定点
+    A1, A2 = 3.1416e-4, 3.1416e-4
+    D, L, EPS = 0.02, 0.5, 1.0e-5
+    mu_A = _gasA.mu(600.0)
+    # 定点：g(p_mid) = Darcy₁(3e5,p_mid) − cap₂(p_mid)；g 单调降 → 唯一根
+    def g_mid(p_mid):
+        m_d = pipe_m_hand_full(3.0e5, p_mid, 600.0, L, D, EPS, A1, 0.05)
+        m_c = _cap_fanno(A2, p_mid, 600.0, L, D, EPS,
+                         _gasA.R, _gasA.gamma, mu_A)
+        return m_d - m_c
+    p_lo_b, p_hi_b = 1.0e5, 3.0e5
     for _ in range(200):
-        st_h = _gasA.total_to_static(p_hand, 600.0, m_fix, A2)
-        re_h = m_fix * 0.02 / (_gasA.mu(st_h.T) * A2)
-        f_h = 0.25 / np.log10(1.0e-5 / (3.7 * 0.02) + 5.74 / re_h ** 0.9) ** 2
-        p_hand = 1.0e5 + m_fix ** 2 * f_h * 0.5 / (2.0 * st_h.rho * A2 ** 2 * 0.02)
-    print(f"   A 两管串联(钳位): p_mid={resA.x[1]:.2f}  手算定点={p_hand:.2f}")
+        p_mid_h = 0.5 * (p_lo_b + p_hi_b)
+        if g_mid(p_mid_h) > 0.0:
+            p_lo_b = p_mid_h
+        else:
+            p_hi_b = p_mid_h
+    p_hand = 0.5 * (p_lo_b + p_hi_b)
+    m_fix = _cap_fanno(A2, p_hand, 600.0, L, D, EPS, _gasA.R, _gasA.gamma, mu_A)
+    print(f"   A 两管串联(等面积瓶颈涌现): p_mid={resA.x[1]:.2f}"
+          f"  手算二分={p_hand:.2f}")
     mA = resA.x[sysA.n_interior + sysA.n_T + 1]
     print(f"          m={mA:.6f}"
           f"（管0进口）  手算={m_fix:.6f}  iters={resA.report.iters}"
-          f"  cap1={m_fix:.6f}（小管壅塞位）")
-    check("A 中点压力二分（静密度）", abs(resA.x[1] - p_hand) < 0.5,
+          f"  cap2={m_fix:.6f}（管2 Fanno 壅塞位）")
+    check("A 中点压力（Darcy₁=cap₂ 联立定点）", abs(resA.x[1] - p_hand) < 0.5,
           f"Δ={abs(resA.x[1] - p_hand):.2e} Pa")
-    check("A 流量（静密度定点）",
+    check("A 流量（cap₂ Fanno）",
           abs(abs(mA) - m_fix) < 1e-6)
 
     # C 孔板+管串联：壅塞孔板闭式 + 管压降定点（ρs 静密度口径）
@@ -435,8 +447,11 @@ def main():
         rho_s, mu_s = st_s.rho, _gasC.mu(st_s.T)   # 静参数同源（pipe 同口径）
         # 钳位口径（2026-09-26）：管 Darcy 容量不足 0.1 时进口压涨到
         # cap(p_in) = m_spec 反解——p_in = m_spec / (q(1)/√T0 · A)
-        cap_s = _gasC.choked_flow(3.1416e-4, p_in, 600.0)
-        if cap_s <= m_spec:   # 管口声速容量 < 规定流量：p_in 由 cap 反解
+        # Fanno cap（2026-09-27）：管容量不足 0.1 时进口压涨到
+        # Fanno cap(p_in) = m_spec 外层定点（cap 弱依赖 p0，不可线性除）
+        cap_s = _cap_fanno(3.1416e-4, p_in, 600.0, 0.5, 0.02, 1.0e-5,
+                           _gasC.R, _gasC.gamma, _gasC.mu(600.0))
+        if cap_s <= m_spec:   # 管容量 < 规定流量：p_in 由 cap 反解
             break
         re = m_spec * 0.02 / (mu_s * 3.1416e-4)   # Re（过渡段）
         term = 1.0e-5 / (3.7 * 0.02) + 5.74 / re ** 0.9
@@ -446,10 +461,18 @@ def main():
                                       * 3.1416e-4 ** 2 * 0.02)
         p_in = 1.0e5 + dp
     if cap_s <= m_spec:
-        # cap 反解：m = q(1)·p·A/√T0 → p = m·√T0/(q(1)·A)
-        p_in = m_spec * np.sqrt(600.0) / (
-            _gasA.q_of_mach(1.0) * 3.1416e-4)
-        mode_s = "choked(cap)"
+        # Fanno cap 反解：cap(p) = m_spec 外层定点（cap ∝ p0 仅首阶——
+        # q* 经 Re→f 弱依赖 p0，fanno 面积不变性不覆盖 p0 维度）
+        p_in = 1.0e5
+        for _ in range(60):
+            cap_it = _cap_fanno(3.1416e-4, p_in, 600.0, 0.5, 0.02, 1.0e-5,
+                                _gasC.R, _gasC.gamma, _gasC.mu(600.0))
+            p_new = p_in * m_spec / cap_it
+            if abs(p_new - p_in) < 1.0e-10 * max(1.0, abs(p_new)):
+                p_in = p_new
+                break
+            p_in = p_new
+        mode_s = "choked(Fanno-cap)"
     else:
         mode_s = "Darcy"
     print(f"   S 流量进口: p_in={resS.x[0]:.2f}  手算定点={p_in:.2f}({mode_s})"

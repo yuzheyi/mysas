@@ -106,6 +106,39 @@ def statics_from_mach(ma, p0, T0, R, gamma):
     return T, p, rho, v
 
 
+def sonic_state_from_flow(mdot: float, area: float, t0: float,
+                          R: float, gamma: float) -> StaticState:
+    """壅塞截面闭式：(|ṁ|, A, T0) → 声速截面静参数（Ma≡1）。
+
+    壅塞物理（与 mach_from_q 的夹断互补的正确前向）：壅塞截面上
+    连续性 ρ*v*A = |ṁ| 与声速条件 v = a(T) 联立——**不经过任何压力
+    反演**（静压不是输入而是输出）:
+      T* = T0·2/(γ+1)（能量方程，临界温比闭式）
+      ρ* = |ṁ|/(a*·A)，a* = √(γRT*)
+      p* = ρ*RT*（状态方程收尾）
+    白板 prime 的 q≥q_max 夹 Ma=1 是运动学钳位（面积-滞止压力对
+    不上给定流量时的数学兜底）；本函数是热力学前向——给定流量
+    的声速截面必然存在且唯一（ρ*v 连续性单调）。出口报表对
+    壅塞口改用此闭式：静参数由 ṁ 与上游 T0 生成，**不从下游
+    节点总压反推**（壅塞 = 下游压力退场，2026-09-27 用户裁决）。
+    """
+    if R <= 0.0 or gamma <= 1.0:
+        raise ValueError(f"气体参数非物理: R={R}, gamma={gamma}")
+    if t0 <= 0.0:
+        raise ValueError(f"总温非物理: T0={t0}")
+    if area <= 0.0:
+        raise ValueError(
+            f"端口面积 {area} <= 0，无法恢复静参数（边界元件口 area=0 无动通量）")
+    m = abs(mdot)
+    T_star = t0 * 2.0 / (gamma + 1.0)          # 临界温比闭式
+    a_star = np.sqrt(R * gamma * T_star)       # 声速截面当地声速
+    if m == 0.0:                               # 零流量无壅塞截面
+        return StaticState(0.0, 0.0, t0, 0.0, 0.0, False)
+    rho_star = m / (a_star * area)
+    p_star = rho_star * R * T_star
+    return StaticState(1.0, p_star, T_star, rho_star, a_star, True)
+
+
 def total_to_static(p0: float, T0: float, mdot: float, area: float,
                     R: float, gamma: float) -> StaticState:
     """端口四件套 (p0, T0, |mdot|, A) → 静参数（等熵关系）。

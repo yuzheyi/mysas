@@ -26,6 +26,8 @@ def write_result(path: Path, tag: str, sys_, ctx, x: np.ndarray,
         f"规模: n={sys_.n} (N={sys_.n_interior}, N_T={sys_.n_T}, M={sys_.n_m})",
         f"收敛: {converged}  max|F|={np.abs(F).max():.3e}",
     ]
+    if not converged:
+        lines.append("  *** 非解：牛顿冻结点（以下数值仅供诊断，不可当物理结果用） ***")
     if extra:
         lines += [f"  {e}" for e in extra]
     lines.append("")

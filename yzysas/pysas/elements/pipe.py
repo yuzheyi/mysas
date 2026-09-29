@@ -11,14 +11,15 @@ Darcy-Weisbach:  Δp = (f·L/D) · ρv²/2,  v = ṁ/(ρA)
   →  层流  f = 64/Re 代回得线性律（Hagen-Poiseuille）:
           Δp = 32μLv/D²  →  ṁ = Δp·ρA·D²/(32μL)   【无 ṁ 依赖】
 
-壅塞钳位（2026-09-26，动力学壅塞）:
-  ṁ = min(ṁ_Darcy, ṁ_cap)，ṁ_cap = gas.choked_flow(A, p0_up, T0_up)
-  管口截面声速容量上限——Darcy 需要的流量超过物理容量时钳在 cap，
-  流量与下游压力解耦（下游扰动不再回传上游；串联支路瓶颈自动涌现，
-  详见开发日志想法 27 讨论）。cap 是理想喷嘴口径（Fanno 上界），
-  管件真壅塞流量更低——网络级经验式口径，M5+ 可升级 Fanno 关系。
-  判据自洽：cap 只看上游总参数，与白板 st_up.choked（运动学钳位）
-  同源；min 结构分支点连续（kink，差分雅可比可处理）。
+壅塞钳位（2026-09-26 引入，2026-09-27 口径升级 Fanno）:
+  ṁ = min(ṁ_Darcy, ṁ_cap)，ṁ_cap = fluids.fanno.choked_flow_fanno
+  管件真容量 = 有限长摩擦管 Fanno 上限（f_D·L/D 定点自洽）——
+  理想喷嘴口径是它在 L→0 的退化（用户算例实证：D=0.02/L=0.5 的管
+  用理想口径时四口全 Ma=1 假象，cap 高估 ~18%、入口 Ma=0.61 的
+  物理图景全失）。下游压力从流量公式退场（下游扰动不回传上游；
+  串联支路瓶颈自动涌现，详见开发日志想法 27 讨论）。
+  判据自洽：cap 只看上游总参数+管几何，与白板 st_up.choked
+  （运动学钳位）同源；min 结构分支点连续（kink，差分雅可比可处理）。
 
 为什么层流段必须写显式线性律、不能沿用 "f=64/Re 代入湍流式"：
   后者是 ṁ 的隐式函数，在 ṁ→0 处 ∂ṁ_ideal/∂ṁ_guess ∝ √(1/ṁ) → ∞，
@@ -44,6 +45,9 @@ from __future__ import annotations
 import numpy as np
 
 from pysas.elements.base import ElementModel
+from pysas.fluids.fanno import (
+    choked_flow_fanno, fanno_param, mach_from_fanno)
+from pysas.fluids.isentropic import StaticState, sonic_state_from_flow
 
 RE_LAM = 2300   # 层流上限 Re（工程惯例 2000~2300，取整便于插值分档）
 RE_TURB = 3000  # 过渡区上限 Re
@@ -77,12 +81,13 @@ class PipeModel(ElementModel):
         _static_state 取）；mdot_guess 只用于湍流/过渡段的 f(Re) 估计
         （Swanee-Jain 对 f 灵敏度低）；层流段完全不用它。
 
-        壅塞支（2026-09-26）：ṁ = min(Darcy, ṁ_cap)——管口截面的声速
-        容量上限（gas.choked_flow，理想喷嘴口径 = Fanno 的上界）。
-        Darcy 需要的流量超过截面物理容量时钳在 cap，下游压力从流量
-        公式退场（只留连续性传递）；min 结构保证分支点连续（kink，
+        壅塞支（2026-09-26，2026-09-27 Fanno 口径）：ṁ = min(Darcy,
+        ṁ_cap)——管件真容量 = Fanno 摩擦管上限（f_D·L/D 定点自洽，
+        fluids.fanno.choked_flow_fanno；理想喷嘴是其 L→0 退化）。
+        Darcy 需要的流量超过管容量时钳在 cap，下游压力从流量公式
+        退场（只留连续性传递）；min 结构保证分支点连续（kink，
         差分雅可比可处理，与 orifice β 夹断同族）。t0_up=None 退回
-        旧口径（不钳，兼容旧调用）。"
+        旧口径（不钳，兼容旧调用）。
         """
         dp = p_up - p_down
         if dp <= 0.0:
@@ -102,8 +107,11 @@ class PipeModel(ElementModel):
 
         if t0_up is None:
             return m_darcy          # 旧口径（无总温不上限）
-        m_cap = ctx.gas.choked_flow(A, p_up, t0_up)   # 截面声速容量（理想喷嘴上界）
-        return min(m_darcy, m_cap)                    # 钳位：分支点连续
+        # Fanno 摩擦管容量（f·L/D 定点自洽；理想喷嘴 = L→0 退化）
+        m_cap = choked_flow_fanno(A, p_up, t0_up, L, D, self.roughness,
+                                  ctx.gas.R, ctx.gas.gamma,
+                                  ctx.gas.mu(t0_up))
+        return min(m_darcy, m_cap)                  # 钳位：分支点连续
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
         p1 = self._total_p(x, ctx, 0)
@@ -131,3 +139,57 @@ class PipeModel(ElementModel):
             m1 + m2,
             x[self._m_idx[k]] - m_ideal,
         ])
+
+    # ---------- 出口截面状态重构（报表/后处理用，不进残差） ----------
+    def exit_state(self, x, ctx, j: int):
+        """口 j 出口截面的静参数（StaticState；j 应为出料口 ṁ_j<0）。
+
+        物理依据（2026-09-27，用户裁决"拥塞口静参数不得从下游节点
+        总压反推"）：管的出口截面是元件内部物理的终点，其状态由
+        (ṁ, A, T0_up) + 管几何决定——与下游节点压力无关（亚声速口
+        依赖下游压力匹配出口静压，但总参数与 T0 仍是上游的）。
+
+        壅塞口（ṁ ≥ cap）：出口即临界截面，sonic_state_from_flow
+        声速闭合（T*=T0·2/(γ+1)，ρ*=ṁ/(a*A)，p*=ρ*RT*——ṁ 自身生成
+        静压，无压力反演）。
+        亚声速口：进口 Ma 由等熵 q(ṁ|p0_up) 反解（与 Darcy 支 ρs 同
+        口径），出口 Ma 由 Fanno 管长关系 F(M_out) = F(M_in) − f·L/D
+        （亚声速沿程加速），T0 守恒 + 连续性直算静参数，状态方程
+        收尾——压力是输出不是输入。ṁ→cap 时两支在 Ma=1 精确铰链。
+
+        白板查表（_static_state）对出料口给的是"节点滞止态反推"的
+        假想等熵态（腔体假设），本方法是其物理修正——port_states
+        对管件出料口改调此处（与 areachange 同构的元件自报模式）。
+        """
+        gas = ctx.gas
+        mdot = abs(x[self._m_idx[j]])           # 出料口流量（=管内流量）
+        if mdot == 0.0:
+            return None                         # 零流量无出口态
+        A, D, L = self.area, self.diameter, self.length
+        j_up = 1 - j
+        t0_up = self._total_t(x, ctx, j_up)     # 上游节点总温（Fanno T0 守恒）
+        st_son = sonic_state_from_flow(mdot, A, t0_up, gas.R, gas.gamma)
+        # 出口马赫：壅塞口 = 1（临界截面）；亚声速口沿 Fanno 线积分
+        cap = choked_flow_fanno(A, self._total_p(x, ctx, j_up), t0_up,
+                                L, D, self.roughness, gas.R, gas.gamma,
+                                gas.mu(t0_up))
+        if mdot >= cap:
+            return st_son                       # 壅塞：出口 = 临界截面
+        # 亚声速：F(M_out) = F(M_in) − f·L/D（亚声速沿程加速）；
+        # M_in 由等熵 q(ṁ|p0_up) 反解（与 Darcy 支 ρs 同口径），f 取
+        # 实际 ṁ 的 Re（Swanee-Jain）。连续性 + T0 守恒直接构造静参数
+        # ——不经总压链，压力是输出不是输入。
+        q_m = gas.q_of_flow(mdot, self._total_p(x, ctx, j_up), t0_up, A)
+        ma_in, _ = gas.mach_from_q(q_m)
+        re = mdot * D / (gas.mu(t0_up) * A)
+        chi_out = fanno_param(ma_in, gas.gamma) - self._friction(re) * L / D
+        if chi_out <= 1.0e-8:                  # 剩余壅塞长度≈0（ṁ→cap 数值
+            return st_son                      # 贴界）：按临界报（χ→Ma 是
+                                               # 平方根映射，Ma 阈值会漏判）
+        ma_out = mach_from_fanno(chi_out, gas.gamma)
+        tau_out = 1.0 + 0.5 * (gas.gamma - 1.0) * ma_out * ma_out
+        T_out = t0_up / tau_out                 # 能量守恒（T0 沿程不变）
+        v_out = ma_out * np.sqrt(gas.R * gas.gamma * T_out)
+        rho_out = mdot / (A * v_out)            # 连续性定密度
+        p_out = rho_out * gas.R * T_out         # 状态方程收尾
+        return StaticState(ma_out, p_out, T_out, rho_out, v_out, False)

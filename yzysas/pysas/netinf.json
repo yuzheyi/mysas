@@ -28,8 +28,8 @@
       "id": 2,
       "type": "PIPE",
       "ports": [
-        { "area": 4.1416e-4, "node": 1 },
-        { "area": 4.1416e-4, "node": 2 }
+        { "area": 3.1416e-4, "node": 1 },
+        { "area": 3.1416e-4, "node": 2 }
       ],
       "params": [0.5, 0.02, 1.0e-5]
     },
