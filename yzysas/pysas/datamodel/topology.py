@@ -27,6 +27,10 @@ class ElemType(enum.IntEnum):
     WALL_FILM = 11         # 壁面换热（单口，cosim 耦合用）：params = [A_ref]
                            # q 注入能量方程（heat_input），模型在
                            # cosim/netelem/filmwall.py 外部注册进工厂
+    SURROGATE_FLOW = 12    # 数据驱动代理元件（两口压差→流量）：params = [面积比]
+                           # 无量纲特性 Φ(PR) 由 Comp.model_path 携带的模型文件
+                           # 定义（.npz 表 / .onnx），模型在 elements/surrogate/
+                           # 子包，训练管线在 tools/surrogate/（想法 8 / M7 v1）
 
 
 class CompType(enum.IntEnum):
@@ -70,6 +74,9 @@ class Comp:
     comp_type: CompType = CompType.STEADY
     ports: list[Port] = field(default_factory=list)
     params: list[float] = field(default_factory=list)  # 按 elem_type 约定顺序
+    model_path: str = ""  # 代理元件（SURROGATE_FLOW）模型文件路径：
+                          # .npz 一维 Φ 表 / .onnx；load_netinf 把相对路径
+                          # 相对 JSON 目录解析；其余元件忽略
     control_volume: float = 0.0  # 容腔体积 m³（VOLUME 型用，自动从 params[0] 同步）
 
     def __post_init__(self):

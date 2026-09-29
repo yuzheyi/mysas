@@ -227,6 +227,46 @@ CASE_ALL_FLOW = {  # 全流量边界（无压力锚定）-> 组装期应断言�
 }
 
 
+def surrogate_table(tmpdir: str, cd: float = 0.8) -> str:
+    """代理元件算例用 Φ 表（独立闭式造表——复用本文件 orifice_m_hand
+    同源的孔板公式路径，不经 tools/sample 与元件代码，防自证）。"""
+    import os
+    from pysas.fluids import make_gas
+    gam = make_gas().gamma
+    crit = (2.0 / (gam + 1.0)) ** (gam / (gam - 1.0))
+    choke = np.sqrt(gam) * (2.0 / (gam + 1.0)) ** (
+        (gam + 1.0) / (2.0 * (gam - 1.0)))
+    t = np.linspace(0.0, 1.0, 65)
+    pr = np.unique(np.concatenate(
+        [0.02 + 0.98 * (1.0 - (1.0 - t) ** 2), [crit, 1.0]]))
+    phi = np.array([
+        cd * (1.0 if p <= crit else
+              np.sqrt(2.0 * gam / (gam - 1.0)) * p ** (1.0 / gam)
+              * np.sqrt(1.0 - p ** ((gam - 1.0) / gam)) / choke)
+        for p in pr])
+    path = os.path.join(tmpdir, f"phi_cd{int(cd * 100):02d}.npz")
+    np.savez(path, format="pysas-surrogate-table", version=1,
+             pr_grid=pr, phi_grid=phi, pr_crit=crit,
+             gamma_train=gam, a_ref_train=1.0e-4, cd_train=cd,
+             source="test_solver-hand", note="")
+    return path
+
+
+CASE_SURROGATE = {  # SU: 表后端代理元件（拓扑同 B：PB 3e5 → 代理件 → PB 2e5）
+    "gas": {"type": "IdealGas", "T0_default": 600.0},
+    "nodes": [{"id": 0}, {"id": 1}],
+    "comps": [
+        {"id": 0, "type": "PRESSURE_BOUNDARY",
+         "ports": [{"area": 0.0, "node": 0}], "params": [3.0e5, 600.0]},
+        {"id": 1, "type": "SURROGATE_FLOW", "model_path": "@TABLE@",
+         "ports": [{"area": 1.0e-4, "node": 0}, {"area": 1.0e-4, "node": 1}],
+         "params": [1.0]},
+        {"id": 2, "type": "PRESSURE_BOUNDARY",
+         "ports": [{"area": 0.0, "node": 1}], "params": [2.0e5, 600.0]},
+    ],
+}
+
+
 def assemble(case):
     net, ctx = netinf_from_dict(case)
     return NetworkSystem(net, build_models(net)), ctx
@@ -539,6 +579,82 @@ def main():
     except ValueError as e:
         print(f"        ValueError: {str(e)[:50]}…")
         check("全流量边界断言触发", True)
+
+    # ================= SU 代理元件（SURROGATE_FLOW，想法 8 / M7 v1） =================
+    print("\nSU 代理元件（表后端：闭式造表 → 全网求解 → 独立手算对拍）")
+    import copy
+    import os
+    import tempfile
+    from pysas.elements.surrogate.runtime import TableRuntime
+
+    with tempfile.TemporaryDirectory() as td:
+        tbl = surrogate_table(td, cd=0.8)
+        case_su = copy.deepcopy(CASE_SURROGATE)
+        case_su["comps"][1]["model_path"] = tbl
+        sysSU, ctxSU = assemble(case_su)
+        resSU = solve(sysSU, None, ctxSU)
+        # 真值 = orifice_m_hand（本文件独立手算闭式，与元件/训练管线零共享）
+        m_su_hand = orifice_m_hand(3.0e5, 2.0e5, 600.0, 0.8, 1.0e-4)
+        mSU = resSU.x[sysSU.m_idx_of_port[(1, 0)]]
+        rel_su = abs(mSU - m_su_hand) / m_su_hand
+        print(f"   SU 表代理件: m={mSU:.8f}  手算={m_su_hand:.8f}"
+              f"  rel={rel_su:.2e}  iters={resSU.report.iters}")
+        check("SU 表后端流量 vs 独立手算 < 0.5%", rel_su < 5e-3,
+              f"rel={rel_su:.2e}")
+
+        # 壅塞工况（背压 1e5 < p_crit·3e5 ≈ 1.58e5）：流量 = 表平台值
+        tbl2 = surrogate_table(td, cd=0.8)
+        case_ch = copy.deepcopy(CASE_SURROGATE)
+        case_ch["comps"][1]["model_path"] = tbl2
+        case_ch["comps"][2]["params"] = [1.0e5, 600.0]
+        sysCH, ctxCH = assemble(case_ch)
+        resCH = solve(sysCH, None, ctxCH)
+        m_ch_hand = orifice_m_hand(3.0e5, 1.0e5, 600.0, 0.8, 1.0e-4)
+        mCH = resCH.x[sysCH.m_idx_of_port[(1, 0)]]
+        rel_ch = abs(mCH - m_ch_hand) / m_ch_hand
+        print(f"   SU 壅塞:      m={mCH:.8f}  手算={m_ch_hand:.8f}"
+              f"  rel={rel_ch:.2e}（表平台 = Φ_max）")
+        check("SU 壅塞平台夹断正确", rel_ch < 5e-3, f"rel={rel_ch:.2e}")
+
+        # 环境稳健性：T0 ≠ 训练参考也无碍——T0 依赖已解析析出（ṁ ∝ 1/√T0）
+        case_T = copy.deepcopy(CASE_SURROGATE)
+        case_T["comps"][1]["model_path"] = tbl
+        case_T["comps"][0]["params"] = [3.0e5, 800.0]
+        case_T["comps"][2]["params"] = [2.0e5, 800.0]
+        case_T["gas"]["T0_default"] = 800.0
+        sysT, ctxT = assemble(case_T)
+        resT = solve(sysT, None, ctxT)
+        m_T_hand = orifice_m_hand(3.0e5, 2.0e5, 800.0, 0.8, 1.0e-4)
+        mT = resT.x[sysT.m_idx_of_port[(1, 0)]]
+        rel_T = abs(mT - m_T_hand) / m_T_hand
+        print(f"   SU 变温:      m={mT:.8f}  手算={m_T_hand:.8f}"
+              f"  rel={rel_T:.2e}（T0=800 ≠ 训练 600——标度析出验证）")
+        check("SU T0 标度析出（1/√T0）", rel_T < 5e-3, f"rel={rel_T:.2e}")
+
+        # 坏文件清晰报错（组装期，不进牛顿迭代）
+        case_bad = copy.deepcopy(CASE_SURROGATE)
+        case_bad["comps"][1]["model_path"] = os.path.join(td, "nope.npz")
+        try:
+            assemble(case_bad)
+            check("SU 坏 model_path 组装期报错", False, "未报错！")
+        except ValueError as e:
+            print(f"        ValueError: {str(e)[:60]}…")
+            check("SU 坏 model_path 组装期报错", True)
+        # 坏表（非单调）同样组装期报错
+        bad_tbl = os.path.join(td, "bad.npz")
+        np.savez(bad_tbl, format="pysas-surrogate-table", version=1,
+                 pr_grid=np.linspace(0.1, 1.0, 12), phi_grid=np.linspace(
+                     0.1, 0.9, 12),   # 递增 = 非单调
+                 pr_crit=0.528, gamma_train=1.4, a_ref_train=1e-4,
+                 cd_train=0.8, source="bad", note="")
+        case_bad2 = copy.deepcopy(CASE_SURROGATE)
+        case_bad2["comps"][1]["model_path"] = bad_tbl
+        try:
+            assemble(case_bad2)
+            check("SU 非单调表组装期报错", False, "未报错！")
+        except ValueError as e:
+            print(f"        ValueError: {str(e)[:60]}…")
+            check("SU 非单调表组装期报错", True)
 
     # ================= 汇总 =================
     print("\n" + "=" * 60)

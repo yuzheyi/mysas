@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import json
+import os
 
 from pysas.elements.base import ElementModel, SolveContext
 from pysas.datamodel import Comp, ElemType, Network, Node, Port
@@ -21,9 +22,17 @@ from pysas.datamodel import Comp, ElemType, Network, Node, Port
 
 # ---------- 读入 ----------
 def load_netinf(path: str) -> tuple[Network, SolveContext]:
-    """读 JSON 文件 → (Network, SolveContext)。物性进 ctx，边界在元件。"""
+    """读 JSON 文件 → (Network, SolveContext)。物性进 ctx，边界在元件。
+    代理元件（SURROGATE_FLOW）的相对 model_path 相对 JSON 所在目录解析
+    （模型文件常与算例同目录）；netinf_from_dict 内联算例无此上下文，
+    model_path 原样透传（测试用绝对路径）。"""
     with open(path, encoding="utf-8") as f:
-        return netinf_from_dict(json.load(f))
+        net, ctx = netinf_from_dict(json.load(f))
+    base = os.path.dirname(os.path.abspath(path))
+    for c in net.comps:
+        if c.model_path and not os.path.isabs(c.model_path):
+            c.model_path = os.path.join(base, c.model_path)
+    return net, ctx
 
 
 def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
@@ -57,6 +66,7 @@ def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
             ports=[Port(area=p["area"], node_id=p["node"])
                    for p in c["ports"]],
             params=c["params"],
+            model_path=c.get("model_path", ""),
         ))
 
     net = Network(nodes=nodes, comps=comps)
@@ -79,9 +89,11 @@ def register_model(cls):
 
 
 def _default_registry():
-    """惰性注册自带元件（避免 import 环：io 不顶层依赖 elements 子模块）。"""
-    if _MODEL_REGISTRY:
-        return
+    """惰性注册自带元件（避免 import 环：io 不顶层依赖 elements 子模块）。
+
+    幂等判据按 key（2026-09-29 修复）：旧 `if _MODEL_REGISTRY: return`
+    会在外部包（如 cosim WALL_FILM）先自注册时静默吞掉全部内置注册——
+    setdefault 逐 key 判定，外部已占的 key 不覆盖（扩展优先）。"""
     from pysas.elements.areachange import AreaChangeModel
     from pysas.elements.booster import BoosterModel
     from pysas.elements.boundary import (
@@ -90,15 +102,12 @@ def _default_registry():
     from pysas.elements.junction import JunctionModel
     from pysas.elements.orifice import OrificeModel
     from pysas.elements.pipe import PipeModel
+    from pysas.elements.surrogate.flow import SurrogateFlowModel
 
-    register_model(OrificeModel)
-    register_model(PipeModel)
-    register_model(PressureBoundaryModel)
-    register_model(MassSourceModel)
-    register_model(BoosterModel)
-    register_model(AreaChangeModel)
-    register_model(HeaterModel)
-    register_model(JunctionModel)
+    for cls in (OrificeModel, PipeModel, PressureBoundaryModel,
+                MassSourceModel, BoosterModel, AreaChangeModel,
+                HeaterModel, JunctionModel, SurrogateFlowModel):
+        _MODEL_REGISTRY.setdefault(int(cls.elem_type), cls)
 
 
 def build_models(net: Network) -> dict[int, ElementModel]:

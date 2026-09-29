@@ -1,0 +1,14 @@
+{
+  "gas": {"type": "IdealGas", "T0_default": 600.0},
+  "nodes": [{"id": 0}, {"id": 1}],
+  "comps": [
+    {"id": 0, "type": "PRESSURE_BOUNDARY",
+     "ports": [{"area": 0.0, "node": 0}], "params": [3.0e5, 600.0]},
+    {"id": 1, "type": "SURROGATE_FLOW",
+     "model_path": "out/phi_cd08.npz",
+     "ports": [{"area": 1.0e-4, "node": 0}, {"area": 1.0e-4, "node": 1}],
+     "params": [1.0]},
+    {"id": 2, "type": "PRESSURE_BOUNDARY",
+     "ports": [{"area": 0.0, "node": 1}], "params": [2.0e5, 600.0]}
+  ]
+}
