@@ -258,22 +258,20 @@ class NetworkSystem:
         Ma/choked）连同总参数与 ṁ 持久化进 datamodel.PortState。
         A=0 边界口无动通量：静=总（滞止）、v=Ma=0、ρ=ρ0。
 
-        出料口出口状态调度（2026-09-29 归位裁决 + 用户口径裁决：
-        调度归系统、物理归元件、cap 兜底 = 等熵 Cd=1 + A_min）：
-        白板对出料口（ṁ<0）是从下游节点滞止态反推的**腔假设**——
-        只在 choked=False（亚声速，出口与腔压匹配）成立（用户裁决）。
-        白板 q-clamp 触发（choked=True）= 腔假设失效（欠膨胀射流，
-        静压高于腔压），三层调度接管：
-          ① 元件 exit_state 覆盖（pipe：Fanno 记账/声速闭合——精确）
-          ② 框架等熵声速闭合：上游节点滞止态（同元件另一口，两口件）
-             + sonic_state_from_flow(ṁ, A_eff, T0_up)，A_eff 由 Cd=1
-             兜底 = 元件两口最小面积（cap 上界口径；孔板 Cd 精化
-             待元件覆盖 exit_state，登记待定）
-          ③ choke 元件外（junction 等无喉部）维持白板
-        亚声速出料口：白板值可信，直接用（腔假设成立）。
+        出料口出口状态调度（2026-09-29 归位裁决：调度归系统、物理归
+        元件、数学归 fluids）：白板对出料口（ṁ<0）是从下游节点滞止
+        态反推的**腔假设**——只在 choked=False（亚声速出口与腔压
+        匹配）成立（2026-09-29 用户裁决）；q-clamp 触发（choked=True）
+        = 腔假设失效（欠膨胀/高 Ma 射流，滞止源在上游），系统在此
+        且仅在此做一次契约调用 model.exit_state：
+          ① 元件覆盖（pipe：Fanno 记账/声速闭合——精确）
+          ② 基类默认（两口件：容量判据分派的等熵重构，与
+             choke_capacity 组合——cap 精化自动精化出口态）
+          ③ None（多口/退化）→ 维持白板（腔假设兜底）
+        调度归本方法，出口物理全住元件层（base 默认/覆盖）——
+        本方法不含任何重构公式。
         """
         from pysas.datamodel import PortState
-        from pysas.fluids.isentropic import sonic_state_from_flow
         self._prime_static(x, ctx)          # 重建白板（纯函数，无副作用风险）
         states = []
         for comp in sorted(self.net.comps, key=lambda c: c.comp_id):
@@ -285,19 +283,13 @@ class NetworkSystem:
                 if port.area > 0.0:
                     st = model._static_state(x, ctx, j)   # 白板查表
                     if mdot < 0.0 and st.choked:
-                        # 壅塞出料口：腔假设失效，三层接管
+                        # 腔假设失效（q-clamp）：出口物理接管——
+                        # 契约调用（元件覆盖 > 基类默认等熵重构，
+                        # 见 base.exit_state）；None（多口/退化）
+                        # 维持白板
                         st_exit = model.exit_state(x, ctx, j)
                         if st_exit is not None:
-                            st = st_exit            # ① 元件精确物理
-                        elif len(comp.ports) == 2:
-                            # ② 框架兜底：等熵声速闭合（Cd=1 + A_min）
-                            j_up = 1 - j
-                            t0_up = model._total_t(x, ctx, j_up)
-                            a_min = min(p.area for p in comp.ports)
-                            st = sonic_state_from_flow(
-                                abs(mdot), a_min, t0_up,
-                                ctx.gas.R, ctx.gas.gamma)
-                        # ③ 多口无喉部件：维持白板（运动学报警）
+                            st = st_exit
                     states.append(PortState(
                         mass_flow=mdot, static_pressure=st.p,
                         static_temperature=st.T, total_pressure=p0,

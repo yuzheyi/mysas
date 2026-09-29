@@ -26,6 +26,13 @@ class OrificeModel(ElementModel):
         area_ratio, self.cd = comp.params
         self.area = area_ratio * comp.ports[0].area  # 有效流通面积
 
+    def choke_capacity(self, p0_up: float, t0_up: float, ctx, j: int):
+        """孔板容量 = Cd·A·q(1)·p0/√T0（超临界分支同源；C_choke=Cd）。
+
+        与特性公式自同源：_ideal_mass_flow 的超临界支就是这个值——
+        契约化后两处共享同一定义，回归基准 B2（壅塞孔板闭式）不变。"""
+        return self.cd * ctx.gas.choked_flow(self.area, p0_up, t0_up)
+
     def _ideal_mass_flow(self, p01, p02, T01, R, gamma):
         """理想流量，恒为正，方向 = 高压侧 → 低压侧。
         β 夹在 [1e-8, 1]：防止迭代跑到负压区时分数幂出 NaN。"""

@@ -58,13 +58,14 @@ class AreaChangeModel(ElementModel):
         # 1/√(1+ζ) 保守下界），先取解析式便于回归钉住
         self.c_contract = 1.0 / (1.0 + np.sqrt(self.zeta))
 
-    def _choke_cap(self, p0_up: float, t0_up: float, ctx, j: int):
-        """面积变化件容量（元件私有；方向敏感）:
+    def choke_capacity(self, p0_up: float, t0_up: float, ctx, j: int):
+        """面积变化件容量（方向敏感——契约 j 参数的首个真实用例）:
 
-        突缩向（j=大口上游）：真喉道 = vena contracta，C=Cc；
+        突缩向（j=大口上游）：真喉道 = vena contracta，C_choke=Cc；
         突扩向（j=小口上游）：几何最小截面即喉道，射流不收缩，
-        C=1（Borda 损失在扩散段，不占流通面积）。
-        不可压 √Δp0 需求曲线在大压差下无界，min 钳位必须补。"""
+        C_choke=1（Borda 损失在扩散段，不占流通面积）。
+        min(需求, cap) 钳位补齐（自治模式漏写 cap 的活例——裁决 1
+        的动机之一）：不可压 √Δp0 需求曲线在大压差下无界，必须钳。"""
         if self.comp.ports[j].area > self.a_ref:   # 上游 = 大口 → 突缩
             c_eff = self.c_contract
         else:                                      # 上游 = 小口 → 突扩
@@ -85,9 +86,9 @@ class AreaChangeModel(ElementModel):
         rho_up = ctx.gas.rho_from_pT(p_hi, T_hi)  # 上游总态密度（不可压口径）
         dp0 = max(p_hi - p_lo, 0.0)
         m_ideal = self.a_ref * np.sqrt(2.0 * rho_up * dp0 / self.zeta)
-        # 壅塞钳位（2026-09-29）：不可压需求曲线无界，min 钳到真容量
-        # （与 pipe min(Darcy, cap_Fanno) 同构）
-        m_cap = self._choke_cap(p_hi, T_hi, ctx, k)
+        # 喳塞钳位（2026-09-29 随容量契约补齐）：不可压需求曲线无界，
+        # min 钳到真容量（与 pipe min(Darcy, cap_Fanno) 同构）
+        m_cap = self.choke_capacity(p_hi, T_hi, ctx, k)
         m_ideal = min(m_ideal, m_cap)
         return np.array([
             x[self._m_idx[0]] + x[self._m_idx[1]],   # f1 连续性

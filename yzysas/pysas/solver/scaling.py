@@ -104,11 +104,16 @@ def make_scaling(system, ctx, p_ref: float | None = None,
 
     if m_ref is None:
         T_ref = ctx.T0_default
-        # 逐口容量自估（2026-09-29 裁决：容量契约已删，统一用等熵
-        # Cd=1 + 口面积兜底——缩放只要量级正确，理想口径无害且
-        # 零元件耦合；A=0 边界口 choked_flow 返回 0 自动跳过）
-        caps = [ctx.gas.choked_flow(port.area, p_ref, T_ref)
-                for comp in system.net.comps for port in comp.ports]
+        # 逐口容量自估（2026-09-29 容量契约消费点，待定 #5 落地）:
+        # choke_capacity 恒有值——默认兜底 = 等熵 Cd=1 + A_min
+        # （A_min=0 边界口自动 0），精化住元件覆盖（孔板=Cd/管=Fanno/
+        # 突缩=Cc/突扩=1）。比旧"全网统一理想口径"细一档：管口自估
+        # 从 0.156 修到真容量（Fanno 口径），多尺度面积网络（大主管+
+        # 小封严齿）小口不再被全网最大口淹没
+        caps = [model.choke_capacity(p_ref, T_ref, ctx, j)
+                for model in (system.models[c.comp_id]
+                              for c in system.net.comps)
+                for j in range(len(model.comp.ports))]
         ms = [abs(c.params[0]) for c in system.net.comps
               if c.elem_type == ElemType.MASS_SOURCE]  # 规定流量纳入估计
         m_ref = max([*caps, *ms], default=0.0)

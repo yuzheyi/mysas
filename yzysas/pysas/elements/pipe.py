@@ -104,6 +104,11 @@ class PipeModel(ElementModel):
             q = q_new
         return q * p0_up * A / np.sqrt(t0_up)
 
+    def choke_capacity(self, p0_up: float, t0_up: float, ctx, j: int):
+        """管件 Fanno 容量（容量契约在管件的实现；j 对管无方向性
+        ——等截面两向同容量，签名带 j 仅为契约一致）。"""
+        return self._fanno_cap(p0_up, t0_up, ctx)
+
     # ---------- 特性 ----------
     def mass_flow(self, p_up, p_down, rho_up, mu_up, mdot_guess, ctx, t0_up=None):
         """给定两端总压与上游静参数（ρs、μ(Ts)），返回管流量。
@@ -138,9 +143,10 @@ class PipeModel(ElementModel):
 
         if t0_up is None:
             return m_darcy          # 旧口径（无总温不上限）
-        # Fanno 摩擦管容量（f·L/D 定点自洽；理想喷嘴 = L→0 退化；
-        # 元件私有方法 _fanno_cap——特性钳位与出口重构同源）
-        m_cap = self._fanno_cap(p_up, t0_up, ctx)
+        # Fanno 摩擦管容量（f·L/D 定点自洽；理想喷嘴 = L→0 退化）；
+        # 契约化后 cap 唯一出口 = choke_capacity（消费点与特性钳位
+        # 同源，杜绝两处口径漂移）
+        m_cap = self.choke_capacity(p_up, t0_up, ctx, 0)
         return min(m_darcy, m_cap)                  # 钳位：分支点连续
 
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:

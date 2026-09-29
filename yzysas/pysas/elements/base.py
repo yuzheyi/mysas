@@ -86,22 +86,74 @@ class ElementModel(ABC):
     def exit_state(self, x, ctx, j: int):
         """口 j（出料口 ṁ_j<0）出口截面静参数 → StaticState | None。
 
-        系统出口状态契约（2026-09-29，第三"报值即能力"）：归属裁决
-        ——**调度归 system.port_states**（它决定"问谁要、何时问"），
-        **物理归元件**（自己的出口怎么算自己知道）。默认 None =
-        "无自报出口态，回退框架统一口径"（见 system.port_states：
-        壅塞口等熵声速闭合、亚声速口白板腔假设）；管件等有内部分布
-        物理的元件覆盖（pipe：壅塞口声速闭合 / 亚声速口 Fanno 管长
-        记账）。只在解后报表/后处理路径调用，不进残差。
+        系统出口状态契约（2026-09-29，第三"报值即能力"）：调度归
+        system.port_states（仅白板 q-clamp 触发=腔假设失效时问），
+        物理归元件（基类本默认实现 + 元件覆盖）。
 
-        壅塞容量说明（2026-09-29 裁决：容量契约已删）：cap 的物理
-        上界 = 等熵膨胀 Cd=1（框架兜底用元件最小面积 A_min），精化
-        （孔板 Cd/管 Fanno/突缩 Cc）住各元件特性公式内部——cap 本质
-        是 (p0_up, T0_up) 的标量函数，信息量不配占基类契约；需要
-        精确出口静参数的元件覆盖本方法（如 orifice 写 6 行即可
-        拿到喉道口径 ps）。
+        默认实现（两口件，守恒律重建——用户裁决，替代被否决的
+        等熵 A_eff 版）：只用三条对任何元件都成立的守恒律 + 网络
+        已解出的量，**零过程假设**——损失无需显式给定，网络解
+        (ṁ, 节点压力) 已包含它（隐含射流总压自然显现，实测
+        −12.3% @ Cd=0.8，可直接反读元件损耗）:
+          ṁ = ρ·A_port·v（连续性，出料口几何面积=报表口径）
+          T = T0 − v²/(2cp)（能量守恒）
+          ρ = ps/(RT)（状态方程）
+          ps = min(下游腔压, ps_E)（压力匹配 + 热二律保险丝：
+            腔总压≡射流匹配静压，K&S 1994"完全掺混"恒等式；
+            ps_E=零损失等熵上界，min-钉构造性保证隐含射流总压
+            ≤ 上游总压——账本缝隙场景裸用会违反 +8.1%，红队实测）
+        声速钳位：v>a*（⟺ps<p*_sonic，正根穿越定理——守恒律解
+        随腔压下降自己连续到达声速）→ Ma=1 平面声速态（欠膨胀
+        射流，ps 可高于腔压）。
+        恒等式 ρ·A_port·v=ṁ 两支均构造性精确闭合。
+
+        多口件返回 None（混合滞止态无默认可猜，同 port_T_out 的
+        raise 语义）；pipe 覆盖（Fanno 记账/声速闭合——精确）。
+        只在解后报表/后处理路径调用，不进残差。
+
+        验证锚点（2026-09-29 B/B2 实测，改本方法后跑孔板
+        3e5→{2e5,1e5}、Cd=0.8、A=1e-4 应逐位复现）:
+          B  亚临界: Ma=0.6387  choked=False  ps=200000（min 取腔压）
+              v=301.5  隐含射流总压 263,171（−12.3%，Cd=0.8 量级✓）
+          B2 壅塞:   Ma=1.0000  choked=True   ps=126,787=ρ*RT*
+              （平面口径 @A_geo；对照喉道口径 158,485=0.5283·p0_up）
+          恒等式 ρ·A·v−ṁ 两支机器精度闭合；背压扫 158k→160k ps 连续
         """
-        return None
+        if len(self.comp.ports) != 2:
+            return None                      # 多口件无默认（见 docstring）
+        j_up = 1 - j
+        from pysas.fluids.isentropic import matched_plane_state
+        return matched_plane_state(
+            abs(x[self._m_idx[j]]),         # |ṁ|
+            self.comp.ports[j].area,         # A_port（出料口几何面积）
+            self._total_p(x, ctx, j),        # 下游腔总压（压力匹配锚）
+            max(self._total_t(x, ctx, j), 10.0),   # T0（能量守恒）
+            max(self._total_p(x, ctx, j_up), 1.0),  # p0_up（仅 ps_E 上界）
+            ctx.gas.R, ctx.gas.gamma, ctx.gas.cp())
+
+    def choke_capacity(self, p0_up: float, t0_up: float, ctx, j: int) -> float:
+        """口 j 作为上游时本元件的壅塞流量上限 kg/s（容量契约）。
+
+        默认兜底（2026-09-29 用户裁决）= **等熵膨胀 Cd=1 + 元件最小
+        面积 A_min**——cap 的物理上界，任何压损元件在缺省情况下
+        框架都持有保守容量；精化住各元件覆盖（孔板=Cd、管=Fanno
+        q(M_in)/q(1)、突缩=Cc 方向敏感/突扩=1）。A_min=0（边界口）
+        → choked_flow 返回 0，自然豁免。
+
+        统一形态: ṁ_cap = C_choke·A_ref·q(1)·p0_up/√T0_up，
+    C_choke∈(0,1]（兜底即 C_choke=1）。
+
+        契约性质——cap 是 (p0_up, t0_up) 的**标量函数**（纪律保证：
+        禁读 ṁ_guess——零初值处 ∂cap/∂ṁ≡0；签名无下游参数——
+        壅塞=压力 upwind 想法 27）：无迭代状态依赖，任何路径随时
+        可调、可缓存。注意管件经 Re→f 对 p0 有 ~1% 弱非线性——
+        是标量函数但不是 p0 的比例函数（勿线性外推）。
+
+        消费点：scaling.make_scaling m_ref 逐口自估（直接调用，
+        无 None 判据——默认兜底恒有值）；容量初值/报表余量后续按需。
+        """
+        a_min = min(p.area for p in self.comp.ports)
+        return ctx.gas.choked_flow(a_min, p0_up, t0_up)
 
     def __init__(self, comp):
         self.comp = comp

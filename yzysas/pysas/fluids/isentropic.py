@@ -59,6 +59,9 @@ class StaticState:
     choked: bool     # True = 给定 (p0,T0,mdot,A) 物理壅塞，Ma 夹在 1
 
 
+# ══════════════════════════════════════════════════════════════
+# 等熵流量函数族（q(Ma) 正反解——白板 prime / 手算 / 孔板同源）
+# ══════════════════════════════════════════════════════════════
 def q_of_mach(ma: float, R: float, gamma: float) -> float:
     """流量参数 q(Ma)；其量纲为 sqrt(K)·s/m。"""
     tau = 1.0 + 0.5 * (gamma - 1.0) * ma * ma
@@ -108,6 +111,9 @@ def mach_from_q_arr(q: np.ndarray, R: float, gamma: float
     return 0.5 * (lo + hi), choked
 
 
+# ══════════════════════════════════════════════════════════════
+# 等熵闭式族（Ma + 总参数 → 静参数；声速截面前向闭合）
+# ══════════════════════════════════════════════════════════════
 def statics_from_mach(ma, p0, T0, R, gamma):
     """等熵闭式：Ma + 总参数 → (T, p, rho, v)。标量/数组通用（numpy
     广播）——total_to_static（标量）与白板 prime（数组）单点共用的
@@ -205,6 +211,76 @@ def p0_star_ratio(ma: float, gamma: float) -> float:
     tau = 1.0 + 0.5 * (gamma - 1.0) * m2
     return (1.0 / ma) * (2.0 * tau / (gamma + 1.0)) ** (
         (gamma + 1.0) / (2.0 * (gamma - 1.0)))
+
+
+# ══════════════════════════════════════════════════════════════
+# 出口平面守恒律重建（方案 H，2026-09-29——零过程假设，损耗可见）
+# ══════════════════════════════════════════════════════════════
+def matched_plane_state(mdot: float, area: float, p0_dn: float, t0: float,
+                        p0_up: float, R: float, gamma: float,
+                        cp: float) -> StaticState:
+    """出料口平面守恒律重建（方案 H，2026-09-29 用户方向 + 多 agent 论证）。
+
+    只用对任何元件都成立的三条守恒律 + 网络已解出的量——零过程
+    假设（等熵 A_eff 版被否决：强制零损失；白板被否决：滞止源反）。
+    损失无需显式给定：网络解 (ṁ, 节点压力) 已包含它——隐含射流
+    总压 ps·(T0/T)^(γ/(γ−1)) 自然低于上游（实测 −12.3% @ Cd=0.8）。
+
+    输入:
+      mdot   |ṁ|（网络解）
+      area   出料口自己的几何面积 A_port（与报表 A 列同口径——
+             红队裁决：出口平面用 A_port，容量/喉道才用 A_min）
+      p0_dn  本口（下游腔）节点总压 —— 压力匹配的锚（腔总压 ≡
+             射流匹配静压，K&S 1994"完全掺混"恒等式）
+      t0     本口节点总温（输运/掺混后；T0 守恒，heater 已体现）
+      p0_up  上游节点总压 —— 仅用于 ps_E 上界（二律保险丝）
+
+    三条方程（未知 v/T/ρ）: ṁ=ρAv、T=T0−v²/(2cp)、ρ=ps/(RT)
+    ⟹ 二次方程 (ṁR/2cp)v² + ps·A·v − ṁRT0 = 0，有理化稳定根式:
+
+        v = 2ṁRT0 / (ps·A + sqrt((ps·A)² + 2ṁ²R²T0/cp))
+
+    两道保险丝:
+      1. min-钉（热二律）: ps = min(p0_dn, ps_E)，ps_E = 上游滞止态
+         经几何面积零损失等熵膨胀的静压上界。引理: 亚声速支隐含
+         p0_jet = ps(T0/T)^(γ/(γ−1)) 对 ps 单调增且 ps=ps_E 时
+         p0_jet=p0_up ⟹ ps≤ps_E ⟹ p0_jet≤p0_up 恒成立（构造性
+         安全，无检测分支——账本缝隙场景红队实测裸用违反 +8.1%）
+      2. 声速钳位: v>a* ⟺ ps<p*_sonic（正根穿越定理: 二次方程
+         正根恰在 ps=p*_sonic(ṁ,A,T0) 处穿越 Ma=1——守恒律解随
+         腔压下降自己连续到达声速，两支天然连续）→ 钳 Ma=1、
+         T*=2T0/(γ+1)、ρ*=ṁ/(A·a*)、ps=ρ*RT*（欠膨胀射流的
+         平面声速态，ps 可高于腔压——几何平面核心流语义）
+
+    恒等式 ρ·A·v = ṁ 两支均由构造精确闭合（报表面积口径）。
+    """
+    if area <= 0.0 or mdot <= 0.0 or p0_dn <= 0.0 or t0 <= 0.0:
+        raise ValueError(
+            f"matched_plane_state 非物理入参: mdot={mdot}, area={area}, "
+            f"p0_dn={p0_dn}, t0={t0}")
+    # ps_E：上游滞止态 + 几何面积的零损失等熵上界
+    q_geo = mdot * np.sqrt(t0) / (max(p0_up, 1.0) * area)
+    ma_e, clamped = mach_from_q(q_geo, R, gamma)
+    if clamped:
+        ps_e = p0_up * (2.0 / (gamma + 1.0)) ** (gamma / (gamma - 1.0))
+    else:
+        ps_e = p0_up * (1.0 + 0.5 * (gamma - 1.0) * ma_e * ma_e) ** (
+            -gamma / (gamma - 1.0))
+    ps = min(p0_dn, ps_e)
+    # 守恒律二次方程（有理化根式：免大数吃小数）
+    b = ps * area
+    v = 2.0 * mdot * R * t0 / (b + np.sqrt(b * b + 2.0 * mdot * mdot
+                                           * R * t0 / cp * R))
+    t_star = t0 * 2.0 / (gamma + 1.0)
+    a_star = np.sqrt(R * gamma * t_star)
+    if v >= a_star:                       # 声速钳位（欠膨胀）
+        rho_s = mdot / (area * a_star)
+        return StaticState(1.0, rho_s * R * t_star, t_star, rho_s,
+                           a_star, True)
+    t_s = t0 - v * v / (2.0 * cp)
+    rho_s = ps / (R * t_s)
+    return StaticState(v / np.sqrt(R * gamma * t_s), ps, t_s, rho_s,
+                       v, False)
 
 
 # ---------------- 自验证（手算闭式核对，独立于元件代码） ----------------
