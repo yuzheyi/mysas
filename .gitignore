@@ -22,3 +22,5 @@ papers/
 
 yzysas/tmp_*.txt
 yzysas/pysas/out/
+
+yzysas/pysas/tools/ui/sas_studio.html
