@@ -84,6 +84,7 @@
   <input type="file" id="fImport" accept=".json" style="display:none">
   <span style="flex:1"></span>
   <button id="bFit" title="缩放至全部 (F)">⤢ 适配</button>
+  <button id="bOverlay" disabled title="结果解析后可开关画布叠加">叠加结果</button>
   <button id="bResult">结果查看 ▾</button>
   <button id="bExport" class="primary">导出 JSON</button>
 </header>
@@ -133,6 +134,8 @@ const VP = { x: 0, y: 0, k: 1 };
 const $ = id => document.getElementById(id);
 const cv = $('cv'), ctx = cv.getContext('2d');
 const mm = $('minimap'), mctx = mm.getContext('2d');
+// 结果叠加（需求：结果在网络上显示）——解析后填充，draw() 消费
+const RES = { data:null, map:new Map(), maxAbs:1, show:true };
 
 function toast(msg, warn){
   const t = $('toast'); t.textContent = msg;
@@ -209,13 +212,20 @@ function draw(){
         ctx.fillRect(x, y, 1.2, 1.2);
   }
   ctx.translate(VP.x, VP.y); ctx.scale(VP.k, VP.k);   // 世界坐标系
-  // 连线
+  // 连线（有结果叠加时：粗细=流量幅值，红=壅塞口）
   for (const c of S.comps) c.ports.forEach((p,j)=>{
     if (p.node == null) return;
     const n = S.nodes.find(n=>n.id===p.node);
     if (!n) return;
     const a = portPos(c,j);
     ctx.strokeStyle = '#5a6470'; ctx.lineWidth = 1.6/VP.k;
+    if (RES.data && RES.show){
+      const rp = RES.map.get(c.id+':'+j);
+      if (rp){
+        ctx.lineWidth = (1.6 + 6*Math.abs(rp.m)/RES.maxAbs)/VP.k;
+        ctx.strokeStyle = rp.ch ? '#ff7b6b' : '#7fa8c9';
+      }
+    }
     ctx.beginPath(); ctx.moveTo(a.x,a.y);
     ctx.bezierCurveTo(a.x+34, a.y, n.x-34, n.y, n.x, n.y);
     ctx.stroke();
@@ -293,6 +303,27 @@ function draw(){
       const areaStr = (p.area>=0.001? p.area.toFixed(4) : p.area.toExponential(1));
       ctx.fillText(`:${j} ${areaStr}`, c.x+6/VP.k, pp.y+7/VP.k);
     });
+  }
+  // 结果叠加层（需求：结果在网络上显示）——节点 p0/T0、端口 ṁ/Ma
+  if (RES.data && RES.show){
+    ctx.font = `${10/VP.k}px Consolas`;
+    ctx.textAlign='center';
+    for (const rn of RES.data.nodes){
+      const n = S.nodes.find(n=>n.id===rn.id);
+      if (!n) continue;
+      ctx.fillStyle = '#ffd479';
+      ctx.fillText(`${(rn.p0/1000).toFixed(1)}k ${rn.T0.toFixed(0)}K`,
+                   n.x, n.y + 38/VP.k);
+    }
+    ctx.textAlign='left';
+    for (const rp of RES.data.ports){
+      const c = S.comps.find(c=>c.id===rp.c);
+      if (!c) continue;
+      const pp = portPos(c, rp.j);
+      ctx.fillStyle = rp.ch ? '#ff7b6b' : '#8fd3a8';
+      ctx.fillText(`${rp.m>=0?'+':''}${rp.m.toPrecision(3)} Ma${rp.Ma.toFixed(2)}`,
+                   pp.x+9/VP.k, pp.y+3.5/VP.k);
+    }
   }
   ctx.setTransform(dpr,0,0,dpr,0,0);
   drawMinimap();
@@ -490,19 +521,14 @@ cv.addEventListener('pointerdown', e=>{
   if (hitNode){
     if (!S.sel.has(key('n',hitNode.id))){ if (!e.ctrlKey) S.sel.clear();
       S.sel.add(key('n',hitNode.id)); renderProps(); }
-    dragging = { kind:'n', id:hitNode.id, sx:wx, sy:wy,
-                 orig:new Map([[hitNode.id,{x:hitNode.x,y:hitNode.y}]]) };
+    dragging = makeSelDrag(wx, wy);
     draw(); return;
   }
   const hitC = hitCompAt(wx, wy);
   if (hitC){
     if (!S.sel.has(key('c',hitC.id))){ if (!e.ctrlKey) S.sel.clear();
       S.sel.add(key('c',hitC.id)); renderProps(); }
-    const orig = new Map();
-    for (const k_ of S.sel){ if (k_[0]!=='c') continue;
-      const c2 = S.comps.find(c=>c.id===+k_.slice(1));
-      if (c2) orig.set(c2.id, {x:c2.x,y:c2.y}); }
-    dragging = { kind:'c', id:hitC.id, sx:wx, sy:wy, orig };
+    dragging = makeSelDrag(wx, wy);
     draw(); return;
   }
   // 空白：清选 + 框选
@@ -521,13 +547,12 @@ cv.addEventListener('pointermove', e=>{
     draw(); return; }
   if (SELBOX.active){ SELBOX.b = [wx,wy]; boxSelect(); draw(); return; }
   if (dragging){
+    // 整选区同步平移（修复：全选移动时节点不掉队）
     const dx = wx-dragging.sx, dy = wy-dragging.sy;
-    if (dragging.kind==='n'){
-      const n = S.nodes.find(n=>n.id===dragging.id);
-      if (n){ const o = dragging.orig.get(n.id); n.x=o.x+dx; n.y=o.y+dy; }
-    } else {
-      for (const [id,o] of dragging.orig){
-        const c = S.comps.find(c=>c.id===id);
+    for (const [k_, o] of dragging.orig){
+      if (k_[0]==='n'){ const n = S.nodes.find(n=>n.id===+k_.slice(1));
+        if (n){ n.x=o.x+dx; n.y=o.y+dy; } }
+      else { const c = S.comps.find(c=>c.id===+k_.slice(1));
         if (c){ c.x=o.x+dx; c.y=o.y+dy; } }
     }
     draw(); return;
@@ -535,7 +560,7 @@ cv.addEventListener('pointermove', e=>{
   if (S.link) draw();
 });
 window.addEventListener('pointerup', ()=>{
-  if (dragging) commit();
+  if (dragging){ commit(); savePos(); }   // 拖拽后即时记忆
   panning = null; dragging = null;
   if (SELBOX.active){ SELBOX.active=false; draw(); }
 });
@@ -564,6 +589,17 @@ function boxSelect(){
     const h = compH(c);
     if (c.x<x1 && c.x+CW>x0 && c.y<y1 && c.y+h>y0) S.sel.add(key('c',c.id));
   }
+}
+function makeSelDrag(wx, wy){
+  // 整选区一起动：选中的节点+元件全部记录原位（需求：全选移动整个网络）
+  const orig = new Map();
+  for (const k_ of S.sel){
+    if (k_[0]==='n'){ const n = S.nodes.find(n=>n.id===+k_.slice(1));
+      if (n) orig.set('n'+n.id, {x:n.x, y:n.y}); }
+    else { const c = S.comps.find(c=>c.id===+k_.slice(1));
+      if (c) orig.set('c'+c.id, {x:c.x, y:c.y}); }
+  }
+  return { sx:wx, sy:wy, orig };
 }
 function linkToNode(link, nodeId){
   const c = S.comps.find(c=>c.id===link.cid);
@@ -780,8 +816,36 @@ function buildJSON(){
       return o; })
   }, warn };
 }
+// ================= 人工位置记忆（localStorage，需求：读入不冲掉我调好的版式） =================
+// 指纹 = 拓扑内容摘要（不含坐标）——同拓扑重读即恢复你手调的版式；
+// 拓扑变了（加删元件/改绑定）指纹变，自动重新布局不乱套
+function topoFingerprint(){
+  const parts = [];
+  for (const c of S.comps)
+    parts.push(`${SCHEMA[c.type].etype}#${c.id}[${c.ports.map(p=>p.node).join(',')}]`);
+  return 'sasui:' + parts.sort().join('|');
+}
+function savePos(){
+  try {
+    const pos = { n:Object.fromEntries(S.nodes.map(n=>[n.id,[Math.round(n.x),Math.round(n.y)]])),
+                  c:Object.fromEntries(S.comps.map(c=>[c.id,[Math.round(c.x),Math.round(c.y)]])) };
+    localStorage.setItem(topoFingerprint(), JSON.stringify(pos));
+  } catch(e){ /* 隐私模式等存不了则静默 */ }
+}
+function restorePos(){
+  try {
+    const raw = localStorage.getItem(topoFingerprint());
+    if (!raw) return false;
+    const pos = JSON.parse(raw);
+    let hit = 0;
+    for (const n of S.nodes){ const p = pos.n[n.id]; if (p){ n.x=p[0]; n.y=p[1]; hit++; } }
+    for (const c of S.comps){ const p = pos.c[c.id]; if (p){ c.x=p[0]; c.y=p[1]; hit++; } }
+    return hit > 0;
+  } catch(e){ return false; }
+}
 $('bExport').onclick = ()=>{
   if (!S.nodes.length && !S.comps.length){ toast('空网络', 1); return; }
+  savePos();     // 导出时顺手记忆当前版式
   const {json, warn} = buildJSON();
   const blob = new Blob([JSON.stringify(json, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
@@ -793,9 +857,7 @@ function loadJSON(data){
   S.nodes = (data.nodes??[]).map(n=>({id:n.id, x:n._ui?.x??0, y:n._ui?.y??0}));
   const byEtype = {}; for (const [k,m] of Object.entries(SCHEMA)) byEtype[m.etype] = +k;
   const unknown = [];
-  let noCoord = !(data.nodes??[]).some(n=>n._ui);
   S.comps = (data.comps??[]).map(c=>{
-    if (!c._ui) noCoord = true;
     return { id:c.id, type:(()=>{ const t=byEtype[c.type];
       if (t==null) unknown.push(c.type); return t??0; })(),
       x:c._ui?.x??0, y:c._ui?.y??0,
@@ -803,7 +865,11 @@ function loadJSON(data){
       params:(c.params??[]).map(Number), model_path:c.model_path||'' };
   });
   if (unknown.length) toast('未知元件类型（按 ORIFICE 占位）: '+unknown.join(','), 1);
-  if (noCoord) autoLayout();
+  // 位置优先级：localStorage 记忆（你手调的）> _ui 坐标 > autoLayout
+  if (!restorePos()){
+    const hasCoord = (data.nodes??[]).some(n=>n._ui) || (data.comps??[]).some(c=>c._ui);
+    if (!hasCoord) autoLayout();
+  }
   S.nid = Math.max(-1, ...S.nodes.map(n=>n.id))+1;
   S.cid = Math.max(-1, ...S.comps.map(c=>c.id))+1;
   S.gas = {type:data.gas?.type??'IdealGas',
@@ -899,7 +965,18 @@ $('bResult').onclick = ()=>{
   $('bResult').textContent = p.classList.contains('open') ? '结果查看 ▴' : '结果查看 ▾';
   fit();
 };
-$('bParse') && null;
+function parseResult(t){
+  const meta = t.match(/收敛:\s*(\S+)\s+max\|F\|=([\d.eE+-]+)/);
+  const nodes = [...t.matchAll(/n(\d+)\s+p0=([\d.eE+-]+)\s+T0=([\d.eE+-]+)/g)]
+    .map(m=>({id:+m[1], p0:+m[2], T0:+m[3]}));
+  const ports = [...t.matchAll(
+    /c(\d+)口(\d+)\(n(\d+)\)\s+A=([\d.eE+-]+)\s+m=([+-][\d.eE+-]+)\s+ps=([\d.eE+-]+)\s+Ts=([\d.eE+-]+)\s+rho=([\d.eE+-]+)\s+v=([\d.eE+-]+)\s+Ma=([\d.eE+-]+)\s+(choked|sub)/g
+  )].map(m=>({c:+m[1], j:+m[2], n:+m[3], A:+m[4], m:+m[5], ps:+m[6],
+              Ts:+m[7], rho:+m[8], v:+m[9], Ma:+m[10], ch:m[11]==='choked'}));
+  const cont = [...t.matchAll(/n(\d+)\s+\((\d+)口\):\s*([+-][\d.eE+-]+)/g)]
+    .map(m=>({id:+m[1], k:+m[2], s:+m[3]}));
+  return {meta, nodes, ports, cont};
+}
 (function(){
   const btn = document.createElement('button');
   btn.className = 'primary'; btn.textContent = '解析渲染';
@@ -907,17 +984,17 @@ $('bParse') && null;
   btn.onclick = ()=>{
     const t = $('resText').value;
     if (!t.trim()){ toast('先粘贴结果文本', 1); return; }
-    const meta = t.match(/收敛:\s*(\S+)\s+max\|F\|=([\d.eE+-]+)/);
-    const nodes = [...t.matchAll(/n(\d+)\s+p0=([\d.eE+-]+)\s+T0=([\d.eE+-]+)/g)]
-      .map(m=>({id:+m[1], p0:+m[2], T0:+m[3]}));
-    const ports = [...t.matchAll(
-      /c(\d+)口(\d+)\(n(\d+)\)\s+A=([\d.eE+-]+)\s+m=([+-][\d.eE+-]+)\s+ps=([\d.eE+-]+)\s+Ts=([\d.eE+-]+)\s+rho=([\d.eE+-]+)\s+v=([\d.eE+-]+)\s+Ma=([\d.eE+-]+)\s+(choked|sub)/g
-    )].map(m=>({c:+m[1], j:+m[2], n:+m[3], A:+m[4], m:+m[5], ps:+m[6],
-                Ts:+m[7], rho:+m[8], v:+m[9], Ma:+m[10], ch:m[11]==='choked'}));
-    const cont = [...t.matchAll(/n(\d+)\s+\((\d+)口\):\s*([+-][\d.eE+-]+)/g)]
-      .map(m=>({id:+m[1], k:+m[2], s:+m[3]}));
+    const {meta, nodes, ports, cont} = parseResult(t);
     if (!nodes.length && !ports.length){ toast('未解析到数据——确认是 write_result 格式',1); return; }
-    const maxAbs = Math.max(1e-12, ...ports.map(p=>Math.abs(p.m)));
+    // 填入叠加层（需求：结果在网络上显示）
+    RES.data = {nodes, ports};
+    RES.map.clear();
+    for (const p of ports) RES.map.set(p.c+':'+p.j, p);
+    RES.maxAbs = Math.max(1e-12, ...ports.map(p=>Math.abs(p.m)));
+    RES.show = true;
+    $('bOverlay').disabled = false;
+    draw();
+    const maxAbs = RES.maxAbs;
     let h = '';
     if (meta) h += `<div class="kv"><span>收敛</span>
       <b style="color:${meta[1]==='True'?'#2ecc71':'#ff7b6b'}">${meta[1]}</b>
@@ -946,6 +1023,12 @@ $('bParse') && null;
   };
   $('resIn').appendChild(btn);
 })();
+$('bOverlay').onclick = ()=>{
+  if (!RES.data) return;
+  RES.show = !RES.show;
+  $('bOverlay').classList.toggle('on', RES.show);
+  draw();
+};
 
 // ================= 启动 =================
 fit();
