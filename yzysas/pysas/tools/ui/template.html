@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>pysas studio — 网络前处理 / 结果查看</title>
+<style>
+  :root { --bg:#1b1e22; --panel:#242830; --edge:#363c46; --fg:#d8dce0;
+          --dim:#8a9199; --accent:#3d9bdc; --hot:#f1c40f; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:13px/1.45 "Segoe UI","Microsoft YaHei",sans-serif;
+         display:flex; flex-direction:column; height:100vh; }
+  header { display:flex; align-items:center; gap:8px; padding:7px 12px;
+           background:var(--panel); border-bottom:1px solid var(--edge);
+           flex:none; flex-wrap:wrap; }
+  header h1 { font-size:14px; font-weight:600; color:#fff; margin-right:4px; }
+  header code { color:var(--dim); font-size:10px; margin-right:6px; }
+  button { background:#333a44; color:var(--fg); border:1px solid var(--edge);
+           border-radius:4px; padding:3px 11px; cursor:pointer; font-size:12px; }
+  button:hover { background:#3f4753; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button:disabled { opacity:.35; cursor:not-allowed; }
+  select, input[type=text], input[type=number] {
+    background:#1b1e22; color:var(--fg); border:1px solid var(--edge);
+    border-radius:3px; padding:3px 6px; font-size:12px; }
+  select:focus, input:focus { outline:1px solid var(--accent); }
+  #main { flex:1; display:flex; min-height:0; position:relative; }
+  aside { background:var(--panel); overflow-y:auto; flex:none; z-index:2; }
+  #palette { width:172px; border-right:1px solid var(--edge); padding:7px; }
+  #props   { width:270px; border-left:1px solid var(--edge); padding:9px; }
+  .pal-cat { margin:7px 0 2px; font-size:10px; color:var(--dim);
+             text-transform:uppercase; letter-spacing:.05em; }
+  .pal-item { display:flex; align-items:center; gap:6px; padding:4px 6px;
+              margin:1px 0; border-radius:4px; cursor:pointer;
+              border:1px solid transparent; font-size:12px; }
+  .pal-item:hover { background:#313844; }
+  .pal-item.on { border-color:var(--accent); background:#28394a; }
+  .pal-item.dis { opacity:.38; cursor:not-allowed; }
+  #canvas-wrap { flex:1; position:relative; overflow:hidden;
+                 background:var(--bg); }
+  canvas#cv { position:absolute; inset:0; width:100%; height:100%; }
+  #minimap { position:absolute; right:10px; bottom:10px; width:170px;
+             height:118px; background:#20242add; border:1px solid var(--edge);
+             border-radius:6px; z-index:3; }
+  #status { position:absolute; left:10px; bottom:8px; font-size:11px;
+            color:var(--dim); pointer-events:none; z-index:3; }
+  #zoombox { position:absolute; left:10px; top:10px; display:flex; gap:4px;
+             z-index:3; }
+  label { display:block; font-size:11px; color:var(--dim); margin:7px 0 2px; }
+  .kv { display:flex; justify-content:space-between; padding:2px 0; font-size:12px; }
+  .kv b { color:#fff; font-weight:500; }
+  #resPanel { flex:none; height:0; border-top:1px solid var(--edge);
+              display:flex; flex-direction:column; background:var(--panel);
+              transition:height .18s ease; }
+  #resPanel.open { height:36vh; }
+  #resBody { flex:1; display:flex; gap:10px; padding:7px 12px; min-height:0; }
+  #resIn { width:36%; display:flex; flex-direction:column; gap:5px; }
+  #resText { flex:1; resize:none; font:11px/1.4 Consolas,monospace;
+             background:#17191d; color:#b8e0c0; border:1px solid var(--edge);
+             border-radius:4px; padding:7px; }
+  #resOut { flex:1; overflow:auto; }
+  table { border-collapse:collapse; font-size:12px; margin:3px 0 10px; }
+  th, td { border:1px solid var(--edge); padding:2px 8px; text-align:right; }
+  th { background:#2c323b; color:var(--dim); font-weight:500; }
+  th:first-child, td:first-child { text-align:left; }
+  tr.choked td { color:#ff7b6b; }
+  #toast { position:fixed; top:52px; left:50%; transform:translateX(-50%);
+           background:#28394a; border:1px solid var(--accent); color:#fff;
+           padding:7px 16px; border-radius:5px; font-size:12px; display:none;
+           z-index:9; max-width:80%; }
+  .warn { color:var(--hot); }
+</style>
+</head>
+<body>
+<header>
+  <h1>pysas studio</h1><code>infinite-canvas 架构 · netinf schema</code>
+  <button id="bUndo" disabled title="Ctrl+Z">↶</button>
+  <button id="bRedo" disabled title="Ctrl+Shift+Z">↷</button>
+  <span style="width:1px;height:18px;background:var(--edge)"></span>
+  <select id="demoSel" title="内置算例"></select>
+  <button id="bDemo">加载</button>
+  <button id="bImport">导入</button>
+  <input type="file" id="fImport" accept=".json" style="display:none">
+  <span style="flex:1"></span>
+  <button id="bFit" title="缩放至全部 (F)">⤢ 适配</button>
+  <button id="bResult">结果查看 ▾</button>
+  <button id="bExport" class="primary">导出 JSON</button>
+</header>
+<div id="main">
+  <aside id="palette"><div id="pal"></div></aside>
+  <div id="canvas-wrap">
+    <canvas id="cv"></canvas>
+    <div id="zoombox">
+      <button id="bZi" title="滚轮也可缩放">＋</button>
+      <button id="bZo">－</button>
+      <button id="bZr" title="重置视图 (R)">1:1</button>
+    </div>
+    <canvas id="minimap" width="340" height="236"></canvas>
+    <div id="status"></div>
+  </div>
+  <aside id="props"><div id="propBody"></div></aside>
+</div>
+<section id="resPanel">
+  <div id="resBody">
+    <div id="resIn">
+      <textarea id="resText" placeholder="把 pysas out/result_*.txt 内容整段粘进来……"></textarea>
+      <div style="font-size:11px;color:var(--dim)">
+        解析节点 p0/T0、各口 m/ps/Ts/ρ/v/Ma/壅塞 + 连续性；红行 = 壅塞口</div>
+    </div>
+    <div id="resOut"></div>
+  </div>
+</section>
+<div id="toast"></div>
+
+<script>
+"use strict";
+const SCHEMA = __SCHEMA__;
+const DEMOS  = __DEMOS__;
+
+// ================= 状态 =================
+const S = {
+  nodes: [], comps: [],            // netinf 数据（世界坐标 x,y 在 _ui 已并入）
+  nid: 0, cid: 0,
+  sel: new Set(),                  // 多选集合 {kind:'n'|'c', id}
+  mode: 'sel',                     // sel | place
+  placeType: null,
+  link: null,                      // {cid, j} 连线起点端口
+  gas: {type:'IdealGas', T0_default:600},
+};
+// viewport（infinite-canvas 模型）：screen = world·k + (tx,ty)
+const VP = { x: 0, y: 0, k: 1 };
+const $ = id => document.getElementById(id);
+const cv = $('cv'), ctx = cv.getContext('2d');
+const mm = $('minimap'), mctx = mm.getContext('2d');
+
+function toast(msg, warn){
+  const t = $('toast'); t.textContent = msg;
+  t.style.borderColor = warn ? '#f1c40f' : '#3d9bdc';
+  t.style.display = 'block';
+  clearTimeout(t._h); t._h = setTimeout(()=>t.style.display='none', 2600);
+}
+const w2s = (wx, wy) => [wx*VP.k + VP.x, wy*VP.k + VP.y];
+const s2w = (sx, sy) => [(sx - VP.x)/VP.k, (sy - VP.y)/VP.k];
+const key = (kind, id) => kind + id;
+
+// ================= 撤销重做（infinite-canvas 的 history 防抖 commit） =================
+const HIST = { past: [], future: [], last: null, timer: null, applying: false };
+function snapshot(){
+  return JSON.stringify({nodes:S.nodes, comps:S.comps, nid:S.nid, cid:S.cid});
+}
+function commit(force){
+  if (HIST.applying) return;
+  clearTimeout(HIST.timer);
+  const snap = () => {
+    const cur = snapshot();
+    if (HIST.last !== null && cur !== HIST.last){
+      HIST.past.push(HIST.last);
+      if (HIST.past.length > 100) HIST.past.shift();
+      HIST.future.length = 0;
+    }
+    HIST.last = cur;
+    syncHistBtns();
+  };
+  if (force) snap();
+  else HIST.timer = setTimeout(snap, 400);   // 防抖：连续编辑合成一步
+}
+function restore(snapStr){
+  HIST.applying = true;
+  const d = JSON.parse(snapStr);
+  S.nodes = d.nodes; S.comps = d.comps; S.nid = d.nid; S.cid = d.cid;
+  S.sel.clear(); renderProps(); draw();
+  HIST.applying = false;
+}
+function undo(){ if (!HIST.past.length) return;
+  HIST.future.push(HIST.last); restore(HIST.past.pop()); syncHistBtns(); }
+function redo(){ if (!HIST.future.length) return;
+  HIST.past.push(HIST.last); restore(HIST.future.pop()); syncHistBtns(); }
+function syncHistBtns(){
+  $('bUndo').disabled = !HIST.past.length;
+  $('bRedo').disabled = !HIST.future.length;
+}
+$('bUndo').onclick = undo; $('bRedo').onclick = redo;
+
+// ================= 元件几何（世界坐标） =================
+const CW = 120, CH_H = 26, PORT_DY = 20;
+function compH(c){ return CH_H + SCHEMA[c.type].ports*PORT_DY + 6; }
+function portPos(c, j){ return {x: c.x + CW, y: c.y + CH_H + 4 + j*PORT_DY + 4}; }
+function portInPos(c, j){ return {x: c.x, y: c.y + CH_H + 4 + j*PORT_DY + 4}; }
+
+// ================= 绘制 =================
+let dpr = 1;
+function fit(){
+  dpr = window.devicePixelRatio || 1;
+  const r = cv.parentElement.getBoundingClientRect();
+  cv.width = r.width*dpr; cv.height = r.height*dpr;
+  draw();
+}
+function draw(){
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,cv.width,cv.height);
+  // 点阵背景（随 viewport 平移缩放——infinite-canvas lines 模式）
+  const gap = 24*VP.k;
+  if (gap > 7){
+    const [ox, oy] = w2s(0,0);
+    ctx.fillStyle = '#2c3138';
+    for (let x = ox % gap; x < cv.width/dpr; x += gap)
+      for (let y = oy % gap; y < cv.height/dpr; y += gap)
+        ctx.fillRect(x, y, 1.2, 1.2);
+  }
+  ctx.translate(VP.x, VP.y); ctx.scale(VP.k, VP.k);   // 世界坐标系
+  // 连线
+  for (const c of S.comps) c.ports.forEach((p,j)=>{
+    if (p.node == null) return;
+    const n = S.nodes.find(n=>n.id===p.node);
+    if (!n) return;
+    const a = portPos(c,j);
+    ctx.strokeStyle = '#5a6470'; ctx.lineWidth = 1.6/VP.k;
+    ctx.beginPath(); ctx.moveTo(a.x,a.y);
+    ctx.bezierCurveTo(a.x+34, a.y, n.x-34, n.y, n.x, n.y);
+    ctx.stroke();
+    // 流向箭头（中点）
+    const t=.55, bx=(1-t)**3*a.x+3*(1-t)**2*t*(a.x+34)+3*(1-t)*t*t*(n.x-34)+t**3*n.x,
+          by=(1-t)**3*a.y+3*(1-t)**2*t*a.y+3*(1-t)*t*t*n.y+t**3*n.y;
+    ctx.fillStyle='#5a6470';
+    ctx.beginPath(); ctx.arc(bx,by,2.6/VP.k,0,7); ctx.fill();
+  });
+  // 连线预览
+  if (S.link && S.mouseW){
+    const c = S.comps.find(c=>c.id===S.link.cid);
+    if (c){ const a = portPos(c, S.link.j);
+      ctx.strokeStyle = '#f1c40f'; ctx.lineWidth = 1.6/VP.k;
+      ctx.setLineDash([5/VP.k, 4/VP.k]);
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(S.mouseW[0],S.mouseW[1]);
+      ctx.stroke(); ctx.setLineDash([]); }
+  }
+  // 框选矩形
+  if (SELBOX.active){
+    ctx.fillStyle = 'rgba(61,155,220,.12)';
+    ctx.strokeStyle = '#3d9bdc'; ctx.lineWidth = 1/VP.k;
+    const x = Math.min(SELBOX.a[0],SELBOX.b[0]), y = Math.min(SELBOX.a[1],SELBOX.b[1]),
+          w = Math.abs(SELBOX.b[0]-SELBOX.a[0]), h = Math.abs(SELBOX.b[1]-SELBOX.a[1]);
+    ctx.fillRect(x,y,w,h); ctx.strokeRect(x,y,w,h);
+  }
+  // 节点
+  ctx.textAlign='center';
+  for (const n of S.nodes){
+    const on = S.sel.has(key('n',n.id));
+    ctx.beginPath(); ctx.arc(n.x,n.y,11,0,7);
+    ctx.fillStyle = on ? '#f1c40f' : '#3f5260'; ctx.fill();
+    ctx.lineWidth = (on?2.5:1.3)/VP.k;
+    ctx.strokeStyle = '#cfd8dc'; ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.font = `${10/VP.k}px Consolas`;
+    ctx.fillText(n.id, n.x, n.y+3.5/VP.k);
+    ctx.fillStyle = '#7d858d';
+    ctx.font = `${10/VP.k}px "Segoe UI","Microsoft YaHei"`;
+    ctx.fillText('n'+n.id, n.x, n.y + 24/VP.k);
+  }
+  // 元件盒
+  for (const c of S.comps){
+    const m = SCHEMA[c.type], h = compH(c), on = S.sel.has(key('c',c.id));
+    ctx.fillStyle = '#282e37';
+    ctx.strokeStyle = on ? '#f1c40f' : m.color;
+    ctx.lineWidth = (on?2.4:1.4)/VP.k;
+    rr(c.x, c.y, CW, h, 6/VP.k); ctx.fill(); ctx.stroke();
+    // 标题条
+    ctx.fillStyle = m.color; ctx.globalAlpha = .22;
+    rr(c.x, c.y, CW, CH_H, {tl:6/VP.k, tr:6/VP.k}); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.textAlign='left';
+    ctx.fillStyle = m.color;
+    ctx.font = `600 ${11/VP.k}px "Segoe UI","Microsoft YaHei"`;
+    ctx.fillText(m.name, c.x+8/VP.k, c.y+16/VP.k);
+    ctx.fillStyle = '#9aa2a9';
+    ctx.font = `${10/VP.k}px Consolas`;
+    ctx.textAlign='right';
+    ctx.fillText('c'+c.id, c.x+CW-8/VP.k, c.y+16/VP.k);
+    drawSymbol(c, m);
+    // 端口
+    c.ports.forEach((p,j)=>{
+      const pp = portPos(c,j), pi = portInPos(c,j);
+      const bound = p.node != null;
+      const hot = S.link && S.link.cid===c.id && S.link.j===j;
+      ctx.beginPath(); ctx.arc(pp.x, pp.y, 5.5/VP.k, 0, 7);
+      ctx.fillStyle = hot ? '#f1c40f' : (bound ? m.color : '#78818b');
+      ctx.fill();
+      ctx.beginPath(); ctx.arc(pi.x, pi.y, 1.8/VP.k, 0, 7);
+      ctx.fillStyle = bound ? m.color : '#4a525c'; ctx.fill();
+      ctx.textAlign='left';
+      ctx.fillStyle = bound ? '#b8bec4' : '#78818b';
+      ctx.font = `${9.5/VP.k}px Consolas`;
+      const areaStr = (p.area>=0.001? p.area.toFixed(4) : p.area.toExponential(1));
+      ctx.fillText(`:${j} ${areaStr}`, c.x+6/VP.k, pp.y+7/VP.k);
+    });
+  }
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  drawMinimap();
+  $('status').textContent =
+    `节点 ${S.nodes.length} · 元件 ${S.comps.length} · 缩放 ${Math.round(VP.k*100)}%` +
+    (S.mode==='place' ? ` · 放置 ${SCHEMA[S.placeType].name}（Esc 取消）` : '') +
+    (S.link ? ' · 连线中：点目标节点' : '');
+}
+function rr(x,y,w,h,r){
+  ctx.beginPath();
+  if (typeof r === 'number'){ r={tl:r,tr:r,br:r,bl:r}; }
+  ctx.moveTo(x+r.tl,y);
+  ctx.lineTo(x+w-r.tr,y); ctx.arcTo(x+w,y,x+w,y+r.tr,r.tr);
+  ctx.lineTo(x+w,y+h-r.br); ctx.arcTo(x+w,y+h,x+w-r.br,y+h,r.br);
+  ctx.lineTo(x+r.bl,y+h); ctx.arcTo(x,y+h,x,y+h-r.bl,r.bl);
+  ctx.lineTo(x,y+r.tl); ctx.arcTo(x,y,x+r.tl,y,r.tl);
+  ctx.closePath();
+}
+// 元件小图符（右下角 SVG 风格简笔，8 种已实现件）
+function drawSymbol(c, m){
+  const s = 13/VP.k, x0 = c.x + CW - 12/VP.k - s, y0 = c.y + compH(c) - 4/VP.k - s;
+  ctx.save(); ctx.strokeStyle = m.color; ctx.lineWidth = 1.5/VP.k;
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  switch (m.sym){
+    case 'orifice': { // 收缩喷嘴
+      ctx.beginPath();
+      ctx.moveTo(x0, y0); ctx.lineTo(x0+s*.45, y0);
+      ctx.lineTo(x0+s*.45, y0+s*.3); ctx.lineTo(x0+s, y0+s*.3);
+      ctx.lineTo(x0+s, y0+s*.7); ctx.lineTo(x0+s*.45, y0+s*.7);
+      ctx.lineTo(x0+s*.45, y0+s); ctx.lineTo(x0, y0+s); ctx.closePath(); ctx.stroke();
+      break; }
+    case 'pipe': {    // 双横线管
+      ctx.beginPath();
+      ctx.moveTo(x0, y0+s*.25); ctx.lineTo(x0+s, y0+s*.25);
+      ctx.moveTo(x0, y0+s*.75); ctx.lineTo(x0+s, y0+s*.75);
+      ctx.stroke(); break; }
+    case 'pbound': case 'msource': { // 边界：圆 + 内箭头
+      ctx.beginPath(); ctx.arc(x0+s/2, y0+s/2, s*.48, 0, 7); ctx.stroke();
+      ctx.beginPath();
+      const d = m.sym==='msource' ? 1 : -1;
+      ctx.moveTo(x0+s*.28, y0+s/2); ctx.lineTo(x0+s*.68, y0+s/2);
+      ctx.moveTo(x0+s*.55, y0+s*.32); ctx.lineTo(x0+s*.72*d>0?x0+s*.72:x0+s*.72, y0+s/2);
+      ctx.stroke(); break; }
+    case 'booster': { // 三角增压
+      ctx.beginPath();
+      ctx.moveTo(x0, y0+s*.2); ctx.lineTo(x0+s, y0+s/2); ctx.lineTo(x0, y0+s*.8);
+      ctx.closePath(); ctx.stroke(); break; }
+    case 'heater': {  // 电阻折线
+      ctx.beginPath(); ctx.moveTo(x0, y0+s/2);
+      for (let i=0;i<4;i++) ctx.lineTo(x0+s*(i+1)/4, y0+(i%2? s*.22 : s*.78));
+      ctx.stroke(); break; }
+    case 'junction': { // 三岔
+      ctx.beginPath();
+      ctx.moveTo(x0, y0+s/2); ctx.lineTo(x0+s*.55, y0+s/2);
+      ctx.moveTo(x0+s*.55, y0+s*.15); ctx.lineTo(x0+s*.55, y0+s*.85);
+      ctx.moveTo(x0+s*.55, y0+s*.15); ctx.lineTo(x0+s, y0+s*.15);
+      ctx.moveTo(x0+s*.55, y0+s*.85); ctx.lineTo(x0+s, y0+s*.85);
+      ctx.stroke(); break; }
+    case 'areachg': { // 阶梯变径
+      ctx.beginPath();
+      ctx.moveTo(x0, y0+s*.3); ctx.lineTo(x0+s*.5, y0+s*.3);
+      ctx.lineTo(x0+s*.5, y0+s*.12); ctx.lineTo(x0+s, y0+s*.12);
+      ctx.moveTo(x0, y0+s*.7); ctx.lineTo(x0+s*.5, y0+s*.7);
+      ctx.lineTo(x0+s*.5, y0+s*.88); ctx.lineTo(x0+s, y0+s*.88);
+      ctx.stroke(); break; }
+    case 'surrogate': { // 神经元
+      ctx.beginPath(); ctx.arc(x0+s*.3, y0+s*.3, s*.16, 0, 7);
+      ctx.moveTo(x0+s*.3+s*.16, y0+s*.3); ctx.lineTo(x0+s*.72, y0+s*.52);
+      ctx.stroke();
+      ctx.beginPath(); ctx.arc(x0+s*.74, y0+s*.55, s*.18, 0, 7); ctx.stroke(); break; }
+    default: { ctx.strokeRect(x0, y0, s, s); }
+  }
+  ctx.restore();
+}
+
+// ================= minimap（infinite-canvas 的 Minimap） =================
+function drawMinimap(){
+  const W = mm.width, Hh = mm.height;
+  mctx.setTransform(1,0,0,1,0,0);
+  mctx.clearRect(0,0,W,Hh);
+  if (!S.nodes.length && !S.comps.length) return;
+  let L=1e9, T=1e9, R=-1e9, B=-1e9;
+  const ext = (x,y)=>{ L=Math.min(L,x); T=Math.min(T,y); R=Math.max(R,x); B=Math.max(B,y); };
+  for (const n of S.nodes) ext(n.x, n.y);
+  for (const c of S.comps) ext(c.x, c.y+compH(c));
+  ext(R+120, B+60);
+  const pad = 14, k = Math.min((W-2*pad)/(R-L), (Hh-2*pad)/(B-T));
+  const mx = x => pad + (x-L)*k + (W-2*pad-(R-L)*k)/2;
+  const my = y => pad + (y-T)*k + (Hh-2*pad-(B-T)*k)/2;
+  for (const c of S.comps){
+    const m = SCHEMA[c.type];
+    mctx.fillStyle = m.color;
+    mctx.fillRect(mx(c.x), my(c.y), Math.max(3,CW*k), Math.max(3,compH(c)*k));
+  }
+  mctx.fillStyle = '#9fb4c4';
+  for (const n of S.nodes){ mctx.beginPath(); mctx.arc(mx(n.x),my(n.y),2.4,0,7); mctx.fill(); }
+  // 当前视口矩形
+  const [vx0,vy0] = s2w(0,0), [vx1,vy1] = s2w(mm.clientWidth||170, mm.clientHeight||118);
+  mctx.strokeStyle = '#f1c40f'; mctx.lineWidth = 1.4;
+  mctx.strokeRect(mx(vx0), my(vy0), (vx1-vx0)*k, (vy1-vy0)*k);
+}
+mm.addEventListener('pointerdown', e=>{
+  const r = mm.getBoundingClientRect();
+  const wx = (e.clientX-r.left)*(340/r.width), wy = (e.clientY-r.top)*(236/r.height);
+  // 反解 world：简化为直接居中该点（mm 内部坐标 → world 用同 k）
+  let L=1e9,T=1e9,R=-1e9,B=-1e9;
+  const ext=(x,y)=>{L=Math.min(L,x);T=Math.min(T,y);R=Math.max(R,x);B=Math.max(B,y);};
+  for (const n of S.nodes) ext(n.x,n.y);
+  for (const c of S.comps) ext(c.x,c.y+compH(c));
+  if (R<L) return;
+  const pad=14, k=Math.min((340-2*pad)/(R-L),(236-2*pad)/(B-T));
+  const px = (wx-pad-(340-2*pad-(R-L)*k)/2)/k + L;
+  const py = (wy-pad-(236-2*pad-(B-T)*k)/2)/k + T;
+  const [sx,sy] = w2s(px,py);
+  VP.x = (cv.clientWidth)/2 - sx + VP.x; VP.y = (cv.clientHeight)/2 - sy + VP.y;
+  draw();
+});
+
+// ================= 交互：平移/缩放/框选/拖拽（infinite-canvas 原语） =================
+let panning = null, dragging = null;
+const SELBOX = { active:false, a:null, b:null, additive:false };
+let spaceDown = false;
+
+cv.addEventListener('wheel', e=>{
+  e.preventDefault();
+  const r = cv.getBoundingClientRect();
+  const [mx_, my_] = [e.clientX-r.left, e.clientY-r.top];
+  const [wx, wy] = s2w(mx_, my_);
+  const k2 = Math.min(Math.max(VP.k * Math.exp(-e.deltaY*0.0012), 0.06), 4);
+  VP.x = mx_ - wx*k2; VP.y = my_ - wy*k2; VP.k = k2;   // 鼠标锚点缩放
+  draw();
+}, {passive:false});
+
+cv.addEventListener('pointerdown', e=>{
+  const r = cv.getBoundingClientRect();
+  const [mx_, my_] = [e.clientX-r.left, e.clientY-r.top];
+  const [wx, wy] = s2w(mx_, my_);
+  const midOrSpace = e.button===1 || (e.button===0 && spaceDown);
+  if (midOrSpace){ panning = {sx:mx_, sy:my_, vx:VP.x, vy:VP.y}; return; }
+  if (e.button !== 0) return;
+
+  if (S.mode === 'place' && S.placeType != null){
+    const t = S.placeType, m = SCHEMA[t];
+    S.comps.push({ id:S.cid++, type:t, x:wx-CW/2, y:wy-16,
+      ports: Array.from({length:m.ports}, ()=>({area:1e-4, node:null})),
+      params: m.params.filter(pr=>pr[2]!=null).map(pr=>pr[2]),
+      model_path:'' });
+    commit(); draw(); return;
+  }
+  // 端口小圆（连线起点/终点判定用外扩半径）
+  const hit = hitPort(wx, wy);
+  if (hit){ S.link = {cid:hit.c.id, j:hit.j}; draw(); return; }
+  const hitNode = hitNodeAt(wx, wy);
+  if (S.link){
+    if (hitNode){
+      const c = S.comps.find(c=>c.id===S.link.cid);
+      if (c.ports.some((p,j)=>p.node===hitNode.id && j!==S.link.j))
+        toast('该节点已挂此元件另一口（多口件每口独立节点）', 1);
+      else { c.ports[S.link.j].node = hitNode.id;
+             toast(`c${c.id} 口${S.link.j} → n${hitNode.id}`); }
+      S.link = null; commit(); draw();
+    } else { S.link = null; draw(); }
+    return;
+  }
+  if (hitNode){
+    if (!S.sel.has(key('n',hitNode.id))){ if (!e.ctrlKey) S.sel.clear();
+      S.sel.add(key('n',hitNode.id)); renderProps(); }
+    dragging = { kind:'n', id:hitNode.id, sx:wx, sy:wy,
+                 orig:new Map([[hitNode.id,{x:hitNode.x,y:hitNode.y}]]) };
+    draw(); return;
+  }
+  const hitC = hitCompAt(wx, wy);
+  if (hitC){
+    if (!S.sel.has(key('c',hitC.id))){ if (!e.ctrlKey) S.sel.clear();
+      S.sel.add(key('c',hitC.id)); renderProps(); }
+    const orig = new Map();
+    for (const k_ of S.sel){ if (k_[0]!=='c') continue;
+      const c2 = S.comps.find(c=>c.id===+k_.slice(1));
+      if (c2) orig.set(c2.id, {x:c2.x,y:c2.y}); }
+    dragging = { kind:'c', id:hitC.id, sx:wx, sy:wy, orig };
+    draw(); return;
+  }
+  // 空白：清选 + 框选
+  if (!e.ctrlKey) S.sel.clear();
+  SELBOX.active = true; SELBOX.a = [wx,wy]; SELBOX.b = [wx,wy];
+  SELBOX.additive = e.ctrlKey;
+  renderProps(); draw();
+});
+
+cv.addEventListener('pointermove', e=>{
+  const r = cv.getBoundingClientRect();
+  const [mx_, my_] = [e.clientX-r.left, e.clientY-r.top];
+  const [wx, wy] = s2w(mx_, my_);
+  S.mouseW = [wx, wy];
+  if (panning){ VP.x = panning.vx + (mx_-panning.sx); VP.y = panning.vy + (my_-panning.sy);
+    draw(); return; }
+  if (SELBOX.active){ SELBOX.b = [wx,wy]; boxSelect(); draw(); return; }
+  if (dragging){
+    const dx = wx-dragging.sx, dy = wy-dragging.sy;
+    if (dragging.kind==='n'){
+      const n = S.nodes.find(n=>n.id===dragging.id);
+      if (n){ const o = dragging.orig.get(n.id); n.x=o.x+dx; n.y=o.y+dy; }
+    } else {
+      for (const [id,o] of dragging.orig){
+        const c = S.comps.find(c=>c.id===id);
+        if (c){ c.x=o.x+dx; c.y=o.y+dy; } }
+    }
+    draw(); return;
+  }
+  if (S.link) draw();
+});
+window.addEventListener('pointerup', ()=>{
+  if (dragging) commit();
+  panning = null; dragging = null;
+  if (SELBOX.active){ SELBOX.active=false; draw(); }
+});
+window.addEventListener('keydown', e=>{
+  if (e.code==='Space' && document.activeElement===document.body){ spaceDown=true; e.preventDefault(); }
+  if (e.key==='Escape'){ S.mode='sel'; S.placeType=null; S.link=null;
+    document.querySelectorAll('.pal-item').forEach(el=>el.classList.remove('on')); draw(); }
+  if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='z'){
+    e.preventDefault(); e.shiftKey ? redo() : undo(); }
+  if ((e.key==='Delete'||e.key==='Backspace') && S.sel.size &&
+      !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){
+    e.preventDefault(); delSel(); }
+  if (e.key.toLowerCase()==='f' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) fitView();
+  if (e.key.toLowerCase()==='r' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)){ VP.k=1; draw(); }
+});
+window.addEventListener('keyup', e=>{ if (e.code==='Space') spaceDown=false; });
+window.addEventListener('resize', fit);
+
+function boxSelect(){
+  const x0 = Math.min(SELBOX.a[0],SELBOX.b[0]), x1 = Math.max(SELBOX.a[0],SELBOX.b[0]);
+  const y0 = Math.min(SELBOX.a[1],SELBOX.b[1]), y1 = Math.max(SELBOX.a[1],SELBOX.b[1]);
+  if (!SELBOX.additive) S.sel.clear();
+  for (const n of S.nodes)
+    if (n.x>=x0 && n.x<=x1 && n.y>=y0 && n.y<=y1) S.sel.add(key('n',n.id));
+  for (const c of S.comps){
+    const h = compH(c);
+    if (c.x<x1 && c.x+CW>x0 && c.y<y1 && c.y+h>y0) S.sel.add(key('c',c.id));
+  }
+}
+function hitPort(wx, wy){
+  const R = 8/Math.min(VP.k,1)*1.4;
+  for (const c of S.comps){
+    if (wx < c.x-10 || wx > c.x+CW+10) continue;
+    for (let j=0; j<c.ports.length; j++){
+      const p = portPos(c,j);
+      if ((wx-p.x)**2 + (wy-p.y)**2 <= R*R) return {c, j};
+    }
+  } return null;
+}
+function hitNodeAt(wx, wy){
+  for (let i=S.nodes.length-1; i>=0; i--){
+    const n = S.nodes[i];
+    if ((wx-n.x)**2 + (wy-n.y)**2 <= 14*14) return n;
+  } return null;
+}
+function hitCompAt(wx, wy){
+  for (let i=S.comps.length-1; i>=0; i--){
+    const c = S.comps[i];
+    if (wx>=c.x && wx<=c.x+CW && wy>=c.y && wy<=c.y+compH(c)) return c;
+  } return null;
+}
+function delSel(){
+  if (!S.sel.size) return;
+  for (const k_ of S.sel){
+    if (k_[0]==='n'){ const id = +k_.slice(1);
+      S.nodes = S.nodes.filter(n=>n.id!==id);
+      for (const c of S.comps) c.ports.forEach(p=>{ if(p.node===id) p.node=null; });
+    } else { const id = +k_.slice(1);
+      S.comps = S.comps.filter(c=>c.id!==id); }
+  }
+  S.sel.clear(); commit(true); renderProps(); draw(); toast('已删除');
+}
+function fitView(){
+  if (!S.nodes.length && !S.comps.length) return;
+  let L=1e9,T=1e9,R=-1e9,B=-1e9;
+  const ext=(x,y)=>{L=Math.min(L,x);T=Math.min(T,y);R=Math.max(R,x);B=Math.max(B,y);};
+  for (const n of S.nodes) ext(n.x,n.y);
+  for (const c of S.comps) ext(c.x+CW, c.y+compH(c));
+  const w = cv.clientWidth, h = cv.clientHeight;
+  VP.k = Math.min(Math.max(Math.min((w-80)/(R-L), (h-80)/(B-T)), 0.06), 1.5);
+  VP.x = (w - (L+R)*VP.k)/2; VP.y = (h - (T+B)*VP.k)/2;
+  draw();
+}
+$('bFit').onclick = fitView;
+$('bZi').onclick = ()=>zoomStep(1.25);
+$('bZo').onclick = ()=>zoomStep(0.8);
+$('bZr').onclick = ()=>{ VP.k=1; draw(); };
+function zoomStep(f){
+  const w = cv.clientWidth/2, h = cv.clientHeight/2;
+  const [wx,wy] = s2w(w,h);
+  VP.k = Math.min(Math.max(VP.k*f, 0.06), 4);
+  VP.x = w - wx*VP.k; VP.y = h - wy*VP.k; draw();
+}
+
+// ================= 元件面板 =================
+(function(){
+  const cats = {};
+  for (const [id,m] of Object.entries(SCHEMA)) (cats[m.cat] ??= []).push([+id,m]);
+  const pal = $('pal');
+  for (const [cat, items] of Object.entries(cats)){
+    const h = document.createElement('div'); h.className='pal-cat'; h.textContent = cat;
+    pal.appendChild(h);
+    for (const [id,m] of items){
+      const d = document.createElement('div');
+      d.className = 'pal-item' + (m.impl?'':' dis');
+      d.innerHTML = `<span style="width:10px;height:10px;border-radius:2px;
+        background:${m.color};flex:none"></span><span>${m.name}</span>
+        <span style="flex:1"></span>
+        <span style="font-size:10px;color:var(--dim)">${m.impl?'':'+5'}</span>`;
+      if (m.impl) d.onclick = ()=>{
+        S.mode = S.placeType===id ? 'sel' : 'place'; S.placeType = id;
+        document.querySelectorAll('.pal-item').forEach(el=>el.classList.remove('on'));
+        if (S.mode==='place') d.classList.add('on');
+        draw();
+      };
+      pal.appendChild(d);
+    }
+  }
+  const ds = $('demoSel');
+  for (const k of Object.keys(DEMOS)) ds.add(new Option(k, k));
+})();
+
+// ================= 属性面板 =================
+function renderProps(){
+  const el = $('propBody');
+  if (S.sel.size === 1){
+    const k_ = [...S.sel][0], kind = k_[0], id = +k_.slice(1);
+    if (kind==='n'){
+      const n = S.nodes.find(n=>n.id===id);
+      if (n){
+        const deg = S.comps.flatMap(c=>c.ports.map((p,j)=>p.node===id?`c${c.id}:${j}`:null)).filter(Boolean);
+        el.innerHTML = `<div class="kv"><span>内部节点</span><b>n${n.id}</b></div>
+          <div class="kv"><span>挂接口</span><b>${deg.length?deg.join(' '):'—'}</b></div>
+          <div style="font-size:11px;color:var(--dim);margin-top:6px">
+            p0/T0 均为未知量由方程解出</div>`;
+        return;
+      }
+    } else {
+      const c = S.comps.find(c=>c.id===id);
+      if (c){ renderCompProps(el, c); return; }
+    }
+  }
+  if (S.sel.size > 1){
+    el.innerHTML = `<div class="kv"><span>多选</span><b>${S.sel.size} 个对象</b></div>
+      <div style="font-size:11px;color:var(--dim);margin-top:6px">
+      Del 扠除 · 拖拽整体移动</div>`;
+    return;
+  }
+  // 全局（未选中）
+  el.innerHTML = `<div class="kv"><span>全局</span><b>netinf</b></div>
+    <label>气体类型（fluids/make_gas）</label>
+    <select id="gType"><option>IdealGas</option><option>WaterVapor</option></select>
+    <label>缺省总温 T0_default (K)</label>
+    <input id="gT0" type="number" value="${S.gas.T0_default}">
+    <div style="margin-top:10px;font-size:11px;color:var(--dim)">
+      gas 数值不进 JSON——选身份不传数值<br>操作：滚轮缩放 · 中键/空格平移 ·
+      Ctrl+Z 撤销 · F 适配</div>`;
+  $('gType').value = S.gas.type;
+  $('gType').onchange = e=>{ S.gas.type = e.target.value; };
+  $('gT0').onchange  = e=>{ S.gas.T0_default = +e.target.value||600; };
+}
+function renderCompProps(el, c){
+  const m = SCHEMA[c.type];
+  let h = `<div class="kv"><span>元件</span><b>${m.name}</b></div>
+           <div class="kv"><span>comp id</span><b>c${c.id}</b></div>
+           <label>类型</label><select id="pType">`;
+  for (const [id,mm] of Object.entries(SCHEMA))
+    h += `<option value="${id}" ${+id===c.type?'selected':''}
+           ${mm.impl?'':'disabled'}>${mm.name}${mm.impl?'':'（未实现）'}</option>`;
+  h += `</select>`;
+  c.ports.forEach((p,j)=>{
+    h += `<label>口 ${j} 面积 A (m²)</label>
+          <input class="pa" data-j="${j}" type="number" step="any" value="${p.area}">
+          <label>口 ${j} 绑定节点</label>
+          <select class="pn" data-j="${j}"><option value="">— 未绑定 —</option>`;
+    for (const n of S.nodes)
+      h += `<option value="${n.id}" ${p.node===n.id?'selected':''}>n${n.id}</option>`;
+    h += `</select>`;
+  });
+  m.params.forEach((pr,i)=>{
+    h += `<label>${pr[0]} ${pr[1]!=='–'?`(${pr[1]})`:''}</label>
+          <input class="pp" data-i="${i}" type="number" step="any"
+                 value="${c.params[i] ?? ''}" placeholder="可选">`;
+  });
+  if (m.model_path)
+    h += `<label>模型文件 model_path（相对本 JSON）</label>
+          <input id="pPath" type="text" value="${c.model_path||''}"
+                 placeholder="phi.onnx">`;
+  el.innerHTML = h;
+  $('pType').onchange = e=>{
+    const t = +e.target.value; if (t===c.type) return;
+    c.type = t; const mm = SCHEMA[t];
+    c.params = mm.params.filter(pr=>pr[2]!=null).map(pr=>pr[2]);
+    while (c.ports.length < mm.ports) c.ports.push({area:1e-4, node:null});
+    c.ports.length = mm.ports;
+    commit(); renderCompProps(el, c); draw();
+  };
+  el.querySelectorAll('.pa').forEach(inp=>inp.onchange=e=>{
+    c.ports[+e.target.dataset.j].area = +e.target.value||0; commit(); draw(); });
+  el.querySelectorAll('.pn').forEach(sel=>sel.onchange=e=>{
+    c.ports[+e.target.dataset.j].node = e.target.value===''?null:+e.target.value;
+    commit(); draw(); });
+  el.querySelectorAll('.pp').forEach(inp=>inp.onchange=e=>{
+    c.params[+e.target.dataset.i] = +e.target.value; commit(); });
+  if (m.model_path) $('pPath').onchange = e=>{ c.model_path = e.target.value.trim(); };
+}
+
+// ================= 导出 / 导入 =================
+function buildJSON(){
+  const warn = [];
+  for (const c of S.comps){
+    c.ports.forEach((p,j)=>{
+      if (p.node==null) warn.push(`c${c.id} 口${j} 未绑定节点`);
+      if (SCHEMA[c.type].ports>1 && !(p.area>0)) warn.push(`c${c.id} 口${j} 面积≤0`);
+    });
+  }
+  if (!S.comps.some(c=>c.type===5))
+    warn.push('无 PRESSURE_BOUNDARY——方程组无压力锚定，组装期将报错');
+  return { json: {
+    gas: {type:S.gas.type, T0_default:+S.gas.T0_default},
+    nodes: S.nodes.map(n=>({id:n.id, _ui:{x:Math.round(n.x), y:Math.round(n.y)}})),
+    comps: S.comps.map(c=>{
+      const meta = SCHEMA[c.type];
+      const params = [...c.params.map(Number)];
+      while (params.length && params[params.length-1] == null) params.pop();
+      const o = {id:c.id, type:meta.etype,
+        ports:c.ports.map(p=>({area:+p.area, node:p.node})), params};
+      if (meta.model_path && c.model_path) o.model_path = c.model_path;
+      o._ui = {x:Math.round(c.x), y:Math.round(c.y)};
+      return o; })
+  }, warn };
+}
+$('bExport').onclick = ()=>{
+  if (!S.nodes.length && !S.comps.length){ toast('空网络', 1); return; }
+  const {json, warn} = buildJSON();
+  const blob = new Blob([JSON.stringify(json, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'netinf_ui.json'; a.click(); URL.revokeObjectURL(a.href);
+  toast(warn.length ? '已导出（注意：'+warn.join('；')+'）' : '已导出 netinf_ui.json', !!warn.length);
+};
+function loadJSON(data){
+  S.nodes = (data.nodes??[]).map(n=>({id:n.id, x:n._ui?.x??0, y:n._ui?.y??0}));
+  const byEtype = {}; for (const [k,m] of Object.entries(SCHEMA)) byEtype[m.etype] = +k;
+  const unknown = [];
+  let noCoord = !(data.nodes??[]).some(n=>n._ui);
+  S.comps = (data.comps??[]).map(c=>{
+    if (!c._ui) noCoord = true;
+    return { id:c.id, type:(()=>{ const t=byEtype[c.type];
+      if (t==null) unknown.push(c.type); return t??0; })(),
+      x:c._ui?.x??0, y:c._ui?.y??0,
+      ports:(c.ports??[]).map(p=>({area:+p.area, node:p.node})),
+      params:(c.params??[]).map(Number), model_path:c.model_path||'' };
+  });
+  if (unknown.length) toast('未知元件类型（按 ORIFICE 占位）: '+unknown.join(','), 1);
+  if (noCoord) autoLayout();
+  S.nid = Math.max(-1, ...S.nodes.map(n=>n.id))+1;
+  S.cid = Math.max(-1, ...S.comps.map(c=>c.id))+1;
+  S.gas = {type:data.gas?.type??'IdealGas',
+           T0_default:data.gas?.T0_default??600};
+  S.sel.clear(); HIST.past.length = 0; HIST.future.length = 0; HIST.last = snapshot();
+  renderProps(); fitView();
+  toast(`已加载：${S.nodes.length} 节点 / ${S.comps.length} 元件`);
+}
+function autoLayout(){
+  const cx=0, cy=0, R=170;
+  S.nodes.forEach((n,i)=>{
+    const a = i/Math.max(S.nodes.length,1)*2*Math.PI - Math.PI/2;
+    n.x = cx+R*Math.cos(a); n.y = cy+R*Math.sin(a);
+  });
+  S.comps.forEach((c,i)=>{
+    c.x = 340+(i%2)*170; c.y = -260+Math.floor(i/2)*120;
+  });
+}
+$('bImport').onclick = ()=>$('fImport').click();
+$('fImport').onchange = e=>{
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(t=>{ try{ loadJSON(JSON.parse(t)); }
+                     catch(err){ toast('JSON 解析失败: '+err.message, 1); } });
+  e.target.value = '';
+};
+$('bDemo').onclick = ()=>{
+  const k = $('demoSel').value;
+  if (k && DEMOS[k]) loadJSON(JSON.parse(DEMOS[k]));
+};
+
+// ================= 结果查看器 =================
+$('bResult').onclick = ()=>{
+  const p = $('resPanel');
+  p.classList.toggle('open');
+  $('bResult').textContent = p.classList.contains('open') ? '结果查看 ▴' : '结果查看 ▾';
+  fit();
+};
+$('bParse') && null;
+(function(){
+  const btn = document.createElement('button');
+  btn.className = 'primary'; btn.textContent = '解析渲染';
+  btn.style.cssText = 'align-self:flex-start';
+  btn.onclick = ()=>{
+    const t = $('resText').value;
+    if (!t.trim()){ toast('先粘贴结果文本', 1); return; }
+    const meta = t.match(/收敛:\s*(\S+)\s+max\|F\|=([\d.eE+-]+)/);
+    const nodes = [...t.matchAll(/n(\d+)\s+p0=([\d.eE+-]+)\s+T0=([\d.eE+-]+)/g)]
+      .map(m=>({id:+m[1], p0:+m[2], T0:+m[3]}));
+    const ports = [...t.matchAll(
+      /c(\d+)口(\d+)\(n(\d+)\)\s+A=([\d.eE+-]+)\s+m=([+-][\d.eE+-]+)\s+ps=([\d.eE+-]+)\s+Ts=([\d.eE+-]+)\s+rho=([\d.eE+-]+)\s+v=([\d.eE+-]+)\s+Ma=([\d.eE+-]+)\s+(choked|sub)/g
+    )].map(m=>({c:+m[1], j:+m[2], n:+m[3], A:+m[4], m:+m[5], ps:+m[6],
+                Ts:+m[7], rho:+m[8], v:+m[9], Ma:+m[10], ch:m[11]==='choked'}));
+    const cont = [...t.matchAll(/n(\d+)\s+\((\d+)口\):\s*([+-][\d.eE+-]+)/g)]
+      .map(m=>({id:+m[1], k:+m[2], s:+m[3]}));
+    if (!nodes.length && !ports.length){ toast('未解析到数据——确认是 write_result 格式',1); return; }
+    const maxAbs = Math.max(1e-12, ...ports.map(p=>Math.abs(p.m)));
+    let h = '';
+    if (meta) h += `<div class="kv"><span>收敛</span>
+      <b style="color:${meta[1]==='True'?'#2ecc71':'#ff7b6b'}">${meta[1]}</b>
+      <span>max|F|</span><b>${meta[2]}</b></div>`;
+    if (nodes.length)
+      h += `<table><tr><th>节点</th><th>p0 (Pa)</th><th>T0 (K)</th></tr>` +
+        nodes.map(n=>`<tr><td>n${n.id}</td><td>${n.p0.toFixed(1)}</td><td>${n.T0.toFixed(2)}</td></tr>`).join('') + `</table>`;
+    if (ports.length)
+      h += `<table><tr><th>口</th><th>节点</th><th>A (m²)</th><th>ṁ (kg/s)</th><th>流量分布</th>
+            <th>ps (Pa)</th><th>Ts (K)</th><th>ρ</th><th>v</th><th>Ma</th></tr>` +
+        ports.map(p=>{
+          const w = Math.abs(p.m)/maxAbs*90;
+          return `<tr${p.ch?' class="choked"':''}><td>c${p.c}口${p.j}</td><td>n${p.n}</td>
+            <td>${p.A.toExponential(1)}</td><td>${p.m.toPrecision(4)}</td>
+            <td><div style="display:flex;align-items:center;height:14px">
+              <div style="width:${w.toFixed(0)}px;height:8px;border-radius:2px;
+                background:${p.m<0?'#e67e22':'#3d9bdc'}"></div>
+              <span style="font-size:10px;margin-left:4px">${p.ch?'壅塞':''}</span></div></td>
+            <td>${p.ps.toFixed(0)}</td><td>${p.Ts.toFixed(1)}</td><td>${p.rho.toFixed(3)}</td>
+            <td>${p.v.toFixed(1)}</td><td>${p.Ma.toFixed(4)}</td></tr>`; }).join('') + `</table>`;
+    if (cont.length)
+      h += `<table><tr><th>节点连续性</th><th>口数</th><th>Σṁ（应≈0）</th></tr>` +
+        cont.map(c=>`<tr><td>n${c.id}</td><td>${c.k}</td>
+          <td style="color:${Math.abs(c.s)>1e-6?'#f1c40f':'#2ecc71'}">${c.s.toExponential(2)}</td></tr>`).join('') + `</table>`;
+    $('resOut').innerHTML = h;
+  };
+  $('resIn').appendChild(btn);
+})();
+
+// ================= 启动 =================
+fit();
+const dk = Object.keys(DEMOS);
+if (dk.length){ $('demoSel').value = dk[0]; loadJSON(JSON.parse(DEMOS[dk[0]])); }
+HIST.last = snapshot();
+</script>
+</body>
+</html>
