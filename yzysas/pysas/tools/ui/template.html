@@ -196,7 +196,9 @@ let dpr = 1;
 function fit(){
   dpr = window.devicePixelRatio || 1;
   const r = cv.parentElement.getBoundingClientRect();
-  cv.width = r.width*dpr; cv.height = r.height*dpr;
+  if (r.width < 2 || r.height < 2) return;   // 过渡中瞬时塌缩不置零位图
+  cv.width = Math.round(r.width*dpr);
+  cv.height = Math.round(r.height*dpr);
   draw();
 }
 function draw(){
@@ -1032,6 +1034,17 @@ $('bOverlay').onclick = ()=>{
 
 // ================= 启动 =================
 fit();
+// 容器尺寸变化（结果面板开合动画的每帧 + 窗口缩放）同步画布位图——
+// 失真/点击偏移的根修：旧代码只在面板 toggle 的一瞬间 fit()，那刻过渡
+// 还在中途，位图被定为中间态尺寸，动画结束后容器定形而位图未随→拉伸失真。
+// ResizeObserver + rAF 节流：跟随到最终态，过渡中每帧重设代价可控。
+let fitPending = false;
+if (typeof ResizeObserver !== 'undefined'){
+  new ResizeObserver(()=>{
+    if (fitPending) return; fitPending = true;
+    requestAnimationFrame(()=>{ fitPending = false; fit(); });
+  }).observe(cv.parentElement);
+}
 const dk = Object.keys(DEMOS);
 if (dk.length){ $('demoSel').value = dk[0]; loadJSON(JSON.parse(DEMOS[dk[0]])); }
 HIST.last = snapshot();
