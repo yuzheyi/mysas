@@ -299,7 +299,7 @@ function draw(){
   $('status').textContent =
     `节点 ${S.nodes.length} · 元件 ${S.comps.length} · 缩放 ${Math.round(VP.k*100)}%` +
     (S.mode==='place' ? ` · 放置 ${SCHEMA[S.placeType].name}（Esc 取消）` : '') +
-    (S.link ? ' · 连线中：点目标节点' : '');
+    (S.link ? ' · 连线中：拖到节点 / 另一元件（自动建节点）/ 空白取消' : '');
 }
 function rr(x,y,w,h,r){
   ctx.beginPath();
@@ -416,6 +416,30 @@ let panning = null, dragging = null;
 const SELBOX = { active:false, a:null, b:null, additive:false };
 let spaceDown = false;
 
+// 面板拖拽放置（需求①：draggable 原生拖放）
+cv.addEventListener('dragover', e=>{ e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+cv.addEventListener('drop', e=>{
+  e.preventDefault();
+  const t = e.dataTransfer.getData('text/pysas-elem');
+  if (t === '' || SCHEMA[+t] == null || !SCHEMA[+t].impl) return;
+  const r = cv.getBoundingClientRect();
+  const [wx, wy] = s2w(e.clientX-r.left, e.clientY-r.top);
+  placeComp(+t, wx-CW/2, wy-16);
+});
+function placeComp(type, x, y){
+  const m = SCHEMA[type];
+  const c = { id:S.cid++, type, x, y,
+    ports: Array.from({length:m.ports}, ()=>({area:1e-4, node:null})),
+    params: m.params.filter(pr=>pr[2]!=null).map(pr=>pr[2]),
+    model_path:'' };
+  S.comps.push(c);
+  S.mode = 'sel'; S.placeType = null;
+  document.querySelectorAll('.pal-item').forEach(el=>el.classList.remove('on'));
+  S.sel.clear(); S.sel.add(key('c',c.id));
+  renderProps(); commit(); draw();
+  return c;
+}
+
 cv.addEventListener('wheel', e=>{
   e.preventDefault();
   const r = cv.getBoundingClientRect();
@@ -442,19 +466,25 @@ cv.addEventListener('pointerdown', e=>{
       model_path:'' });
     commit(); draw(); return;
   }
-  // 端口小圆（连线起点/终点判定用外扩半径）
+  // 端口小圆（连线起点：按下即开始拖连线）
   const hit = hitPort(wx, wy);
   if (hit){ S.link = {cid:hit.c.id, j:hit.j}; draw(); return; }
   const hitNode = hitNodeAt(wx, wy);
   if (S.link){
+    // 连线落点：节点 → 直连；元件 → 自动建中间节点（需求③）；空白 → 取消
     if (hitNode){
-      const c = S.comps.find(c=>c.id===S.link.cid);
-      if (c.ports.some((p,j)=>p.node===hitNode.id && j!==S.link.j))
-        toast('该节点已挂此元件另一口（多口件每口独立节点）', 1);
-      else { c.ports[S.link.j].node = hitNode.id;
-             toast(`c${c.id} 口${S.link.j} → n${hitNode.id}`); }
-      S.link = null; commit(); draw();
-    } else { S.link = null; draw(); }
+      linkToNode(S.link, hitNode.id);
+    } else {
+      const hitC2 = hitCompAt(wx, wy);
+      if (hitC2 && hitC2.id !== S.link.cid){
+        const nn = makeNodeBetween(S.link, hitC2, wx, wy);
+        linkToNode(S.link, nn.id);
+        toast(`c${S.link.cid}口${S.link.j} ↔ c${hitC2.id}：自动生成节点 n${nn.id}`);
+      } else if (hitC2 && hitC2.id === S.link.cid){
+        toast('不能连自己', 1);
+      }
+    }
+    S.link = null; commit(); draw();
     return;
   }
   if (hitNode){
@@ -535,6 +565,23 @@ function boxSelect(){
     if (c.x<x1 && c.x+CW>x0 && c.y<y1 && c.y+h>y0) S.sel.add(key('c',c.id));
   }
 }
+function linkToNode(link, nodeId){
+  const c = S.comps.find(c=>c.id===link.cid);
+  if (!c) return;
+  if (c.ports.some((p,j)=>p.node===nodeId && j!==link.j)){
+    toast('该节点已挂此元件另一口（多口件每口独立节点）', 1); return;
+  }
+  c.ports[link.j].node = nodeId;
+}
+function makeNodeBetween(link, target, wx, wy){
+  // 元件↔元件直连：落点自动建节点（需求③）——若 target 有未绑口顺手接上
+  // （零额外操作）；节点归双方共用
+  const free = target.ports.findIndex(p=>p.node==null);
+  const nn = {id:S.nid++, x:wx, y:wy};
+  S.nodes.push(nn);
+  if (free >= 0) target.ports[free].node = nn.id;
+  return nn;
+}
 function hitPort(wx, wy){
   const R = 8/Math.min(VP.k,1)*1.4;
   for (const c of S.comps){
@@ -601,10 +648,15 @@ function zoomStep(f){
     for (const [id,m] of items){
       const d = document.createElement('div');
       d.className = 'pal-item' + (m.impl?'':' dis');
+      d.draggable = !!m.impl;
       d.innerHTML = `<span style="width:10px;height:10px;border-radius:2px;
         background:${m.color};flex:none"></span><span>${m.name}</span>
         <span style="flex:1"></span>
-        <span style="font-size:10px;color:var(--dim)">${m.impl?'':'+5'}</span>`;
+        <span style="font-size:10px;color:var(--dim)">${m.impl?'↖拖':''}</span>`;
+      d.ondragstart = e=>{
+        e.dataTransfer.setData('text/pysas-elem', String(id));
+        e.dataTransfer.effectAllowed = 'copy';
+      };
       if (m.impl) d.onclick = ()=>{
         S.mode = S.placeType===id ? 'sel' : 'place'; S.placeType = id;
         document.querySelectorAll('.pal-item').forEach(el=>el.classList.remove('on'));
@@ -761,14 +813,72 @@ function loadJSON(data){
   toast(`已加载：${S.nodes.length} 节点 / ${S.comps.length} 元件`);
 }
 function autoLayout(){
-  const cx=0, cy=0, R=170;
-  S.nodes.forEach((n,i)=>{
-    const a = i/Math.max(S.nodes.length,1)*2*Math.PI - Math.PI/2;
-    n.x = cx+R*Math.cos(a); n.y = cy+R*Math.sin(a);
-  });
-  S.comps.forEach((c,i)=>{
-    c.x = 340+(i%2)*170; c.y = -260+Math.floor(i/2)*120;
-  });
+  // 分层布局（需求④，替换旧圆周+网格）：以边界为源、两口件桥接为边 BFS
+  // 分层，同层横向排开、层间纵向等距——与气流方向对齐，读入即"对齐"
+  const NB = new Map();   // node id -> layer
+  const adj = new Map();  // node id -> Set(node id)
+  const linkNodes = (a,b)=>{ if (a==null||b==null||a===b) return;
+    if (!adj.has(a)) adj.set(a, new Set());
+    if (!adj.has(b)) adj.set(b, new Set());
+    adj.get(a).add(b); adj.get(b).add(a); };
+  for (const c of S.comps){
+    if (c.ports.length === 2)
+      linkNodes(c.ports[0]?.node, c.ports[1]?.node);
+  }
+  // 源 = 挂在边界元件上的节点；无边界则取度最大的节点
+  let sources = new Set();
+  for (const c of S.comps) if (c.type===5 || c.type===6)
+    c.ports.forEach(p=>{ if (p.node!=null) sources.add(p.node); });
+  if (!sources.size){
+    let best=null, deg=-1;
+    for (const [n, s_] of adj){ if (s_.size > deg){ deg = s_.size; best = n; } }
+    if (best != null) sources.add(best);
+  }
+  // BFS 分层
+  let layer = 0, frontier = [...sources];
+  for (const n of frontier) NB.set(n, 0);
+  const seen = new Set(sources);
+  while (frontier.length){
+    const next = [];
+    for (const n of frontier)
+      for (const m of (adj.get(n) ?? []))
+        if (!seen.has(m)){ seen.add(m); NB.set(m, layer+1); next.push(m); }
+    frontier = next; layer++;
+  }
+  // 孤立节点（无任何连接）收进最后一层
+  for (const n of S.nodes) if (!NB.has(n.id)) NB.set(n.id, layer+1);
+  // 同层排序：按已有 x 坐标（导入算例保持相对次序）
+  const byLayer = new Map();
+  for (const [id, L] of NB){
+    if (!byLayer.has(L)) byLayer.set(L, []);
+    byLayer.get(L).push(id);
+  }
+  const DX = 150, DY = 170, X0 = -300, Y0 = -200;
+  for (const [L, ids] of byLayer.entries()){
+    ids.sort((a,b)=>{
+      const na = S.nodes.find(n=>n.id===a), nb2 = S.nodes.find(n=>n.id===b);
+      return (na?na.x:0) - (nb2?nb2.x:0);
+    });
+    ids.forEach((id,i)=>{
+      const n = S.nodes.find(n=>n.id===id);
+      if (n){ n.x = X0 + i*DX - (ids.length-1)*DX/2; n.y = Y0 + L*DY; }
+    });
+  }
+  // 元件归位：边界挂节点左侧；两口件放两口节点中点；多口/未全绑层间右列
+  const maxL = Math.max(0, ...[...NB.values()]);
+  let heavyRow = 0;
+  for (const c of S.comps){
+    if ((c.type===5 || c.type===6) && c.ports[0]?.node!=null){
+      const n = S.nodes.find(n=>n.id===c.ports[0].node);
+      if (n){ c.x = n.x - CW - 46; c.y = n.y - compH(c)/2; continue; }
+    }
+    if (c.ports.length===2 && c.ports[0]?.node!=null && c.ports[1]?.node!=null){
+      const a = S.nodes.find(n=>n.id===c.ports[0].node);
+      const b = S.nodes.find(n=>n.id===c.ports[1].node);
+      if (a && b){ c.x = (a.x+b.x)/2 - CW/2; c.y = (a.y+b.y)/2 - compH(c)/2; continue; }
+    }
+    c.x = X0 + (maxL+1)*DX*1.6 + 30; c.y = Y0 - 40 + heavyRow*130; heavyRow++;
+  }
 }
 $('bImport').onclick = ()=>$('fImport').click();
 $('fImport').onchange = e=>{
