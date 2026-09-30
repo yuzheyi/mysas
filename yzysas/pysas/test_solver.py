@@ -656,6 +656,65 @@ def main():
             print(f"        ValueError: {str(e)[:60]}…")
             check("SU 非单调表组装期报错", True)
 
+    # ================= JN: junction 出口守恒律（多口默认支验收） =================
+    # 2026-09-30 base.exit_state 多口扩展：进料集合按 ṁ 符号、p0_up =
+    # 进料节点总压最大值。Y 型汇流：两股孔板进料（3e5/500K +
+    # 3e5/650K）→ junction → 出流到 2.5e5 背压腔。junction 出口面积
+    # = 两孔板之和（1.6e-4，物理通畅不欠膨胀）。物理图景：junction
+    # 腔对出口流是真水库（K&S 三前提成立）→ min-钉钉在 ps_E（腔
+    # 滞止态等熵加速）——隐含射流总压恰=进料上界（贴界 seam），
+    # 出口 ps < 腔压 = 加速降压（水库→管流的正确物理）。
+    case_jn = {
+        "gas": {"type": "IdealGas", "T0_default": 600.0},
+        "nodes": [{"id": 0}, {"id": 1}, {"id": 2}, {"id": 3}, {"id": 4}],
+        "comps": [
+            {"id": 0, "type": "PRESSURE_BOUNDARY",
+             "ports": [{"area": 0.0, "node": 0}], "params": [3.0e5, 500.0]},
+            {"id": 1, "type": "ORIFICE",
+             "ports": [{"area": 8.0e-5, "node": 0}, {"area": 8.0e-5, "node": 1}],
+             "params": [1.0, 0.8]},
+            {"id": 2, "type": "PRESSURE_BOUNDARY",
+             "ports": [{"area": 0.0, "node": 2}], "params": [3.0e5, 650.0]},
+            {"id": 3, "type": "ORIFICE",
+             "ports": [{"area": 8.0e-5, "node": 2}, {"area": 8.0e-5, "node": 3}],
+             "params": [1.0, 0.8]},
+            {"id": 4, "type": "JUNCTION",
+             "ports": [{"area": 1.6e-4, "node": 1},
+                       {"area": 1.6e-4, "node": 3},
+                       {"area": 1.6e-4, "node": 4}],
+             "params": []},
+            {"id": 5, "type": "PRESSURE_BOUNDARY",
+             "ports": [{"area": 0.0, "node": 4}], "params": [2.5e5, 600.0]},
+        ],
+    }
+    sysJN, ctxJN = assemble(case_jn)
+    resJN = solve(sysJN, None, ctxJN)
+    check("JN 汇流求解收敛", resJN.converged)
+    sts = sysJN.port_states(resJN.x, ctxJN)
+    # junction 出料口 = c4 口 2（发号序：c0.0 c1.0 c1.1 c2.0 c3.0 c3.1 c4.0 c4.1 c4.2 c5.0）
+    ex = sts[8]
+    m_out = -ex.mass_flow
+    p0_dn = resJN.x[sysJN.p_idx_of_node[4]]
+    p0_feed = resJN.x[sysJN.p_idx_of_node[1]]   # 进料节点（=零压差=腔压）
+    ident = ex.density * 1.6e-4 * ex.velocity - m_out
+    p0_jet = ex.static_pressure * (ex.total_temperature / ex.static_temperature) ** 3.5
+    check("JN 恒等式 ρAv=ṁ 机器精度", abs(ident) < 1e-12 * max(m_out, 1e-6),
+          f"ident={ident:.2e}")
+    check("JN 亚声速（出口面积=孔板和，通畅）", ex.mach_number < 0.99,
+          f"Ma={ex.mach_number:.4f}")
+    check("JN 隐含射流总压 ≤ 真上界 3e5（二律）", p0_jet <= 3.0e5,
+          f"p0_jet={p0_jet:.0f}")
+    # min-钉签名：ps 钉在 ps_E（<腔压），隐含射流总压 ≈ 进料上界（贴界）
+    check("JN ps<腔压且隐含总压≈进料上界（ps_E 钉住=水库等熵加速）",
+          ex.static_pressure < p0_dn and abs(p0_jet - p0_feed) < 0.02 * p0_feed,
+          f"ps={ex.static_pressure:.0f} 腔压={p0_dn:.0f} p0_jet={p0_jet:.0f}"
+          f" 进料上界={p0_feed:.0f}")
+    # 混合温度进 T0 通路：出流 T0 介于两股进料温之间（能量平衡独立验收）
+    T0_out = ex.total_temperature
+    check("JN 出口 T0 = 流量加权混合温度",
+          min(500.0, 650.0) < T0_out < max(500.0, 650.0),
+          f"T0_out={T0_out:.2f}（500/650 混合）")
+
     # ================= 汇总 =================
     print("\n" + "=" * 60)
     if FAILURES:

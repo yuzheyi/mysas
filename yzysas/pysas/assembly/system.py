@@ -259,17 +259,22 @@ class NetworkSystem:
         A=0 边界口无动通量：静=总（滞止）、v=Ma=0、ρ=ρ0。
 
         出料口出口状态调度（2026-09-29 归位裁决：调度归系统、物理归
-        元件、数学归 fluids）：白板对出料口（ṁ<0）是从下游节点滞止
-        态反推的**腔假设**——只在 choked=False（亚声速出口与腔压
-        匹配）成立（2026-09-29 用户裁决）；q-clamp 触发（choked=True）
-        = 腔假设失效（欠膨胀/高 Ma 射流，滞止源在上游），系统在此
-        且仅在此做一次契约调用 model.exit_state：
+        元件、数学归 fluids）——对**全部出料口**（ṁ<0）统一契约调用
+        model.exit_state（2026-09-29c 低速统一实验定案）：
           ① 元件覆盖（pipe：Fanno 记账/声速闭合——精确）
-          ② 基类默认（两口件：容量判据分派的等熵重构，与
-             choke_capacity 组合——cap 精化自动精化出口态）
-          ③ None（多口/退化）→ 维持白板（腔假设兜底）
+          ② 基类默认（两口件：守恒律重建——见 base.exit_state）
+          ③ None（多口/零流量/退化）→ 维持白板（腔假设兜底）
         调度归本方法，出口物理全住元件层（base 默认/覆盖）——
         本方法不含任何重构公式。
+
+        为什么含低速（实验，tmp_diag3，B 算例孔板扫背压 280→220k）：
+        白板对出料口是"下游腔滞止态等熵加速过 A_geo"——亚声速时
+        它不满足出口压力匹配（射流匹配静压应=腔压），ps 系统性偏低
+        （280k: −4.8%、260k: −11.1%、220k: −38.6%），且跨 q-clamp
+        阈值时报表跳变（220k→215k 时 Ma 0.86→0.57 不连续）——低速
+        白板不是无害近似，是结构性错口径。守恒律口径在低速极限
+        精确退化为 ps=腔压 + v=ṁ/(ρA)（不可压极限的正确答案），
+        q-clamp 门铃不再是调度开关，纯报表标志。
         """
         from pysas.datamodel import PortState
         self._prime_static(x, ctx)          # 重建白板（纯函数，无副作用风险）
@@ -282,10 +287,11 @@ class NetworkSystem:
                 t0 = x[self.T_idx_of_node[port.node_id]]
                 if port.area > 0.0:
                     st = model._static_state(x, ctx, j)   # 白板查表
-                    if mdot < 0.0 and st.choked:
-                        # 腔假设失效（q-clamp）：出口物理接管——
-                        # 契约调用（元件覆盖 > 基类默认等熵重构，
-                        # 见 base.exit_state）；None（多口/退化）
+                    if mdot < 0.0:
+                        # 出料口统一调度（2026-09-29c 定案：含低速——
+                        # 实验证明白板亚声速口径同样违反压力匹配，见
+                        # docstring）。契约调用（元件覆盖 > 基类默认
+                        # 守恒律重建）；None（多口/退化/零流量）
                         # 维持白板
                         st_exit = model.exit_state(x, ctx, j)
                         if st_exit is not None:

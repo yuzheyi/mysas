@@ -87,12 +87,13 @@ class ElementModel(ABC):
         """口 j（出料口 ṁ_j<0）出口截面静参数 → StaticState | None。
 
         系统出口状态契约（2026-09-29，第三"报值即能力"）：调度归
-        system.port_states（仅白板 q-clamp 触发=腔假设失效时问），
-        物理归元件（基类本默认实现 + 元件覆盖）。
+        system.port_states（对全部出料口 ṁ<0 统一问，含低速——白板
+        亚声速口径对出料口同样违反压力匹配，实验定案；见其
+        docstring），物理归元件（基类本默认实现 + 元件覆盖）。
 
-        默认实现（两口件，守恒律重建——用户裁决，替代被否决的
-        等熵 A_eff 版）：只用三条对任何元件都成立的守恒律 + 网络
-        已解出的量，**零过程假设**——损失无需显式给定，网络解
+        默认实现（守恒律重建——用户裁决，替代被否决的等熵 A_eff 版；
+        两口件/多口件通用，见下）：只用三条对任何元件都成立的守恒律
+        + 网络已解出的量，**零过程假设**——损失无需显式给定，网络解
         (ṁ, 节点压力) 已包含它（隐含射流总压自然显现，实测
         −12.3% @ Cd=0.8，可直接反读元件损耗）:
           ṁ = ρ·A_port·v（连续性，出料口几何面积=报表口径）
@@ -107,28 +108,44 @@ class ElementModel(ABC):
         射流，ps 可高于腔压）。
         恒等式 ρ·A_port·v=ṁ 两支均构造性精确闭合。
 
-        多口件返回 None（混合滞止态无默认可猜，同 port_T_out 的
-        raise 语义）；pipe 覆盖（Fanno 记账/声速闭合——精确）。
-        只在解后报表/后处理路径调用，不进残差。
+        多口件同样适用（2026-09-30 用户提议定案）：守恒律数学里
+        本没有"两口件"前提——唯一用到上游的地方是 ps_E 上界的
+        p0_up，推广为"全部进料口节点总压的最大值"（多股进料的
+        联合上界，任一进料源都不许隐含出超它）；混合温度 T_mix 已
+        由 port_T_out 契约报出（junction 流量加权混合），t0 取
+        本口节点总温（掺混后）——junction 白板 clamp 假值无人接管
+        的尾巴（红队遗留）就此收编。进料口集合由解出的 ṁ 符号
+        即时决定，与 port_T_out 同一模式；无进料口（解未收敛的
+        中间态）返回 None 维持白板。pipe 覆盖（Fanno 记账/声速
+        闭合——精确）；零流量口返回 None。只在解后报表/后处理
+        路径调用，不进残差。
 
         验证锚点（2026-09-29 B/B2 实测，改本方法后跑孔板
         3e5→{2e5,1e5}、Cd=0.8、A=1e-4 应逐位复现）:
-          B  亚临界: Ma=0.6387  choked=False  ps=200000（min 取腔压）
-              v=301.5  隐含射流总压 263,171（−12.3%，Cd=0.8 量级✓）
+          B  亚临界: Ma=0.6388  choked=False  ps=200000（min 取腔压）
+              v=301.6  隐含射流总压 263,189（−12.3%，Cd=0.8 量级✓）
           B2 壅塞:   Ma=1.0000  choked=True   ps=126,787=ρ*RT*
               （平面口径 @A_geo；对照喉道口径 158,485=0.5283·p0_up）
           恒等式 ρ·A·v−ṁ 两支机器精度闭合；背压扫 158k→160k ps 连续
+          低速统一（背压 260k，q-clamp 不触发区）: Ma=0.3680
+              ps=260000=腔压（压力匹配精确）  v=178.3；白板旧口径
+              同场景 Ma=0.4123/ps=231282（低 11%）——统一调度后退役
         """
-        if len(self.comp.ports) != 2:
-            return None                      # 多口件无默认（见 docstring）
-        j_up = 1 - j
+        mdot = x[self._m_idx[j]]
+        if mdot >= 0.0:
+            return None                  # 非出料口（调度约定 ṁ<0；含零流量）
+        # 进料口集合（ṁ>0）；p0_up = 进料节点总压最大值（ps_E 联合上界）
+        ins = [k for k in range(len(self.comp.ports)) if x[self._m_idx[k]] > 0.0]
+        if not ins:
+            return None                  # 无进料（中间态）：维持白板
+        p0_up = max(self._total_p(x, ctx, k) for k in ins)
         from pysas.fluids.isentropic import matched_plane_state
         return matched_plane_state(
-            abs(x[self._m_idx[j]]),         # |ṁ|
-            self.comp.ports[j].area,         # A_port（出料口几何面积）
-            self._total_p(x, ctx, j),        # 下游腔总压（压力匹配锚）
+            -mdot,                       # |ṁ|
+            self.comp.ports[j].area,     # A_port（出料口几何面积）
+            self._total_p(x, ctx, j),    # 下游腔总压（压力匹配锚）
             max(self._total_t(x, ctx, j), 10.0),   # T0（能量守恒）
-            max(self._total_p(x, ctx, j_up), 1.0),  # p0_up（仅 ps_E 上界）
+            p0_up,                       # 进料联合上界（仅 ps_E 用）
             ctx.gas.R, ctx.gas.gamma, ctx.gas.cp())
 
     def choke_capacity(self, p0_up: float, t0_up: float, ctx, j: int) -> float:
