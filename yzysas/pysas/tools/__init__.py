@@ -7,7 +7,7 @@ import tools**；tools 只消费 pysas 公开 API（依赖单向 tools → 核�
 
 住户：
   surrogate/  代理元件训练管线（torch 引擎：采样 → 拟合 → ONNX）
-  app.py      可视化前后处理单文件 HTML 生成器（python -m pysas.tools，
-              2026-09-30；原拟独立 pysas/ui 子包，裁决收编入 tools——
-              tools 就是工具集合体，依赖单向纪律不变）
+  ui/         可视化前后处理（python -m pysas.tools.ui 生成单文件
+              HTML；2026-09-30 位置终裁 tools/ui 子包，与 surrogate/
+              并列——tools 是工具集合体，依赖单向纪律不变）
 """

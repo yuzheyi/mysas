@@ -1,4 +1,4 @@
-"""app — 单文件 HTML 前后处理工具生成器（pysas/tools 的本体）。
+"""app — 单文件 HTML 前后处理工具生成器（pysas/tools/ui 的本体）。
 
 产物：零依赖 HTML（原生 JS + Canvas，无构建/无 CDN）——离线可用，
 浏览器打开即用。生成期把两样 Python 侧知识注入 JS 常量：
@@ -12,9 +12,9 @@
           _ui 字段——netinf_from_dict 忽略未知键，回读自动复布局）
   后处理  粘贴 out/ 结果文本 → 节点/端口表格渲染 + 流量条形图
 
-落点裁决（2026-09-30）：原拟独立 pysas/ui 子包，用户裁定收编
-pysas/tools——tools 就是工具集合体（surrogate 训练管线 + 本件），
-依赖单向纪律不变：核心包永不 import tools。
+落点终裁（2026-09-30，三轮）：yzysas 根 → pysas/ui 独立包 →
+tools 平铺 → tools/ui 子包（与 surrogate/ 训练管线并列）；
+tools 是工具集合体，依赖单向纪律不变：核心包永不 import tools。
 """
 from __future__ import annotations
 
@@ -85,7 +85,7 @@ def _check_schema():
 
 def _demos() -> dict[str, str]:
     """内置 demo：pysas/ 下三个真实算例原文（离线可加载）。"""
-    base = Path(__file__).resolve().parents[1]
+    base = Path(__file__).resolve().parents[2]
     out = {}
     for key, fn in [("两管串联 A", "netinf.json"),
                     ("单孔板 B", "netinf_B.json"),
