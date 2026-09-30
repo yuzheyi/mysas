@@ -24,11 +24,15 @@
   ⑥ 适定性断言: 全流量边界（无 PRESSURE_BOUNDARY）-> 组装期 ValueError
 """
 import sys
+from pathlib import Path
 
 import numpy as np
 from scipy.optimize import root
 
-sys.path.insert(0, r"e:\mywork\programDesign\mysas\yzysas")
+# __file__ 相对解析（2026-09-30）：主工作区与 git worktree 拷贝各自
+# import 自己的代码——绝对路径硬编码会把 worktree 的测试偷偷指回
+# 主工作区（测错了树还全绿，最危险的假阳性）
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from pysas.assembly import NetworkSystem          # noqa: E402
 from pysas.io import load_netinf, netinf_from_dict, build_models  # noqa: E402

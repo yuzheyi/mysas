@@ -18,7 +18,9 @@ from pathlib import Path
 import numpy as np
 from scipy.optimize import root
 
-sys.path.insert(0, r"e:\mywork\programDesign\mysas\yzysas")
+# __file__ 相对解析（2026-09-30）：worktree 拷贝 import 自己的代码
+# （绝对路径硬编码会把 worktree 测试偷偷指回主工作区——假绿）
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from pysas.assembly import NetworkSystem          # noqa: E402
 from pysas.io import build_models, load_netinf, write_result  # noqa: E402
