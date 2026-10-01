@@ -234,6 +234,61 @@ def run_dg3():
     return rec.done(out, case)
 
 
+def _dg_step(code: str, topo: str, case: dict, param: str, value: float,
+             dp_nominal: float) -> dict:
+    """扫描单档求解 → 逐档 record（任务四补测：含 K 分解与 offset 对照列）。
+
+    K 按该网络守卫参考量实算（sysm._p_ref_for_guard/_m_ref_for_guard）；
+    offset=|ṁ|−cap、offset/cap（面积无关不变量）、offset/Δp vs 1/K、
+    理论钉位 cap+Δp/K 的闭合残差全列。
+    """
+    rec = Rec(code, "A", topo)
+    out = rl.solve_case(case)
+    m: dict = {"param": param, "value": value,
+               "status": out.get("status"), "iters": out.get("iters"),
+               "warn_calls": out.get("warn_soft_choke")}
+    if out["status"] == "converged":
+        sysm, x = out["sysm"], out["x"]
+        pg = float(sysm._p_ref_for_guard)
+        mg = float(sysm._m_ref_for_guard)
+        k_guard = rl.SOFT_CHOKE_KAPPA * pg / mg
+        m["K_guard"] = k_guard
+        m["p_ref_guard"] = pg
+        m["m_ref_guard"] = mg
+        act = out.get("guard_active", [])
+        m["hits"] = len(act)
+        m["worst_ratio"] = out.get("worst_ratio")
+        if act:
+            r = act[0]
+            comp = next(c for c in sysm.net.comps if c.comp_id == r["comp_id"])
+            nids = [p.node_id for p in comp.ports]
+            dp = abs(float(x[sysm.p_idx_of_node[nids[0]]]
+                           - x[sysm.p_idx_of_node[nids[1]]]))
+            theo = r["cap"] + dp / k_guard
+            m.update({"mdot": abs(r["mdot"]), "cap": r["cap"],
+                      "dp_across": dp, "theo_pin": theo,
+                      "close_resid": abs(abs(r["mdot"]) - theo),
+                      "offset": r["offset"],
+                      "offset_over_cap": r["offset"] / r["cap"],
+                      "offset_over_dp": r["offset"] / dp if dp > 0 else None,
+                      "one_over_K": 1.0 / k_guard,
+                      "dp_over_kappa_pref": dp / (rl.SOFT_CHOKE_KAPPA * pg)})
+            rec.check("钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+                      m["close_resid"] < 1.0e-9, f"{m['close_resid']:.2e}")
+    else:
+        m["hits"] = len(out.get("guard_active", []))
+    if out.get("x") is not None:
+        try:
+            rec.rec["mermaid"] = rl.netinf_to_mermaid(case, x=out["x"],
+                                                      sysm=out["sysm"])
+        except Exception:                     # noqa: BLE001
+            pass
+    rec.rec["measured"] = _clean(m)
+    rec.rec["story"] = (f"扫描单档 {param}={value:.3e}（逐档记录，"
+                        "汇总判据见 DG 母记录）")
+    return rec.rec
+
+
 def run_dg45():
     recs = []
     # ---- DG-4 面积扫描 ----
@@ -246,6 +301,8 @@ def run_dg45():
     per, all_ok = [], True
     for a in (1.0e-4, 3.0e-4, 1.0e-3, 3.0e-3, 1.0e-2):
         case = dg1_case(a=a)
+        recs.append(_dg_step(f"DG-4-A{a:g}", f"PB 5e5 → HEATER(A={a:g}) → "
+                             f"PB 1e5", case, "A", a, 4.0e5))
         out = rl.solve_case(case)
         row = {"A": a, "status": out["status"], "iters": out.get("iters"),
                "hits": len(out.get("guard_active", []))}
@@ -299,6 +356,9 @@ def run_dg45():
     per, ratios = [], []
     for p_up in (2.0e5, 3.0e5, 5.0e5, 7.0e5, 9.0e5):
         case = dg1_case(p_up=p_up)
+        recs.append(_dg_step(f"DG-5-P{p_up:g}", f"PB {p_up:g} → "
+                             "HEATER(A=1e-3) → PB 1e5", case, "p_up", p_up,
+                             p_up - 1.0e5))
         out = rl.solve_case(case)
         row = {"p_up": p_up, "status": out["status"],
                "iters": out.get("iters"),
@@ -865,9 +925,11 @@ def main() -> int:
         m = r.get("measured") or {}
         wr = m.get("worst_ratio")
         wr_s = f"{wr:.4f}" if isinstance(wr, float) else "—"
+        hits = m.get("hits", [])
+        n_hits = hits if isinstance(hits, int) else len(hits or [])
         print(f"{r['id']:<7} {r['group']:<2} {r['verdict']:<8} "
               f"{str(m.get('status', '—')):<6} {str(m.get('iters', '—')):<6} "
-              f"{len(m.get('hits', []) or []):<5} "
+              f"{n_hits:<5} "
               f"{str(m.get('warn_calls', '—')):<5} {wr_s}")
         for c in r["checks"]:
             if not c["ok"]:

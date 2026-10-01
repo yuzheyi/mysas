@@ -50,6 +50,8 @@ ELEM_NAMES = {0: "ORIFICE", 2: "PIPE", 5: "PRESSURE_BOUNDARY",
               6: "MASS_SOURCE", 7: "BOOSTER", 8: "HEATER", 9: "JUNCTION",
               10: "AREA_CHANGE", 12: "SURROGATE_FLOW"}
 
+FOLLOWUP_JSON = RESULTS / "soft_choke_followup.json"
+
 
 # ============================================================ 扫描主体
 def sweep_case(case_id: str, case: dict, do_scipy: bool) -> dict:
@@ -315,9 +317,56 @@ def _deep_dive(line: dict, case: dict) -> str:
     return "\n".join(rows)
 
 
+def _dg_scan_table(records: list[dict], prefix: str, param_label: str) -> str:
+    """DG-4/DG-5 逐档扫描表（任务四补测：档位明细 + 守卫标度对照列）。"""
+    steps = [r for r in records if r["id"].startswith(prefix)
+             and r.get("measured")]
+    if not steps:
+        return ""
+    out = [f"**{param_label}逐档明细**（K=κ·p_ref/m_ref 按档实算；"
+           "闭合=|ṁ|−(cap+Δp/K)）:", ""]
+    if prefix == "DG-4-A":
+        out += ["| 档位 A | converged | iters | 告警 | |ṁ| | cap | "
+                "offset=|ṁ|−cap | offset/cap（面积无关不变量） | "
+                "offset/Δp | 1/K | 闭合残差 |",
+                "|---|---|---|---|---|---|---|---|---|---|---|"]
+    else:
+        out += ["| 档位 p_up | converged | iters | 告警 | |ṁ| | cap | ratio | "
+                "offset/Δp | 1/K | 闭合残差 |",
+                "|---|---|---|---|---|---|---|---|---|---|"]
+    for r in steps:
+        m = r["measured"]
+        val = m.get("value")
+        val_s = f"{val:.0e}" if prefix == "DG-4-A" else f"{val:.0e}"
+        row = [f"| {val_s} | {m.get('status')} | {m.get('iters')} | "
+               f"{m.get('warn_calls')} |"]
+        if m.get("cap") is not None:
+            row += [f"{_rd(m.get('mdot'))} | {_rd(m.get('cap'))} | "]
+            if prefix == "DG-4-A":
+                row += [f"{_rd(m.get('offset'), 3)} | "
+                        f"{_rd(m.get('offset_over_cap'), 4)} | "
+                        f"{_rd(m.get('offset_over_dp'), 3)} | "
+                        f"{_rd(m.get('one_over_K'), 3)} | "
+                        f"{_rd(m.get('close_resid'), 2)} |"]
+            else:
+                act_ratio = m.get("worst_ratio")
+                row += [f"{_rd(act_ratio, 5)} | "
+                        f"{_rd(m.get('offset_over_dp'), 3)} | "
+                        f"{_rd(m.get('one_over_K'), 3)} | "
+                        f"{_rd(m.get('close_resid'), 2)} |"]
+        else:
+            row.append(" — " * (4 if prefix == "DG-4-A" else 4) + " |")
+        out.append("".join(row))
+    out.append("")
+    return "\n".join(out)
+
+
 def _regress_section(records: list[dict]) -> list[str]:
     out = []
     for r in records:
+        # DG-4/DG-5 逐档子记录 → 并入母记录后的扫描表（不单独成节）
+        if r["id"].startswith(("DG-4-A", "DG-5-P")):
+            continue
         m = r.get("measured") or {}
         mer = r.get("mermaid")
         out.append(f"### {r['id']}（{r['group']} 组）—— {r['topo']}")
@@ -360,6 +409,14 @@ def _regress_section(records: list[dict]) -> list[str]:
                 out.append(f"| c{h['comp']} | {h['port']} | {_rd(h['mdot'])} "
                            f"| {_rd(h['cap'])} | {_rd(h['ratio'], 5)} |")
         out.append("")
+        if r["id"] == "DG-4":
+            t = _dg_scan_table(records, "DG-4-A", "面积扫描")
+            if t:
+                out.append(t)
+        if r["id"] == "DG-5":
+            t = _dg_scan_table(records, "DG-5-P", "压差扫描")
+            if t:
+                out.append(t)
     return out
 
 
@@ -400,6 +457,225 @@ def _anchor_story(case_id: str, line: dict, case: dict) -> list[str]:
     return out
 
 
+# ============================================================ 补测轮章节
+def _k_evidence_section(task1: list[dict], records: list[dict]) -> list[str]:
+    """§2.6 K 标度边界证据库（补测任务一）。"""
+    L = []
+    ap = L.append
+    ap("### 2.6 三告警例深挖：K 全网单标度边界证据库（补测轮任务一）")
+    ap("")
+    ap("守卫钉位公式：解处压力行平衡给出 **|ṁ| = cap + Δp/K，"
+       "K = κ·p_ref/m_ref（κ=1e3，p_ref=锚定压力上限，m_ref=全网最大口"
+       "容量）**。推论（单标度的直接后果）：钉位相对偏差 "
+       "**ratio−1 = (Δp/p_ref)·(m_ref/(κ·cap))**——元件自身容量 cap 离"
+       "全网容量尺度 m_ref 越远、该元件承受的相对压差越大，钉位偏得越"
+       "远。三例分解全部按实现守卫参考量（`_p_ref_for_guard`/"
+       "`_m_ref_for_guard`）实算，理论钉位与实测 |ṁ| 的闭合残差在"
+       "机器精度（≤1e-14）——**守卫方程侧工作正常，偏差全部来自 K 的"
+       "全网单标度，不是告警失败**。")
+    ap("")
+    for d in task1:
+        cid = d.get("case_id")
+        if d.get("error"):
+            ap(f"#### {cid}：{d['error']}")
+            ap("")
+            continue
+        ap(f"#### {cid}　K={_rd(d.get('K'), 4)}"
+           f"（p_ref={_rd(d.get('p_ref_guard'), 4)}"
+           f"，m_ref={_rd(d.get('m_ref_guard'), 4)}）")
+        ap("")
+        mer = d.get("mermaid")
+        if mer:
+            ap("```mermaid")
+            ap(mer)
+            ap("```")
+            ap("")
+        drivers = d.get("m_ref_drivers", [])
+        if drivers:
+            ap("m_ref 驱动者（全网口容量 top3，撑大分母 → K 偏小）：" +
+               "；".join(f"c{x['comp']}({x['elem']})口{x['port']} "
+                        f"cap@ref={_rd(x['cap_at_ref'], 3)}"
+                        for x in drivers))
+            ap("")
+        ap("| 命中 | |ṁ| | cap | ratio | Δp 跨元件 | 理论钉位 cap+Δp/K | "
+           "闭合残差 | Δp/p_ref | m_ref/cap | ratio−1 预测 |")
+        ap("|---|---|---|---|---|---|---|---|---|---|")
+        for h in d.get("hits", []):
+            ap(f"| c{h['comp']}({h['elem']})口{h['port']} | {_rd(h['mdot'])} "
+               f"| {_rd(h['cap'], 4)} | {_rd(h['ratio'], 5)} | "
+               f"{_rd(h['dp_across'], 4)} | {_rd(h['theo_pin'], 5)} | "
+               f"{h['close_resid']:.1e} | {_rd(h['dp_over_pref'], 4)} | "
+               f"{_rd(h['mref_over_cap'], 4)} | "
+               f"{_rd(h['ratio_minus1_pred'], 5)} |")
+        ap("")
+        for cf in d.get("counterfactual", []):
+            if cf.get("status") == "converged":
+                cf_txt = (f"收敛（iters={cf.get('iters')}），同口流量 "
+                          f"{_rd(cf.get('mdot_same_port'))} kg/s"
+                          f"（=该位置容量的 {cf.get('mdot_over_cap')} 倍，"
+                          "亚容量自限流），跨元件压差 "
+                          f"{_rd(cf.get('dp_across'), 4)} Pa")
+            else:
+                cf_txt = (f"{cf.get('status')}——替身也不收敛：该网络对"
+                          "物理壅塞元件同样无根（真·网络容量不足）")
+            ap(f"**反事实推演**（HEATER→{cf.get('surrogate')}）：{cf_txt}。")
+            ap("")
+    ap("**守卫价值判定**（反事实汇总）：")
+    ap("")
+    ap("- **A0093 / A0203：\"守卫把无根变有根\"成立**——ORIFICE 替身"
+       "（同面积 Cd=1）收敛到亚容量良定解（0.54/0.72 倍容量），超容需求"
+       "来自 HEATER 的零压降特性（无流量方程→流量无界→无根）；守卫陡坡"
+       "扮演\"虚拟压损\"，钉位偏差 ratio−1 = 1e-4 / 8.6e-3（K 尺度匹配"
+       "良好，几乎贴着物理容量）。")
+    ap("- **A0171：\"守卫把崩溃变可诊断\"**——ORIFICE 替身同样 "
+       "clean_fail：booster 压头 >> 全网物理容量，对任何限流元件都无根；"
+       "守卫让解存在+告警指路。钉位偏差 ratio−1 = 23：K 被大孔板 "
+       "m_ref=2.79 撑大 167 倍 → 钉在 24×cap——**K 全网单标度失准的"
+       "量化实证**。")
+    ap("")
+    ap("**DG-4 对照**（尺度均匀网络，守卫标度关系应逐位成立）：")
+    ap("")
+    dg4 = [r for r in records if r["id"].startswith("DG-4-A")
+           and r.get("measured")]
+    if dg4:
+        ap("| 档位 A | offset=|ṁ|−cap | offset/cap | Δp/(κ·p_ref) 预测 |")
+        ap("|---|---|---|---|")
+        for r in dg4:
+            m = r["measured"]
+            ap(f"| {m['value']:.0e} | {_rd(m.get('offset'), 3)} | "
+               f"{_rd(m.get('offset_over_cap'), 5)} | "
+               f"{_rd(m.get('dp_over_kappa_pref'), 5)} |")
+        ap("")
+    ap("**证据库结论**（供\"K 逐元件局部参考量\"——待定问题 #14 姊妹条"
+       "重启时引用）：单标度 K 的钉位偏差可精确分解为两因子之积——"
+       "Δp/p_ref × m_ref/(κ·cap)。尺度均匀（DG-1 族：cap≈m_ref）时偏差 "
+       "~1e-3 与设计一致；多尺度+带功元件网络（A0171：m_ref/cap≈1.7e5、"
+       "Δp/p_ref≈0.14）偏差放大到 ratio=24，钉位解离物理壅塞极限一个"
+       "数量级以上——此时告警文案中的 \"ṁ>cap\" 数值不再近似物理壅塞"
+       "流量，只应作\"超容\"标志读。局部参考量方案（K_i=κ·p_ref/cap_i）"
+       "可把偏差收回 Δp/(κ·cap) 量级。")
+    ap("")
+    return L
+
+
+def _assemble_section(task2: list[dict]) -> list[str]:
+    """§2.7 assemble_error 分诊（补测任务二）。"""
+    L = []
+    ap = L.append
+    n_design = sum(1 for t in task2 if t.get("class") == "design_intended")
+    ap(f"### 2.7 assemble_error 分诊（{len(task2)} 例，设计内拦截 "
+       f"{n_design} / 疑似缺陷 {len(task2) - n_design}）（补测轮任务二）")
+    ap("")
+    ap("| case | 来源 | 异常 | 定性 |")
+    ap("|---|---|---|---|")
+    for t in task2:
+        mark = "✅" if t.get("class") == "design_intended" else "❌"
+        exc = (t.get("exception") or "").replace("|", "/")
+        if len(exc) > 60:
+            exc = exc[:60] + "…"
+        src = ("C 层酷刑产线" if t["case_id"].startswith("C")
+               else "A 层生成器")
+        ap(f"| {t['case_id']} | {src} | {exc} | {mark} {t['verdict']} |")
+    ap("")
+    for t in task2:
+        ap(f"<details><summary>{t['case_id']} — {t['verdict']}</summary>")
+        ap("")
+        mer = t.get("mermaid")
+        if mer:
+            ap("```mermaid")
+            ap(mer)
+            ap("```")
+            ap("")
+        ap(f"异常：{t.get('exception')}")
+        ap("")
+        ap("</details>")
+        ap("")
+    ap("**生成器侧建议（只记录，不改代码）**：本轮 6 例全部来自 C 层"
+       "边界酷刑产线设计例（C5 组：全 MASS_SOURCE 无压力锚定 ×5、代理"
+       "模型缺文件 ×1），**非 gen_random.py 产出**——随机生成器未产出"
+       "非法拓扑，无需修改建议；C5 组保留作组装期校验的回归哨兵。")
+    ap("")
+    return L
+
+
+def _init_sens_section(task3: dict) -> list[str]:
+    """§2.8 初值敏感性对照（补测任务三）。"""
+    L = []
+    ap = L.append
+    rows = task3.get("rows", [])
+    neg = task3.get("negative_list", [])
+    ap(f"### 2.8 scipy_not_ok 家族初值敏感性对照（{len(rows)} 例 × 4 组"
+       "初值，补测轮任务三）")
+    ap("")
+    if neg:
+        ap("> ⚠ **容量初值负面清单（default_guess 不收敛而零流量初值"
+           f"收敛）：{', '.join(neg)}**——下一轮初值方案迭代的直接输入，"
+           "明细见下表负清单列。")
+        ap("")
+    else:
+        ap("**容量初值负面清单为空**：14 例家族成员中无一出现"
+           "\"default_guess 不收敛而零流量初值收敛\"——容量初值无可检"
+           "负面案例。反向依赖（default 过 / 零初值不过）"
+           f"{task3.get('n_reverse', 0)} 例，见下。")
+        ap("")
+    ap("| case | a default | b 零流量 | c ×0.5 | c ×2 | 收敛组同根? | "
+       "负清单 | 反向 |")
+    ap("|---|---|---|---|---|---|---|---|")
+
+    def _cell(v):
+        if not v or v.get("status") is None:
+            return "—"
+        if v.get("converged"):
+            return (f"C({v.get('iters')},w{v.get('warn_calls')},"
+                    f"r={_rd(v.get('worst_ratio'), 4)})")
+        return f"{v.get('status')}({v.get('iters')})"
+
+    for r in rows:
+        vs = r.get("variants", {})
+        sr = r.get("same_root")
+        sr_s = "—" if sr is None else ("✅" if sr else "❌ 异根")
+        ap(f"| {r['case_id']} | {_cell(vs.get('a_default'))} | "
+           f"{_cell(vs.get('b_zeroflow'))} | {_cell(vs.get('c_half'))} | "
+           f"{_cell(vs.get('c_double'))} | {sr_s} | "
+           f"{'⚠️' if r.get('negative_list') else ''} | "
+           f"{'←' if r.get('reverse') else ''} |")
+    ap("")
+    for r in rows:
+        pd = r.get("pair_dx_scaled") or {}
+        if not pd:
+            continue
+        pairs = "，".join(f"{k}={v:.2e}" for k, v in pd.items())
+        mer = r.get("mermaid_a")
+        ap(f"<details><summary>{r['case_id']} 两两缩放 max|dx|：{pairs}"
+           "</summary>")
+        ap("")
+        if mer:
+            ap("```mermaid")
+            ap(mer)
+            ap("```")
+            ap("")
+        ap("</details>")
+        ap("")
+    ap("**判定**：守卫的初值依赖性**总体良性**——")
+    ap("")
+    ap(f"- {task3.get('n_same_root', 0)}/{len(rows)} 例全部收敛组严格"
+       "同根（缩放坐标 max|dx|<1e-6；A0004 等告警例 pair_dx=0.0 逐位"
+       "一致）；")
+    ap(f"- 异根 {task3.get('n_diff_root', 0)} 例中：**A0005 是零流量"
+       "死肢节点温度的数值多解**（流量段全同、T_n5 差 1.8e4 K——死肢 T "
+       "无物理约束的已知性质，与守卫无关）；A0062/A0101 为亚容量网络"
+       "轻度多解；A0093/A0199 仅边际超阈（8.4e-4 / 1.0e-6，守卫特征"
+       "坐标 ratio 逐位一致）；")
+    ap(f"- **反向依赖 {task3.get('n_reverse', 0)} 例**（default 过 / "
+       "零初值失败：A0062/A0093/A0171/A0203）全部落在软壅塞守卫家族——"
+       "零流量初值在守卫对象元件上死区冻结（iters=0 或 50 步耗尽）。"
+       "这是容量初值（±1.1·cap 越 kink 让 FD 雅可比看见陡坡斜率）存在"
+       "理由的家族内定量实证：**撤掉容量初值，守卫钉位网络失去收敛"
+       "能力**。")
+    ap("")
+    return L
+
+
 def generate_report(reg_records: list[dict], lines: list[dict],
                     summary: dict, anchors: list[dict]) -> str:
     """组装 fuzz/SOFT_CHOKE_REGRESS.md（全脚本生成，每例一图）。"""
@@ -415,6 +691,13 @@ def generate_report(reg_records: list[dict], lines: list[dict],
 
     L: list[str] = []
     ap = L.append
+    followup = None
+    if FOLLOWUP_JSON.exists():
+        try:
+            followup = json.loads(
+                FOLLOWUP_JSON.read_text(encoding="utf-8"))
+        except Exception:                     # noqa: BLE001
+            followup = None
     ap("# pysas 软壅塞守卫体系回归报告（定向矩阵 + fuzz 全量扫描）")
     ap("")
     ap(f"- 日期：{date.today().isoformat()}")
@@ -430,6 +713,33 @@ def generate_report(reg_records: list[dict], lines: list[dict],
        "D:\\Python\\Python312\\python.exe）；纪律：pysas 源码零改动，"
        "产出仅落 `fuzz/`")
     ap("")
+
+    # ---------- 顶部：负面清单高亮 + 两轮变更对照（补测轮任务五） ----------
+    if followup:
+        neg = followup.get("task3_init_sens", {}).get("negative_list", [])
+        if neg:
+            ap(f">> ⚠️ **容量初值负面清单（default_guess 不收敛而零流量"
+               f"初值收敛）：{', '.join(neg)}**——下一轮初值方案迭代的"
+               "直接输入，明细见 §2.8。")
+            ap("")
+        ap("## 两轮变更对照（补测轮新增）")
+        ap("")
+        ap("| 维度 | 上轮（59c78a7） | 本轮（补测轮） |")
+        ap("|---|---|---|")
+        ap("| 告警例解读 | \"守卫钉位（非物理解）\"一笔带过 | K 分解闭合至"
+           "机器精度（§2.6）：偏差全部来自 K 全网单标度，A0171 定性为"
+           "失准证据而非告警失败 |")
+        ap("| assemble_error | 未分诊 | 6 例全部设计内拦截（§2.7），"
+           "生成器侧无需修改 |")
+        ap("| 初值依赖 | DG-1b 单点路径无关回归 | 家族 14 例 × 4 初值对照"
+           "（§2.8）：负面清单为空，反向依赖 4 例实证容量初值必要性 |")
+        ap("| DG-4/DG-5 | 仅 PASS verdict | 逐档记录落盘 + offset≈Δp/K "
+           "标度对照列（§1 A 组表） |")
+        ap("| 收敛率 | 全局 32.4% 一个总数 | 分层口径修正：A 层 14.7% "
+           "vs 基线 14.0%、C 层 88.4%（§0 口径段） |")
+        ap("| 已知边界 | 3 条 | 5 条：新增 K 单标度失准、容量初值负面"
+           "清单结论（§4） |")
+        ap("")
 
     # ---------- 0. 执行摘要 ----------
     ap("## 0. 执行摘要")
@@ -459,9 +769,11 @@ def generate_report(reg_records: list[dict], lines: list[dict],
     ap("|---|---|---|---|---|---|---|---|")
     for r in reg_records:
         m = r.get("measured") or {}
+        hits = m.get("hits", [])
+        n_hits = hits if isinstance(hits, int) else len(hits or [])
         ap(f"| {r['id']} | {r['group']} | {r['verdict']} | "
            f"{m.get('status', '—')} | {m.get('iters', '—')} | "
-           f"{len(m.get('hits', []) or [])} | {m.get('warn_calls', '—')} | "
+           f"{n_hits} | {m.get('warn_calls', '—')} | "
            f"{_rd(m.get('worst_ratio'))} |")
     ap("")
     an_ok = sum(1 for a in anchors if a["ok"])
@@ -474,6 +786,26 @@ def generate_report(reg_records: list[dict], lines: list[dict],
         mark = "✅" if a["ok"] else "❌"
         ap(f"| {a['case']} | {a['assert']} | {mark} | "
            f"{json.dumps(a['measured'], ensure_ascii=False)} |")
+    ap("")
+
+    # ---- 收敛率对比基准（补测轮任务五：分层口径，禁止单一总数） ----
+    pg = summary.get("per_group", {})
+    a_g = pg.get("A", {})
+    c_g = pg.get("C", {})
+    ap("**收敛率对比基准（口径对齐）**：")
+    ap("")
+    ap("- 上上轮基线（守卫实施前，`REPORT.md` 时点）：**A 层 300 例"
+       "（族一语料，同种子）收敛 42 = 14.0%**；")
+    ap(f"- 本扫描 **A 层：{a_g.get('converged')}/{a_g.get('n')} = "
+       f"{a_g.get('converged', 0) / max(a_g.get('n', 1), 1):.1%}**——"
+       "同语料真实增量 +2 例（14.0%→14.7%）。注意混入效应：两轮之间"
+       "落地了 2372a45（出口总温口径 + 读入期拓扑校验），增量不能全部"
+       "归因守卫/容量初值；")
+    ap(f"- 本扫描 **C 层：{c_g.get('converged')}/{c_g.get('n')} = "
+       f"{c_g.get('converged', 0) / max(c_g.get('n', 1), 1):.1%}**"
+       "（边界酷刑产线，首次挂入全量扫描，无守卫前直接对照）；")
+    ap(f"- 全局 {summary['converge_rate']:.1%} 是 A+C 混合口径——"
+       "**与 14% 基线不可直接比较**（分母含 95 例高收敛 C 层）。")
     ap("")
 
     # ---------- 1. 定向矩阵 ----------
@@ -597,6 +929,18 @@ def generate_report(reg_records: list[dict], lines: list[dict],
                + (" …" if n_not_ok > 20 else ""))
         ap("")
 
+    # ---------- 2.6–2.8 补测轮章节 ----------
+    if followup:
+        t1 = followup.get("task1_k_decomp")
+        t2 = followup.get("task2_assemble")
+        t3 = followup.get("task3_init_sens")
+        if t1:
+            L.extend(_k_evidence_section(t1, reg_records))
+        if t2:
+            L.extend(_assemble_section(t2))
+        if t3:
+            L.extend(_init_sens_section(t3))
+
     # ---------- 3. 附录 ----------
     ap("## 3. 附录：全部扫描例逐例条目（每例一图）")
     ap("")
@@ -634,6 +978,17 @@ def generate_report(reg_records: list[dict], lines: list[dict],
     ap("- **不收敛路径零提示**：clean-fail 只有 status/iters，无失败分类"
        "（无根/初值域外/病态 J）——失败分类器是后续项；本扫描 DG-8/J-2 "
        "实证失败路径安静退出、不崩溃；")
+    ap("- **K 全网单标度的多尺度失准**（补测轮 §2.6 证据库）：钉位偏差 "
+       "ratio−1 = (Δp/p_ref)·(m_ref/(κ·cap))，A0171 实证放大到 23 倍——"
+       "多尺度+带功元件网络中告警数值只应作\"超容\"标志读；\"K 逐元件"
+       "局部参考量\"（待定问题 #14 姊妹条）重启时引用该节；")
+    ap("- **容量初值负面清单为空，反向依赖 4 例**（补测轮 §2.8）：家族 "
+       "14 例无\"default 不过而零初值过\"；反向（default 过/零初值冻结）"
+       "A0062/A0093/A0171/A0203 全为守卫家族——容量初值是守卫钉位网络"
+       "收敛的必要组件，初值方案迭代时两者必须联动评估；")
+    ap("- **零流量死肢节点温度数值多解**（补测轮 §2.8，A0005 实证）："
+       "死肢 T 无物理约束（能量行仅 ε 正则），不同初值可差 1e4 K 量级——"
+       "流量/压力根不受影响，报表侧如需可加死肢温度标志（后续项）；")
     ap("- **告警合并**：一次 solve 的全部命中合并进一条 warn 文案——按"
        "命中条数口径判读；")
     ap("- **J-2 裸拓扑病态**：junction 出口直挂等压双 PB 的分流比不定"

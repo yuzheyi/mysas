@@ -6,9 +6,20 @@
 - 口径注记：实现把一次 solve 的全部命中**合并进一条 warn 文案**，故"告警数"按**命中条数**（hits）口径报告，warn 调用数另列
 - 运行方式：Windows GBK 终端，`python -X utf8`（D:\Python\Python312\python.exe）；纪律：pysas 源码零改动，产出仅落 `fuzz/`
 
+## 两轮变更对照（补测轮新增）
+
+| 维度 | 上轮（59c78a7） | 本轮（补测轮） |
+|---|---|---|
+| 告警例解读 | "守卫钉位（非物理解）"一笔带过 | K 分解闭合至机器精度（§2.6）：偏差全部来自 K 全网单标度，A0171 定性为失准证据而非告警失败 |
+| assemble_error | 未分诊 | 6 例全部设计内拦截（§2.7），生成器侧无需修改 |
+| 初值依赖 | DG-1b 单点路径无关回归 | 家族 14 例 × 4 初值对照（§2.8）：负面清单为空，反向依赖 4 例实证容量初值必要性 |
+| DG-4/DG-5 | 仅 PASS verdict | 逐档记录落盘 + offset≈Δp/K 标度对照列（§1 A 组表） |
+| 收敛率 | 全局 32.4% 一个总数 | 分层口径修正：A 层 14.7% vs 基线 14.0%、C 层 88.4%（§0 口径段） |
+| 已知边界 | 3 条 | 5 条：新增 K 单标度失准、容量初值负面清单结论（§4） |
+
 ## 0. 执行摘要
 
-**定向矩阵 18/18 PASS、0 SKIP、0 FAIL（全过）；fuzz 全量扫描 395 例（A 层 300 例 + C 层 95 例），收敛 128（32.4%），守卫告警例 4，ratio P50/P90/MAX = 0.03744/1.018/24.07（分位数只取收敛例；未收敛解中间态最大 9769，无解质量意义）**
+**定向矩阵 28/28 PASS、0 SKIP、0 FAIL（全过）；fuzz 全量扫描 395 例（A 层 300 例 + C 层 95 例），收敛 128（32.4%），守卫告警例 4，ratio P50/P90/MAX = 0.03744/1.018/24.07（分位数只取收敛例；未收敛解中间态最大 9769，无解质量意义）**
 
 | 代号 | 组 | verdict | status | iters | 命中 | warn调用 | worst ratio |
 |---|---|---|---|---|---|---|---|
@@ -16,7 +27,17 @@
 | DG-1b | A | PASS | converged | 3 | 1 | 1 | 1.001 |
 | DG-2 | A | PASS | converged | 1 | 0 | 0 | 0.1818 |
 | DG-3 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-4-A0.0001 | A | PASS | converged | 4 | 1 | 1 | 1.001 |
+| DG-4-A0.0003 | A | PASS | converged | 4 | 1 | 1 | 1.001 |
+| DG-4-A0.001 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-4-A0.003 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-4-A0.01 | A | PASS | converged | 2 | 1 | 1 | 1.001 |
 | DG-4 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-5-P200000 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-5-P300000 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-5-P500000 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-5-P700000 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
+| DG-5-P900000 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
 | DG-5 | A | PASS | converged | 3 | 1 | 1 | 1.001 |
 | DG-6 | A | PASS | converged | 2 | 2 | 1 | 1.001 |
 | DG-7 | A | PASS | converged | 3 | 0 | 0 | 0.6 |
@@ -39,6 +60,13 @@
 | A0199 | converged 且 HEATER ratio<0.05 且零命中 | ✅ | {"status": "converged", "heater_ratio": 0.03744160217712915, "hits": 0} |
 | A0257 | converged 且零命中 | ✅ | {"status": "converged", "hits": 0} |
 | A0275 | 允许不收敛（记录归 M2 同伦） | ✅ | {"status": "clean_fail", "iters": 1, "worst_ratio": 1.0987895892530584} |
+
+**收敛率对比基准（口径对齐）**：
+
+- 上上轮基线（守卫实施前，`REPORT.md` 时点）：**A 层 300 例（族一语料，同种子）收敛 42 = 14.0%**；
+- 本扫描 **A 层：44/300 = 14.7%**——同语料真实增量 +2 例（14.0%→14.7%）。注意混入效应：两轮之间落地了 2372a45（出口总温口径 + 读入期拓扑校验），增量不能全部归因守卫/容量初值；
+- 本扫描 **C 层：84/95 = 88.4%**（边界酷刑产线，首次挂入全量扫描，无守卫前直接对照）；
+- 全局 32.4% 是 A+C 混合口径——**与 14% 基线不可直接比较**（分母含 95 例高收敛 C 层）。
 
 ## 1. 定向矩阵逐例详析（A 守卫行为 / B 豁免矩阵 / C 基准对照）
 
@@ -217,6 +245,16 @@ linkStyle 2 stroke:#E53935,stroke-width:3px
 |---|---|---|---|---|
 | c1 | 1 | -0.8256 | 0.825 | 1.0008 |
 
+**面积扫描逐档明细**（K=κ·p_ref/m_ref 按档实算；闭合=|ṁ|−(cap+Δp/K)）:
+
+| 档位 A | converged | iters | 告警 | |ṁ| | cap | offset=|ṁ|−cap | offset/cap（面积无关不变量） | offset/Δp | 1/K | 闭合残差 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1e-04 | converged | 4 | 1 |0.08256 | 0.0825 | 6.6e-05 | 0.0008 | 1.65e-10 | 1.65e-10 | 1.4e-17 |
+| 3e-04 | converged | 4 | 1 |0.2477 | 0.2475 | 0.000198 | 0.0008 | 4.95e-10 | 4.95e-10 | 2.8e-17 |
+| 1e-03 | converged | 3 | 1 |0.8256 | 0.825 | 0.00066 | 0.0008 | 1.65e-09 | 1.65e-09 | 1.1e-11 |
+| 3e-03 | converged | 3 | 1 |2.477 | 2.475 | 0.00198 | 0.0008 | 4.95e-09 | 4.95e-09 | 9.9e-12 |
+| 1e-02 | converged | 2 | 1 |8.256 | 8.25 | 0.0066 | 0.0008 | 1.65e-08 | 1.65e-08 | 0 |
+
 ### DG-5（A 组）—— DG-1 压差扫描 p_up∈{2e5,3e5,5e5,7e5,9e5}
 
 **verdict: PASS**　status=converged　iters=3　命中=1　告警调用=1　worst ratio=1.001
@@ -252,6 +290,16 @@ linkStyle 2 stroke:#E53935,stroke-width:3px
 | 命中元件 | 口 | ṁ | cap | ratio |
 |---|---|---|---|---|
 | c1 | 1 | -1.156 | 1.155 | 1.0009 |
+
+**压差扫描逐档明细**（K=κ·p_ref/m_ref 按档实算；闭合=|ṁ|−(cap+Δp/K)）:
+
+| 档位 p_up | converged | iters | 告警 | |ṁ| | cap | ratio | offset/Δp | 1/K | 闭合残差 |
+|---|---|---|---|---|---|---|---|---|---|
+| 2e+05 | converged | 3 | 1 |0.3302 | 0.33 | 1.0005 | 1.65e-09 | 1.65e-09 | 6.3e-12 |
+| 3e+05 | converged | 3 | 1 |0.4953 | 0.495 | 1.0007 | 1.65e-09 | 1.65e-09 | 1.1e-11 |
+| 5e+05 | converged | 3 | 1 |0.8256 | 0.825 | 1.0008 | 1.65e-09 | 1.65e-09 | 1.1e-11 |
+| 7e+05 | converged | 3 | 1 |1.156 | 1.155 | 1.0009 | 1.65e-09 | 1.65e-09 | 1.7e-11 |
+| 9e+05 | converged | 3 | 1 |1.486 | 1.485 | 1.0009 | 1.65e-09 | 1.65e-09 | 5.4e-12 |
 
 ### DG-6（A 组）—— PB 5e5 → H1(A=1e-3) → 节点 → H2(A=1e-3) → PB 1e5
 
@@ -1722,6 +1770,1034 @@ linkStyle 3 stroke:#E53935,stroke-width:3px
 | A0260 | 7.904e-05 | 0.04742 |
 
 scipy 自身未收敛（lm 异常/不达 1e-8）27 例：A0004, A0005, A0052, A0061, A0062, A0066, A0093, A0101, A0127, A0143, A0150, A0165, A0171, A0187, A0199, A0203, A0226, A0231, A0233, A0245 …
+
+### 2.6 三告警例深挖：K 全网单标度边界证据库（补测轮任务一）
+
+守卫钉位公式：解处压力行平衡给出 **|ṁ| = cap + Δp/K，K = κ·p_ref/m_ref（κ=1e3，p_ref=锚定压力上限，m_ref=全网最大口容量）**。推论（单标度的直接后果）：钉位相对偏差 **ratio−1 = (Δp/p_ref)·(m_ref/(κ·cap))**——元件自身容量 cap 离全网容量尺度 m_ref 越远、该元件承受的相对压差越大，钉位偏得越远。三例分解全部按实现守卫参考量（`_p_ref_for_guard`/`_m_ref_for_guard`）实算，理论钉位与实测 |ṁ| 的闭合残差在机器精度（≤1e-14）——**守卫方程侧工作正常，偏差全部来自 K 的全网单标度，不是告警失败**。
+
+#### A0171　K=1.685e+08（p_ref=4.698e+05，m_ref=2.787）
+
+```mermaid
+flowchart LR
+N0(("n0<br/>279 kPa<br/>T=783.1 K"))
+N1(("n1<br/>469.7 kPa<br/>T=783.1 K"))
+N2(("n2<br/>404.7 kPa<br/>T=1047 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.5081<br/>A=8.41e-03/8.41e-03"]
+C0 -- "ṁ=-2.87" --> N0
+N1 -- "ṁ=2.87" --> C0
+C1["c1 HEATER<br/>q=107.2 W<br/>A=2.47e-08/2.47e-08"]
+N1 -- "ṁ=0.0004028" --> C1
+C1 -- "ṁ=-0.0004028" --> N2
+C2["c2 PIPE<br/>L=0.111 D=0.0004403<br/>A=1.52e-07/1.52e-07"]
+C2 -- "ṁ=-2.528e-05" --> N0
+N2 -- "ṁ=2.528e-05" --> C2
+C3["c3 BOOSTER<br/>p: 2.79e+05→4.697e+05 Pa<br/>增压比 π=1.684"]
+N0 -- "ṁ=2.87" --> C3
+C3 -- "ṁ=-2.589" --> N1
+C4["c4 PRESSURE_BOUNDARY<br/>p0=4.047e+05 Pa<br/>T0=846.5 K"]
+N2 -- "ṁ=0.0003775" --> C4
+C5["c5 MASS_SOURCE<br/>ṁ=0.2818 kg/s<br/>T0=783.1 K"]
+C5 -- "ṁ=-0.2818" --> N1
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C3 softchoked
+class C4 pbound
+class C5 msource
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+```
+
+m_ref 驱动者（全网口容量 top3，撑大分母 → K 偏小）：c0(ORIFICE)口1 cap@ref=2.79；c0(ORIFICE)口0 cap@ref=2.79；c3(BOOSTER)口1 cap@ref=0.0653
+
+| 命中 | |ṁ| | cap | ratio | Δp 跨元件 | 理论钉位 cap+Δp/K | 闭合残差 | Δp/p_ref | m_ref/cap | ratio−1 预测 |
+|---|---|---|---|---|---|---|---|---|---|
+| c1(HEATER)口1 | 0.0004028 | 1.673e-05 | 24.074 | 6.507e+04 | 0.0004028 | 5.2e-15 | 0.1385 | 1.666e+05 | 23.074 |
+
+**反事实推演**（HEATER→ORIFICE(A=2.4663e-08, Cd=1)）：clean_fail——替身也不收敛：该网络对物理壅塞元件同样无根（真·网络容量不足）。
+
+#### A0093　K=1.206e+09（p_ref=3.665e+05，m_ref=0.3039）
+
+```mermaid
+flowchart LR
+N0(("n0<br/>197.3 kPa<br/>T=458.6 K"))
+N1(("n1<br/>229.7 kPa<br/>T=500.6 K"))
+N2(("n2<br/>243.3 kPa<br/>T=458.6 K"))
+N3(("n3<br/>366.5 kPa<br/>T=458.6 K"))
+C0["c0 AREA_CHANGE<br/>ζ=1.183<br/>A=8.26e-04/2.30e-07"]
+C0 -- "ṁ=-8.723e-05" --> N0
+N2 -- "ṁ=8.723e-05" --> C0
+C1["c1 HEATER<br/>q=9768 W<br/>A=4.86e-04/4.86e-04"]
+N2 -- "ṁ=0.2233" --> C1
+C1 -- "ṁ=-0.2233" --> N1
+C2["c2 ORIFICE<br/>β=1 Cd=0.803<br/>A=1.46e-05/1.46e-05"]
+C2 -- "ṁ=-0.007915" --> N1
+N3 -- "ṁ=0.007915" --> C2
+C3["c3 BOOSTER<br/>p: 2.433e+05→3.665e+05 Pa<br/>增压比 π=1.506"]
+C3 -- "ṁ=-0.2234" --> N2
+C3 -- "ṁ=-0.007915" --> N3
+C4["c4 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=355.5 K"]
+N1 -- "ṁ=0.2313" --> C4
+C5["c5 PRESSURE_BOUNDARY<br/>p0=1.973e+05 Pa<br/>T0=561.7 K"]
+N0 -- "ṁ=8.723e-05" --> C5
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C3 softchoked
+class C4 pbound
+class C5 pbound
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+```
+
+m_ref 驱动者（全网口容量 top3，撑大分母 → K 偏小）：c1(HEATER)口1 cap@ref=0.304；c1(HEATER)口0 cap@ref=0.304；c3(BOOSTER)口1 cap@ref=0.0625
+
+| 命中 | |ṁ| | cap | ratio | Δp 跨元件 | 理论钉位 cap+Δp/K | 闭合残差 | Δp/p_ref | m_ref/cap | ratio−1 预测 |
+|---|---|---|---|---|---|---|---|---|---|
+| c1(HEATER)口1 | 0.2233 | 0.2233 | 1.0001 | 1.359e+04 | 0.22334 | 5.6e-17 | 0.03708 | 1.361 | 5.0464e-05 |
+
+**反事实推演**（HEATER→ORIFICE(A=0.00048636, Cd=1)）：收敛（iters=1），同口流量 0.1057 kg/s（=该位置容量的 0.54134 倍，亚容量自限流），跨元件压差 1.359e+04 Pa。
+
+#### A0203　K=6.92e+08（p_ref=3.211e+05，m_ref=0.464）
+
+```mermaid
+flowchart LR
+N0(("n0<br/>242.4 kPa<br/>T=915.2 K"))
+N1(("n1<br/>242.4 kPa<br/>T=849.8 K"))
+N2(("n2<br/>242.4 kPa<br/>T=849.8 K"))
+N3(("n3<br/>242.4 kPa<br/>T=849.8 K"))
+N4(("n4<br/>321.1 kPa<br/>T=895.2 K"))
+N5(("n5<br/>242.4 kPa<br/>T=849.8 K"))
+C0["c0 PIPE<br/>L=2.082 D=0.04122<br/>A=1.33e-03/1.33e-03"]
+N0 --- C0
+N1 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.9741<br/>A=1.66e-07/1.66e-07"]
+N0 --- C1
+N2 --- C1
+C2["c2 AREA_CHANGE<br/>ζ=0.6533<br/>A=4.04e-08/3.71e-03"]
+N2 --- C2
+N3 --- C2
+C3["c3 HEATER<br/>q=267.5 W<br/>A=3.04e-05/3.04e-05"]
+C3 -- "ṁ=-0.01332" --> N0
+N4 -- "ṁ=0.01332" --> C3
+C4["c4 AREA_CHANGE<br/>ζ=1.916<br/>A=1.91e-06/3.07e-03"]
+N1 --- C4
+N5 --- C4
+C5["c5 PRESSURE_BOUNDARY<br/>p0=3.211e+05 Pa<br/>T0=895.2 K"]
+C5 -- "ṁ=-0.01332" --> N4
+C6["c6 PRESSURE_BOUNDARY<br/>p0=2.424e+05 Pa<br/>T0=804.4 K"]
+N0 -- "ṁ=0.01332" --> C6
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C3 softchoked
+class C5 pbound
+class C6 pbound
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+```
+
+m_ref 驱动者（全网口容量 top3，撑大分母 → K 偏小）：c0(PIPE)口1 cap@ref=0.464；c0(PIPE)口0 cap@ref=0.464；c3(HEATER)口1 cap@ref=0.0132
+
+| 命中 | |ṁ| | cap | ratio | Δp 跨元件 | 理论钉位 cap+Δp/K | 闭合残差 | Δp/p_ref | m_ref/cap | ratio−1 预测 |
+|---|---|---|---|---|---|---|---|---|---|
+| c3(HEATER)口1 | 0.01332 | 0.0132 | 1.0086 | 7.867e+04 | 0.013318 | 1.2e-15 | 0.245 | 35.14 | 0.0086097 |
+
+**反事实推演**（HEATER→ORIFICE(A=3.0445e-05, Cd=1)）：收敛（iters=3），同口流量 0.01159 kg/s（=该位置容量的 0.71887 倍，亚容量自限流），跨元件压差 7.867e+04 Pa。
+
+**守卫价值判定**（反事实汇总）：
+
+- **A0093 / A0203："守卫把无根变有根"成立**——ORIFICE 替身（同面积 Cd=1）收敛到亚容量良定解（0.54/0.72 倍容量），超容需求来自 HEATER 的零压降特性（无流量方程→流量无界→无根）；守卫陡坡扮演"虚拟压损"，钉位偏差 ratio−1 = 1e-4 / 8.6e-3（K 尺度匹配良好，几乎贴着物理容量）。
+- **A0171："守卫把崩溃变可诊断"**——ORIFICE 替身同样 clean_fail：booster 压头 >> 全网物理容量，对任何限流元件都无根；守卫让解存在+告警指路。钉位偏差 ratio−1 = 23：K 被大孔板 m_ref=2.79 撑大 167 倍 → 钉在 24×cap——**K 全网单标度失准的量化实证**。
+
+**DG-4 对照**（尺度均匀网络，守卫标度关系应逐位成立）：
+
+| 档位 A | offset=|ṁ|−cap | offset/cap | Δp/(κ·p_ref) 预测 |
+|---|---|---|---|
+| 1e-04 | 6.6e-05 | 0.0008 | 0.0008 |
+| 3e-04 | 0.000198 | 0.0008 | 0.0008 |
+| 1e-03 | 0.00066 | 0.0008 | 0.0008 |
+| 3e-03 | 0.00198 | 0.0008 | 0.0008 |
+| 1e-02 | 0.0066 | 0.0008 | 0.0008 |
+
+**证据库结论**（供"K 逐元件局部参考量"——待定问题 #14 姊妹条重启时引用）：单标度 K 的钉位偏差可精确分解为两因子之积——Δp/p_ref × m_ref/(κ·cap)。尺度均匀（DG-1 族：cap≈m_ref）时偏差 ~1e-3 与设计一致；多尺度+带功元件网络（A0171：m_ref/cap≈1.7e5、Δp/p_ref≈0.14）偏差放大到 ratio=24，钉位解离物理壅塞极限一个数量级以上——此时告警文案中的 "ṁ>cap" 数值不再近似物理壅塞流量，只应作"超容"标志读。局部参考量方案（K_i=κ·p_ref/cap_i）可把偏差收回 Δp/(κ·cap) 量级。
+
+### 2.7 assemble_error 分诊（6 例，设计内拦截 6 / 疑似缺陷 0）（补测轮任务二）
+
+| case | 来源 | 异常 | 定性 |
+|---|---|---|---|
+| C5_01_ms_or_ms | C 层酷刑产线 | ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（… | ✅ 设计内拦截（组装期适定性校验，预期行为） |
+| C5_02_ms_deadend | C 层酷刑产线 | ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（… | ✅ 设计内拦截（组装期适定性校验，预期行为） |
+| C5_03_ms_pipe_ms | C 层酷刑产线 | ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（… | ✅ 设计内拦截（组装期适定性校验，预期行为） |
+| C5_04_ms_junction | C 层酷刑产线 | ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（… | ✅ 设计内拦截（组装期适定性校验，预期行为） |
+| C5_05_ms_extract_only | C 层酷刑产线 | ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（… | ✅ 设计内拦截（组装期适定性校验，预期行为） |
+| C5_06_surrogate_no_file | C 层酷刑产线 | ValueError: 代理模型文件不存在: 'fuzz/__no_such_model__.npz' | ✅ 设计内拦截（组装期适定性校验，预期行为） |
+
+<details><summary>C5_01_ms_or_ms — 设计内拦截（组装期适定性校验，预期行为）</summary>
+
+```mermaid
+flowchart LR
+N0(("n0"))
+N1(("n1"))
+N2(("n2"))
+C0["c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K"]
+N0 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.8<br/>A=1.00e-04/1.00e-04"]
+N0 --- C1
+N1 --- C1
+C2["c2 MASS_SOURCE<br/>ṁ=-0.1 kg/s<br/>T0=600 K"]
+N1 --- C2
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 msource
+class C2 msource
+```
+
+异常：ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）
+
+</details>
+
+<details><summary>C5_02_ms_deadend — 设计内拦截（组装期适定性校验，预期行为）</summary>
+
+```mermaid
+flowchart LR
+N0(("n0"))
+N1(("n1"))
+C0["c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K"]
+N0 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.8<br/>A=1.00e-04/1.00e-04"]
+N0 --- C1
+N1 --- C1
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 msource
+```
+
+异常：ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）
+
+</details>
+
+<details><summary>C5_03_ms_pipe_ms — 设计内拦截（组装期适定性校验，预期行为）</summary>
+
+```mermaid
+flowchart LR
+N0(("n0"))
+N1(("n1"))
+N2(("n2"))
+C0["c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K"]
+N0 --- C0
+C1["c1 PIPE<br/>L=1 D=0.01128<br/>A=1.00e-04/1.00e-04"]
+N0 --- C1
+N1 --- C1
+C2["c2 MASS_SOURCE<br/>ṁ=-0.1 kg/s<br/>T0=600 K"]
+N1 --- C2
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 msource
+class C2 msource
+```
+
+异常：ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）
+
+</details>
+
+<details><summary>C5_04_ms_junction — 设计内拦截（组装期适定性校验，预期行为）</summary>
+
+```mermaid
+flowchart LR
+N0(("n0"))
+N1(("n1"))
+N2(("n2"))
+N3(("n3"))
+C0["c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K"]
+N0 --- C0
+C1["c1 JUNCTION<br/>零压差绝热混合"]
+N0 --- C1
+N1 --- C1
+N2 --- C1
+C2["c2 MASS_SOURCE<br/>ṁ=-0.05 kg/s<br/>T0=600 K"]
+N1 --- C2
+C3["c3 MASS_SOURCE<br/>ṁ=-0.05 kg/s<br/>T0=600 K"]
+N2 --- C3
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 msource
+class C2 msource
+class C3 msource
+```
+
+异常：ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）
+
+</details>
+
+<details><summary>C5_05_ms_extract_only — 设计内拦截（组装期适定性校验，预期行为）</summary>
+
+```mermaid
+flowchart LR
+N0(("n0"))
+N1(("n1"))
+C0["c0 MASS_SOURCE<br/>ṁ=-0.1 kg/s<br/>T0=600 K"]
+N0 --- C0
+C1["c1 AREA_CHANGE<br/>ζ=1<br/>A=1.00e-04/1.00e-03"]
+N0 --- C1
+N1 --- C1
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 msource
+```
+
+异常：ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）
+
+</details>
+
+<details><summary>C5_06_surrogate_no_file — 设计内拦截（组装期适定性校验，预期行为）</summary>
+
+```mermaid
+flowchart LR
+N0(("n0"))
+N1(("n1"))
+N2(("n2"))
+C0["c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K"]
+N0 --- C0
+C1["c1 SURROGATE_FLOW<br/>__no_such_model__.npz<br/>A=1.00e-04/1.00e-04"]
+N0 --- C1
+N1 --- C1
+C2["c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
+N1 --- C2
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 pbound
+class C2 pbound
+```
+
+异常：ValueError: 代理模型文件不存在: 'fuzz/__no_such_model__.npz'
+
+</details>
+
+**生成器侧建议（只记录，不改代码）**：本轮 6 例全部来自 C 层边界酷刑产线设计例（C5 组：全 MASS_SOURCE 无压力锚定 ×5、代理模型缺文件 ×1），**非 gen_random.py 产出**——随机生成器未产出非法拓扑，无需修改建议；C5 组保留作组装期校验的回归哨兵。
+
+### 2.8 scipy_not_ok 家族初值敏感性对照（14 例 × 4 组初值，补测轮任务三）
+
+**容量初值负面清单为空**：14 例家族成员中无一出现"default_guess 不收敛而零流量初值收敛"——容量初值无可检负面案例。反向依赖（default 过 / 零初值不过）4 例，见下。
+
+| case | a default | b 零流量 | c ×0.5 | c ×2 | 收敛组同根? | 负清单 | 反向 |
+|---|---|---|---|---|---|---|---|
+| A0004 | C(11,w1,r=1.021) | C(11,w1,r=1.021) | C(11,w1,r=1.021) | C(11,w1,r=1.021) | ✅ |  |  |
+| A0005 | C(8,w0,r=1.279e-23) | C(8,w0,r=4.844e-25) | C(9,w0,r=2.599e-22) | C(8,w0,r=0) | ❌ 异根 |  |  |
+| A0052 | C(6,w0,r=0) | C(6,w0,r=0) | C(6,w0,r=0) | C(6,w0,r=0) | ✅ |  |  |
+| A0061 | C(8,w0,r=—) | C(8,w0,r=—) | clean_fail(1) | C(8,w0,r=—) | ✅ |  |  |
+| A0062 | C(6,w0,r=0.05913) | clean_fail(50) | C(7,w0,r=0.05913) | C(5,w0,r=0.05913) | ❌ 异根 |  | ← |
+| A0093 | C(4,w1,r=1) | clean_fail(0) | clean_fail(0) | C(2,w1,r=1) | ❌ 异根 |  | ← |
+| A0101 | C(4,w0,r=9.873e-23) | C(2,w0,r=2.953e-22) | C(8,w0,r=8.839e-22) | C(3,w0,r=6.77e-23) | ❌ 异根 |  |  |
+| A0127 | C(12,w0,r=—) | C(12,w0,r=—) | C(12,w0,r=—) | C(12,w0,r=—) | ✅ |  |  |
+| A0171 | C(5,w1,r=24.07) | clean_fail(0) | clean_fail(0) | C(5,w1,r=24.07) | ✅ |  | ← |
+| A0187 | C(3,w0,r=0) | C(3,w0,r=0) | C(3,w0,r=0) | C(3,w0,r=0) | ✅ |  |  |
+| A0199 | C(14,w0,r=0.03744) | C(10,w0,r=0.03744) | C(11,w0,r=0.03744) | C(14,w0,r=0.03744) | ❌ 异根 |  |  |
+| A0203 | C(4,w1,r=1.009) | clean_fail(0) | clean_fail(0) | C(4,w1,r=1.009) | ✅ |  | ← |
+| A0245 | C(18,w0,r=—) | C(18,w0,r=—) | C(18,w0,r=—) | C(18,w0,r=—) | ✅ |  |  |
+| A0253 | C(34,w0,r=—) | C(34,w0,r=—) | C(34,w0,r=—) | C(34,w0,r=—) | ✅ |  |  |
+
+<details><summary>A0004 两两缩放 max|dx|：a_default|b_zeroflow=0.00e+00，a_default|c_half=0.00e+00，a_default|c_double=0.00e+00，b_zeroflow|c_half=0.00e+00，b_zeroflow|c_double=0.00e+00，c_half|c_double=0.00e+00</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>549.8 kPa<br/>T=502.9 K"))
+N1(("n1<br/>136.1 kPa<br/>T=623.4 K"))
+N2(("n2<br/>571 kPa<br/>T=502.9 K"))
+N3(("n3<br/>113.1 kPa<br/>T=623.4 K"))
+N4(("n4<br/>600.9 kPa<br/>T=637.8 K"))
+C0["c0 HEATER<br/>q=253.2 W<br/>A=5.02e-06/5.02e-06"]
+N0 -- "ṁ=0.005082" --> C0
+C0 -- "ṁ=-0.005082" --> N1
+C1["c1 AREA_CHANGE<br/>ζ=1.449<br/>A=1.50e-05/2.11e-05"]
+C1 -- "ṁ=-0.005082" --> N0
+N2 -- "ṁ=0.005082" --> C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.5517<br/>A=3.22e-04/3.22e-04"]
+N1 -- "ṁ=0.03007" --> C2
+C2 -- "ṁ=-0.03007" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.5145<br/>A=5.05e-05/5.05e-05"]
+C3 -- "ṁ=-0.02499" --> N1
+N4 -- "ṁ=0.02499" --> C3
+C4["c4 PRESSURE_BOUNDARY<br/>p0=6.009e+05 Pa<br/>T0=637.8 K"]
+C4 -- "ṁ=-0.02499" --> N4
+C5["c5 PRESSURE_BOUNDARY<br/>p0=1.131e+05 Pa<br/>T0=821 K"]
+N3 -- "ṁ=0.03007" --> C5
+C6["c6 PRESSURE_BOUNDARY<br/>p0=5.71e+05 Pa<br/>T0=502.9 K"]
+C6 -- "ṁ=-0.005082" --> N2
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 softchoked
+class C3 softchoked
+class C4 pbound
+class C5 pbound
+class C6 pbound
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0005 两两缩放 max|dx|：a_default|b_zeroflow=3.05e+01，a_default|c_half=5.95e+01，a_default|c_double=4.77e-01，b_zeroflow|c_half=9.00e+01，b_zeroflow|c_double=3.04e+01，c_half|c_double=5.96e+01</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>171.4 kPa<br/>T=977.3 K"))
+N1(("n1<br/>171.4 kPa<br/>T=745.8 K"))
+N2(("n2<br/>332.6 kPa<br/>T=865.7 K"))
+N3(("n3<br/>334 kPa<br/>T=1.731e+04 K"))
+N4(("n4<br/>313.7 kPa<br/>T=693.7 K"))
+N5(("n5<br/>171.4 kPa<br/>T=1.915e+04 K"))
+C0["c0 HEATER<br/>q=440.4 W<br/>A=1.48e-03/1.48e-03"]
+N0 -- "ṁ=1.271e-23" --> C0
+C0 -- "ṁ=-4.186e-24" --> N1
+C1["c1 AREA_CHANGE<br/>ζ=1.37<br/>A=3.23e-04/9.55e-08"]
+C1 -- "ṁ=-4.358e-05" --> N0
+N2 -- "ṁ=4.358e-05" --> C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.905<br/>A=5.30e-08/5.30e-08"]
+C2 -- "ṁ=-7.456e-08" --> N2
+N3 -- "ṁ=7.456e-08" --> C2
+C3["c3 AREA_CHANGE<br/>ζ=0.7525<br/>A=1.82e-08/1.28e-05"]
+C3 -- "ṁ=-4.697e-06" --> N0
+N4 -- "ṁ=4.697e-06" --> C3
+C4["c4 PIPE<br/>L=0.1789 D=0.000148<br/>A=1.72e-08/1.72e-08"]
+C4 -- "ṁ=-7.456e-08" --> N3
+N5 -- "ṁ=7.456e-08" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.987<br/>A=1.30e-07/1.30e-07"]
+N0 -- "ṁ=7.456e-08" --> C5
+C5 -- "ṁ=-7.456e-08" --> N5
+C6["c6 PRESSURE_BOUNDARY<br/>p0=3.326e+05 Pa<br/>T0=856.9 K"]
+C6 -- "ṁ=-4.351e-05" --> N2
+C7["c7 PRESSURE_BOUNDARY<br/>p0=3.137e+05 Pa<br/>T0=693.6 K"]
+C7 -- "ṁ=-4.697e-06" --> N4
+C8["c8 PRESSURE_BOUNDARY<br/>p0=1.714e+05 Pa<br/>T0=686.8 K"]
+N0 -- "ṁ=4.82e-05" --> C8
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C4 softchoked
+class C6 pbound
+class C7 pbound
+class C8 pbound
+linkStyle 8 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0052 两两缩放 max|dx|：a_default|b_zeroflow=0.00e+00，a_default|c_half=0.00e+00，a_default|c_double=0.00e+00，b_zeroflow|c_half=0.00e+00，b_zeroflow|c_double=0.00e+00，c_half|c_double=0.00e+00</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>231.4 kPa<br/>T=427.6 K"))
+N1(("n1<br/>351.4 kPa<br/>T=427.6 K"))
+N2(("n2<br/>231.4 kPa<br/>T=554.2 K"))
+N3(("n3<br/>231.4 kPa<br/>T=427.6 K"))
+N4(("n4<br/>231.4 kPa<br/>T=554.2 K"))
+C0["c0 AREA_CHANGE<br/>ζ=1.919<br/>A=5.68e-06/1.54e-03"]
+C0 -- "ṁ=-0.001635" --> N0
+N1 -- "ṁ=0.001635" --> C0
+C1["c1 AREA_CHANGE<br/>ζ=1.983<br/>A=3.15e-05/6.57e-08"]
+C1 -- "ṁ=-1.887e-34" --> N0
+N2 --- C1
+C2["c2 AREA_CHANGE<br/>ζ=1.06<br/>A=7.83e-03/1.59e-04"]
+N0 -- "ṁ=0.001635" --> C2
+C2 -- "ṁ=-0.001635" --> N3
+C3["c3 HEATER<br/>q=8969 W<br/>A=2.42e-05/2.42e-05"]
+N2 --- C3
+N4 --- C3
+C4["c4 PRESSURE_BOUNDARY<br/>p0=3.514e+05 Pa<br/>T0=427.6 K"]
+C4 -- "ṁ=-0.001635" --> N1
+C5["c5 PRESSURE_BOUNDARY<br/>p0=2.314e+05 Pa<br/>T0=680.8 K"]
+N3 -- "ṁ=0.001635" --> C5
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C4 pbound
+class C5 pbound
+```
+
+</details>
+
+<details><summary>A0061 两两缩放 max|dx|：a_default|b_zeroflow=1.19e-09，a_default|c_double=9.29e-10，b_zeroflow|c_double=2.59e-10</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>229.7 kPa<br/>T=718.9 K"))
+N1(("n1<br/>212.9 kPa<br/>T=805.4 K"))
+N2(("n2<br/>212.9 kPa<br/>T=726.9 K"))
+N3(("n3<br/>212.9 kPa<br/>T=805.4 K"))
+N4(("n4<br/>212.9 kPa<br/>T=726.9 K"))
+N5(("n5<br/>181.9 kPa<br/>T=805.4 K"))
+N6(("n6<br/>181.9 kPa<br/>T=726.9 K"))
+N7(("n7<br/>212.9 kPa<br/>T=726.9 K"))
+C0["c0 PIPE<br/>L=0.3405 D=0.0004251<br/>A=1.42e-07/1.42e-07"]
+N0 -- "ṁ=1.297e-06" --> C0
+C0 -- "ṁ=-1.297e-06" --> N1
+C1["c1 PIPE<br/>L=0.9365 D=0.0018<br/>A=2.54e-06/2.54e-06"]
+N1 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=0.8079 D=0.002339<br/>A=4.30e-06/4.30e-06"]
+N0 -- "ṁ=0.0001864" --> C2
+C2 -- "ṁ=-0.0001864" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.7503<br/>A=7.07e-07/7.07e-07"]
+N1 -- "ṁ=6.206e-24" --> C3
+C3 -- "ṁ=-6.15e-24" --> N4
+C4["c4 PIPE<br/>L=0.1883 D=0.004729<br/>A=1.76e-05/1.76e-05"]
+N1 -- "ṁ=0.004074" --> C4
+C4 -- "ṁ=-0.004074" --> N5
+C5["c5 ORIFICE<br/>β=1 Cd=0.6465<br/>A=4.32e-03/4.32e-03"]
+N5 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6425<br/>A=8.62e-06/8.62e-06"]
+N1 --- C6
+N7 --- C6
+C7["c7 JUNCTION<br/>零压差绝热混合"]
+N4 -- "ṁ=6.15e-24" --> C7
+N3 -- "ṁ=0.004073" --> C7
+C7 -- "ṁ=-0.004073" --> N1
+C8["c8 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=718.9 K"]
+C8 -- "ṁ=-0.0001877" --> N0
+C9["c9 PRESSURE_BOUNDARY<br/>p0=2.129e+05 Pa<br/>T0=809.6 K"]
+C9 -- "ṁ=-0.003886" --> N3
+C10["c10 PRESSURE_BOUNDARY<br/>p0=1.819e+05 Pa<br/>T0=652.2 K"]
+N5 -- "ṁ=0.004074" --> C10
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C8 pbound
+class C9 pbound
+class C10 pbound
+linkStyle 9 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0062 两两缩放 max|dx|：a_default|c_half=1.74e-06，a_default|c_double=1.22e-04，c_half|c_double=1.24e-04</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>145.2 kPa<br/>T=333.3 K"))
+N1(("n1<br/>145.2 kPa<br/>T=333.4 K"))
+N2(("n2<br/>299.8 kPa<br/>T=333.3 K"))
+C0["c0 HEATER<br/>q=171.2 W<br/>A=5.42e-05/5.42e-05"]
+N0 -- "ṁ=0.001031" --> C0
+C0 -- "ṁ=-0.001031" --> N1
+C1["c1 PIPE<br/>L=1.22 D=0.1008<br/>A=7.98e-03/7.98e-03"]
+C1 -- "ṁ=-4.866" --> N1
+N2 -- "ṁ=4.866" --> C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.561<br/>A=2.77e-06/2.77e-06"]
+C2 -- "ṁ=-0.001031" --> N0
+N2 -- "ṁ=0.001031" --> C2
+C3["c3 PRESSURE_BOUNDARY<br/>p0=2.998e+05 Pa<br/>T0=333.3 K"]
+C3 -- "ṁ=-4.867" --> N2
+C4["c4 PRESSURE_BOUNDARY<br/>p0=1.452e+05 Pa<br/>T0=502.1 K"]
+N1 -- "ṁ=4.867" --> C4
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C3 pbound
+class C4 pbound
+linkStyle 2 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0093 两两缩放 max|dx|：a_default|c_double=8.44e-04</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>197.3 kPa<br/>T=458.6 K"))
+N1(("n1<br/>229.7 kPa<br/>T=500.6 K"))
+N2(("n2<br/>243.3 kPa<br/>T=458.6 K"))
+N3(("n3<br/>366.5 kPa<br/>T=458.6 K"))
+C0["c0 AREA_CHANGE<br/>ζ=1.183<br/>A=8.26e-04/2.30e-07"]
+C0 -- "ṁ=-8.723e-05" --> N0
+N2 -- "ṁ=8.723e-05" --> C0
+C1["c1 HEATER<br/>q=9768 W<br/>A=4.86e-04/4.86e-04"]
+N2 -- "ṁ=0.2233" --> C1
+C1 -- "ṁ=-0.2233" --> N1
+C2["c2 ORIFICE<br/>β=1 Cd=0.803<br/>A=1.46e-05/1.46e-05"]
+C2 -- "ṁ=-0.007915" --> N1
+N3 -- "ṁ=0.007915" --> C2
+C3["c3 BOOSTER<br/>p: 2.433e+05→3.665e+05 Pa<br/>增压比 π=1.506"]
+C3 -- "ṁ=-0.2234" --> N2
+C3 -- "ṁ=-0.007915" --> N3
+C4["c4 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=355.5 K"]
+N1 -- "ṁ=0.2313" --> C4
+C5["c5 PRESSURE_BOUNDARY<br/>p0=1.973e+05 Pa<br/>T0=561.7 K"]
+N0 -- "ṁ=8.723e-05" --> C5
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C3 softchoked
+class C4 pbound
+class C5 pbound
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0101 两两缩放 max|dx|：a_default|b_zeroflow=3.23e-02，a_default|c_half=2.85e-01，a_default|c_double=6.80e-03，b_zeroflow|c_half=3.15e-01，b_zeroflow|c_double=3.23e-02，c_half|c_double=2.85e-01</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>251.4 kPa<br/>T=679.6 K"))
+N1(("n1<br/>251.4 kPa<br/>T=643.5 K"))
+N2(("n2<br/>295.3 kPa<br/>T=681.5 K"))
+N3(("n3<br/>251.4 kPa<br/>T=572.5 K"))
+N4(("n4<br/>287.4 kPa<br/>T=681.2 K"))
+C0["c0 AREA_CHANGE<br/>ζ=0.6077<br/>A=2.29e-06/3.61e-05"]
+N0 -- "ṁ=5.902e-07" --> C0
+C0 -- "ṁ=-5.902e-07" --> N1
+C1["c1 PIPE<br/>L=0.3222 D=0.0002488<br/>A=4.86e-08/4.86e-08"]
+C1 -- "ṁ=-5.902e-07" --> N0
+N2 -- "ṁ=5.902e-07" --> C1
+C2["c2 HEATER<br/>q=2702 W<br/>A=1.86e-05/1.86e-05"]
+C2 -- "ṁ=-1.927e-24" --> N1
+N3 -- "ṁ=7.784e-25" --> C2
+C3["c3 AREA_CHANGE<br/>ζ=1.351<br/>A=1.40e-07/3.14e-08"]
+N2 -- "ṁ=4.178e-06" --> C3
+C3 -- "ṁ=-4.178e-06" --> N4
+C4["c4 PRESSURE_BOUNDARY<br/>p0=2.953e+05 Pa<br/>T0=681.8 K"]
+C4 -- "ṁ=-4.768e-06" --> N2
+C5["c5 PRESSURE_BOUNDARY<br/>p0=2.514e+05 Pa<br/>T0=579.5 K"]
+N1 -- "ṁ=0.2082" --> C5
+C6["c6 PRESSURE_BOUNDARY<br/>p0=2.874e+05 Pa<br/>T0=368.9 K"]
+N4 -- "ṁ=4.178e-06" --> C6
+C7["c7 MASS_SOURCE<br/>ṁ=0.2082 kg/s<br/>T0=643.5 K"]
+C7 -- "ṁ=-0.2082" --> N1
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C4 pbound
+class C5 pbound
+class C6 pbound
+class C7 msource
+```
+
+</details>
+
+<details><summary>A0127 两两缩放 max|dx|：a_default|b_zeroflow=0.00e+00，a_default|c_half=0.00e+00，a_default|c_double=0.00e+00，b_zeroflow|c_half=0.00e+00，b_zeroflow|c_double=0.00e+00，c_half|c_double=0.00e+00</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>404.3 kPa<br/>T=306.9 K"))
+N1(("n1<br/>545.1 kPa<br/>T=306.7 K"))
+N2(("n2<br/>802.7 kPa<br/>T=306.9 K"))
+N3(("n3<br/>290.9 kPa<br/>T=306.9 K"))
+N4(("n4<br/>802.8 kPa<br/>T=306.9 K"))
+N5(("n5<br/>802.8 kPa<br/>T=306.9 K"))
+C0["c0 AREA_CHANGE<br/>ζ=0.6083<br/>A=1.84e-08/2.93e-08"]
+C0 -- "ṁ=-1.299e-05" --> N0
+N1 -- "ṁ=1.299e-05" --> C0
+C1["c1 AREA_CHANGE<br/>ζ=0.9618<br/>A=1.94e-05/9.29e-07"]
+C1 -- "ṁ=-0.001721" --> N0
+N2 -- "ṁ=0.001721" --> C1
+C2["c2 AREA_CHANGE<br/>ζ=0.5998<br/>A=2.75e-06/3.13e-06"]
+N2 -- "ṁ=0.005094" --> C2
+C2 -- "ṁ=-0.005094" --> N3
+C3["c3 PIPE<br/>L=4.176 D=0.02643<br/>A=5.48e-04/5.48e-04"]
+C3 -- "ṁ=-0.006815" --> N2
+N4 -- "ṁ=0.006815" --> C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.9442<br/>A=8.38e-04/8.38e-04"]
+C4 -- "ṁ=-0.006815" --> N4
+N5 -- "ṁ=0.006815" --> C4
+C5["c5 BOOSTER<br/>p: 4.043e+05→8.028e+05 Pa<br/>增压比 π=1.986"]
+N0 -- "ṁ=0.001734" --> C5
+C5 -- "ṁ=-0.006815" --> N5
+C6["c6 PRESSURE_BOUNDARY<br/>p0=5.451e+05 Pa<br/>T0=306.6 K"]
+C6 -- "ṁ=-1.299e-05" --> N1
+C7["c7 PRESSURE_BOUNDARY<br/>p0=2.909e+05 Pa<br/>T0=551.2 K"]
+N3 -- "ṁ=0.005094" --> C7
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C5 booster
+class C6 pbound
+class C7 pbound
+linkStyle 5 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0171 两两缩放 max|dx|：a_default|c_double=4.31e-07</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>279 kPa<br/>T=783.1 K"))
+N1(("n1<br/>469.7 kPa<br/>T=783.1 K"))
+N2(("n2<br/>404.7 kPa<br/>T=1047 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.5081<br/>A=8.41e-03/8.41e-03"]
+C0 -- "ṁ=-2.87" --> N0
+N1 -- "ṁ=2.87" --> C0
+C1["c1 HEATER<br/>q=107.2 W<br/>A=2.47e-08/2.47e-08"]
+N1 -- "ṁ=0.0004028" --> C1
+C1 -- "ṁ=-0.0004028" --> N2
+C2["c2 PIPE<br/>L=0.111 D=0.0004403<br/>A=1.52e-07/1.52e-07"]
+C2 -- "ṁ=-2.528e-05" --> N0
+N2 -- "ṁ=2.528e-05" --> C2
+C3["c3 BOOSTER<br/>p: 2.79e+05→4.697e+05 Pa<br/>增压比 π=1.684"]
+N0 -- "ṁ=2.87" --> C3
+C3 -- "ṁ=-2.589" --> N1
+C4["c4 PRESSURE_BOUNDARY<br/>p0=4.047e+05 Pa<br/>T0=846.5 K"]
+N2 -- "ṁ=0.0003775" --> C4
+C5["c5 MASS_SOURCE<br/>ṁ=0.2818 kg/s<br/>T0=783.1 K"]
+C5 -- "ṁ=-0.2818" --> N1
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C3 softchoked
+class C4 pbound
+class C5 msource
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0187 两两缩放 max|dx|：a_default|b_zeroflow=0.00e+00，a_default|c_half=0.00e+00，a_default|c_double=0.00e+00，b_zeroflow|c_half=0.00e+00，b_zeroflow|c_double=0.00e+00，c_half|c_double=0.00e+00</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>383.3 kPa<br/>T=650.2 K"))
+N1(("n1<br/>383.3 kPa<br/>T=650.2 K"))
+N2(("n2<br/>383.3 kPa<br/>T=535.4 K"))
+N3(("n3<br/>383.3 kPa<br/>T=650.1 K"))
+N4(("n4<br/>383.3 kPa<br/>T=650.2 K"))
+N5(("n5<br/>470.2 kPa<br/>T=535.4 K"))
+C0["c0 AREA_CHANGE<br/>ζ=1.749<br/>A=1.19e-05/7.60e-07"]
+N0 -- "ṁ=1.654e-12" --> C0
+C0 -- "ṁ=-1.654e-12" --> N1
+C1["c1 PIPE<br/>L=1.611 D=0.00156<br/>A=1.91e-06/1.91e-06"]
+C1 -- "ṁ=-1.654e-12" --> N0
+N2 -- "ṁ=1.654e-12" --> C1
+C2["c2 AREA_CHANGE<br/>ζ=1.072<br/>A=2.64e-05/1.19e-07"]
+N1 -- "ṁ=7.249e-13" --> C2
+C2 -- "ṁ=-7.249e-13" --> N3
+C3["c3 HEATER<br/>q=6975 W<br/>A=2.63e-03/2.63e-03"]
+N1 --- C3
+N4 --- C3
+C4["c4 PIPE<br/>L=2.793 D=0.0008137<br/>A=5.20e-07/5.20e-07"]
+C4 -- "ṁ=-3.766e-05" --> N2
+N5 -- "ṁ=3.766e-05" --> C4
+C5["c5 AREA_CHANGE<br/>ζ=1.185<br/>A=4.48e-03/1.60e-07"]
+N1 -- "ṁ=9.292e-13" --> C5
+C5 -- "ṁ=-9.292e-13" --> N2
+C6["c6 AREA_CHANGE<br/>ζ=0.4215<br/>A=2.69e-03/1.87e-05"]
+C6 -- "ṁ=-7.249e-13" --> N2
+N3 -- "ṁ=7.249e-13" --> C6
+C7["c7 PRESSURE_BOUNDARY<br/>p0=4.702e+05 Pa<br/>T0=535.1 K"]
+C7 -- "ṁ=-3.766e-05" --> N5
+C8["c8 PRESSURE_BOUNDARY<br/>p0=3.833e+05 Pa<br/>T0=765.2 K"]
+N2 -- "ṁ=3.766e-05" --> C8
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C7 pbound
+class C8 pbound
+```
+
+</details>
+
+<details><summary>A0199 两两缩放 max|dx|：a_default|b_zeroflow=5.44e-07，a_default|c_half=4.65e-07，a_default|c_double=5.77e-10，b_zeroflow|c_half=1.01e-06，b_zeroflow|c_double=5.44e-07，c_half|c_double=4.65e-07</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>220.9 kPa<br/>T=592.5 K"))
+N1(("n1<br/>14 kPa<br/>T=2008 K"))
+N2(("n2<br/>247.1 kPa<br/>T=592.5 K"))
+N3(("n3<br/>247.1 kPa<br/>T=592.5 K"))
+N4(("n4<br/>14 kPa<br/>T=592.5 K"))
+N5(("n5<br/>364.4 kPa<br/>T=592.5 K"))
+N6(("n6<br/>247.1 kPa<br/>T=592.5 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.7847<br/>A=5.41e-07/5.41e-07"]
+N0 -- "ṁ=0.0001557" --> C0
+C0 -- "ṁ=-0.0001557" --> N1
+C1["c1 PIPE<br/>L=5.266 D=0.004439<br/>A=1.55e-05/1.55e-05"]
+C1 -- "ṁ=-0.00143" --> N1
+N2 -- "ṁ=0.00143" --> C1
+C2["c2 PIPE<br/>L=0.2236 D=0.0001826<br/>A=2.62e-08/2.62e-08"]
+C2 -- "ṁ=-1.289e-06" --> N1
+N3 -- "ṁ=1.289e-06" --> C2
+C3["c3 HEATER<br/>q=9367 W<br/>A=5.74e-03/5.74e-03"]
+C3 -- "ṁ=-0.004996" --> N1
+N4 -- "ṁ=0.004996" --> C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.5046<br/>A=3.45e-05/3.45e-05"]
+C4 -- "ṁ=-0.009996" --> N3
+N5 -- "ṁ=0.009996" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.6067<br/>A=3.25e-08/3.25e-08"]
+N2 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6715<br/>A=1.23e-05/1.23e-05"]
+C6 -- "ṁ=-0.004996" --> N4
+N5 -- "ṁ=0.004996" --> C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.9198<br/>A=6.35e-03/6.35e-03"]
+C7 -- "ṁ=-0.001874" --> N2
+N3 -- "ṁ=0.001874" --> C7
+C8["c8 ORIFICE<br/>β=1 Cd=0.6112<br/>A=2.50e-07/2.50e-07"]
+C8 -- "ṁ=-9.114e-05" --> N0
+N5 -- "ṁ=9.114e-05" --> C8
+C9["c9 ORIFICE<br/>β=1 Cd=0.9762<br/>A=3.20e-05/3.20e-05"]
+C9 -- "ṁ=-0.00812" --> N0
+N3 -- "ṁ=0.00812" --> C9
+C10["c10 BOOSTER<br/>p: 2.471e+05→3.644e+05 Pa<br/>增压比 π=1.475"]
+N2 -- "ṁ=0.0004447" --> C10
+C10 -- "ṁ=-0.01508" --> N5
+C11["c11 PRESSURE_BOUNDARY<br/>p0=2.209e+05 Pa<br/>T0=499 K"]
+N0 -- "ṁ=0.008055" --> C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=1.4e+04 Pa<br/>T0=686 K"]
+N1 -- "ṁ=0.006583" --> C12
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C2 softchoked
+class C6 softchoked
+class C10 booster
+class C11 pbound
+class C12 pbound
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0203 两两缩放 max|dx|：a_default|c_double=1.39e-10</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>242.4 kPa<br/>T=915.2 K"))
+N1(("n1<br/>242.4 kPa<br/>T=849.8 K"))
+N2(("n2<br/>242.4 kPa<br/>T=849.8 K"))
+N3(("n3<br/>242.4 kPa<br/>T=849.8 K"))
+N4(("n4<br/>321.1 kPa<br/>T=895.2 K"))
+N5(("n5<br/>242.4 kPa<br/>T=849.8 K"))
+C0["c0 PIPE<br/>L=2.082 D=0.04122<br/>A=1.33e-03/1.33e-03"]
+N0 --- C0
+N1 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.9741<br/>A=1.66e-07/1.66e-07"]
+N0 --- C1
+N2 --- C1
+C2["c2 AREA_CHANGE<br/>ζ=0.6533<br/>A=4.04e-08/3.71e-03"]
+N2 --- C2
+N3 --- C2
+C3["c3 HEATER<br/>q=267.5 W<br/>A=3.04e-05/3.04e-05"]
+C3 -- "ṁ=-0.01332" --> N0
+N4 -- "ṁ=0.01332" --> C3
+C4["c4 AREA_CHANGE<br/>ζ=1.916<br/>A=1.91e-06/3.07e-03"]
+N1 --- C4
+N5 --- C4
+C5["c5 PRESSURE_BOUNDARY<br/>p0=3.211e+05 Pa<br/>T0=895.2 K"]
+C5 -- "ṁ=-0.01332" --> N4
+C6["c6 PRESSURE_BOUNDARY<br/>p0=2.424e+05 Pa<br/>T0=804.4 K"]
+N0 -- "ṁ=0.01332" --> C6
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C3 softchoked
+class C5 pbound
+class C6 pbound
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0245 两两缩放 max|dx|：a_default|b_zeroflow=0.00e+00，a_default|c_half=0.00e+00，a_default|c_double=0.00e+00，b_zeroflow|c_half=0.00e+00，b_zeroflow|c_double=0.00e+00，c_half|c_double=0.00e+00</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>618.2 kPa<br/>T=354 K"))
+N1(("n1<br/>619.2 kPa<br/>T=354 K"))
+N2(("n2<br/>420.7 kPa<br/>T=476.3 K"))
+N3(("n3<br/>213.4 kPa<br/>T=361.5 K"))
+N4(("n4<br/>425.2 kPa<br/>T=355.1 K"))
+N5(("n5<br/>69.78 kPa<br/>T=355.1 K"))
+N6(("n6<br/>317.9 kPa<br/>T=355.1 K"))
+N7(("n7<br/>256.9 kPa<br/>T=355.1 K"))
+N8(("n8<br/>618.2 kPa<br/>T=354 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.9001<br/>A=3.38e-05/3.38e-05"]
+C0 -- "ṁ=-0.003375" --> N0
+N1 -- "ṁ=0.003375" --> C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.7895<br/>A=1.22e-06/1.22e-06"]
+N1 -- "ṁ=0.001217" --> C1
+C1 -- "ṁ=-0.001217" --> N2
+C2["c2 ORIFICE<br/>β=1 Cd=0.7801<br/>A=1.97e-04/1.97e-04"]
+N2 -- "ṁ=0.1195" --> C2
+C2 -- "ṁ=-0.1195" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.5455<br/>A=2.13e-06/2.13e-06"]
+C3 -- "ṁ=-0.001059" --> N3
+N4 -- "ṁ=0.001059" --> C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.8247<br/>A=2.02e-06/2.02e-06"]
+N0 -- "ṁ=0.002216" --> C4
+C4 -- "ṁ=-0.002216" --> N5
+C5["c5 PIPE<br/>L=2.364 D=0.06121<br/>A=2.94e-03/2.94e-03"]
+N4 -- "ṁ=2.31" --> C5
+C5 -- "ṁ=-2.31" --> N6
+C6["c6 ORIFICE<br/>β=1 Cd=0.7191<br/>A=5.85e-03/5.85e-03"]
+N6 -- "ṁ=2.31" --> C6
+C6 -- "ṁ=-2.31" --> N7
+C7["c7 ORIFICE<br/>β=1 Cd=0.9083<br/>A=8.28e-06/8.28e-06"]
+C7 -- "ṁ=-0.009985" --> N5
+N8 -- "ṁ=0.009985" --> C7
+C8["c8 PIPE<br/>L=3.344 D=0.01622<br/>A=2.07e-04/2.07e-04"]
+N1 -- "ṁ=0.009985" --> C8
+C8 -- "ṁ=-0.009985" --> N8
+C9["c9 PIPE<br/>L=0.1992 D=0.07112<br/>A=3.97e-03/3.97e-03"]
+C9 -- "ṁ=-2.135" --> N3
+N7 -- "ṁ=2.135" --> C9
+C10["c10 PIPE<br/>L=0.6595 D=0.0007815<br/>A=4.80e-07/4.80e-07"]
+N1 -- "ṁ=0.0001217" --> C10
+C10 -- "ṁ=-0.0001217" --> N6
+C11["c11 PIPE<br/>L=2.528 D=0.08497<br/>A=5.67e-03/5.67e-03"]
+N4 -- "ṁ=4.582" --> C11
+C11 -- "ṁ=-4.582" --> N5
+C12["c12 PIPE<br/>L=5.458 D=0.002735<br/>A=5.88e-06/5.88e-06"]
+N0 -- "ṁ=0.001159" --> C12
+C12 -- "ṁ=-0.001159" --> N4
+C13["c13 AREA_CHANGE<br/>ζ=1.811<br/>A=1.21e-06/1.05e-05"]
+N1 -- "ṁ=0.001606" --> C13
+C13 -- "ṁ=-0.001606" --> N5
+C14["c14 ORIFICE<br/>β=1 Cd=0.5851<br/>A=5.42e-04/5.42e-04"]
+C14 -- "ṁ=-0.1748" --> N5
+N7 -- "ṁ=0.1748" --> C14
+C15["c15 PIPE<br/>L=2.309 D=0.07919<br/>A=4.92e-03/4.92e-03"]
+N1 -- "ṁ=5.848" --> C15
+C15 -- "ṁ=-5.848" --> N4
+C16["c16 BOOSTER<br/>p: 2.134e+05→4.252e+05 Pa<br/>增压比 π=1.993"]
+N3 -- "ṁ=2.256" --> C16
+C16 -- "ṁ=-1.044" --> N4
+C17["c17 PRESSURE_BOUNDARY<br/>p0=6.192e+05 Pa<br/>T0=354 K"]
+C17 -- "ṁ=-5.864" --> N1
+C18["c18 PRESSURE_BOUNDARY<br/>p0=4.207e+05 Pa<br/>T0=477.5 K"]
+C18 -- "ṁ=-0.1182" --> N2
+C19["c19 PRESSURE_BOUNDARY<br/>p0=6.978e+04 Pa<br/>T0=871.3 K"]
+N5 -- "ṁ=4.771" --> C19
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C7 softchoked
+class C9 softchoked
+class C13 softchoked
+class C14 softchoked
+class C16 softchoked
+class C17 pbound
+class C18 pbound
+class C19 pbound
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 28 stroke:#E53935,stroke-width:3px
+linkStyle 31 stroke:#E53935,stroke-width:3px
+linkStyle 32 stroke:#E53935,stroke-width:3px
+linkStyle 33 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+<details><summary>A0253 两两缩放 max|dx|：a_default|b_zeroflow=0.00e+00，a_default|c_half=0.00e+00，a_default|c_double=0.00e+00，b_zeroflow|c_half=0.00e+00，b_zeroflow|c_double=0.00e+00，c_half|c_double=0.00e+00</summary>
+
+```mermaid
+flowchart LR
+N0(("n0<br/>589.5 kPa<br/>T=706.3 K"))
+N1(("n1<br/>280.2 kPa<br/>T=706.3 K"))
+N2(("n2<br/>394.7 kPa<br/>T=706.3 K"))
+N3(("n3<br/>226.2 kPa<br/>T=727.4 K"))
+N4(("n4<br/>489.5 kPa<br/>T=727.4 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.6641<br/>A=6.85e-07/6.85e-07"]
+N0 -- "ṁ=0.000408" --> C0
+C0 -- "ṁ=-0.000408" --> N1
+C1["c1 PIPE<br/>L=0.3783 D=0.01932<br/>A=2.93e-04/2.93e-04"]
+C1 -- "ṁ=-0.1557" --> N1
+N2 -- "ṁ=0.1557" --> C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.8692<br/>A=1.20e-08/1.20e-08"]
+N1 -- "ṁ=3.574e-06" --> C2
+C2 -- "ṁ=-3.574e-06" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.9148<br/>A=7.15e-05/7.15e-05"]
+N0 -- "ṁ=0.04514" --> C3
+C3 -- "ṁ=-0.04514" --> N4
+C4["c4 PIPE<br/>L=8.037 D=0.03774<br/>A=1.12e-03/1.12e-03"]
+C4 -- "ṁ=-0.4887" --> N3
+N4 -- "ṁ=0.4887" --> C4
+C5["c5 BOOSTER<br/>p: 2.802e+05→3.947e+05 Pa<br/>增压比 π=1.409"]
+N1 -- "ṁ=0.1561" --> C5
+C5 -- "ṁ=-0.1557" --> N2
+C6["c6 PRESSURE_BOUNDARY<br/>p0=5.895e+05 Pa<br/>T0=706.3 K"]
+C6 -- "ṁ=-0.04555" --> N0
+C7["c7 PRESSURE_BOUNDARY<br/>p0=2.262e+05 Pa<br/>T0=517.1 K"]
+N3 -- "ṁ=0.4887" --> C7
+C8["c8 PRESSURE_BOUNDARY<br/>p0=4.895e+05 Pa<br/>T0=729.6 K"]
+C8 -- "ṁ=-0.4435" --> N4
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C4 softchoked
+class C5 softchoked
+class C6 pbound
+class C7 pbound
+class C8 pbound
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+```
+
+</details>
+
+**判定**：守卫的初值依赖性**总体良性**——
+
+- 9/14 例全部收敛组严格同根（缩放坐标 max|dx|<1e-6；A0004 等告警例 pair_dx=0.0 逐位一致）；
+- 异根 5 例中：**A0005 是零流量死肢节点温度的数值多解**（流量段全同、T_n5 差 1.8e4 K——死肢 T 无物理约束的已知性质，与守卫无关）；A0062/A0101 为亚容量网络轻度多解；A0093/A0199 仅边际超阈（8.4e-4 / 1.0e-6，守卫特征坐标 ratio 逐位一致）；
+- **反向依赖 4 例**（default 过 / 零初值失败：A0062/A0093/A0171/A0203）全部落在软壅塞守卫家族——零流量初值在守卫对象元件上死区冻结（iters=0 或 50 步耗尽）。这是容量初值（±1.1·cap 越 kink 让 FD 雅可比看见陡坡斜率）存在理由的家族内定量实证：**撤掉容量初值，守卫钉位网络失去收敛能力**。
 
 ## 3. 附录：全部扫描例逐例条目（每例一图）
 
@@ -20727,6 +21803,9 @@ linkStyle 3 stroke:#E53935,stroke-width:3px
 - **A0275 归 M2 同伦**：不收敛路径在同伦延拓（mode=2）落地后处理；
 - **多口件方程侧无守卫**（JUNCTION 等 >2 口件按 A0257 实证豁免，容量约束语义属腔整体）——报表侧逐口超容警告是后续项；
 - **不收敛路径零提示**：clean-fail 只有 status/iters，无失败分类（无根/初值域外/病态 J）——失败分类器是后续项；本扫描 DG-8/J-2 实证失败路径安静退出、不崩溃；
+- **K 全网单标度的多尺度失准**（补测轮 §2.6 证据库）：钉位偏差 ratio−1 = (Δp/p_ref)·(m_ref/(κ·cap))，A0171 实证放大到 23 倍——多尺度+带功元件网络中告警数值只应作"超容"标志读；"K 逐元件局部参考量"（待定问题 #14 姊妹条）重启时引用该节；
+- **容量初值负面清单为空，反向依赖 4 例**（补测轮 §2.8）：家族 14 例无"default 不过而零初值过"；反向（default 过/零初值冻结）A0062/A0093/A0171/A0203 全为守卫家族——容量初值是守卫钉位网络收敛的必要组件，初值方案迭代时两者必须联动评估；
+- **零流量死肢节点温度数值多解**（补测轮 §2.8，A0005 实证）：死肢 T 无物理约束（能量行仅 ε 正则），不同初值可差 1e4 K 量级——流量/压力根不受影响，报表侧如需可加死肢温度标志（后续项）；
 - **告警合并**：一次 solve 的全部命中合并进一条 warn 文案——按命中条数口径判读；
 - **J-2 裸拓扑病态**：junction 出口直挂等压双 PB 的分流比不定（J 零空间），实测 iters=0 冻结——拓扑适定性问题，非守卫问题，适定变体 J-2b 全过；
 - **V2 参考基线过期**：v2_results.json 生成后管件模型经历 Fanno 重构（两工作区现实现逐位一致、同解），脚本的不可压 Darcy 手算不再描述现管件物理——守卫零扰动以 dev vs pre-guard 旧工作树双跑逐位一致实证。

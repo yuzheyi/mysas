@@ -168,6 +168,196 @@
    "mermaid": "flowchart LR\nN0((\"n0<br/>100 kPa<br/>T=600.9 K\"))\nN1((\"n1<br/>500 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN0 -- \"ṁ=0.8256\" --> C0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nC1 -- \"ṁ=-0.8256\" --> N0\nN1 -- \"ṁ=0.8256\" --> C1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC2 -- \"ṁ=-0.8256\" --> N1\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
   },
   {
+   "id": "DG-4-A0.0001",
+   "group": "A",
+   "topo": "PB 5e5 → HEATER(A=0.0001) → PB 1e5",
+   "story": "扫描单档 A=1.000e-04（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "1.39e-17"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "A",
+    "value": 0.0001,
+    "status": "converged",
+    "iters": 4,
+    "warn_calls": 1,
+    "K_guard": 6060858168.373754,
+    "p_ref_guard": 500000.0,
+    "m_ref_guard": 0.08249656832576231,
+    "hits": 1,
+    "worst_ratio": 1.0008,
+    "mdot": 0.08256256558042291,
+    "cap": 0.08249656832576231,
+    "dp_across": 400000.0,
+    "theo_pin": 0.08256256558042292,
+    "close_resid": 1.3877787807814457e-17,
+    "offset": 6.599725466059636e-05,
+    "offset_over_cap": 0.0007999999999998365,
+    "offset_over_dp": 1.649931366514909e-10,
+    "one_over_K": 1.6499313665152464e-10,
+    "dp_over_kappa_pref": 0.0008
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=612.1 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.08256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-04/1.00e-04\"]\nN0 -- \"ṁ=0.08256\" --> C1\nC1 -- \"ṁ=-0.08256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.08256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-4-A0.0003",
+   "group": "A",
+   "topo": "PB 5e5 → HEATER(A=0.0003) → PB 1e5",
+   "story": "扫描单档 A=3.000e-04（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "2.78e-17"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "A",
+    "value": 0.0003,
+    "status": "converged",
+    "iters": 4,
+    "warn_calls": 1,
+    "K_guard": 2020286056.124585,
+    "p_ref_guard": 500000.0,
+    "m_ref_guard": 0.2474897049772869,
+    "hits": 1,
+    "worst_ratio": 1.0008,
+    "mdot": 0.2476876967412687,
+    "cap": 0.2474897049772869,
+    "dp_across": 400000.0,
+    "theo_pin": 0.24768769674126873,
+    "close_resid": 2.7755575615628914e-17,
+    "offset": 0.00019799176398180296,
+    "offset_over_cap": 0.0007999999999998927,
+    "offset_over_dp": 4.949794099545074e-10,
+    "one_over_K": 4.949794099545738e-10,
+    "dp_over_kappa_pref": 0.0008
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=604 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.2477\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=3.00e-04/3.00e-04\"]\nN0 -- \"ṁ=0.2477\" --> C1\nC1 -- \"ṁ=-0.2477\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.2477\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-4-A0.001",
+   "group": "A",
+   "topo": "PB 5e5 → HEATER(A=0.001) → PB 1e5",
+   "story": "扫描单档 A=1.000e-03（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "1.05e-11"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "A",
+    "value": 0.001,
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "K_guard": 606085816.8373753,
+    "p_ref_guard": 500000.0,
+    "m_ref_guard": 0.8249656832576232,
+    "hits": 1,
+    "worst_ratio": 1.000800000012752,
+    "mdot": 0.8256256557936211,
+    "cap": 0.8249656832365121,
+    "dp_across": 400000.0,
+    "theo_pin": 0.8256256557831182,
+    "close_resid": 1.0502931857558906e-11,
+    "offset": 0.0006599725571090342,
+    "offset_over_cap": 0.0008000000127518329,
+    "offset_over_dp": 1.6499313927725856e-09,
+    "one_over_K": 1.6499313665152465e-09,
+    "dp_over_kappa_pref": 0.0008
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.9 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.8256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.8256\" --> C1\nC1 -- \"ṁ=-0.8256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.8256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-4-A0.003",
+   "group": "A",
+   "topo": "PB 5e5 → HEATER(A=0.003) → PB 1e5",
+   "story": "扫描单档 A=3.000e-03（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "9.86e-12"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "A",
+    "value": 0.003,
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "K_guard": 202028605.61245847,
+    "p_ref_guard": 500000.0,
+    "m_ref_guard": 2.4748970497728693,
+    "hits": 1,
+    "worst_ratio": 1.000800000003899,
+    "mdot": 2.4768769676880464,
+    "cap": 2.4748970500383662,
+    "dp_across": 400000.0,
+    "theo_pin": 2.4768769676781845,
+    "close_resid": 9.86188908314034e-12,
+    "offset": 0.0019799176496801962,
+    "offset_over_cap": 0.0008000000038989514,
+    "offset_over_dp": 4.949794124200491e-09,
+    "one_over_K": 4.949794099545738e-09,
+    "dp_over_kappa_pref": 0.0008
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.3 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-2.477\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=3.00e-03/3.00e-03\"]\nN0 -- \"ṁ=2.477\" --> C1\nC1 -- \"ṁ=-2.477\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=2.477\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-4-A0.01",
+   "group": "A",
+   "topo": "PB 5e5 → HEATER(A=0.01) → PB 1e5",
+   "story": "扫描单档 A=1.000e-02（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "0.00e+00"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "A",
+    "value": 0.01,
+    "status": "converged",
+    "iters": 2,
+    "warn_calls": 1,
+    "K_guard": 60608581.683737546,
+    "p_ref_guard": 500000.0,
+    "m_ref_guard": 8.24965683257623,
+    "hits": 1,
+    "worst_ratio": 1.0008,
+    "mdot": 8.25625655804229,
+    "cap": 8.24965683257623,
+    "dp_across": 400000.0,
+    "theo_pin": 8.25625655804229,
+    "close_resid": 0.0,
+    "offset": 0.006599725466060136,
+    "offset_over_cap": 0.0007999999999998971,
+    "offset_over_dp": 1.6499313665150338e-08,
+    "one_over_K": 1.649931366515246e-08,
+    "dp_over_kappa_pref": 0.0008
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.1 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-8.256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-02/1.00e-02\"]\nN0 -- \"ṁ=8.256\" --> C1\nC1 -- \"ṁ=-8.256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=8.256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
    "id": "DG-4",
    "group": "A",
    "topo": "DG-1 面积扫描 A∈{1e-4,3e-4,1e-3,3e-3,1e-2}",
@@ -257,6 +447,196 @@
     ]
    },
    "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.9 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.8256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.8256\" --> C1\nC1 -- \"ṁ=-0.8256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.8256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-5-P200000",
+   "group": "A",
+   "topo": "PB 200000 → HEATER(A=1e-3) → PB 1e5",
+   "story": "扫描单档 p_up=2.000e+05（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "6.26e-12"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "p_up",
+    "value": 200000.0,
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "K_guard": 606085816.8373754,
+    "p_ref_guard": 200000.0,
+    "m_ref_guard": 0.32998627330304925,
+    "hits": 1,
+    "worst_ratio": 1.000500000018998,
+    "mdot": 0.33015126643451775,
+    "cap": 0.32998627329160285,
+    "dp_across": 100000.0,
+    "theo_pin": 0.3301512664282544,
+    "close_resid": 6.263378704574052e-12,
+    "offset": 0.0001649931429149043,
+    "offset_over_cap": 0.0005000000189980717,
+    "offset_over_dp": 1.649931429149043e-09,
+    "one_over_K": 1.649931366515246e-09,
+    "dp_over_kappa_pref": 0.0005
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>200 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=602.5 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.3302\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.3302\" --> C1\nC1 -- \"ṁ=-0.3302\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.3302\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-5-P300000",
+   "group": "A",
+   "topo": "PB 300000 → HEATER(A=1e-3) → PB 1e5",
+   "story": "扫描单档 p_up=3.000e+05（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "1.09e-11"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "p_up",
+    "value": 300000.0,
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "K_guard": 606085816.8373754,
+    "p_ref_guard": 300000.0,
+    "m_ref_guard": 0.49497940995457385,
+    "hits": 1,
+    "worst_ratio": 1.0006666666886472,
+    "mdot": 0.4953093962888355,
+    "cap": 0.4949794100046192,
+    "dp_across": 200000.0,
+    "theo_pin": 0.49530939627792225,
+    "close_resid": 1.0913270287460364e-11,
+    "offset": 0.0003299862842163215,
+    "offset_over_cap": 0.0006666666886471945,
+    "offset_over_dp": 1.6499314210816073e-09,
+    "one_over_K": 1.649931366515246e-09,
+    "dp_over_kappa_pref": 0.0006666666666666666
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=601.7 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.4953\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.4953\" --> C1\nC1 -- \"ṁ=-0.4953\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.4953\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-5-P500000",
+   "group": "A",
+   "topo": "PB 500000 → HEATER(A=1e-3) → PB 1e5",
+   "story": "扫描单档 p_up=5.000e+05（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "1.05e-11"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "p_up",
+    "value": 500000.0,
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "K_guard": 606085816.8373753,
+    "p_ref_guard": 500000.0,
+    "m_ref_guard": 0.8249656832576232,
+    "hits": 1,
+    "worst_ratio": 1.000800000012752,
+    "mdot": 0.8256256557936211,
+    "cap": 0.8249656832365121,
+    "dp_across": 400000.0,
+    "theo_pin": 0.8256256557831182,
+    "close_resid": 1.0502931857558906e-11,
+    "offset": 0.0006599725571090342,
+    "offset_over_cap": 0.0008000000127518329,
+    "offset_over_dp": 1.6499313927725856e-09,
+    "one_over_K": 1.6499313665152465e-09,
+    "dp_over_kappa_pref": 0.0008
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.9 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.8256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.8256\" --> C1\nC1 -- \"ṁ=-0.8256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.8256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-5-P700000",
+   "group": "A",
+   "topo": "PB 700000 → HEATER(A=1e-3) → PB 1e5",
+   "story": "扫描单档 p_up=7.000e+05（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "1.70e-11"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "p_up",
+    "value": 700000.0,
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "K_guard": 606085816.8373754,
+    "p_ref_guard": 700000.0,
+    "m_ref_guard": 1.1549519565606723,
+    "hits": 1,
+    "worst_ratio": 1.0008571428424797,
+    "mdot": 1.1559419152408494,
+    "cap": 1.1549519564379807,
+    "dp_across": 600000.0,
+    "theo_pin": 1.1559419152578898,
+    "close_resid": 1.7040369115761678e-11,
+    "offset": 0.0009899588028687845,
+    "offset_over_cap": 0.0008571428424797373,
+    "offset_over_dp": 1.6499313381146408e-09,
+    "one_over_K": 1.649931366515246e-09,
+    "dp_over_kappa_pref": 0.0008571428571428571
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>700 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.7 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=7e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-1.156\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=1.156\" --> C1\nC1 -- \"ṁ=-1.156\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=1.156\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "id": "DG-5-P900000",
+   "group": "A",
+   "topo": "PB 900000 → HEATER(A=1e-3) → PB 1e5",
+   "story": "扫描单档 p_up=9.000e+05（逐档记录，汇总判据见 DG 母记录）",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "钉位闭合|ṁ|−(cap+Δp/K)<1e-9",
+     "ok": true,
+     "detail": "5.43e-12"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "param": "p_up",
+    "value": 900000.0,
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "K_guard": 606085816.8373754,
+    "p_ref_guard": 900000.0,
+    "m_ref_guard": 1.4849382298637215,
+    "hits": 1,
+    "worst_ratio": 1.0008888888924647,
+    "mdot": 1.4862581750934185,
+    "cap": 1.4849382299947798,
+    "dp_across": 800000.0,
+    "theo_pin": 1.486258175087992,
+    "close_resid": 5.42654809976284e-12,
+    "offset": 0.0013199450986387529,
+    "offset_over_cap": 0.0008888888924648354,
+    "offset_over_dp": 1.649931373298441e-09,
+    "one_over_K": 1.649931366515246e-09,
+    "dp_over_kappa_pref": 0.0008888888888888889
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>900 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.6 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=9e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-1.486\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=1.486\" --> C1\nC1 -- \"ṁ=-1.486\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=1.486\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
   },
   {
    "id": "DG-5",
