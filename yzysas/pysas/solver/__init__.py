@@ -15,6 +15,7 @@
 """
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass
 
 import numpy as np
@@ -76,6 +77,59 @@ def default_guess(system, ctx) -> np.ndarray:
     mean_T = (float(np.mean(supplies)) if supplies else ctx.T0_default)
     for nid in system.T_ids:
         x0[system.T_idx_of_node[nid]] = mean_T
+
+    # 容量初值（2026-10-01，软壅塞配套——头脑风暴三路审查定稿）：
+    # 零压降元件（软壅塞守卫的对象）在 m=0 起步时压力行对流量全盲
+    # （死区内项恒 +0.0）→ 纯零压降链路的 J 结构性奇异（实测
+    # cond 1.8e17、iters=0 冻结）。把非锚定元件的端口流量初始化为
+    # 元件声速容量的 ±1.1 倍（同一幅值、连续性精确对称，略越 kink
+    # 让 FD 看见陡坡斜率 K），方向按锚定压力梯度取（ṁ>0=流入，
+    # 高压侧口为正）。正常网络：初值只影响路径不影响根，全量回归
+    # 护栏守住逐位不变。
+    anchors2 = {}
+    for model in system.models.values():
+        anchors2.update(model.anchor_P_values())
+
+    def _p_near(nid: int) -> float:
+        """节点 nid 的压力初值（锚定值或网络均值）——方向判别用。"""
+        return anchors2.get(nid, mean_p)
+
+    for comp in sorted(system.net.comps, key=lambda c: c.comp_id):
+        model = system.models[comp.comp_id]
+        if model.anchor_P_values():
+            continue
+        if 1 not in model.row_units:
+            continue      # 无压力行（孔板/管/面积件）：特性行自定流量，
+                          # 零流量初值有层流线性律保底——容量初值只服务
+                          # 软壅塞守卫对象（压力行在死区内对流量盲的件）
+        # 元件级容量（同一幅值；多口件按进/出口分组对称分摊，
+        # 连续性初值精确为零）：
+        # cap 取上风侧节点滞止态（与 _soft_choke_guard 的 upwind 同口径）
+        p_ports = [_p_near(p.node_id) for p in comp.ports]
+        k_up = int(np.argmax(p_ports))
+        p_max, p_min = max(p_ports), min(p_ports)
+        if p_max <= p_min:
+            continue                      # 无梯度（等压环）：保持 0
+        # 初值容量用【全网锚定压力上限】估（初值目的只是让 FD 看见
+        # 陡坡斜率，幅值宁大勿小——非锚定节点初值=均值会低估容量，
+        # 初值流量超初值容量、陡坡大幅激活、首步不降）。**两侧同幅值
+        # （单一 cap）**：守卫阈值按 upwind 高压侧容量判，若低压组用
+        # 自身节点容量估（旧 cap_lo 口径），1.1·cap_lo < cap_up 落回
+        # 死区内 → 压力行重新变盲 → iters=0 冻结（PB-PB 零压降链
+        # 实证，2026-10-02 告警验证抓出）。元件内 Σṁ 初值精确为零。
+        p_hi_ref = max(list(anchors2.values()) + [mean_p])
+        cap = model.choke_capacity(max(p_hi_ref, 1.0), mean_T, ctx, k_up)
+        if cap <= 0.0:
+            continue
+        hi = [j for j, p in enumerate(p_ports) if p >= 0.5 * (p_max + p_min)]
+        n_lo = max(len(comp.ports) - len(hi), 1)
+        for j, port in enumerate(comp.ports):
+            if port.area <= 0.0:
+                continue
+            if j in hi:
+                x0[system.m_idx_of_port[(comp.comp_id, j)]] = 1.1 * cap / len(hi)
+            else:                          # 低压侧组：流出（−）
+                x0[system.m_idx_of_port[(comp.comp_id, j)]] = -1.1 * cap / n_lo
     return x0
 
 
@@ -138,6 +192,29 @@ def solve(system, x0, ctx, settings: SolverSettings | None = None, *,
 
     x = scaling.to_raw(x_t)
     F_raw = system.residual(x, ctx)
+
+    # ---------- 软壅塞终态告警（2026-10-02 用户裁决） ----------
+    # 解上守卫仍激活 = 网络物理上要求某口流量超过声速容量（非物理），
+    # 兜底陡坡把它钉在 cap+Δp/K 让计算走得下去——使用者应回头修网络
+    # （面积/压差/拓扑）。只在解处查一次且仅收敛时报：residual 里报
+    # 会被 FD 雅可比 n+1 次调用刷屏，且容量初值故意 1.1×cap 越 kink、
+    # 首残差必然"激活"——那是机制不是病；判定与方程侧共用
+    # _comp_overloads（含全部豁免规则），两者永远同条件。
+    if report.converged:
+        hits = []
+        for comp in sorted(system.net.comps, key=lambda c: c.comp_id):
+            model = system.models[comp.comp_id]
+            for i, cap, m_a in system._comp_overloads(model, comp, x, ctx):
+                hits.append((comp.comp_id, i, m_a, cap))
+        if hits:
+            detail = "; ".join(
+                f"c{cid}口{i}: ṁ={m_a:.3g} > cap={cap:.3g} kg/s"
+                for cid, i, m_a, cap in hits)
+            warnings.warn(
+                "软壅塞兜底在解处仍激活（非物理解——某口流量被钉在声速"
+                f"容量附近）：{detail}。网络物理容量不足，请检查元件"
+                "面积/压差设置（求解器已强行收敛以便调试）",
+                RuntimeWarning)
     return SolveResult(
         x=x, x_scaled=x_t, report=report, scaling=scaling,
         max_F_raw=float(np.max(np.abs(F_raw))) if F_raw.size else 0.0)

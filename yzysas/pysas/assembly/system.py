@@ -198,6 +198,7 @@ class NetworkSystem:
     def residual(self, x: np.ndarray, ctx) -> np.ndarray:
         """全局残差 F(x)：节点连续性 + 节点能量平衡 + 元件方程块。"""
         self._prime_static(x, ctx)   # 静参数白板：有效口一次向量化反算
+        self._init_guard_refs(ctx)   # 软壅塞参考量（惰性一次）
         F = np.zeros(self.n)
 
         # ① 节点连续性：Σᵢ ṁᵢ = 0（ṁ 流入组件为正 → 对节点即流出为正）
@@ -236,7 +237,9 @@ class NetworkSystem:
         # ③ 元件方程块（每口 1 个，共 M 个）
         off = self.n_interior + self.n_T
         for comp in sorted(self.net.comps, key=lambda c: c.comp_id):
-            block = self.models[comp.comp_id].residual(x, ctx)
+            model = self.models[comp.comp_id]
+            block = model.residual(x, ctx)
+            self._soft_choke_guard(block, comp, model, x, ctx)
             F[off:off + len(block)] = block
             off += len(block)
         
@@ -248,6 +251,126 @@ class NetworkSystem:
         """定压比热（能量方程 q/cp 项；物性归 ctx.gas，与缩放层能量行
         参考量同源——同一实例保证数值一致）。"""
         return ctx.gas.cp()
+
+    # ---------- 软壅塞陡坡（2026-10-01 用户方案，想法 33 修 2 定稿） ----------
+    #: 陡坡强度（无量纲 κ = K·m_ref/p_ref；K 挂缩放层量纲推导，见
+    #: solver/scaling.py——条件数冲击恰为 κ，跨网络尺度可移植）。
+    #: 亚容量区项精确为 +0.0（正常网络解逐位不变）；超容量解钉在
+    #: cap + Δp/K（K→∞ 收敛到"壅塞=压力 upwind"，想法 27 的正则化）。
+    #: κ=1e3（三路审查窗口 1e3~1e5 的下端）：fuzz 多尺度网络实测
+    #: κ=1e4 时陡坡高度 >> 网络压力尺度、单步刚性行程过大 iters=0
+    #: 冻结（A0004）；1e3 下收敛且钳位偏差 ~1%（worst=1.024）。
+    SOFT_CHOKE_KAPPA = 1.0e3
+
+    def _soft_choke_guard(self, block, comp, model, x, ctx):
+        """非锚定元件压力行的软壅塞兜底（row_units==1 才命中——框架
+        不认识元件名，未来零压差元件自动免疫）。
+
+        形式: block[i] -= K·sign(m_a)·max(0, |m_a| − cap_up)
+
+        三条设计纪律（头脑风暴三路审查定稿）:
+        ① 配对规则——压力行 p_a − p_b 配 **+号口 a**（heater f2=p2−p1
+           配口1 会反向无解；junction 侥幸盲配也对但不能当规则）。
+           现有元件压力行恰好都是"本口 − 参考"形（i 行 = i 口），框架
+           按 i=i 配并依赖该约定；未来元件若写反式需覆盖本方法豁免。
+        ② upwind cap——cap 取上风侧滞止态：m_a>0 时上游=本口节点；
+           m_a<0 时上游=全部进料口节点总压最大者（与 exit_state 的
+           p0_up=max(进料口)（想法 31）同源）。反向用本口会把容量
+           定在低压侧，错压比倍数且破坏 K→∞ 极限。
+        ③ 豁免锚定元件（anchor_P_values 非空：PB/booster 的压力行是
+           规定值不是关系式，加项会移动锚点）。
+
+        多口件豁免（2026-10-01 实证，A0257）：junction 的零压差行组
+        是"约束多腔等压"的结构，逐口陡坡与它互锁（f2/f3 各自把腔压
+        钉在一起，口超容需要腔压抬升——两行打架无解）。多口混合件
+        的容量约束属于腔整体（Σ 进料口容量），逐口方程侧兜底语义
+        不成立——只做报表侧超容量警告（port_states，后续项）。
+        故 n_ports>2 的元件跳过方程侧兜底。
+
+        cap 从当前 x 现算（choke_capacity 契约保证无状态闭式）；
+        p0/T0 进 cap 前 clamp 防线搜索试探点负压 NaN（同
+        _prime_static 纪律）。挂在 residual 热路径的是**兜底闭式**
+        （base 默认 = 等熵 Cd=1 + A_min 单行），不是 pipe 那种
+        50 轮 Fanno 定点——后者住元件特性内部，不经此路。
+        """
+        for i, cap, m_a in self._comp_overloads(model, comp, x, ctx):
+            K = self.SOFT_CHOKE_KAPPA * self._p_ref_for_guard / max(
+                self._m_ref_for_guard, 1.0e-12)
+            block[i] -= K * (m_a - (1.0 if m_a > 0 else -1.0) * cap)
+
+    def _comp_overloads(self, model, comp, x, ctx):
+        """软壅塞守卫的纯判定（生成器）——yield (行号, cap, ṁ)。
+
+        方程侧（guard 减陡坡项）与告警侧（solve 尾部终态检查）共用
+        同一份判定（含全部豁免规则），两者永远同条件——告警不会在
+        方程侧未激活的点上误报，方程侧也不会有告警看不见的激活。
+        """
+        if model.anchor_P_values():
+            return
+        if len(comp.ports) > 2:
+            return      # 多口混合件：报表侧警告领地（A0257 实证）
+        units = model.row_units
+        # 参考量初始化在 residual 开头（惰性一次，2026-10-02 用户裁决
+        # 保留那处、删此处冗余）：本生成器不消费 _p/_m_ref_for_guard，
+        # 消费者是 _soft_choke_guard 的 K——它只在 residual ③ 段被调，
+        # 开头必已初始化；solve 尾部告警路径也必经 residual 后到达。
+        for i, u in enumerate(units):
+            if u != 1 or i >= len(comp.ports):
+                continue
+            m_a = x[model._m_idx[i]]
+            if abs(m_a) <= 0.0:
+                continue
+            # upwind 上游侧滞止态
+            if m_a > 0.0:
+                k_up = i
+            else:
+                ins = [k for k in range(len(comp.ports))
+                       if x[model._m_idx[k]] > 0.0]
+                if not ins:
+                    continue        # 无进料（中间态）：不设闸
+                k_up = max(ins, key=lambda k: model._total_p(x, ctx, k))
+            p0_up = max(model._total_p(x, ctx, k_up), 1.0)
+            t0_up = max(model._total_t(x, ctx, k_up), 10.0)
+            cap = model.choke_capacity(p0_up, t0_up, ctx, i)
+            if cap <= 0.0 or abs(m_a) <= cap:
+                continue           # 亚容量：精确零扰动（+0.0）
+            yield i, cap, m_a
+
+    def _init_guard_refs(self, ctx):
+        """兜底用的参考量（惰性缓存一次；与 scaling.make_scaling 同源
+        口径：p_ref=锚定压力上限，m_ref=全网最大口壅塞容量）。
+
+        温度口径（2026-10-02 用户裁决）：T0_default → 网络源温度上限
+        maxT（单口源元件 T_supply 池的 max，无源回落 T0_default；与
+        T_bar_anchor/default_guess 的 mean_T 同池取 max）。容量 ∝
+        p0/√T0：maxT 下 m_ref 最保守（偏小）→ K 偏大——junction 网
+        （源温 500/800）实测 K ↑~15%（κ_eff 1.15e3），远离 1e4
+        冻结阈值；供温全等于 T0_default 的网络 K 逐位不变。
+
+        ⚠ 已知漏洞（待定问题 #14 记档，先注释后查）：参考量只进 K
+        （陡坡刚度定标），**cap 本身永远从当前节点滞止态现算**
+        （_comp_overloads 里 _total_p/_total_t）——所以升压/温升
+        元件（燃烧室、极端增压泵）错的是 K 的标度，不是容量值：
+        局部 p0/T0 超过此处全局上限时 κ_eff 偏离设计值，影响收敛
+        行为/条件数，不影响解的正确性（终态告警也会指路）。
+        """
+        if getattr(self, "_p_ref_for_guard", None) is None:
+            anchors = {}
+            for model in self.models.values():
+                anchors.update(model.anchor_P_values())
+            p0s = [v for v in anchors.values() if v > 0.0]
+            p_ref = max(p0s) if p0s else 1.0e5
+            supplies = [m.T_supply(ctx) for m in self.models.values()
+                        if len(m.comp.ports) == 1]
+            t_ref = max(supplies) if supplies else ctx.T0_default
+            m_ref = 0.0
+            for model in self.models.values():
+                for j, port in enumerate(model.comp.ports):
+                    if port.area > 0.0:
+                        m_ref = max(m_ref, model.choke_capacity(
+                            max(p_ref, 1.0), max(t_ref, 10.0), ctx, j))
+            self._p_ref_for_guard = p_ref
+            self._m_ref_for_guard = max(m_ref, 1.0e-6)
 
     # ---------- 解后处理：端口静参数持久化 ----------
     def port_states(self, x: np.ndarray, ctx) -> list:
