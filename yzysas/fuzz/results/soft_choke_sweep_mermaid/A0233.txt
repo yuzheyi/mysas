@@ -17,13 +17,13 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=5.256e+05 Pa<br/>T0=642.4 K"]
 N0 -- "ṁ=0.05629" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=0.05592 kg/s<br/>T0=467.7 K"]
 C5 -- "ṁ=-0.05592" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 pbound
 class C4 pbound
 class C5 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px

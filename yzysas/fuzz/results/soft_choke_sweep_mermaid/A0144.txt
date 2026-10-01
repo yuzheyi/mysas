@@ -64,10 +64,10 @@ C17["c17 PRESSURE_BOUNDARY<br/>p0=3.631e+05 Pa<br/>T0=716.4 K"]
 C17 -- "ṁ=-1.838e-05" --> N1
 C18["c18 MASS_SOURCE<br/>ṁ=0.2047 kg/s<br/>T0=874.5 K"]
 C18 -- "ṁ=-0.1024" --> N9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C4 softchoked
 class C6 softchoked
@@ -79,17 +79,17 @@ class C15 pbound
 class C16 pbound
 class C17 pbound
 class C18 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 28 stroke:#B71C1C,stroke-width:3px
-linkStyle 30 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 28 stroke:#E53935,stroke-width:3px
+linkStyle 30 stroke:#E53935,stroke-width:3px

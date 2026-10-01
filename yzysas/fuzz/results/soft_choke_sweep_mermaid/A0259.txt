@@ -36,9 +36,9 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.457e+05 Pa<br/>T0=667.5 K"]
 C8 -- "ṁ=-0.01639" --> N3
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.633e+05 Pa<br/>T0=348.2 K"]
 N7 -- "ṁ=0.01639" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound

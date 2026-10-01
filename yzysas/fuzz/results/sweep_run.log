@@ -1,14 +1,14 @@
-  [50/395] 22s elapsed
-  [100/395] 49s elapsed
-  [150/395] 80s elapsed
-  [200/395] 125s elapsed
-  [250/395] 173s elapsed
-  [300/395] 202s elapsed
-  [350/395] 207s elapsed
-  [395/395] 215s elapsed
-扫描完成：395 例，收敛率 32.4%，告警例 4，耗时 214.7s
+  [50/395] 25s elapsed
+  [100/395] 53s elapsed
+  [150/395] 86s elapsed
+  [200/395] 120s elapsed
+  [250/395] 163s elapsed
+  [300/395] 191s elapsed
+  [350/395] 195s elapsed
+  [395/395] 203s elapsed
+扫描完成：395 例，收敛率 32.4%，告警例 4，耗时 203.1s
   ✅ A0004: converged 且 worst∈[1.00,1.05] 且 1 命中 → {"status": "converged", "worst_ratio": 1.0208409959693896, "hits": 1}
   ✅ A0199: converged 且 HEATER ratio<0.05 且零命中 → {"status": "converged", "heater_ratio": 0.03744160217712915, "hits": 0}
   ✅ A0257: converged 且零命中 → {"status": "converged", "hits": 0}
   ✅ A0275: 允许不收敛（记录归 M2 同伦） → {"status": "clean_fail", "iters": 1, "worst_ratio": 1.0987895892530584}
-报告已生成：E:\mywork\programDesign\mysas_dev\yzysas\fuzz\SOFT_CHOKE_REGRESS.md（651 KB）
+报告已生成：E:\mywork\programDesign\mysas_dev\yzysas\fuzz\SOFT_CHOKE_REGRESS.md（673 KB）

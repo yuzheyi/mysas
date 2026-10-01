@@ -357,16 +357,22 @@ def netinf_to_mermaid(data: dict, x=None, sysm=None) -> str:
                 choked_edges.append(edge_idx)
             edge_idx += 1
     # ---- 样式类与壅塞标红 ----
+    # 浅色填充 + 强制深色文字（color:）：mermaid 文字色默认跟页面主题
+    # （深色主题下浅底配浅字不可读），显式钉死深字后明暗两主题都清晰。
     lines += [
-        "classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px",
-        "classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px",
-        "classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px",
-        "classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px",
+        "classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,"
+        "color:#7B3F00",
+        "classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,"
+        "color:#6A1B9A",
+        "classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,"
+        "color:#0D47A1",
+        "classDef softchoked fill:#FFCDD2,stroke:#D32F2F,"
+        "stroke-width:2.5px,color:#8B0000",
     ]
     for cid, cls in comp_class.items():
         lines.append(f"class C{cid} {cls}")
     for ei in choked_edges:
-        lines.append(f"linkStyle {ei} stroke:#B71C1C,stroke-width:3px")
+        lines.append(f"linkStyle {ei} stroke:#E53935,stroke-width:3px")
     return "\n".join(lines)
 
 

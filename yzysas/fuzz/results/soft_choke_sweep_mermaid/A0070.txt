@@ -45,10 +45,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=1.514e+04 Pa<br/>T0=753.8 K"]
 N2 -- "ṁ=0.984" --> C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=4.231e+04 Pa<br/>T0=382.9 K"]
 N4 -- "ṁ=0.05702" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C5 softchoked
 class C6 softchoked
@@ -56,9 +56,9 @@ class C8 softchoked
 class C11 pbound
 class C12 pbound
 class C13 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px

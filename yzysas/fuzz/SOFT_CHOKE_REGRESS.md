@@ -57,15 +57,15 @@ N0 -- "ṁ=0.8256" --> C1
 C1 -- "ṁ=-0.8256" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.8256" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：heater 零压降行 f2=p2−p1 对流量全盲，全网 4e5 Pa 压差全部由守卫陡坡吸收：物理解要求流量超声速容量（cap 按 upwind 5e5/600K≈0.825 kg/s），守卫把工作点钉在闭式根 cap+Δp/K（K=κ·p_ref/m_ref），终态告警指路网络容量不足。流量自 n0 经 heater 到 n1，q=1000W 使 n1 温升约 0.9 K。
@@ -95,15 +95,15 @@ N0 -- "ṁ=0.8256" --> C1
 C1 -- "ṁ=-0.8256" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.8256" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：与 DG-1 同网络，初值由测试侧独立构造（锚定压力/均值温度/±1.1·cap 对称流量，与 default_guess 同式不同源）——两路径必须落到同一根：容量初值只影响路径不影响根的回归钉。
@@ -131,10 +131,10 @@ N0 -- "ṁ=0.03" --> C1
 C1 -- "ṁ=-0.03" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 msource
 class C2 pbound
 ```
@@ -160,15 +160,15 @@ C1 -- "ṁ=-0.8256" --> N0
 N1 -- "ṁ=0.8256" --> C1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K"]
 C2 -- "ṁ=-0.8256" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：流量自 heater port1 进 port0 出：upwind 判定切换到进料口（取料口总压最大者 n1=5e5），闭式根对称成立 ṁ0≈−0.8256——守卫 upwind 口径方向对称性的检查（反向用本口容量会把 cap 定在低压侧）。
@@ -196,15 +196,15 @@ N0 -- "ṁ=0.8256" --> C1
 C1 -- "ṁ=-0.8256" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.8256" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：面积扫描：cap 与 m_ref 同比例缩放 → K=κ·p_ref/m_ref 反比缩放 → 相对钉位偏移 ratio−1 = Δp/(κ·p_ref)≈8e-4 与面积无关（守卫标度的物理检查，K→∞ 极限的有限-κ 版本）。注意绝对 offset=Δp/K∝A（任务带 [4e-4,1e-3] 仅在 A≈1e-3 档成立，逐档实测记录在案）。
@@ -232,15 +232,15 @@ N0 -- "ṁ=1.156" --> C1
 C1 -- "ṁ=-1.156" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=1.156" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：压差扫描：ratio−1 = Δp/(κ·p_ref) 恒在 1e-3 量级（远小于 5% 带）；offset/Δp = 1/K = m_ref/(κ·p_ref) 近常数——cap∝p0/√T0 与 p0 的一次律相抵，K 的 p_ref/m_ref 定标自消（守卫标度跨压差可移植的检查）。
@@ -272,18 +272,18 @@ N2 -- "ṁ=0.825" --> C2
 C2 -- "ṁ=-0.825" --> N1
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.825" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 softchoked
 class C3 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：双零压降串联：两根陡坡行串联分压，中间节点压力由两守卫行联立决定（≈4.996e5，贴着上游锚点）——H1 贴激活阈值（ratio−1≈1e-6），H2 吸收主要偏移（ratio−1≈8e-4）；两件各自命中（hits=2，告警调用合并为 1 条——实现把全部命中写进同一文案）。|ṁ|≈cap+Δp/(2K)∈[0.82,0.83]。
@@ -317,13 +317,13 @@ N1 -- "ṁ=0.099" --> C2
 C2 -- "ṁ=-0.099" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.099" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：孔板喉口有效面积 0.6·2e-4=1.2e-4，链路流量由孔板物理壅塞限定 ṁ≈0.099（超临界闭式）；heater 的 upwind 是自身上游 1e5 节点（零压降、亚容量、压力行未被扰动），守卫口径 cap≈0.165 → ratio=0.6<1，守卫全程旁观零告警。按 5e5 全压口径 heater cap≈0.825，链路流量仅为其 12%（<50% 带，任务书口径）——孔板自限流、heater 远未饱和。
@@ -349,10 +349,10 @@ N0 -- "ṁ=0.01648" --> C1
 C1 -- "ṁ=-0.01648" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.01648" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 msource
 class C2 pbound
 ```
@@ -400,18 +400,18 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N5 -- "ṁ=0.05385" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N6 -- "ṁ=0.0359" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 class C4 softchoked
 class C7 pbound
 class C8 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：junction 零压差行组（f2/f3）是'多腔等压'的结构约束，逐口陡坡与它互锁（A0257 实证）→ 方程侧守卫按 >2 口豁免——全网收敛零告警。
@@ -443,18 +443,18 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N3 --- C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N4 --- C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 softchoked
 class C3 pbound
 class C4 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：junction 出口直挂两个等压 PB：两支路完全对称等压 → 分流比不定（J 有一维零空间，任 split 都满足全部方程）——实测 iters=0 冻结在容量初值。定性：拓扑病态非守卫问题；守卫口径下 junction 口从未出现在命中里（多口豁免生效）。适定变体见 J-2b。
@@ -499,20 +499,20 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N4 -- "ṁ=0.02491" --> C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N6 -- "ṁ=0.02491" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 softchoked
 class C5 pbound
 class C6 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：J-2 的适定变体：junction 每条出口支路加限流孔板再挂 PB，分流由孔板特性定住。heater（A=1e-4，cap≈0.0495）成为唯一瓶颈被守卫钉位——全部命中只指向 heater，junction 永不出现（多口豁免在有告警网络中的实证）。
@@ -544,13 +544,13 @@ N1 -- "ṁ=0.005944" --> C2
 C2 -- "ṁ=-0.005944" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.005944" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：两孔板物理壅塞自限流（孔板特性行流量纲、无压力行）——守卫不管物理壅塞：零告警，投影牛顿领地照常收敛。
@@ -573,10 +573,10 @@ N0 -- "ṁ=0.03788" --> C1
 C1 -- "ṁ=-0.03788" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03788" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -623,18 +623,18 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N4 -- "ṁ=0.08693" --> C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=8e+04 Pa<br/>T0=600 K"]
 N5 -- "ṁ=0.1267" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C6 pbound
 class C7 pbound
 class C8 pbound
 class C9 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：管件特性行皆流量纲（无 row_units==1 压力行）——守卫零对象，收敛零告警。
@@ -661,13 +661,13 @@ N1 -- "ṁ=0.1217" --> C2
 C2 -- "ṁ=-0.1217" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.1217" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 netinf_B.json：
@@ -682,10 +682,10 @@ N0 -- "ṁ=0.03788" --> C1
 C1 -- "ṁ=-0.03788" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03788" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -709,15 +709,15 @@ N0 -- "ṁ=0.0495" --> C1
 C1 -- "ṁ=-0.0495" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.5e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0495" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C2 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：孔板无压力行、容量初值不涉及（网络无 row_units==1 行）→ 守卫零扰动。三重对照：① dev 实现（补丁副本）自身四项文献判据全过；② 与参考 v1_results.json 逐点 |Δṁ|<1e-9（孔板物理自参考生成以来未变）；③ 与旧工作树（pre-guard）双跑结果逐位一致。补丁两处：路径改指 dev 树 + 解向量提取行从旧布局 [p|ṁ] 位置下标适配为 dev API（想法 22 后布局为 [p|T|ṁ]，位置下标取到的是温度）。原基准文件零改动。
@@ -757,13 +757,13 @@ N1 -- "ṁ=0.1311" --> C2
 C2 -- "ṁ=-0.1311" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.1311" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 **物理故事**：管件特性行皆流量纲（无压力行）→ 守卫零对象。核对发现：参考 v2_results.json 生成后管件模型经历 Fanno 压缩管流重构（git: 11bfd85 不可压算法体 → bef9569 Fanno cap 口径——两工作区当前 pipe.py 逐位相同、同解 0.1217 kg/s），脚本的不可压 Darcy 手算对照已不再描述现管件物理——参考基线过期，与守卫无关（守卫对管件零作用）。守卫回归的实质判据改为：dev（含守卫）与旧工作树（pre-guard）双跑结果逐位一致——零扰动直接实证。参考对照差值如实记录。
@@ -798,7 +798,7 @@ linkStyle 4 stroke:#B71C1C,stroke-width:3px
 | worst ratio 分位 P50 / P90 / MAX | 0.03744 / 1.018 / 24.07 |
 | scipy 双解嫌疑（max\|dx\|_scaled>1e-6） | 6 |
 | scipy 未收敛例（lm 从同初值） | 27 |
-| 扫描耗时 | 214.7 s |
+| 扫描耗时 | 203.1 s |
 
 ### 2.2 converged+有告警 例逐例详析
 
@@ -829,18 +829,18 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1.131e+05 Pa<br/>T0=821 K"]
 N3 -- "ṁ=0.03007" --> C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=5.71e+05 Pa<br/>T0=502.9 K"]
 C6 -- "ṁ=-0.005082" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 pbound
 class C6 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c0(HEATER)口1 ratio=1.021 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -873,17 +873,17 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=355.5 K"]
 N1 -- "ṁ=0.2313" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=1.973e+05 Pa<br/>T0=561.7 K"]
 N0 -- "ṁ=8.723e-05" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c1(HEATER)口1 ratio=1 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -915,18 +915,18 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=4.047e+05 Pa<br/>T0=846.5 K"]
 N2 -- "ṁ=0.0003775" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=0.2818 kg/s<br/>T0=783.1 K"]
 C5 -- "ṁ=-0.2818" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c1(HEATER)口1 ratio=24.07 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -964,15 +964,15 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.211e+05 Pa<br/>T0=895.2 K"]
 C5 -- "ṁ=-0.01332" --> N4
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.424e+05 Pa<br/>T0=804.4 K"]
 N0 -- "ṁ=0.01332" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C5 pbound
 class C6 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c3(HEATER)口1 ratio=1.009 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -1006,18 +1006,18 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=4.047e+05 Pa<br/>T0=846.5 K"]
 N2 -- "ṁ=0.0003775" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=0.2818 kg/s<br/>T0=783.1 K"]
 C5 -- "ṁ=-0.2818" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c1(HEATER)口1 ratio=24.07 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -1053,18 +1053,18 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1.131e+05 Pa<br/>T0=821 K"]
 N3 -- "ṁ=0.03007" --> C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=5.71e+05 Pa<br/>T0=502.9 K"]
 C6 -- "ṁ=-0.005082" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 pbound
 class C6 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c0(HEATER)口1 ratio=1.021 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -1102,15 +1102,15 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.211e+05 Pa<br/>T0=895.2 K"]
 C5 -- "ṁ=-0.01332" --> N4
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.424e+05 Pa<br/>T0=804.4 K"]
 N0 -- "ṁ=0.01332" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C5 pbound
 class C6 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c3(HEATER)口1 ratio=1.009 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -1143,17 +1143,17 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=355.5 K"]
 N1 -- "ṁ=0.2313" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=1.973e+05 Pa<br/>T0=561.7 K"]
 N0 -- "ṁ=8.723e-05" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：c1(HEATER)口1 ratio=1 —— 守卫钉位（非物理解，告警指路网络容量不足）
@@ -1201,10 +1201,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=1.855e+05 Pa<br/>T0=453.3 K"]
 N4 -- "ṁ=0.0731" --> C9
 C10["c10 MASS_SOURCE<br/>ṁ=0.07201 kg/s<br/>T0=624 K"]
 C10 -- "ṁ=-0.07201" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 msource
@@ -1234,14 +1234,14 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.998e+05 Pa<br/>T0=333.3 K"]
 C3 -- "ṁ=-4.867" --> N2
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1.452e+05 Pa<br/>T0=502.1 K"]
 N1 -- "ṁ=4.867" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 pbound
 class C4 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：收敛且无守卫命中
@@ -1296,20 +1296,20 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=2.209e+05 Pa<br/>T0=499 K"]
 N0 -- "ṁ=0.008055" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=1.4e+04 Pa<br/>T0=686 K"]
 N1 -- "ṁ=0.006583" --> C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C2 softchoked
 class C6 softchoked
 class C10 booster
 class C11 pbound
 class C12 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：收敛且无守卫命中
@@ -1346,10 +1346,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=1.917e+05 Pa<br/>T0=455.7 K"]
 C6 -- "ṁ=-5.468e-09" --> N4
 C7["c7 MASS_SOURCE<br/>ṁ=0.168 kg/s<br/>T0=459.9 K"]
 C7 -- "ṁ=-0.168" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 booster
 class C5 pbound
 class C6 pbound
@@ -1389,10 +1389,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=2.874e+05 Pa<br/>T0=368.9 K"]
 N4 -- "ṁ=4.178e-06" --> C6
 C7["c7 MASS_SOURCE<br/>ṁ=0.2082 kg/s<br/>T0=643.5 K"]
 C7 -- "ṁ=-0.2082" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
@@ -1437,15 +1437,15 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=3.137e+05 Pa<br/>T0=693.6 K"]
 C7 -- "ṁ=-4.697e-06" --> N4
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1.714e+05 Pa<br/>T0=686.8 K"]
 N0 -- "ṁ=4.82e-05" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C6 pbound
 class C7 pbound
 class C8 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 **定性**：收敛且无守卫命中
@@ -1483,18 +1483,18 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1.131e+05 Pa<br/>T0=821 K"]
 N3 -- "ṁ=0.03007" --> C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=5.71e+05 Pa<br/>T0=502.9 K"]
 C6 -- "ṁ=-0.005082" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 pbound
 class C6 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 | 元件 | 口 | 类型 | ṁ [kg/s] | cap [kg/s] | ratio | 口节点压力 [Pa] |
@@ -1558,20 +1558,20 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=2.209e+05 Pa<br/>T0=499 K"]
 N0 -- "ṁ=0.008055" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=1.4e+04 Pa<br/>T0=686 K"]
 N1 -- "ṁ=0.006583" --> C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C2 softchoked
 class C6 softchoked
 class C10 booster
 class C11 pbound
 class C12 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
 ```
 
 （无守卫命中）
@@ -1618,16 +1618,16 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.854e+05 Pa<br/>T0=899.8 K"]
 N3 -- "ṁ=0.1035" --> C9
 C10["c10 MASS_SOURCE<br/>ṁ=0.2564 kg/s<br/>T0=689.3 K"]
 C10 -- "ṁ=-0.2564" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 msource
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
 ```
 
 （无守卫命中）
@@ -1692,16 +1692,16 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=1.193e+05 Pa<br/>T0=745 K"]
 N4 -- "ṁ=0.0003643" --> C13
 C14["c14 PRESSURE_BOUNDARY<br/>p0=1.8e+05 Pa<br/>T0=556.3 K"]
 C14 -- "ṁ=-0.0003543" --> N7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C12 pbound
 class C13 pbound
 class C14 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 | 元件 | 口 | 类型 | ṁ [kg/s] | cap [kg/s] | ratio | 口节点压力 [Pa] |
@@ -1768,10 +1768,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=5.519e+05 Pa<br/>T0=634.3 K"]
 N0 --- C9
 C10["c10 MASS_SOURCE<br/>ṁ=0.2713 kg/s<br/>T0=748.2 K"]
 N3 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 pbound
@@ -1813,10 +1813,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=4.952e+05 Pa<br/>T0=594.2 K"]
 N2 --- C6
 C7["c7 PRESSURE_BOUNDARY<br/>p0=1.002e+05 Pa<br/>T0=831.2 K"]
 N1 --- C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 class C7 pbound
@@ -1869,16 +1869,16 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=5.467e+05 Pa<br/>T0=792.9 K"]
 N3 -- "ṁ=0.008174" --> C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=6.639e+05 Pa<br/>T0=819.4 K"]
 N8 -- "ṁ=0.01131" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C8 pbound
 class C9 pbound
 class C10 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=13）
@@ -1938,15 +1938,15 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=2.19e+05 Pa<br/>T0=390.6 K"]
 N7 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=1.108e+05 Pa<br/>T0=688 K"]
 N0 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C11 pbound
 class C12 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -1973,14 +1973,14 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=4.306e+05 Pa<br/>T0=348.7 K"]
 C3 -- "ṁ=-6.386" --> N2
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1.765e+05 Pa<br/>T0=839.6 K"]
 N1 -- "ṁ=6.386" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 pbound
 class C4 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=50）
@@ -2020,10 +2020,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=4.705e+05 Pa<br/>T0=486.6 K"]
 N2 --- C6
 C7["c7 PRESSURE_BOUNDARY<br/>p0=6.981e+04 Pa<br/>T0=335.4 K"]
 N3 --- C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 ```
@@ -2087,10 +2087,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=7.082e+05 Pa<br/>T0=321.3 K"]
 N7 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=1.507e+05 Pa<br/>T0=890.9 K"]
 N1 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 class C13 pbound
@@ -2153,10 +2153,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=4.818e+05 Pa<br/>T0=776.8 K"]
 N7 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=3.11e+05 Pa<br/>T0=733.2 K"]
 N6 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -2184,15 +2184,15 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=1.787e+05 Pa<br/>T0=683.8 K"]
 C3 -- "ṁ=-1.128" --> N1
 C4["c4 PRESSURE_BOUNDARY<br/>p0=3.351e+04 Pa<br/>T0=406.4 K"]
 N2 -- "ṁ=1.128" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C2 pbound
 class C3 pbound
 class C4 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -2225,10 +2225,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=4.215e+05 Pa<br/>T0=456.2 K"]
 N2 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=3.273e+05 Pa<br/>T0=459.6 K"]
 N1 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
@@ -2301,17 +2301,17 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=5.682e+05 Pa<br/>T0=581.7 K"]
 N5 --- C15
 C16["c16 MASS_SOURCE<br/>ṁ=0.1546 kg/s<br/>T0=535.9 K"]
 N1 --- C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 softchoked
 class C13 pbound
 class C14 pbound
 class C15 pbound
 class C16 msource
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -2370,10 +2370,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=8.017e+04 Pa<br/>T0=510.3 K"]
 N0 -- "ṁ=0.003899" --> C12
 C13["c13 MASS_SOURCE<br/>ṁ=-0.07138 kg/s<br/>T0=463.8 K"]
 N8 -- "ṁ=0.07138" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C4 softchoked
 class C6 softchoked
@@ -2382,12 +2382,12 @@ class C10 pbound
 class C11 pbound
 class C12 pbound
 class C13 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -2451,10 +2451,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=8.93e+05 Pa<br/>T0=690.7 K"]
 N9 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=2.891e+05 Pa<br/>T0=736 K"]
 N2 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 pbound
 class C13 pbound
 ```
@@ -2486,16 +2486,16 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=4.566e+04 Pa<br/>T0=505.6 K"]
 N2 -- "ṁ=5.079e-05" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=2.455e+05 Pa<br/>T0=777.1 K"]
 N0 -- "ṁ=0.001409" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 pbound
 class C4 pbound
 class C5 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -2543,10 +2543,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.681e+04 Pa<br/>T0=861.7 K"]
 N6 -- "ṁ=0.01847" --> C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=3.797e+04 Pa<br/>T0=765.7 K"]
 N0 -- "ṁ=0.4957" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C1 softchoked
 class C2 softchoked
@@ -2556,17 +2556,17 @@ class C7 softchoked
 class C8 pbound
 class C9 pbound
 class C10 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -2606,13 +2606,13 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=2.266e+05 Pa<br/>T0=357.3 K"]
 C6 -- "ṁ=-0.002562" --> N0
 C7["c7 PRESSURE_BOUNDARY<br/>p0=1.221e+05 Pa<br/>T0=354.9 K"]
 N3 -- "ṁ=0.002562" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -2650,15 +2650,15 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=3.338e+05 Pa<br/>T0=854.5 K"]
 N0 -- "ṁ=1.337" --> C6
 C7["c7 PRESSURE_BOUNDARY<br/>p0=1.58e+05 Pa<br/>T0=309.4 K"]
 N4 -- "ṁ=0.0001886" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C5 pbound
 class C6 pbound
 class C7 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=50）
@@ -2688,10 +2688,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=2.767e+05 Pa<br/>T0=397.2 K"]
 C4 -- "ṁ=-0.003921" --> N1
 C5["c5 PRESSURE_BOUNDARY<br/>p0=3.623e+04 Pa<br/>T0=798.7 K"]
 N2 -- "ṁ=0.003938" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 class C5 pbound
@@ -2742,15 +2742,15 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=4.098e+05 Pa<br/>T0=479.5 K"]
 N1 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=3.778e+05 Pa<br/>T0=427.1 K"]
 N4 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C8 pbound
 class C9 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -2815,10 +2815,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=1.719e+05 Pa<br/>T0=485.1 K"]
 N0 --- C13
 C14["c14 MASS_SOURCE<br/>ṁ=0.1036 kg/s<br/>T0=301.3 K"]
 N3 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 booster
 class C12 pbound
 class C13 pbound
@@ -2887,14 +2887,14 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=9.088e+04 Pa<br/>T0=740.2 K"]
 N7 --- C14
 C15["c15 MASS_SOURCE<br/>ṁ=-0.177 kg/s<br/>T0=747.6 K"]
 N7 --- C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C13 pbound
 class C14 pbound
 class C15 msource
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -2964,10 +2964,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=4.869e+05 Pa<br/>T0=634.8 K"]
 C15 -- "ṁ=-6.165" --> N4
 C16["c16 PRESSURE_BOUNDARY<br/>p0=1.317e+05 Pa<br/>T0=649.8 K"]
 N2 -- "ṁ=6.165" --> C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 softchoked
 class C6 softchoked
@@ -2978,20 +2978,20 @@ class C13 softchoked
 class C14 softchoked
 class C15 pbound
 class C16 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 28 stroke:#B71C1C,stroke-width:3px
-linkStyle 29 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 28 stroke:#E53935,stroke-width:3px
+linkStyle 29 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=10）
@@ -3043,10 +3043,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=1.034e+05 Pa<br/>T0=620.5 K"]
 N6 --- C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=8.646e+04 Pa<br/>T0=653.3 K"]
 N5 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 class C11 pbound
@@ -3116,10 +3116,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=2.047e+05 Pa<br/>T0=579.7 K"]
 N0 --- C15
 C16["c16 PRESSURE_BOUNDARY<br/>p0=1.773e+05 Pa<br/>T0=785.9 K"]
 N6 --- C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C13 booster
 class C14 pbound
 class C15 pbound
@@ -3159,21 +3159,21 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.182e+05 Pa<br/>T0=658.5 K"]
 C5 -- "ṁ=-0.4513" --> N0
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.34e+05 Pa<br/>T0=540.5 K"]
 N3 -- "ṁ=0.4513" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 softchoked
 class C4 softchoked
 class C5 pbound
 class C6 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -3208,10 +3208,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.598e+05 Pa<br/>T0=681.9 K"]
 N0 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=7.953e+04 Pa<br/>T0=365.3 K"]
 N3 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -3262,10 +3262,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=1.198e+05 Pa<br/>T0=367.9 K"]
 N0 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=1.026e+05 Pa<br/>T0=638.8 K"]
 N7 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 pbound
@@ -3322,10 +3322,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=3.204e+05 Pa<br/>T0=330.5 K"]
 N3 --- C10
 C11["c11 MASS_SOURCE<br/>ṁ=-0.299 kg/s<br/>T0=623.4 K"]
 N5 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 class C11 msource
@@ -3366,10 +3366,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.435e+05 Pa<br/>T0=586.7 K"]
 N2 --- C7
 C8["c8 MASS_SOURCE<br/>ṁ=-0.1306 kg/s<br/>T0=329.3 K"]
 N2 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 class C7 pbound
@@ -3456,10 +3456,10 @@ C19["c19 PRESSURE_BOUNDARY<br/>p0=2.029e+05 Pa<br/>T0=475.8 K"]
 C19 -- "ṁ=-0.01661" --> N1
 C20["c20 PRESSURE_BOUNDARY<br/>p0=8.994e+04 Pa<br/>T0=682.7 K"]
 N7 -- "ṁ=0.01661" --> C20
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C1 softchoked
 class C4 softchoked
@@ -3471,25 +3471,25 @@ class C17 softchoked
 class C18 softchoked
 class C19 pbound
 class C20 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 29 stroke:#B71C1C,stroke-width:3px
-linkStyle 34 stroke:#B71C1C,stroke-width:3px
-linkStyle 35 stroke:#B71C1C,stroke-width:3px
-linkStyle 36 stroke:#B71C1C,stroke-width:3px
-linkStyle 37 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 29 stroke:#E53935,stroke-width:3px
+linkStyle 34 stroke:#E53935,stroke-width:3px
+linkStyle 35 stroke:#E53935,stroke-width:3px
+linkStyle 36 stroke:#E53935,stroke-width:3px
+linkStyle 37 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=2）
@@ -3533,15 +3533,15 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=6.654e+05 Pa<br/>T0=699.3 K"]
 N0 -- "ṁ=0.000929" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=2.838e+05 Pa<br/>T0=697 K"]
 C8 -- "ṁ=-0.000929" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C7 pbound
 class C8 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -3575,15 +3575,15 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=4.164e+05 Pa<br/>T0=332.1 K"]
 C5 -- "ṁ=-0.0009675" --> N1
 C6["c6 PRESSURE_BOUNDARY<br/>p0=7.446e+04 Pa<br/>T0=443.7 K"]
 N0 -- "ṁ=0.001139" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C4 pbound
 class C5 pbound
 class C6 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -3613,17 +3613,17 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=1.907e+05 Pa<br/>T0=460.2 K"]
 N2 -- "ṁ=1.46e-06" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=1.952e+05 Pa<br/>T0=492.2 K"]
 C5 -- "ṁ=-0.0004522" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 pbound
 class C4 pbound
 class C5 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=3）
@@ -3681,10 +3681,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=5.13e+04 Pa<br/>T0=749.9 K"]
 N6 --- C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.1577 kg/s<br/>T0=530.5 K"]
 N0 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 class C12 msource
@@ -3715,10 +3715,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.314e+05 Pa<br/>T0=536.8 K"]
 N1 --- C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=2.338e+04 Pa<br/>T0=845.3 K"]
 N0 --- C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 ```
@@ -3780,10 +3780,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=6.046e+05 Pa<br/>T0=711 K"]
 C11 -- "ṁ=-7.514e-05" --> N7
 C12["c12 PRESSURE_BOUNDARY<br/>p0=7.523e+04 Pa<br/>T0=538.2 K"]
 N2 -- "ṁ=7.514e-05" --> C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -3821,10 +3821,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=6.373e+05 Pa<br/>T0=776.8 K"]
 N0 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.626e+05 Pa<br/>T0=792 K"]
 N1 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -3872,19 +3872,19 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1.195e+05 Pa<br/>T0=502.1 K"]
 C8 -- "ṁ=-2.987e-07" --> N2
 C9["c9 MASS_SOURCE<br/>ṁ=-0.2136 kg/s<br/>T0=416.5 K"]
 N4 -- "ṁ=0.003338" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C4 softchoked
 class C7 pbound
 class C8 pbound
 class C9 msource
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -3940,10 +3940,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.77e+05 Pa<br/>T0=737.6 K"]
 N4 --- C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.166 kg/s<br/>T0=710.9 K"]
 N1 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 class C11 pbound
@@ -3981,19 +3981,19 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.074e+05 Pa<br/>T0=864.7 K"]
 N4 -- "ṁ=0.03098" --> C5
 C6["c6 MASS_SOURCE<br/>ṁ=0.0634 kg/s<br/>T0=533 K"]
 C6 -- "ṁ=-0.0317" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C4 pbound
 class C5 pbound
 class C6 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -4056,16 +4056,16 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=4.863e+05 Pa<br/>T0=517.8 K"]
 C12 -- "ṁ=-0.00144" --> N4
 C13["c13 PRESSURE_BOUNDARY<br/>p0=3.326e+05 Pa<br/>T0=680.5 K"]
 N11 -- "ṁ=0.001759" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 softchoked
 class C11 booster
 class C12 pbound
 class C13 pbound
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -4112,16 +4112,16 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.702e+05 Pa<br/>T0=869.8 K"]
 N4 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=5.253e+04 Pa<br/>T0=571.3 K"]
 N7 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C7 booster
 class C8 pbound
 class C9 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -4177,10 +4177,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=2.778e+05 Pa<br/>T0=575.5 K"]
 N9 --- C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=1.182e+05 Pa<br/>T0=756.6 K"]
 N8 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 ```
@@ -4218,10 +4218,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=4.604e+05 Pa<br/>T0=555.8 K"]
 N0 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.183e+05 Pa<br/>T0=534.1 K"]
 N5 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -4271,17 +4271,17 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=7.035e+05 Pa<br/>T0=360.7 K"]
 C8 -- "ṁ=-0.01126" --> N7
 C9["c9 PRESSURE_BOUNDARY<br/>p0=2.726e+05 Pa<br/>T0=318 K"]
 N3 -- "ṁ=0.01126" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C6 softchoked
 class C8 pbound
 class C9 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -4341,10 +4341,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=6.235e+05 Pa<br/>T0=469.1 K"]
 N3 --- C12
 C13["c13 MASS_SOURCE<br/>ṁ=-0.1158 kg/s<br/>T0=831.3 K"]
 N6 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 class C12 pbound
@@ -4399,10 +4399,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=6.03e+05 Pa<br/>T0=657.2 K"]
 N2 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=1.373e+05 Pa<br/>T0=886.5 K"]
 N7 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 booster
 class C9 pbound
 class C10 pbound
@@ -4466,10 +4466,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=2.191e+05 Pa<br/>T0=596.2 K"]
 N1 --- C13
 C14["c14 PRESSURE_BOUNDARY<br/>p0=9.245e+05 Pa<br/>T0=614.5 K"]
 N0 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 pbound
 class C13 pbound
 class C14 pbound
@@ -4530,19 +4530,19 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=3.548e+05 Pa<br/>T0=857 K"]
 N1 -- "ṁ=0.0149" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=2.177e+05 Pa<br/>T0=607.9 K"]
 C12 -- "ṁ=-0.01482" --> N6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C5 softchoked
 class C10 pbound
 class C11 pbound
 class C12 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -4574,10 +4574,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=3.514e+05 Pa<br/>T0=427.6 K"]
 C4 -- "ṁ=-0.001635" --> N1
 C5["c5 PRESSURE_BOUNDARY<br/>p0=2.314e+05 Pa<br/>T0=680.8 K"]
 N3 -- "ṁ=0.001635" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 ```
@@ -4647,10 +4647,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=4.337e+05 Pa<br/>T0=318.7 K"]
 N0 --- C15
 C16["c16 MASS_SOURCE<br/>ṁ=0.2111 kg/s<br/>T0=303.7 K"]
 N3 --- C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C14 pbound
 class C15 pbound
 class C16 msource
@@ -4713,17 +4713,17 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=8.45e+05 Pa<br/>T0=863.3 K"]
 C12 -- "ṁ=-0.1034" --> N1
 C13["c13 PRESSURE_BOUNDARY<br/>p0=3.511e+05 Pa<br/>T0=514.9 K"]
 N0 -- "ṁ=0.1034" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C11 softchoked
 class C12 pbound
 class C13 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=4）
@@ -4753,16 +4753,16 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=2.251e+05 Pa<br/>T0=638.1 K"]
 N2 --- C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=2.864e+05 Pa<br/>T0=619.1 K"]
 N0 --- C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 pbound
 class C4 pbound
 class C5 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -4796,10 +4796,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1.269e+05 Pa<br/>T0=598.9 K"]
 N0 -- "ṁ=3.417e-06" --> C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.682e+05 Pa<br/>T0=527.9 K"]
 N4 -- "ṁ=0.01227" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
@@ -4844,10 +4844,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=3.317e+05 Pa<br/>T0=488.7 K"]
 C7 -- "ṁ=-0.007083" --> N3
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1.846e+05 Pa<br/>T0=513.3 K"]
 N6 -- "ṁ=0.007097" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
@@ -4908,16 +4908,16 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=2.39e+05 Pa<br/>T0=646.1 K"]
 N9 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=1.343e+05 Pa<br/>T0=837.7 K"]
 N6 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 softchoked
 class C10 pbound
 class C11 pbound
 class C12 pbound
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -4957,10 +4957,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=6.222e+05 Pa<br/>T0=827.6 K"]
 C6 -- "ṁ=-0.001879" --> N5
 C7["c7 PRESSURE_BOUNDARY<br/>p0=4.556e+04 Pa<br/>T0=555.3 K"]
 N2 -- "ṁ=0.001879" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 ```
@@ -5041,21 +5041,21 @@ C18["c18 PRESSURE_BOUNDARY<br/>p0=4.515e+05 Pa<br/>T0=615.5 K"]
 N6 -- "ṁ=0.02262" --> C18
 C19["c19 PRESSURE_BOUNDARY<br/>p0=3.986e+04 Pa<br/>T0=608.7 K"]
 N4 -- "ṁ=0.004485" --> C19
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C12 softchoked
 class C17 booster
 class C18 pbound
 class C19 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 31 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 31 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -5105,14 +5105,14 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.129e+05 Pa<br/>T0=809.6 K"]
 C9 -- "ṁ=-0.003886" --> N3
 C10["c10 PRESSURE_BOUNDARY<br/>p0=1.819e+05 Pa<br/>T0=652.2 K"]
 N5 -- "ṁ=0.004074" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 pbound
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -5145,16 +5145,16 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1.723e+05 Pa<br/>T0=569.1 K"]
 N0 -- "ṁ=0.0005006" --> C5
 C6["c6 MASS_SOURCE<br/>ṁ=0.08912 kg/s<br/>T0=661.5 K"]
 C6 -- "ṁ=-0.08912" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 booster
 class C4 pbound
 class C5 pbound
 class C6 msource
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -5192,18 +5192,18 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=3.052e+05 Pa<br/>T0=678.7 K"]
 C6 -- "ṁ=-0.006075" --> N1
 C7["c7 MASS_SOURCE<br/>ṁ=-0.2276 kg/s<br/>T0=774.5 K"]
 N4 -- "ṁ=0.01422" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C4 softchoked
 class C5 pbound
 class C6 pbound
 class C7 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -5263,20 +5263,20 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=5.842e+05 Pa<br/>T0=324.6 K"]
 C12 -- "ṁ=-0.0006936" --> N3
 C13["c13 PRESSURE_BOUNDARY<br/>p0=2.529e+05 Pa<br/>T0=895.2 K"]
 N1 -- "ṁ=0.4801" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C6 softchoked
 class C11 pbound
 class C12 pbound
 class C13 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -5306,10 +5306,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=2.916e+05 Pa<br/>T0=522.3 K"]
 N2 -- "ṁ=0.1679" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=0.1665 kg/s<br/>T0=703.3 K"]
 C5 -- "ṁ=-0.1665" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 class C5 msource
@@ -5375,10 +5375,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=3.799e+05 Pa<br/>T0=537.8 K"]
 N1 --- C13
 C14["c14 MASS_SOURCE<br/>ṁ=0.1681 kg/s<br/>T0=609.8 K"]
 N2 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 booster
 class C11 pbound
 class C12 pbound
@@ -5425,18 +5425,18 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=1.079e+05 Pa<br/>T0=681.9 K"]
 N0 -- "ṁ=0.0004139" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=3.72e+04 Pa<br/>T0=745.1 K"]
 N5 -- "ṁ=0.0001496" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C6 pbound
 class C7 pbound
 class C8 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=3）
@@ -5471,10 +5471,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=7.572e+05 Pa<br/>T0=609.5 K"]
 N0 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=3.377e+05 Pa<br/>T0=764.3 K"]
 N2 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -5533,10 +5533,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=1.514e+04 Pa<br/>T0=753.8 K"]
 N2 -- "ṁ=0.984" --> C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=4.231e+04 Pa<br/>T0=382.9 K"]
 N4 -- "ṁ=0.05702" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C5 softchoked
 class C6 softchoked
@@ -5544,12 +5544,12 @@ class C8 softchoked
 class C11 pbound
 class C12 pbound
 class C13 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=7）
@@ -5585,10 +5585,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=2.19e+05 Pa<br/>T0=879.3 K"]
 N1 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=1.217e+05 Pa<br/>T0=772.3 K"]
 N2 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -5650,10 +5650,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=7.04e+05 Pa<br/>T0=406.5 K"]
 N6 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=2.845e+05 Pa<br/>T0=533.1 K"]
 N9 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -5681,10 +5681,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=7.669e+05 Pa<br/>T0=731.8 K"]
 N0 -- "ṁ=2.461e-05" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=2.527e+05 Pa<br/>T0=552.6 K"]
 N2 -- "ṁ=4.581e-07" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
@@ -5754,10 +5754,10 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=4.703e+05 Pa<br/>T0=739.7 K"]
 C14 -- "ṁ=-2.567" --> N0
 C15["c15 PRESSURE_BOUNDARY<br/>p0=6.17e+04 Pa<br/>T0=588.2 K"]
 N8 -- "ṁ=2.567" --> C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 softchoked
 class C4 softchoked
@@ -5765,19 +5765,19 @@ class C10 softchoked
 class C11 softchoked
 class C14 pbound
 class C15 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -5821,17 +5821,17 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=8.393e+04 Pa<br/>T0=534.4 K"]
 N3 --- C8
 C9["c9 MASS_SOURCE<br/>ṁ=0.1285 kg/s<br/>T0=540.3 K"]
 N5 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C6 pbound
 class C7 pbound
 class C8 pbound
 class C9 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -5883,15 +5883,15 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=2.922e+05 Pa<br/>T0=392.7 K"]
 N8 -- "ṁ=5.755e-05" --> C10
 C11["c11 MASS_SOURCE<br/>ṁ=0.2695 kg/s<br/>T0=719.4 K"]
 C11 -- "ṁ=-0.2695" --> N7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 pbound
 class C11 msource
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -5974,10 +5974,10 @@ C19["c19 PRESSURE_BOUNDARY<br/>p0=2.236e+05 Pa<br/>T0=724.3 K"]
 N1 -- "ṁ=1.883" --> C19
 C20["c20 PRESSURE_BOUNDARY<br/>p0=2.336e+05 Pa<br/>T0=723.4 K"]
 C20 -- "ṁ=-1.882" --> N4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C4 softchoked
 class C9 softchoked
@@ -5988,18 +5988,18 @@ class C17 softchoked
 class C18 pbound
 class C19 pbound
 class C20 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 30 stroke:#B71C1C,stroke-width:3px
-linkStyle 32 stroke:#B71C1C,stroke-width:3px
-linkStyle 33 stroke:#B71C1C,stroke-width:3px
-linkStyle 34 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 30 stroke:#E53935,stroke-width:3px
+linkStyle 32 stroke:#E53935,stroke-width:3px
+linkStyle 33 stroke:#E53935,stroke-width:3px
+linkStyle 34 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -6041,16 +6041,16 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.612e+05 Pa<br/>T0=374.4 K"]
 N6 -- "ṁ=7.197e-06" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=5.552e+05 Pa<br/>T0=830.4 K"]
 N2 -- "ṁ=0.003669" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C6 pbound
 class C7 pbound
 class C8 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -6080,10 +6080,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=1.265e+05 Pa<br/>T0=841.5 K"]
 N2 -- "ṁ=0.0003542" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=3.45e+05 Pa<br/>T0=543.1 K"]
 N0 -- "ṁ=0.05194" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 class C5 pbound
@@ -6131,10 +6131,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=4.752e+05 Pa<br/>T0=722.5 K"]
 N3 --- C9
 C10["c10 MASS_SOURCE<br/>ṁ=0.2601 kg/s<br/>T0=862.8 K"]
 N2 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 pbound
@@ -6200,10 +6200,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=2.544e+05 Pa<br/>T0=520.6 K"]
 N10 --- C12
 C13["c13 MASS_SOURCE<br/>ṁ=-0.1508 kg/s<br/>T0=490.3 K"]
 N10 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 class C13 msource
@@ -6258,14 +6258,14 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.64e+05 Pa<br/>T0=620 K"]
 C9 -- "ṁ=-8.84e-05" --> N6
 C10["c10 PRESSURE_BOUNDARY<br/>p0=1.443e+05 Pa<br/>T0=583 K"]
 N9 -- "ṁ=8.84e-05" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 softchoked
 class C9 pbound
 class C10 pbound
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -6303,16 +6303,16 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=3.942e+05 Pa<br/>T0=644.7 K"]
 C6 -- "ṁ=-0.000225" --> N5
 C7["c7 MASS_SOURCE<br/>ṁ=-0.1298 kg/s<br/>T0=859.2 K"]
 N3 -- "ṁ=0.1298" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C5 pbound
 class C6 pbound
 class C7 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -6364,18 +6364,18 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=3.855e+04 Pa<br/>T0=775.7 K"]
 N4 -- "ṁ=0.0003134" --> C10
 C11["c11 MASS_SOURCE<br/>ṁ=0.1863 kg/s<br/>T0=626.6 K"]
 C11 -- "ṁ=-0.1863" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 softchoked
 class C8 pbound
 class C9 pbound
 class C10 pbound
 class C11 msource
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=8）
@@ -6439,10 +6439,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=5.607e+05 Pa<br/>T0=727.6 K"]
 N5 --- C13
 C14["c14 MASS_SOURCE<br/>ṁ=-0.1699 kg/s<br/>T0=337.5 K"]
 N7 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 class C13 pbound
@@ -6500,20 +6500,20 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=6.554e+04 Pa<br/>T0=741.8 K"]
 N4 -- "ṁ=0.02266" --> C10
 C11["c11 MASS_SOURCE<br/>ṁ=0.129 kg/s<br/>T0=714.9 K"]
 C11 -- "ṁ=-0.01612" --> N5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C4 softchoked
 class C9 pbound
 class C10 pbound
 class C11 msource
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -6565,10 +6565,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=6.234e+05 Pa<br/>T0=635.1 K"]
 N2 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=4.444e+05 Pa<br/>T0=408.7 K"]
 N8 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 ```
@@ -6616,10 +6616,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=6.141e+04 Pa<br/>T0=789.1 K"]
 N1 --- C8
 C9["c9 MASS_SOURCE<br/>ṁ=-0.1961 kg/s<br/>T0=414.6 K"]
 N3 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 msource
@@ -6671,17 +6671,17 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=4.083e+05 Pa<br/>T0=709.6 K"]
 N1 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=1.787e+05 Pa<br/>T0=388.6 K"]
 N0 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C7 booster
 class C8 pbound
 class C9 pbound
 class C10 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -6736,14 +6736,14 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=8.465e+05 Pa<br/>T0=832.3 K"]
 C10 -- "ṁ=-0.07012" --> N5
 C11["c11 PRESSURE_BOUNDARY<br/>p0=2.497e+05 Pa<br/>T0=850.8 K"]
 N8 -- "ṁ=1.177e-05" --> C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 booster
 class C10 pbound
 class C11 pbound
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -6771,10 +6771,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=8.747e+05 Pa<br/>T0=310.6 K"]
 N0 --- C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=4.401e+05 Pa<br/>T0=754.6 K"]
 N2 --- C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 ```
@@ -6828,10 +6828,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.237e+05 Pa<br/>T0=359.2 K"]
 N7 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=5.9e+04 Pa<br/>T0=647.4 K"]
 N1 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 ```
@@ -6906,10 +6906,10 @@ C17["c17 PRESSURE_BOUNDARY<br/>p0=2.296e+05 Pa<br/>T0=766 K"]
 C17 -- "ṁ=-0.008482" --> N3
 C18["c18 MASS_SOURCE<br/>ṁ=0.09771 kg/s<br/>T0=643.1 K"]
 C18 -- "ṁ=-0.09771" --> N8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C5 softchoked
 class C6 softchoked
@@ -6920,16 +6920,16 @@ class C15 pbound
 class C16 pbound
 class C17 pbound
 class C18 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=7）
@@ -6955,14 +6955,14 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=7.139e+04 Pa<br/>T0=608.1 K"]
 N1 -- "ṁ=0.0003238" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=3.736e+04 Pa<br/>T0=850.9 K"]
 N2 -- "ṁ=0.000112" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -7012,17 +7012,17 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.501e+05 Pa<br/>T0=577.3 K"]
 N4 -- "ṁ=0.03061" --> C9
 C10["c10 MASS_SOURCE<br/>ṁ=-0.01604 kg/s<br/>T0=432.1 K"]
 N3 -- "ṁ=0.008855" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C7 softchoked
 class C8 pbound
 class C9 pbound
 class C10 msource
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=6）
@@ -7070,10 +7070,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=4.84e+05 Pa<br/>T0=812.4 K"]
 N2 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.344e+05 Pa<br/>T0=411.4 K"]
 N6 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 ```
@@ -7111,10 +7111,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=4.899e+05 Pa<br/>T0=575.5 K"]
 N0 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=4.577e+05 Pa<br/>T0=574.9 K"]
 N2 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -7148,10 +7148,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=5.809e+05 Pa<br/>T0=348.8 K"]
 N0 --- C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=8.697e+04 Pa<br/>T0=334.4 K"]
 N2 --- C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 ```
@@ -7198,14 +7198,14 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1.269e+05 Pa<br/>T0=802.5 K"]
 N1 -- "ṁ=0.1042" --> C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=2.129e+04 Pa<br/>T0=785.1 K"]
 N6 -- "ṁ=0.0003256" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 pbound
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=35）
@@ -7263,10 +7263,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=1.788e+05 Pa<br/>T0=548.2 K"]
 C12 -- "ṁ=-0.001721" --> N3
 C13["c13 PRESSURE_BOUNDARY<br/>p0=1.41e+05 Pa<br/>T0=339.8 K"]
 N5 -- "ṁ=0.001721" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C4 softchoked
 class C6 softchoked
@@ -7274,13 +7274,13 @@ class C10 softchoked
 class C11 pbound
 class C12 pbound
 class C13 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=6）
@@ -7306,10 +7306,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=1.529e+05 Pa<br/>T0=761.4 K"]
 N0 --- C3
 C4["c4 MASS_SOURCE<br/>ṁ=0.1628 kg/s<br/>T0=577.2 K"]
 N1 --- C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 msource
@@ -7376,10 +7376,10 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=2.283e+04 Pa<br/>T0=479.9 K"]
 N1 --- C14
 C15["c15 MASS_SOURCE<br/>ṁ=0.123 kg/s<br/>T0=822.4 K"]
 N0 --- C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C13 pbound
 class C14 pbound
 class C15 msource
@@ -7440,17 +7440,17 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=3.817e+05 Pa<br/>T0=301.2 K"]
 N4 -- "ṁ=1.882e-06" --> C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.2003 kg/s<br/>T0=425.6 K"]
 C12 -- "ṁ=-0.02504" --> N8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 softchoked
 class C10 pbound
 class C11 pbound
 class C12 msource
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -7486,15 +7486,15 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=2.265e+05 Pa<br/>T0=636.4 K"]
 C6 -- "ṁ=-0.1124" --> N1
 C7["c7 MASS_SOURCE<br/>ṁ=-0.02601 kg/s<br/>T0=349.8 K"]
 N0 -- "ṁ=0.02601" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
 class C7 msource
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=4）
@@ -7550,15 +7550,15 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=4.015e+05 Pa<br/>T0=523.3 K"]
 C10 -- "ṁ=-0.01402" --> N1
 C11["c11 PRESSURE_BOUNDARY<br/>p0=2.556e+05 Pa<br/>T0=826 K"]
 N0 -- "ṁ=0.01402" --> C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -7601,18 +7601,18 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1.776e+04 Pa<br/>T0=333.6 K"]
 N4 --- C8
 C9["c9 MASS_SOURCE<br/>ṁ=0.03095 kg/s<br/>T0=328.8 K"]
 N5 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C5 booster
 class C6 pbound
 class C7 pbound
 class C8 pbound
 class C9 msource
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -7658,10 +7658,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1.61e+05 Pa<br/>T0=844.1 K"]
 N3 --- C8
 C9["c9 MASS_SOURCE<br/>ṁ=0.2233 kg/s<br/>T0=505.2 K"]
 N3 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 msource
@@ -7701,14 +7701,14 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=4.452e+05 Pa<br/>T0=568.3 K"]
 N3 --- C6
 C7["c7 PRESSURE_BOUNDARY<br/>p0=2.786e+05 Pa<br/>T0=604.5 K"]
 N0 --- C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 class C7 pbound
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -7741,10 +7741,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1.392e+05 Pa<br/>T0=323.3 K"]
 N1 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=3.337e+04 Pa<br/>T0=459.6 K"]
 N0 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
@@ -7795,17 +7795,17 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=3.386e+05 Pa<br/>T0=754.8 K"]
 N3 -- "ṁ=0.001333" --> C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=2.13e+05 Pa<br/>T0=856.4 K"]
 N5 -- "ṁ=2.697e-05" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 softchoked
 class C8 pbound
 class C9 pbound
 class C10 pbound
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=12）
@@ -7873,10 +7873,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=5.343e+05 Pa<br/>T0=577.4 K"]
 N1 -- "ṁ=0.5982" --> C15
 C16["c16 PRESSURE_BOUNDARY<br/>p0=8.35e+04 Pa<br/>T0=421.7 K"]
 C16 -- "ṁ=-0.167" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C7 softchoked
 class C8 softchoked
@@ -7888,21 +7888,21 @@ class C13 softchoked
 class C14 pbound
 class C15 pbound
 class C16 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -7962,10 +7962,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=6.072e+05 Pa<br/>T0=468.6 K"]
 N10 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=2.532e+05 Pa<br/>T0=850.8 K"]
 N3 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -8009,10 +8009,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.122e+05 Pa<br/>T0=573.7 K"]
 N5 -- "ṁ=4.992e-06" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=6.098e+04 Pa<br/>T0=440.8 K"]
 N1 -- "ṁ=1.989e-05" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
@@ -8075,19 +8075,19 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=7.241e+05 Pa<br/>T0=610.8 K"]
 C12 -- "ṁ=-5.174" --> N0
 C13["c13 MASS_SOURCE<br/>ṁ=0.05916 kg/s<br/>T0=705.2 K"]
 C13 -- "ṁ=-0.05916" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 softchoked
 class C10 pbound
 class C11 pbound
 class C12 pbound
 class C13 msource
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -8153,10 +8153,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=5.197e+04 Pa<br/>T0=898.4 K"]
 N4 --- C13
 C14["c14 MASS_SOURCE<br/>ṁ=0.02901 kg/s<br/>T0=716.9 K"]
 N2 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 pbound
 class C13 pbound
 class C14 msource
@@ -8205,19 +8205,19 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.633e+05 Pa<br/>T0=888.9 K"]
 C8 -- "ṁ=-0.004399" --> N5
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.483e+05 Pa<br/>T0=641.7 K"]
 N1 -- "ṁ=0.004399" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 softchoked
 class C7 softchoked
 class C8 pbound
 class C9 pbound
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -8252,15 +8252,15 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.104e+05 Pa<br/>T0=688.6 K"]
 C5 -- "ṁ=-1.802" --> N4
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.369e+05 Pa<br/>T0=632.1 K"]
 N2 -- "ṁ=1.804" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C4 booster
 class C5 pbound
 class C6 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -8325,10 +8325,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=2.351e+05 Pa<br/>T0=771.1 K"]
 N4 --- C13
 C14["c14 PRESSURE_BOUNDARY<br/>p0=4.445e+05 Pa<br/>T0=310.4 K"]
 N2 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 pbound
 class C13 pbound
 class C14 pbound
@@ -8401,10 +8401,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=3.166e+05 Pa<br/>T0=612.8 K"]
 N5 --- C15
 C16["c16 MASS_SOURCE<br/>ṁ=0.2788 kg/s<br/>T0=426.8 K"]
 N9 --- C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C14 pbound
 class C15 pbound
 class C16 msource
@@ -8464,21 +8464,21 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.838e+05 Pa<br/>T0=839.9 K"]
 N4 -- "ṁ=0.0001418" --> C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.1572 kg/s<br/>T0=491.4 K"]
 C12 -- "ṁ=-0.1572" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 softchoked
 class C9 softchoked
 class C10 pbound
 class C11 pbound
 class C12 msource
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -8534,17 +8534,17 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=2.917e+05 Pa<br/>T0=632.7 K"]
 C10 -- "ṁ=-1.451" --> N2
 C11["c11 PRESSURE_BOUNDARY<br/>p0=2.741e+04 Pa<br/>T0=597.4 K"]
 N0 -- "ṁ=1.451" --> C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 softchoked
 class C9 softchoked
 class C10 pbound
 class C11 pbound
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -8584,17 +8584,17 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.698e+05 Pa<br/>T0=417.3 K"]
 N0 -- "ṁ=0.08812" --> C7
 C8["c8 MASS_SOURCE<br/>ṁ=0.08162 kg/s<br/>T0=681.1 K"]
 C8 -- "ṁ=-0.08162" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C5 pbound
 class C6 pbound
 class C7 pbound
 class C8 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=11）
@@ -8654,10 +8654,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=8.98e+05 Pa<br/>T0=399.3 K"]
 N3 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=5.494e+05 Pa<br/>T0=694.4 K"]
 N2 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -8708,17 +8708,17 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=5.46e+04 Pa<br/>T0=416.6 K"]
 N1 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=3.517e+04 Pa<br/>T0=731.8 K"]
 N3 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C7 booster
 class C8 pbound
 class C9 pbound
 class C10 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -8757,14 +8757,14 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=5.451e+05 Pa<br/>T0=306.6 K"]
 C6 -- "ṁ=-1.299e-05" --> N1
 C7["c7 PRESSURE_BOUNDARY<br/>p0=2.909e+05 Pa<br/>T0=551.2 K"]
 N3 -- "ṁ=0.005094" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 booster
 class C6 pbound
 class C7 pbound
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -8830,10 +8830,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=4.271e+05 Pa<br/>T0=446.7 K"]
 N6 --- C13
 C14["c14 PRESSURE_BOUNDARY<br/>p0=6.016e+05 Pa<br/>T0=443.3 K"]
 N9 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 pbound
 class C13 pbound
 class C14 pbound
@@ -8890,18 +8890,18 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=2.569e+05 Pa<br/>T0=743.5 K"]
 N3 -- "ṁ=1.902e-05" --> C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=1.134e+05 Pa<br/>T0=833.9 K"]
 N1 -- "ṁ=0.001364" --> C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C4 softchoked
 class C9 pbound
 class C10 pbound
 class C11 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -8934,10 +8934,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=1.026e+05 Pa<br/>T0=585.3 K"]
 N0 --- C5
 C6["c6 MASS_SOURCE<br/>ṁ=0.1091 kg/s<br/>T0=662.4 K"]
 N1 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 msource
@@ -8999,17 +8999,17 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=2.803e+05 Pa<br/>T0=857.3 K"]
 C12 -- "ṁ=-0.008188" --> N3
 C13["c13 PRESSURE_BOUNDARY<br/>p0=1.274e+05 Pa<br/>T0=482.1 K"]
 N0 -- "ṁ=0.008188" --> C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 softchoked
 class C12 pbound
 class C13 pbound
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -9087,10 +9087,10 @@ C17["c17 PRESSURE_BOUNDARY<br/>p0=2.267e+05 Pa<br/>T0=458.4 K"]
 C17 -- "ṁ=-0.04529" --> N2
 C18["c18 PRESSURE_BOUNDARY<br/>p0=1.402e+05 Pa<br/>T0=871.9 K"]
 N3 -- "ṁ=0.04529" --> C18
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C4 softchoked
 class C9 softchoked
@@ -9099,19 +9099,19 @@ class C11 softchoked
 class C14 softchoked
 class C17 pbound
 class C18 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 28 stroke:#B71C1C,stroke-width:3px
-linkStyle 29 stroke:#B71C1C,stroke-width:3px
-linkStyle 33 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 28 stroke:#E53935,stroke-width:3px
+linkStyle 29 stroke:#E53935,stroke-width:3px
+linkStyle 33 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -9139,10 +9139,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=6.903e+05 Pa<br/>T0=562.5 K"]
 N2 --- C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1.685e+05 Pa<br/>T0=616.3 K"]
 N1 --- C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 ```
@@ -9176,17 +9176,17 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.773e+05 Pa<br/>T0=675.5 K"]
 N3 -- "ṁ=0.2511" --> C5
 C6["c6 MASS_SOURCE<br/>ṁ=0.2508 kg/s<br/>T0=463.9 K"]
 C6 -- "ṁ=-0.2508" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 pbound
 class C4 pbound
 class C5 pbound
 class C6 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -9236,17 +9236,17 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=3.054e+05 Pa<br/>T0=732.9 K"]
 N6 -- "ṁ=3.555e-05" --> C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=1.255e+05 Pa<br/>T0=349.3 K"]
 N1 -- "ṁ=0.0003935" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C8 pbound
 class C9 pbound
 class C10 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -9306,10 +9306,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=5.488e+05 Pa<br/>T0=450.7 K"]
 N8 --- C12
 C13["c13 MASS_SOURCE<br/>ṁ=0.1435 kg/s<br/>T0=459.3 K"]
 N3 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 class C12 pbound
@@ -9341,10 +9341,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=1.229e+05 Pa<br/>T0=422.2 K"]
 N1 -- "ṁ=0.1217" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=0.05284 kg/s<br/>T0=817.6 K"]
 C5 -- "ṁ=-0.05284" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
@@ -9382,14 +9382,14 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=4.298e+05 Pa<br/>T0=853.2 K"]
 N2 --- C5
 C6["c6 MASS_SOURCE<br/>ṁ=0.1551 kg/s<br/>T0=639.5 K"]
 N1 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 msource
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -9440,10 +9440,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=1.871e+05 Pa<br/>T0=755.9 K"]
 C10 -- "ṁ=-1.204" --> N0
 C11["c11 MASS_SOURCE<br/>ṁ=0.01193 kg/s<br/>T0=594.4 K"]
 C11 -- "ṁ=-0.001492" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C6 softchoked
 class C7 softchoked
@@ -9451,13 +9451,13 @@ class C8 pbound
 class C9 pbound
 class C10 pbound
 class C11 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -9493,10 +9493,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=7.546e+04 Pa<br/>T0=619.4 K"]
 N4 -- "ṁ=7.224" --> C6
 C7["c7 MASS_SOURCE<br/>ṁ=0.1698 kg/s<br/>T0=614.1 K"]
 C7 -- "ṁ=-0.1698" --> N4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
@@ -9526,14 +9526,14 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=9.355e+04 Pa<br/>T0=600.5 K"]
 N0 -- "ṁ=0.01917" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=3.255e+05 Pa<br/>T0=347.4 K"]
 N2 -- "ṁ=3.872" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=50）
@@ -9583,10 +9583,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.611e+05 Pa<br/>T0=669.4 K"]
 N1 -- "ṁ=1.666e-05" --> C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=4.724e+05 Pa<br/>T0=556.2 K"]
 N5 -- "ṁ=0.2861" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 pbound
@@ -9622,16 +9622,16 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=7.399e+04 Pa<br/>T0=798.1 K"]
 N3 -- "ṁ=5.75e-05" --> C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.514e+05 Pa<br/>T0=670.4 K"]
 N1 -- "ṁ=0.03471" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -9707,10 +9707,10 @@ C17["c17 PRESSURE_BOUNDARY<br/>p0=3.631e+05 Pa<br/>T0=716.4 K"]
 C17 -- "ṁ=-1.838e-05" --> N1
 C18["c18 MASS_SOURCE<br/>ṁ=0.2047 kg/s<br/>T0=874.5 K"]
 C18 -- "ṁ=-0.1024" --> N9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C4 softchoked
 class C6 softchoked
@@ -9722,20 +9722,20 @@ class C15 pbound
 class C16 pbound
 class C17 pbound
 class C18 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 28 stroke:#B71C1C,stroke-width:3px
-linkStyle 30 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 28 stroke:#E53935,stroke-width:3px
+linkStyle 30 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -9820,10 +9820,10 @@ C20["c20 PRESSURE_BOUNDARY<br/>p0=1.649e+05 Pa<br/>T0=434.2 K"]
 N10 --- C20
 C21["c21 PRESSURE_BOUNDARY<br/>p0=1.531e+05 Pa<br/>T0=316.3 K"]
 N0 --- C21
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C19 pbound
 class C20 pbound
 class C21 pbound
@@ -9870,10 +9870,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=8.951e+05 Pa<br/>T0=483.8 K"]
 N7 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=2.374e+05 Pa<br/>T0=674.5 K"]
 N0 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 ```
@@ -9917,10 +9917,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=1.136e+05 Pa<br/>T0=626.2 K"]
 N1 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1.949e+05 Pa<br/>T0=870.5 K"]
 N5 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
@@ -9957,10 +9957,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=6.192e+05 Pa<br/>T0=893.8 K"]
 N0 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=6.074e+05 Pa<br/>T0=481 K"]
 N3 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 pbound
@@ -10049,10 +10049,10 @@ C20["c20 PRESSURE_BOUNDARY<br/>p0=3.055e+05 Pa<br/>T0=529 K"]
 C20 -- "ṁ=-4.851e-07" --> N3
 C21["c21 PRESSURE_BOUNDARY<br/>p0=1.358e+05 Pa<br/>T0=706.5 K"]
 N5 -- "ṁ=4.851e-07" --> C21
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 softchoked
 class C8 softchoked
 class C13 softchoked
@@ -10060,17 +10060,17 @@ class C15 softchoked
 class C17 softchoked
 class C20 pbound
 class C21 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 30 stroke:#B71C1C,stroke-width:3px
-linkStyle 31 stroke:#B71C1C,stroke-width:3px
-linkStyle 34 stroke:#B71C1C,stroke-width:3px
-linkStyle 35 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 30 stroke:#E53935,stroke-width:3px
+linkStyle 31 stroke:#E53935,stroke-width:3px
+linkStyle 34 stroke:#E53935,stroke-width:3px
+linkStyle 35 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=17）
@@ -10097,13 +10097,13 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=5.864e+05 Pa<br/>T0=393.2 K"]
 C3 -- "ṁ=-0.2854" --> N0
 C4["c4 PRESSURE_BOUNDARY<br/>p0=2.293e+05 Pa<br/>T0=548 K"]
 N2 -- "ṁ=0.2854" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -10181,16 +10181,16 @@ C17["c17 PRESSURE_BOUNDARY<br/>p0=2.282e+05 Pa<br/>T0=568.9 K"]
 N7 -- "ṁ=0.211" --> C17
 C18["c18 PRESSURE_BOUNDARY<br/>p0=5.547e+05 Pa<br/>T0=800.5 K"]
 C18 -- "ṁ=-0.2108" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C15 softchoked
 class C16 pbound
 class C17 pbound
 class C18 pbound
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 30 stroke:#B71C1C,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 30 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=6）
@@ -10226,10 +10226,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=6.654e+05 Pa<br/>T0=841.3 K"]
 C5 -- "ṁ=-3.611" --> N0
 C6["c6 PRESSURE_BOUNDARY<br/>p0=3.97e+05 Pa<br/>T0=671.6 K"]
 N4 -- "ṁ=3.611" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -10272,10 +10272,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.033e+05 Pa<br/>T0=454 K"]
 N2 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=3.045e+05 Pa<br/>T0=652.6 K"]
 N3 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
@@ -10336,18 +10336,18 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=9.623e+04 Pa<br/>T0=751.2 K"]
 N5 -- "ṁ=0.000452" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=3.685e+05 Pa<br/>T0=395.2 K"]
 N1 -- "ṁ=1.402e-05" --> C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 softchoked
 class C10 pbound
 class C11 pbound
 class C12 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=15）
@@ -10387,13 +10387,13 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=2.433e+05 Pa<br/>T0=844.8 K"]
 C6 -- "ṁ=-0.5438" --> N3
 C7["c7 PRESSURE_BOUNDARY<br/>p0=2.087e+04 Pa<br/>T0=400.8 K"]
 N0 -- "ṁ=0.5438" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -10451,10 +10451,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=2.977e+05 Pa<br/>T0=677.5 K"]
 N9 --- C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.1506 kg/s<br/>T0=460.9 K"]
 N0 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 class C12 msource
@@ -10488,10 +10488,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=2.126e+05 Pa<br/>T0=333 K"]
 N2 --- C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=2.409e+04 Pa<br/>T0=714.5 K"]
 N1 --- C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 ```
@@ -10537,10 +10537,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=4.287e+05 Pa<br/>T0=347.7 K"]
 N2 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1.592e+05 Pa<br/>T0=698.7 K"]
 N0 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 ```
@@ -10602,10 +10602,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=2.861e+05 Pa<br/>T0=475.2 K"]
 N7 --- C12
 C13["c13 MASS_SOURCE<br/>ṁ=-0.09955 kg/s<br/>T0=793.2 K"]
 N1 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 class C12 pbound
@@ -10662,10 +10662,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=4.3e+05 Pa<br/>T0=350.9 K"]
 N2 --- C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=6.001e+05 Pa<br/>T0=865.2 K"]
 N8 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 class C11 pbound
@@ -10694,15 +10694,15 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.177e+05 Pa<br/>T0=434.3 K"]
 C3 -- "ṁ=-0.1273" --> N2
 C4["c4 PRESSURE_BOUNDARY<br/>p0=4.636e+04 Pa<br/>T0=433.8 K"]
 N1 -- "ṁ=0.1564" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -10788,10 +10788,10 @@ C20["c20 PRESSURE_BOUNDARY<br/>p0=3.029e+05 Pa<br/>T0=701.4 K"]
 C20 -- "ṁ=-0.1082" --> N5
 C21["c21 MASS_SOURCE<br/>ṁ=0.187 kg/s<br/>T0=818.3 K"]
 C21 -- "ṁ=-0.187" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C1 softchoked
 class C4 softchoked
@@ -10804,20 +10804,20 @@ class C18 pbound
 class C19 pbound
 class C20 pbound
 class C21 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 29 stroke:#B71C1C,stroke-width:3px
-linkStyle 32 stroke:#B71C1C,stroke-width:3px
-linkStyle 33 stroke:#B71C1C,stroke-width:3px
-linkStyle 34 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 29 stroke:#E53935,stroke-width:3px
+linkStyle 32 stroke:#E53935,stroke-width:3px
+linkStyle 33 stroke:#E53935,stroke-width:3px
+linkStyle 34 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -10871,23 +10871,23 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=5.309e+05 Pa<br/>T0=414.6 K"]
 C10 -- "ṁ=-0.00126" --> N2
 C11["c11 PRESSURE_BOUNDARY<br/>p0=2.188e+05 Pa<br/>T0=327.6 K"]
 N8 -- "ṁ=0.0373" --> C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C4 softchoked
 class C8 softchoked
 class C9 pbound
 class C10 pbound
 class C11 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=2）
@@ -10913,15 +10913,15 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=8.368e+04 Pa<br/>T0=397.9 K"]
 N1 -- "ṁ=2.676e-05" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=2.064e+05 Pa<br/>T0=381.9 K"]
 N0 -- "ṁ=1.062" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C2 pbound
 class C3 pbound
 class C4 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=50）
@@ -10945,10 +10945,10 @@ C2["c2 PRESSURE_BOUNDARY<br/>p0=5.095e+05 Pa<br/>T0=744.1 K"]
 C2 -- "ṁ=-0.0001883" --> N1
 C3["c3 PRESSURE_BOUNDARY<br/>p0=3.686e+05 Pa<br/>T0=674.1 K"]
 N2 -- "ṁ=0.0001883" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 ```
@@ -11043,15 +11043,15 @@ C22["c22 PRESSURE_BOUNDARY<br/>p0=4.299e+05 Pa<br/>T0=596.2 K"]
 N1 --- C22
 C23["c23 PRESSURE_BOUNDARY<br/>p0=1.292e+05 Pa<br/>T0=485 K"]
 N8 --- C23
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C22 pbound
 class C23 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -11091,19 +11091,19 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=1.387e+05 Pa<br/>T0=726.2 K"]
 N2 -- "ṁ=5.802e-07" --> C7
 C8["c8 MASS_SOURCE<br/>ṁ=0.1467 kg/s<br/>T0=529.3 K"]
 C8 -- "ṁ=-0.1444" --> N4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C5 pbound
 class C6 pbound
 class C7 pbound
 class C8 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=13）
@@ -11139,10 +11139,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=7.876e+05 Pa<br/>T0=363.8 K"]
 C5 -- "ṁ=-7.094e-11" --> N1
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.919e+05 Pa<br/>T0=558.7 K"]
 N5 -- "ṁ=7.094e-11" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -11180,14 +11180,14 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.6e+05 Pa<br/>T0=356.2 K"]
 C5 -- "ṁ=-4.147e-05" --> N1
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.478e+04 Pa<br/>T0=636.5 K"]
 N3 -- "ṁ=4.147e-05" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C5 pbound
 class C6 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -11244,14 +11244,14 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=3.691e+05 Pa<br/>T0=688.4 K"]
 N0 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=3.23e+05 Pa<br/>T0=839.3 K"]
 N5 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 class C13 pbound
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -11307,10 +11307,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=8.916e+04 Pa<br/>T0=460.2 K"]
 C11 -- "ṁ=-2.034e-06" --> N5
 C12["c12 MASS_SOURCE<br/>ṁ=0.01827 kg/s<br/>T0=806.2 K"]
 C12 -- "ṁ=-0.004567" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 class C11 pbound
@@ -11364,10 +11364,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.369e+05 Pa<br/>T0=409.9 K"]
 C9 -- "ṁ=-0.2707" --> N8
 C10["c10 MASS_SOURCE<br/>ṁ=-0.2737 kg/s<br/>T0=820.3 K"]
 N4 -- "ṁ=0.2737" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 msource
@@ -11430,10 +11430,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=4.495e+05 Pa<br/>T0=679.7 K"]
 N7 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=1.369e+05 Pa<br/>T0=438.7 K"]
 N6 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -11479,18 +11479,18 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.079e+05 Pa<br/>T0=408.7 K"]
 C7 -- "ṁ=-1.331e-06" --> N6
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1.247e+05 Pa<br/>T0=769.1 K"]
 N1 -- "ṁ=1.331e-06" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C6 softchoked
 class C7 pbound
 class C8 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -11527,10 +11527,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=5.099e+05 Pa<br/>T0=715.8 K"]
 C6 -- "ṁ=-0.00177" --> N3
 C7["c7 PRESSURE_BOUNDARY<br/>p0=4.821e+05 Pa<br/>T0=625.9 K"]
 N1 -- "ṁ=0.00177" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 ```
@@ -11580,10 +11580,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.083e+05 Pa<br/>T0=760.1 K"]
 N5 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=7.314e+04 Pa<br/>T0=693.4 K"]
 N6 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 ```
@@ -11622,19 +11622,19 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=2.112e+05 Pa<br/>T0=659.3 K"]
 N0 -- "ṁ=0.12" --> C6
 C7["c7 PRESSURE_BOUNDARY<br/>p0=1.948e+05 Pa<br/>T0=792.3 K"]
 N4 -- "ṁ=4.434e-05" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C4 softchoked
 class C5 pbound
 class C6 pbound
 class C7 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=2）
@@ -11672,15 +11672,15 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=5.041e+05 Pa<br/>T0=643.9 K"]
 N2 -- "ṁ=3.766e-07" --> C6
 C7["c7 MASS_SOURCE<br/>ṁ=0.07644 kg/s<br/>T0=463.1 K"]
 C7 -- "ṁ=-0.001194" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 class C7 msource
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -11736,10 +11736,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=2.396e+05 Pa<br/>T0=527.8 K"]
 N1 --- C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=1.07e+05 Pa<br/>T0=544.7 K"]
 N10 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 ```
@@ -11787,10 +11787,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1.016e+05 Pa<br/>T0=576 K"]
 N0 --- C8
 C9["c9 MASS_SOURCE<br/>ṁ=0.0855 kg/s<br/>T0=539.8 K"]
 N2 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 msource
@@ -11864,10 +11864,10 @@ C16["c16 PRESSURE_BOUNDARY<br/>p0=3.681e+05 Pa<br/>T0=402.4 K"]
 N1 -- "ṁ=0.914" --> C16
 C17["c17 MASS_SOURCE<br/>ṁ=0.2741 kg/s<br/>T0=450.3 K"]
 C17 -- "ṁ=-0.06852" --> N6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C4 softchoked
 class C5 softchoked
@@ -11881,23 +11881,23 @@ class C14 pbound
 class C15 pbound
 class C16 pbound
 class C17 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -11930,14 +11930,14 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=2.961e+05 Pa<br/>T0=509.2 K"]
 N1 --- C5
 C6["c6 MASS_SOURCE<br/>ṁ=0.2353 kg/s<br/>T0=550.2 K"]
 N1 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 class C6 msource
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -12000,10 +12000,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=4.708e+05 Pa<br/>T0=672.4 K"]
 N7 --- C13
 C14["c14 PRESSURE_BOUNDARY<br/>p0=3.815e+05 Pa<br/>T0=504.6 K"]
 N8 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 pbound
 class C13 pbound
 class C14 pbound
@@ -12076,10 +12076,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=1.386e+05 Pa<br/>T0=525.9 K"]
 N5 --- C15
 C16["c16 PRESSURE_BOUNDARY<br/>p0=1.505e+05 Pa<br/>T0=439.1 K"]
 N8 --- C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C14 pbound
 class C15 pbound
 class C16 pbound
@@ -12124,10 +12124,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=4.702e+05 Pa<br/>T0=535.1 K"]
 C7 -- "ṁ=-3.766e-05" --> N5
 C8["c8 PRESSURE_BOUNDARY<br/>p0=3.833e+05 Pa<br/>T0=765.2 K"]
 N2 -- "ṁ=3.766e-05" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 ```
@@ -12177,10 +12177,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=3.538e+05 Pa<br/>T0=359.4 K"]
 N1 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=6.786e+04 Pa<br/>T0=462.1 K"]
 N8 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 ```
@@ -12208,10 +12208,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=3.856e+05 Pa<br/>T0=489.8 K"]
 N1 -- "ṁ=0.005962" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=2.749e+05 Pa<br/>T0=554.9 K"]
 N0 -- "ṁ=0.1318" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
@@ -12260,19 +12260,19 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1.731e+05 Pa<br/>T0=725.5 K"]
 C8 -- "ṁ=-5.355e-05" --> N5
 C9["c9 PRESSURE_BOUNDARY<br/>p0=4.31e+04 Pa<br/>T0=836 K"]
 N3 -- "ṁ=0.08266" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C5 softchoked
 class C7 pbound
 class C8 pbound
 class C9 pbound
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -12318,15 +12318,15 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.518e+05 Pa<br/>T0=420.5 K"]
 N3 -- "ṁ=1.26e-05" --> C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=2.602e+05 Pa<br/>T0=659.5 K"]
 N4 -- "ṁ=0.0009416" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C7 pbound
 class C8 pbound
 class C9 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=12）
@@ -12386,10 +12386,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=2.402e+05 Pa<br/>T0=804.5 K"]
 C13 -- "ṁ=-0.002111" --> N7
 C14["c14 MASS_SOURCE<br/>ṁ=0.1796 kg/s<br/>T0=683.9 K"]
 C14 -- "ṁ=-0.1796" --> N5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 softchoked
 class C10 softchoked
@@ -12397,11 +12397,11 @@ class C11 pbound
 class C12 pbound
 class C13 pbound
 class C14 msource
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=11）
@@ -12482,10 +12482,10 @@ C18["c18 PRESSURE_BOUNDARY<br/>p0=4.281e+05 Pa<br/>T0=502.9 K"]
 N7 --- C18
 C19["c19 PRESSURE_BOUNDARY<br/>p0=4.204e+05 Pa<br/>T0=317.7 K"]
 N3 --- C19
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C17 pbound
 class C18 pbound
 class C19 pbound
@@ -12532,14 +12532,14 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=6.329e+05 Pa<br/>T0=747 K"]
 N2 -- "ṁ=4.664e-06" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1.427e+05 Pa<br/>T0=352.7 K"]
 C8 -- "ṁ=-4.664e-06" --> N5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C7 pbound
 class C8 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=3）
@@ -12581,10 +12581,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=1.816e+05 Pa<br/>T0=437.6 K"]
 N2 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=853.5 K"]
 N1 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
@@ -12615,10 +12615,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=5.118e+05 Pa<br/>T0=815.6 K"]
 N2 -- "ṁ=0.1398" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=-0.2109 kg/s<br/>T0=756.2 K"]
 N0 -- "ṁ=0.2109" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
@@ -12684,10 +12684,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=5.664e+05 Pa<br/>T0=718.7 K"]
 N8 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=8.343e+04 Pa<br/>T0=403.6 K"]
 N1 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 class C13 pbound
@@ -12741,16 +12741,16 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=3.601e+05 Pa<br/>T0=500.7 K"]
 N8 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=3.953e+04 Pa<br/>T0=367.3 K"]
 N2 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C8 booster
 class C9 pbound
 class C10 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -12794,10 +12794,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.471e+05 Pa<br/>T0=465.8 K"]
 C7 -- "ṁ=-0.0001778" --> N2
 C8["c8 PRESSURE_BOUNDARY<br/>p0=2.229e+05 Pa<br/>T0=372.1 K"]
 N1 -- "ṁ=0.0001778" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 ```
@@ -12857,19 +12857,19 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.169e+05 Pa<br/>T0=572.6 K"]
 N2 -- "ṁ=0.0006971" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=2.42e+05 Pa<br/>T0=742 K"]
 N5 -- "ṁ=8.298e-05" --> C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 softchoked
 class C9 softchoked
 class C10 pbound
 class C11 pbound
 class C12 pbound
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -12905,10 +12905,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=464.9 K"]
 N3 -- "ṁ=1.303" --> C6
 C7["c7 PRESSURE_BOUNDARY<br/>p0=5.31e+05 Pa<br/>T0=374.5 K"]
 N2 -- "ṁ=9.352e-05" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 class C7 pbound
@@ -12937,14 +12937,14 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=4.236e+04 Pa<br/>T0=746.3 K"]
 N1 -- "ṁ=0.0007552" --> C3
 C4["c4 MASS_SOURCE<br/>ṁ=0.1698 kg/s<br/>T0=471.4 K"]
 C4 -- "ṁ=-0.1698" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 msource
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -12998,14 +12998,14 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=1.364e+05 Pa<br/>T0=726 K"]
 N2 --- C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=3.72e+04 Pa<br/>T0=866.8 K"]
 N6 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 class C11 pbound
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -13071,10 +13071,10 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=7.149e+05 Pa<br/>T0=468.4 K"]
 N8 --- C13
 C14["c14 PRESSURE_BOUNDARY<br/>p0=6.831e+05 Pa<br/>T0=809 K"]
 N6 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C13 pbound
 class C14 pbound
 ```
@@ -13106,10 +13106,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=3.789e+05 Pa<br/>T0=535.8 K"]
 N1 -- "ṁ=2.022e-05" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=6.469e+05 Pa<br/>T0=341.4 K"]
 N0 -- "ṁ=0.3842" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 class C5 pbound
@@ -13149,15 +13149,15 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=2.348e+05 Pa<br/>T0=420.3 K"]
 N2 -- "ṁ=0.012" --> C6
 C7["c7 MASS_SOURCE<br/>ṁ=0.08277 kg/s<br/>T0=378.5 K"]
 C7 -- "ṁ=-0.0003233" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C5 pbound
 class C6 pbound
 class C7 msource
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -13210,10 +13210,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=6.376e+05 Pa<br/>T0=881.9 K"]
 N3 --- C10
 C11["c11 MASS_SOURCE<br/>ṁ=0.2611 kg/s<br/>T0=313.1 K"]
 N4 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 booster
 class C9 pbound
 class C10 pbound
@@ -13251,15 +13251,15 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=9.001e+04 Pa<br/>T0=446.8 K"]
 N0 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=2.356e+04 Pa<br/>T0=855.6 K"]
 N1 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C4 pbound
 class C5 pbound
 class C6 pbound
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -13314,10 +13314,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.233e+05 Pa<br/>T0=412.3 K"]
 N7 --- C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.1014 kg/s<br/>T0=422.5 K"]
 N2 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 booster
 class C9 pbound
 class C10 pbound
@@ -13387,10 +13387,10 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=1.586e+05 Pa<br/>T0=779.7 K"]
 C14 -- "ṁ=-0.02258" --> N7
 C15["c15 PRESSURE_BOUNDARY<br/>p0=5.886e+05 Pa<br/>T0=591.6 K"]
 N5 -- "ṁ=0.0002262" --> C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C2 softchoked
 class C4 softchoked
@@ -13400,19 +13400,19 @@ class C10 softchoked
 class C13 pbound
 class C14 pbound
 class C15 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -13452,10 +13452,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=1.881e+05 Pa<br/>T0=329.7 K"]
 N0 --- C7
 C8["c8 MASS_SOURCE<br/>ṁ=0.1842 kg/s<br/>T0=854.3 K"]
 N2 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 class C7 pbound
@@ -13507,10 +13507,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=9.049e+05 Pa<br/>T0=403.9 K"]
 C8 -- "ṁ=-0.0001255" --> N8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=8.578e+05 Pa<br/>T0=698.4 K"]
 N7 -- "ṁ=0.0001255" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 ```
@@ -13580,10 +13580,10 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=7.918e+05 Pa<br/>T0=415.7 K"]
 N4 --- C14
 C15["c15 PRESSURE_BOUNDARY<br/>p0=1.303e+05 Pa<br/>T0=380.3 K"]
 N10 --- C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C13 booster
 class C14 pbound
 class C15 pbound
@@ -13630,10 +13630,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=8.545e+05 Pa<br/>T0=726.9 K"]
 C7 -- "ṁ=-0.03996" --> N6
 C8["c8 PRESSURE_BOUNDARY<br/>p0=4.514e+05 Pa<br/>T0=851.8 K"]
 N0 -- "ṁ=0.03996" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 ```
@@ -13683,18 +13683,18 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=4.125e+04 Pa<br/>T0=853.2 K"]
 N2 -- "ṁ=0.2909" --> C9
 C10["c10 MASS_SOURCE<br/>ṁ=0.2885 kg/s<br/>T0=537.6 K"]
 C10 -- "ṁ=-0.2885" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C4 softchoked
 class C7 pbound
 class C8 pbound
 class C9 pbound
 class C10 msource
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=8）
@@ -13732,14 +13732,14 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=1.944e+05 Pa<br/>T0=893.8 K"]
 N4 -- "ṁ=2.783e-05" --> C6
 C7["c7 MASS_SOURCE<br/>ṁ=-0.1284 kg/s<br/>T0=567.3 K"]
 N5 -- "ṁ=0.1284" --> C7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 class C7 msource
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -13808,10 +13808,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=4.892e+05 Pa<br/>T0=744.6 K"]
 N5 --- C15
 C16["c16 PRESSURE_BOUNDARY<br/>p0=2.895e+05 Pa<br/>T0=305 K"]
 N3 --- C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C15 pbound
 class C16 pbound
 ```
@@ -13849,14 +13849,14 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=9.481e+05 Pa<br/>T0=766.2 K"]
 C5 -- "ṁ=-0.6693" --> N3
 C6["c6 PRESSURE_BOUNDARY<br/>p0=4.107e+05 Pa<br/>T0=394.5 K"]
 N2 -- "ṁ=0.6693" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C5 pbound
 class C6 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=2）
@@ -13903,16 +13903,16 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.418e+05 Pa<br/>T0=759.6 K"]
 N2 -- "ṁ=0.1944" --> C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.65e+05 Pa<br/>T0=896.2 K"]
 C9 -- "ṁ=-1.045e-08" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 softchoked
 class C7 booster
 class C8 pbound
 class C9 pbound
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -13964,13 +13964,13 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.875e+05 Pa<br/>T0=739 K"]
 C9 -- "ṁ=-1.992" --> N3
 C10["c10 PRESSURE_BOUNDARY<br/>p0=5.168e+04 Pa<br/>T0=718.1 K"]
 N2 -- "ṁ=1.992" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -14028,10 +14028,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=9.868e+05 Pa<br/>T0=656.5 K"]
 N9 -- "ṁ=0.000534" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=2.854e+05 Pa<br/>T0=501.4 K"]
 C12 -- "ṁ=-0.000534" --> N8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 softchoked
 class C5 softchoked
@@ -14041,20 +14041,20 @@ class C9 softchoked
 class C10 softchoked
 class C11 pbound
 class C12 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 19 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 19 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -14083,18 +14083,18 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=3.427e+04 Pa<br/>T0=538.9 K"]
 N1 -- "ṁ=0.965" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=1.79e+05 Pa<br/>T0=658.2 K"]
 C5 -- "ṁ=-0.001364" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C2 softchoked
 class C3 pbound
 class C4 pbound
 class C5 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=16）
@@ -14177,10 +14177,10 @@ C20["c20 PRESSURE_BOUNDARY<br/>p0=1.128e+05 Pa<br/>T0=345.2 K"]
 N9 --- C20
 C21["c21 MASS_SOURCE<br/>ṁ=0.2041 kg/s<br/>T0=674.9 K"]
 N5 --- C21
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C18 pbound
 class C19 pbound
 class C20 pbound
@@ -14212,13 +14212,13 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.508e+05 Pa<br/>T0=674.4 K"]
 C3 -- "ṁ=-5.344e-06" --> N0
 C4["c4 PRESSURE_BOUNDARY<br/>p0=4.181e+04 Pa<br/>T0=855.2 K"]
 N3 -- "ṁ=5.344e-06" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -14264,16 +14264,16 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=3.914e+05 Pa<br/>T0=313.3 K"]
 N6 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.928e+05 Pa<br/>T0=450.7 K"]
 N5 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 softchoked
 class C7 pbound
 class C8 pbound
 class C9 pbound
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -14303,15 +14303,15 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=4.788e+04 Pa<br/>T0=834.7 K"]
 N1 -- "ṁ=0.749" --> C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=1.403e+05 Pa<br/>T0=465 K"]
 C5 -- "ṁ=-0.7474" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 pbound
 class C4 pbound
 class C5 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -14359,10 +14359,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=1.484e+05 Pa<br/>T0=683.4 K"]
 N2 --- C9
 C10["c10 PRESSURE_BOUNDARY<br/>p0=8.204e+04 Pa<br/>T0=346.9 K"]
 N5 --- C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 class C10 pbound
@@ -14444,10 +14444,10 @@ C18["c18 PRESSURE_BOUNDARY<br/>p0=1.757e+05 Pa<br/>T0=856.6 K"]
 N9 -- "ṁ=0.2396" --> C18
 C19["c19 MASS_SOURCE<br/>ṁ=0.2765 kg/s<br/>T0=898.2 K"]
 C19 -- "ṁ=-0.06912" --> N7
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C3 softchoked
 class C6 softchoked
@@ -14459,22 +14459,22 @@ class C16 softchoked
 class C17 pbound
 class C18 pbound
 class C19 msource
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
-linkStyle 31 stroke:#B71C1C,stroke-width:3px
-linkStyle 32 stroke:#B71C1C,stroke-width:3px
-linkStyle 33 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
+linkStyle 31 stroke:#E53935,stroke-width:3px
+linkStyle 32 stroke:#E53935,stroke-width:3px
+linkStyle 33 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -14498,10 +14498,10 @@ C2["c2 PRESSURE_BOUNDARY<br/>p0=7.986e+05 Pa<br/>T0=430.8 K"]
 C2 -- "ṁ=-2.836e-05" --> N0
 C3["c3 PRESSURE_BOUNDARY<br/>p0=7.351e+05 Pa<br/>T0=356.6 K"]
 N1 -- "ṁ=2.836e-05" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 ```
@@ -14567,16 +14567,16 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=6.293e+05 Pa<br/>T0=521.8 K"]
 N3 --- C14
 C15["c15 PRESSURE_BOUNDARY<br/>p0=4.987e+05 Pa<br/>T0=512.1 K"]
 N2 --- C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C13 pbound
 class C14 pbound
 class C15 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -14605,16 +14605,16 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=5.256e+05 Pa<br/>T0=642.4 K"]
 N0 -- "ṁ=0.05629" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=0.05592 kg/s<br/>T0=467.7 K"]
 C5 -- "ṁ=-0.05592" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C3 pbound
 class C4 pbound
 class C5 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -14675,10 +14675,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=4.961e+05 Pa<br/>T0=402.8 K"]
 N0 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=3.207e+05 Pa<br/>T0=754.6 K"]
 N8 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 booster
 class C12 pbound
 class C13 pbound
@@ -14739,10 +14739,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.409e+05 Pa<br/>T0=512.1 K"]
 N7 --- C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.06429 kg/s<br/>T0=854.1 K"]
 N3 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 class C12 msource
@@ -14809,10 +14809,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=4.295e+05 Pa<br/>T0=586.1 K"]
 N4 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=1.599e+05 Pa<br/>T0=642.8 K"]
 N6 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 pbound
 class C13 pbound
 ```
@@ -14864,22 +14864,22 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=2.386e+05 Pa<br/>T0=588 K"]
 N5 -- "ṁ=0.1313" --> C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=1.687e+05 Pa<br/>T0=459 K"]
 C11 -- "ṁ=-0.1224" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 softchoked
 class C7 softchoked
 class C8 softchoked
 class C9 pbound
 class C10 pbound
 class C11 pbound
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=2）
@@ -14934,10 +14934,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=9.058e+05 Pa<br/>T0=731.7 K"]
 N8 --- C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=6.323e+05 Pa<br/>T0=627.2 K"]
 N1 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 booster
 class C10 pbound
 class C11 pbound
@@ -14982,14 +14982,14 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=1.342e+05 Pa<br/>T0=667.4 K"]
 N4 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=602.8 K"]
 N2 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -15015,10 +15015,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.082e+05 Pa<br/>T0=780.1 K"]
 N2 -- "ṁ=0.001155" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=5.268e+05 Pa<br/>T0=789.2 K"]
 C4 -- "ṁ=-0.0009338" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
@@ -15067,10 +15067,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=8.998e+04 Pa<br/>T0=607.7 K"]
 N1 --- C8
 C9["c9 MASS_SOURCE<br/>ṁ=-0.1343 kg/s<br/>T0=843.1 K"]
 N4 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 msource
@@ -15127,10 +15127,10 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=1.681e+05 Pa<br/>T0=534.1 K"]
 N6 -- "ṁ=3.321e-06" --> C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=1.9e+05 Pa<br/>T0=839.7 K"]
 C11 -- "ṁ=-3.344e-06" --> N8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 class C11 pbound
@@ -15197,19 +15197,19 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=5.82e+04 Pa<br/>T0=331.6 K"]
 N5 -- "ṁ=0.05614" --> C14
 C15["c15 PRESSURE_BOUNDARY<br/>p0=1.086e+05 Pa<br/>T0=745.8 K"]
 N7 -- "ṁ=0.002004" --> C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C12 booster
 class C13 pbound
 class C14 pbound
 class C15 pbound
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -15271,10 +15271,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=6.471e+05 Pa<br/>T0=423.1 K"]
 N8 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=1.364e+05 Pa<br/>T0=339 K"]
 N9 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 class C13 pbound
@@ -15354,10 +15354,10 @@ C18["c18 PRESSURE_BOUNDARY<br/>p0=4.207e+05 Pa<br/>T0=477.5 K"]
 C18 -- "ṁ=-0.1182" --> N2
 C19["c19 PRESSURE_BOUNDARY<br/>p0=6.978e+04 Pa<br/>T0=871.3 K"]
 N5 -- "ṁ=4.771" --> C19
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 softchoked
 class C9 softchoked
 class C13 softchoked
@@ -15366,17 +15366,17 @@ class C16 softchoked
 class C17 pbound
 class C18 pbound
 class C19 pbound
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 28 stroke:#B71C1C,stroke-width:3px
-linkStyle 31 stroke:#B71C1C,stroke-width:3px
-linkStyle 32 stroke:#B71C1C,stroke-width:3px
-linkStyle 33 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 28 stroke:#E53935,stroke-width:3px
+linkStyle 31 stroke:#E53935,stroke-width:3px
+linkStyle 32 stroke:#E53935,stroke-width:3px
+linkStyle 33 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -15421,10 +15421,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.189e+05 Pa<br/>T0=732.2 K"]
 N6 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=3.359e+05 Pa<br/>T0=362.5 K"]
 N2 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 pbound
@@ -15459,10 +15459,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=7.902e+05 Pa<br/>T0=691.3 K"]
 N1 --- C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=2.48e+05 Pa<br/>T0=781.9 K"]
 N0 --- C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 ```
@@ -15551,10 +15551,10 @@ C21["c21 PRESSURE_BOUNDARY<br/>p0=2.111e+05 Pa<br/>T0=317 K"]
 C21 -- "ṁ=-0.01195" --> N8
 C22["c22 MASS_SOURCE<br/>ṁ=0.08434 kg/s<br/>T0=698.7 K"]
 C22 -- "ṁ=-0.01285" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C1 softchoked
 class C4 softchoked
@@ -15572,29 +15572,29 @@ class C19 pbound
 class C20 pbound
 class C21 pbound
 class C22 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
-linkStyle 16 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 18 stroke:#B71C1C,stroke-width:3px
-linkStyle 20 stroke:#B71C1C,stroke-width:3px
-linkStyle 21 stroke:#B71C1C,stroke-width:3px
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 24 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 30 stroke:#B71C1C,stroke-width:3px
-linkStyle 31 stroke:#B71C1C,stroke-width:3px
-linkStyle 32 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 30 stroke:#E53935,stroke-width:3px
+linkStyle 31 stroke:#E53935,stroke-width:3px
+linkStyle 32 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=2）
@@ -15639,20 +15639,20 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.196e+05 Pa<br/>T0=825.7 K"]
 N2 -- "ṁ=0.0005076" --> C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.933e+05 Pa<br/>T0=894.7 K"]
 C9 -- "ṁ=-0.0005076" --> N5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C5 softchoked
 class C6 softchoked
 class C8 pbound
 class C9 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=3）
@@ -15709,10 +15709,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=3.299e+05 Pa<br/>T0=395.7 K"]
 N2 --- C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=2.135e+05 Pa<br/>T0=829 K"]
 N6 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -15756,10 +15756,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=3.127e+05 Pa<br/>T0=734.4 K"]
 N3 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=1.993e+05 Pa<br/>T0=850.3 K"]
 N1 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
@@ -15802,20 +15802,20 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=2.262e+05 Pa<br/>T0=517.1 K"]
 N3 -- "ṁ=0.4887" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=4.895e+05 Pa<br/>T0=729.6 K"]
 C8 -- "ṁ=-0.4435" --> N4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C4 softchoked
 class C5 softchoked
 class C6 pbound
 class C7 pbound
 class C8 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 8 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -15872,10 +15872,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=8.378e+04 Pa<br/>T0=891.2 K"]
 N1 --- C11
 C12["c12 MASS_SOURCE<br/>ṁ=-0.06795 kg/s<br/>T0=338.6 K"]
 N5 --- C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 booster
 class C10 pbound
 class C11 pbound
@@ -15925,18 +15925,18 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=5.066e+04 Pa<br/>T0=365.7 K"]
 N4 -- "ṁ=0.02418" --> C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.025e+05 Pa<br/>T0=511.9 K"]
 C9 -- "ṁ=-0.0223" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C3 softchoked
 class C7 pbound
 class C8 pbound
 class C9 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -15996,10 +15996,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=3.674e+05 Pa<br/>T0=705.1 K"]
 C11 -- "ṁ=-4.046e-06" --> N5
 C12["c12 PRESSURE_BOUNDARY<br/>p0=2.543e+05 Pa<br/>T0=566.2 K"]
 N8 -- "ṁ=4.046e-06" --> C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 ```
@@ -16045,15 +16045,15 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=4.472e+05 Pa<br/>T0=326.8 K"]
 N5 --- C8
 C9["c9 MASS_SOURCE<br/>ṁ=0.1163 kg/s<br/>T0=899.4 K"]
 N5 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 class C8 pbound
 class C9 msource
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -16101,10 +16101,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.457e+05 Pa<br/>T0=667.5 K"]
 C8 -- "ṁ=-0.01639" --> N3
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.633e+05 Pa<br/>T0=348.2 K"]
 N7 -- "ṁ=0.01639" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
 ```
@@ -16136,10 +16136,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=4.144e+05 Pa<br/>T0=681.1 K"]
 N0 -- "ṁ=0.107" --> C4
 C5["c5 MASS_SOURCE<br/>ṁ=0.1069 kg/s<br/>T0=493.2 K"]
 C5 -- "ṁ=-0.1069" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 booster
 class C4 pbound
 class C5 msource
@@ -16188,10 +16188,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=9.848e+05 Pa<br/>T0=525.6 K"]
 C8 -- "ṁ=-0.3509" --> N6
 C9["c9 PRESSURE_BOUNDARY<br/>p0=5.001e+05 Pa<br/>T0=748.3 K"]
 N3 -- "ṁ=0.3509" --> C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C1 softchoked
 class C3 softchoked
@@ -16200,17 +16200,17 @@ class C6 softchoked
 class C7 softchoked
 class C8 pbound
 class C9 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
-linkStyle 7 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
-linkStyle 14 stroke:#B71C1C,stroke-width:3px
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=3）
@@ -16274,10 +16274,10 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=5.319e+04 Pa<br/>T0=603.4 K"]
 N0 --- C14
 C15["c15 MASS_SOURCE<br/>ṁ=-0.2849 kg/s<br/>T0=712 K"]
 N2 --- C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C13 pbound
 class C14 pbound
 class C15 msource
@@ -16308,10 +16308,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.516e+05 Pa<br/>T0=459.9 K"]
 C3 -- "ṁ=-4.203e-06" --> N0
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1.444e+05 Pa<br/>T0=505.5 K"]
 N1 -- "ṁ=4.203e-06" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 ```
@@ -16388,10 +16388,10 @@ C16["c16 PRESSURE_BOUNDARY<br/>p0=9.377e+05 Pa<br/>T0=610.4 K"]
 N11 --- C16
 C17["c17 PRESSURE_BOUNDARY<br/>p0=4.656e+05 Pa<br/>T0=825.4 K"]
 N6 --- C17
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C16 pbound
 class C17 pbound
 ```
@@ -16445,10 +16445,10 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=2.006e+05 Pa<br/>T0=425.5 K"]
 C9 -- "ṁ=-0.006069" --> N5
 C10["c10 PRESSURE_BOUNDARY<br/>p0=1.688e+05 Pa<br/>T0=373.3 K"]
 N0 -- "ṁ=0.006069" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C9 pbound
 class C10 pbound
 ```
@@ -16520,23 +16520,23 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=4.553e+04 Pa<br/>T0=802.8 K"]
 C15 -- "ṁ=-0.05593" --> N6
 C16["c16 MASS_SOURCE<br/>ṁ=-0.05583 kg/s<br/>T0=527 K"]
 N6 -- "ṁ=0.05583" --> C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C5 softchoked
 class C13 softchoked
 class C14 pbound
 class C15 pbound
 class C16 msource
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 10 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
-linkStyle 23 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=4）
@@ -16562,10 +16562,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=1.733e+05 Pa<br/>T0=309.8 K"]
 N0 -- "ṁ=0.003325" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1.881e+05 Pa<br/>T0=342.8 K"]
 N2 -- "ṁ=1.457" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
@@ -16610,17 +16610,17 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=8.48e+05 Pa<br/>T0=754.1 K"]
 N4 -- "ṁ=4.734" --> C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=9.083e+05 Pa<br/>T0=390.7 K"]
 C8 -- "ṁ=-0.0003263" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C6 pbound
 class C7 pbound
 class C8 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
-linkStyle 11 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -16646,10 +16646,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.421e+05 Pa<br/>T0=776.8 K"]
 N1 -- "ṁ=6.056e-05" --> C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=2.955e+05 Pa<br/>T0=868 K"]
 C4 -- "ṁ=-4.351e-05" --> N0
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 class C4 pbound
@@ -16700,16 +16700,16 @@ C9["c9 PRESSURE_BOUNDARY<br/>p0=6.345e+05 Pa<br/>T0=510.2 K"]
 N5 -- "ṁ=0.0002677" --> C9
 C10["c10 MASS_SOURCE<br/>ṁ=0.1308 kg/s<br/>T0=841.3 K"]
 C10 -- "ṁ=-0.1308" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 pbound
 class C10 msource
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=3）
@@ -16749,10 +16749,10 @@ C6["c6 PRESSURE_BOUNDARY<br/>p0=4.798e+05 Pa<br/>T0=569.3 K"]
 N4 -- "ṁ=7.339e-06" --> C6
 C7["c7 PRESSURE_BOUNDARY<br/>p0=2.061e+05 Pa<br/>T0=655.8 K"]
 C7 -- "ṁ=-7.339e-06" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 pbound
 class C7 pbound
 ```
@@ -16816,10 +16816,10 @@ C12["c12 PRESSURE_BOUNDARY<br/>p0=1.843e+05 Pa<br/>T0=831.9 K"]
 N5 --- C12
 C13["c13 PRESSURE_BOUNDARY<br/>p0=6.669e+04 Pa<br/>T0=611.1 K"]
 N2 --- C13
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 pbound
 class C12 pbound
 class C13 pbound
@@ -16852,14 +16852,14 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=1.95e+05 Pa<br/>T0=609.1 K"]
 C4 -- "ṁ=-2.968e-06" --> N1
 C5["c5 PRESSURE_BOUNDARY<br/>p0=6.297e+04 Pa<br/>T0=694.9 K"]
 N3 -- "ṁ=0.000202" --> C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 class C5 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -16906,10 +16906,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=2.507e+05 Pa<br/>T0=618.5 K"]
 N1 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=3.969e+04 Pa<br/>T0=697.9 K"]
 N5 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 booster
 class C8 pbound
 class C9 pbound
@@ -16970,17 +16970,17 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.618e+05 Pa<br/>T0=311.4 K"]
 N5 -- "ṁ=0.000418" --> C11
 C12["c12 MASS_SOURCE<br/>ṁ=0.07139 kg/s<br/>T0=384.1 K"]
 C12 -- "ṁ=-0.0002789" --> N10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 softchoked
 class C10 pbound
 class C11 pbound
 class C12 msource
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 12 stroke:#B71C1C,stroke-width:3px
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -17038,10 +17038,10 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.672e+05 Pa<br/>T0=492.8 K"]
 N7 -- "ṁ=0.004569" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=3.124e+05 Pa<br/>T0=564.9 K"]
 C12 -- "ṁ=-1.769e-05" --> N4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C10 pbound
 class C11 pbound
 class C12 pbound
@@ -17110,10 +17110,10 @@ C14["c14 PRESSURE_BOUNDARY<br/>p0=3.927e+05 Pa<br/>T0=749.1 K"]
 N3 --- C14
 C15["c15 PRESSURE_BOUNDARY<br/>p0=1.735e+05 Pa<br/>T0=460 K"]
 N4 --- C15
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C14 pbound
 class C15 pbound
 ```
@@ -17158,14 +17158,14 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=8.72e+05 Pa<br/>T0=412.4 K"]
 C7 -- "ṁ=-0.02066" --> N2
 C8["c8 PRESSURE_BOUNDARY<br/>p0=3.549e+05 Pa<br/>T0=452.9 K"]
 N3 -- "ṁ=0.5368" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C6 booster
 class C7 pbound
 class C8 pbound
-linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -17234,10 +17234,10 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=1.98e+05 Pa<br/>T0=829.6 K"]
 N4 --- C15
 C16["c16 PRESSURE_BOUNDARY<br/>p0=4.372e+05 Pa<br/>T0=651.7 K"]
 N3 --- C16
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C14 pbound
 class C15 pbound
 class C16 pbound
@@ -17311,19 +17311,19 @@ C15["c15 PRESSURE_BOUNDARY<br/>p0=3.053e+05 Pa<br/>T0=863.7 K"]
 N5 -- "ṁ=2.924e-05" --> C15
 C16["c16 PRESSURE_BOUNDARY<br/>p0=3.064e+05 Pa<br/>T0=324.8 K"]
 C16 -- "ṁ=-3.064e-05" --> N8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C1 softchoked
 class C13 softchoked
 class C14 pbound
 class C15 pbound
 class C16 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
-linkStyle 17 stroke:#B71C1C,stroke-width:3px
-linkStyle 26 stroke:#B71C1C,stroke-width:3px
-linkStyle 27 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 26 stroke:#E53935,stroke-width:3px
+linkStyle 27 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -17381,16 +17381,16 @@ C11["c11 PRESSURE_BOUNDARY<br/>p0=1.974e+05 Pa<br/>T0=836 K"]
 N1 -- "ṁ=0.0008845" --> C11
 C12["c12 PRESSURE_BOUNDARY<br/>p0=8.001e+04 Pa<br/>T0=638.8 K"]
 N5 -- "ṁ=2.382e-07" --> C12
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 softchoked
 class C10 pbound
 class C11 pbound
 class C12 pbound
-linkStyle 0 stroke:#B71C1C,stroke-width:3px
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -17422,10 +17422,10 @@ C4["c4 PRESSURE_BOUNDARY<br/>p0=3.684e+05 Pa<br/>T0=311.3 K"]
 N1 --- C4
 C5["c5 PRESSURE_BOUNDARY<br/>p0=5.143e+04 Pa<br/>T0=750.7 K"]
 N0 --- C5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C4 pbound
 class C5 pbound
 ```
@@ -17451,10 +17451,10 @@ C2["c2 PRESSURE_BOUNDARY<br/>p0=2.565e+05 Pa<br/>T0=541 K"]
 C2 -- "ṁ=-1.616e-05" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=2.311e+05 Pa<br/>T0=419.6 K"]
 N1 -- "ṁ=1.616e-05" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 pbound
 class C3 pbound
 ```
@@ -17509,17 +17509,17 @@ C10["c10 PRESSURE_BOUNDARY<br/>p0=2.39e+05 Pa<br/>T0=655 K"]
 N7 --- C10
 C11["c11 PRESSURE_BOUNDARY<br/>p0=3.026e+05 Pa<br/>T0=702.9 K"]
 N5 --- C11
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C8 booster
 class C9 pbound
 class C10 pbound
 class C11 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -17547,10 +17547,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.44e+05 Pa<br/>T0=874.6 K"]
 C3 -- "ṁ=-2.155e-05" --> N2
 C4["c4 PRESSURE_BOUNDARY<br/>p0=9.5e+04 Pa<br/>T0=489.4 K"]
 N3 -- "ṁ=2.155e-05" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 ```
@@ -17618,15 +17618,15 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=1.384e+05 Pa<br/>T0=539.6 K"]
 N11 --- C13
 C14["c14 PRESSURE_BOUNDARY<br/>p0=1.026e+05 Pa<br/>T0=669.8 K"]
 N3 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 softchoked
 class C12 pbound
 class C13 pbound
 class C14 pbound
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -17654,10 +17654,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=6.699e+05 Pa<br/>T0=767.7 K"]
 C3 -- "ṁ=-0.002068" --> N3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=3.29e+05 Pa<br/>T0=533 K"]
 N2 -- "ṁ=0.002068" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 ```
@@ -17725,15 +17725,15 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=7.475e+05 Pa<br/>T0=656.6 K"]
 N10 --- C13
 C14["c14 MASS_SOURCE<br/>ṁ=-0.2344 kg/s<br/>T0=454.7 K"]
 N0 --- C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C11 softchoked
 class C12 pbound
 class C13 pbound
 class C14 msource
-linkStyle 22 stroke:#B71C1C,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -17777,15 +17777,15 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=7.465e+05 Pa<br/>T0=345.3 K"]
 C7 -- "ṁ=-0.002338" --> N4
 C8["c8 PRESSURE_BOUNDARY<br/>p0=6.396e+05 Pa<br/>T0=658.2 K"]
 N3 -- "ṁ=0.002338" --> C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C7 pbound
 class C8 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -17831,10 +17831,10 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=1.963e+05 Pa<br/>T0=638 K"]
 N2 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=1.919e+05 Pa<br/>T0=803.9 K"]
 N6 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 class C9 pbound
@@ -17885,13 +17885,13 @@ C8["c8 PRESSURE_BOUNDARY<br/>p0=3.48e+05 Pa<br/>T0=523.3 K"]
 N5 --- C8
 C9["c9 PRESSURE_BOUNDARY<br/>p0=3.215e+05 Pa<br/>T0=710.4 K"]
 N6 --- C9
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C8 pbound
 class C9 pbound
-linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=0）
@@ -17926,10 +17926,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=3.491e+05 Pa<br/>T0=455.2 K"]
 N2 --- C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=3.286e+05 Pa<br/>T0=803.6 K"]
 N3 --- C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
 ```
@@ -17967,13 +17967,13 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=2.473e+05 Pa<br/>T0=678.7 K"]
 N2 -- "ṁ=2.419e-05" --> C5
 C6["c6 PRESSURE_BOUNDARY<br/>p0=1.415e+05 Pa<br/>T0=451.2 K"]
 C6 -- "ṁ=-2.419e-05" --> N5
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C5 pbound
 class C6 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -18005,10 +18005,10 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=8.434e+04 Pa<br/>T0=397.1 K"]
 N1 -- "ṁ=1.087" --> C5
 C6["c6 MASS_SOURCE<br/>ṁ=-0.2097 kg/s<br/>T0=811.5 K"]
 N2 -- "ṁ=0.2097" --> C6
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 class C5 pbound
@@ -18105,10 +18105,10 @@ C22["c22 PRESSURE_BOUNDARY<br/>p0=9.246e+04 Pa<br/>T0=489.2 K"]
 N8 --- C22
 C23["c23 MASS_SOURCE<br/>ṁ=-0.2811 kg/s<br/>T0=507.1 K"]
 N10 --- C23
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C21 pbound
 class C22 pbound
 class C23 msource
@@ -18155,10 +18155,10 @@ C7["c7 PRESSURE_BOUNDARY<br/>p0=4.408e+05 Pa<br/>T0=599.8 K"]
 N2 --- C7
 C8["c8 PRESSURE_BOUNDARY<br/>p0=2.788e+05 Pa<br/>T0=542 K"]
 N5 --- C8
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C7 pbound
 class C8 pbound
 ```
@@ -18226,17 +18226,17 @@ C13["c13 PRESSURE_BOUNDARY<br/>p0=9.633e+05 Pa<br/>T0=729.3 K"]
 C13 -- "ṁ=-0.2789" --> N5
 C14["c14 PRESSURE_BOUNDARY<br/>p0=6.706e+05 Pa<br/>T0=360.2 K"]
 N9 -- "ṁ=0.0004684" --> C14
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C2 softchoked
 class C12 booster
 class C13 pbound
 class C14 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 25 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=18）
@@ -18269,15 +18269,15 @@ C5["c5 PRESSURE_BOUNDARY<br/>p0=5.595e+05 Pa<br/>T0=555.4 K"]
 N0 -- "ṁ=0.1454" --> C5
 C6["c6 MASS_SOURCE<br/>ṁ=0.05678 kg/s<br/>T0=895.8 K"]
 C6 -- "ṁ=-0.05678" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 softchoked
 class C4 pbound
 class C5 pbound
 class C6 msource
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -18305,10 +18305,10 @@ C3["c3 PRESSURE_BOUNDARY<br/>p0=2.746e+05 Pa<br/>T0=338.1 K"]
 N2 --- C3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1.618e+05 Pa<br/>T0=323.9 K"]
 N1 --- C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C3 pbound
 class C4 pbound
 ```
@@ -18330,10 +18330,10 @@ N0 -- "ṁ=0.02035" --> C1
 C1 -- "ṁ=-0.02035" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.8e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.02035" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18355,10 +18355,10 @@ N0 -- "ṁ=0.02253" --> C1
 C1 -- "ṁ=-0.02253" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.75e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.02253" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18380,10 +18380,10 @@ N0 -- "ṁ=0.02444" --> C1
 C1 -- "ṁ=-0.02444" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.7e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.02444" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18405,10 +18405,10 @@ N0 -- "ṁ=0.02613" --> C1
 C1 -- "ṁ=-0.02613" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.65e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.02613" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18430,10 +18430,10 @@ N0 -- "ṁ=0.02765" --> C1
 C1 -- "ṁ=-0.02765" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.6e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.02765" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18455,10 +18455,10 @@ N0 -- "ṁ=0.02902" --> C1
 C1 -- "ṁ=-0.02902" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.55e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.02902" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18480,10 +18480,10 @@ N0 -- "ṁ=0.03026" --> C1
 C1 -- "ṁ=-0.03026" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.5e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03026" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18505,10 +18505,10 @@ N0 -- "ṁ=0.03139" --> C1
 C1 -- "ṁ=-0.03139" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.45e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03139" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18530,10 +18530,10 @@ N0 -- "ṁ=0.03242" --> C1
 C1 -- "ṁ=-0.03242" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.4e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03242" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18555,10 +18555,10 @@ N0 -- "ṁ=0.03336" --> C1
 C1 -- "ṁ=-0.03336" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.35e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03336" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18580,10 +18580,10 @@ N0 -- "ṁ=0.03422" --> C1
 C1 -- "ṁ=-0.03422" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.3e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03422" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18605,10 +18605,10 @@ N0 -- "ṁ=0.035" --> C1
 C1 -- "ṁ=-0.035" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.25e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.035" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18630,10 +18630,10 @@ N0 -- "ṁ=0.0357" --> C1
 C1 -- "ṁ=-0.0357" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0357" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18655,10 +18655,10 @@ N0 -- "ṁ=0.03634" --> C1
 C1 -- "ṁ=-0.03634" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.15e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03634" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18680,10 +18680,10 @@ N0 -- "ṁ=0.03691" --> C1
 C1 -- "ṁ=-0.03691" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03691" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18705,10 +18705,10 @@ N0 -- "ṁ=0.03743" --> C1
 C1 -- "ṁ=-0.03743" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.05e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03743" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18730,10 +18730,10 @@ N0 -- "ṁ=0.03788" --> C1
 C1 -- "ṁ=-0.03788" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03788" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18755,10 +18755,10 @@ N0 -- "ṁ=0.03828" --> C1
 C1 -- "ṁ=-0.03828" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.95e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03828" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18780,10 +18780,10 @@ N0 -- "ṁ=0.03862" --> C1
 C1 -- "ṁ=-0.03862" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.9e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03862" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18805,10 +18805,10 @@ N0 -- "ṁ=0.03891" --> C1
 C1 -- "ṁ=-0.03891" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.85e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03891" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18830,10 +18830,10 @@ N0 -- "ṁ=0.03915" --> C1
 C1 -- "ṁ=-0.03915" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.8e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03915" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18855,10 +18855,10 @@ N0 -- "ṁ=0.03933" --> C1
 C1 -- "ṁ=-0.03933" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.75e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03933" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18880,10 +18880,10 @@ N0 -- "ṁ=0.03947" --> C1
 C1 -- "ṁ=-0.03947" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.7e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03947" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18905,10 +18905,10 @@ N0 -- "ṁ=0.03956" --> C1
 C1 -- "ṁ=-0.03956" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.65e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03956" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18930,10 +18930,10 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.6e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18955,10 +18955,10 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.55e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -18980,10 +18980,10 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.5e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19005,10 +19005,10 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.45e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19030,10 +19030,10 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.4e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19055,10 +19055,10 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.35e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19080,10 +19080,10 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.3e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19105,13 +19105,13 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.25e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19131,13 +19131,13 @@ N0 -- "ṁ=0.0396" --> C1
 C1 -- "ṁ=-0.0396" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.0396" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19157,10 +19157,10 @@ N0 -- "ṁ=0.02854" --> C1
 C1 -- "ṁ=-0.02854" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.8e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.02854" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19182,10 +19182,10 @@ N0 -- "ṁ=0.03193" --> C1
 C1 -- "ṁ=-0.03193" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.75e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03193" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19207,10 +19207,10 @@ N0 -- "ṁ=0.03491" --> C1
 C1 -- "ṁ=-0.03491" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.7e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03491" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19232,10 +19232,10 @@ N0 -- "ṁ=0.03754" --> C1
 C1 -- "ṁ=-0.03754" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.65e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03754" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -19257,13 +19257,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.6e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19283,13 +19283,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.55e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19309,13 +19309,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.5e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19335,13 +19335,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.45e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19361,13 +19361,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.4e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19387,13 +19387,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.35e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19413,13 +19413,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.3e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19439,13 +19439,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.25e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19465,13 +19465,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19491,13 +19491,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.15e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19517,13 +19517,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.1e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19543,13 +19543,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2.05e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19569,13 +19569,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19595,13 +19595,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.95e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19621,13 +19621,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.9e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19647,13 +19647,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.85e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19673,13 +19673,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.8e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19699,13 +19699,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.75e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19725,13 +19725,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.7e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19751,13 +19751,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.65e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19777,13 +19777,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.6e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19803,13 +19803,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.55e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19829,13 +19829,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.5e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19855,13 +19855,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.45e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19881,13 +19881,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.4e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19907,13 +19907,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.35e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19933,13 +19933,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.3e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19959,13 +19959,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.25e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -19985,13 +19985,13 @@ N0 -- "ṁ=0.03917" --> C1
 C1 -- "ṁ=-0.03917" --> N1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=1.2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.03917" --> C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20015,13 +20015,13 @@ N1 -- "ṁ=0.000396" --> C2
 C2 -- "ṁ=-0.000396" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.000396" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=9）
@@ -20045,10 +20045,10 @@ N1 -- "ṁ=0.0001779" --> C2
 C2 -- "ṁ=-0.0001779" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=2.85e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.0001779" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
 ```
@@ -20078,15 +20078,15 @@ N2 -- "ṁ=0.3904" --> C3
 C3 -- "ṁ=-0.3904" --> N3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N3 -- "ṁ=0.3904" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 softchoked
 class C4 pbound
-linkStyle 5 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=6）
@@ -20114,16 +20114,16 @@ N2 -- "ṁ=0.05156" --> C3
 C3 -- "ṁ=-0.05156" --> N3
 C4["c4 PRESSURE_BOUNDARY<br/>p0=2.5e+04 Pa<br/>T0=600 K"]
 N3 -- "ṁ=0.05156" --> C4
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 softchoked
 class C4 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
-linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=1）
@@ -20147,13 +20147,13 @@ N1 -- "ṁ=0.000495" --> C2
 C2 -- "ṁ=-0.000495" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.000495" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 未收敛（clean_fail，iters=9）
@@ -20177,13 +20177,13 @@ N1 -- "ṁ=0.03197" --> C2
 C2 -- "ṁ=-0.03197" --> N2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.03197" --> C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20203,10 +20203,10 @@ N0 --- C1
 N1 --- C1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K"]
 N1 --- C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -20228,10 +20228,10 @@ N0 --- C1
 N1 --- C1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K"]
 N1 --- C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -20253,10 +20253,10 @@ N0 --- C1
 N1 --- C1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K"]
 N1 --- C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -20282,10 +20282,10 @@ N1 --- C2
 N2 --- C2
 C3["c3 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K"]
 N2 --- C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C3 pbound
 ```
@@ -20311,10 +20311,10 @@ C3["c3 JUNCTION<br/>零压差绝热混合"]
 N0 --- C3
 N1 --- C3
 N2 --- C3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 pbound
 class C2 pbound
@@ -20337,10 +20337,10 @@ N0 --- C1
 N1 --- C1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=900 K"]
 N1 --- C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -20363,10 +20363,10 @@ N0 --- C1
 N1 --- C1
 C2["c2 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K"]
 N1 --- C2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 pbound
 ```
@@ -20388,13 +20388,13 @@ N0 -- "ṁ=0.066" --> C1
 C1 -- "ṁ=-0.066" --> N1
 C10["c10 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.066" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C10 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20414,14 +20414,14 @@ C1 -- "ṁ=-0.066" --> N0
 N1 -- "ṁ=0.066" --> C1
 C10["c10 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K"]
 C10 -- "ṁ=-0.066" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C10 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20441,13 +20441,13 @@ N0 -- "ṁ=0.05813" --> C1
 C1 -- "ṁ=-0.05813" --> N1
 C10["c10 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.05813" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C10 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20467,14 +20467,14 @@ C1 -- "ṁ=-0.05813" --> N0
 N1 -- "ṁ=0.05813" --> C1
 C10["c10 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K"]
 C10 -- "ṁ=-0.05813" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C1 softchoked
 class C10 pbound
-linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20494,10 +20494,10 @@ N0 -- "ṁ=0.4355" --> C1
 C1 -- "ṁ=-0.4355" --> N1
 C10["c10 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N1 -- "ṁ=0.4355" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C10 pbound
 ```
@@ -20519,13 +20519,13 @@ C1 -- "ṁ=-0.825" --> N0
 N1 -- "ṁ=0.825" --> C1
 C10["c10 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K"]
 C10 -- "ṁ=-0.825" --> N1
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C10 pbound
-linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20549,13 +20549,13 @@ N1 -- "ṁ=0.05802" --> C2
 C2 -- "ṁ=-0.05802" --> N2
 C10["c10 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N2 -- "ṁ=0.05802" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C10 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20579,14 +20579,14 @@ C2 -- "ṁ=-0.05813" --> N1
 N2 -- "ṁ=0.05813" --> C2
 C10["c10 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K"]
 C10 -- "ṁ=-0.05813" --> N2
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 softchoked
 class C10 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20614,13 +20614,13 @@ N2 -- "ṁ=0.06594" --> C3
 C3 -- "ṁ=-0.06594" --> N3
 C10["c10 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K"]
 N3 -- "ṁ=0.06594" --> C10
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C10 pbound
-linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
@@ -20648,14 +20648,14 @@ C3 -- "ṁ=-0.06594" --> N2
 N3 -- "ṁ=0.06594" --> C3
 C10["c10 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K"]
 C10 -- "ṁ=-0.06594" --> N3
-classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
-classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
-classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
-classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
 class C0 pbound
 class C2 softchoked
 class C10 pbound
-linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
 ```
 
 收敛且无守卫命中
