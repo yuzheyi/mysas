@@ -41,6 +41,29 @@ class CompType(enum.IntEnum):
     COUPLED = 3  # 耦合元件（预留）
 
 
+#: 元件端口数约定表（单一事实源，2026-10-01）——io 校验（端口数
+#: 够不够）、tools/ui 面板元数据都从这张表读。此前约定只活在
+#: ElemType docstring 文字里（三处记载等着漂移：docstring/io/ui）。
+#: (min_ports, max_ports)：JUNCTION 允许 3~6 口（理想混合，多股
+#: 汇流/分流都合法）；其余固定口数。新元件必须同步登记此表——
+#: _check_schema（tools/ui）与 netinf 校验都会对它对拍。
+PORT_COUNTS: dict[ElemType, tuple[int, int]] = {
+    ElemType.ORIFICE: (2, 2),
+    ElemType.SEAL: (2, 2),
+    ElemType.PIPE: (2, 2),
+    ElemType.PRESWIRL_NOZZLE: (2, 2),
+    ElemType.VOLUME: (1, 1),
+    ElemType.PRESSURE_BOUNDARY: (1, 1),
+    ElemType.MASS_SOURCE: (1, 1),
+    ElemType.BOOSTER: (2, 2),
+    ElemType.HEATER: (2, 2),
+    ElemType.JUNCTION: (3, 6),
+    ElemType.AREA_CHANGE: (2, 2),
+    ElemType.WALL_FILM: (1, 1),
+    ElemType.SURROGATE_FLOW: (2, 2),
+}
+
+
 @dataclass
 class Port:
     """接口几何 + 拓扑（不随时间变）。"""

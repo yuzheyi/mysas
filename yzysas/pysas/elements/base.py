@@ -111,14 +111,14 @@ class ElementModel(ABC):
         多口件同样适用（2026-09-30 用户提议定案）：守恒律数学里
         本没有"两口件"前提——唯一用到上游的地方是 ps_E 上界的
         p0_up，推广为"全部进料口节点总压的最大值"（多股进料的
-        联合上界，任一进料源都不许隐含出超它）；混合温度 T_mix 已
-        由 port_T_out 契约报出（junction 流量加权混合），t0 取
-        本口节点总温（掺混后）——junction 白板 clamp 假值无人接管
-        的尾巴（红队遗留）就此收编。进料口集合由解出的 ṁ 符号
-        即时决定，与 port_T_out 同一模式；无进料口（解未收敛的
-        中间态）返回 None 维持白板。pipe 覆盖（Fanno 记账/声速
-        闭合——精确）；零流量口返回 None。只在解后报表/后处理
-        路径调用，不进残差。
+        联合上界，任一进料源都不许隐含出超它）；射流总温 T0 一律
+        取 port_T_out 契约报出的输运总温（2026-10-01 裁决：多口件
+        即流量加权混合温度，两口件即上游+本元件加热温升）——
+        junction 白板 clamp 假值无人接管的尾巴（红队遗留）就此收编。
+        进料口集合由解出的 ṁ 符号即时决定，与 port_T_out 同一
+        模式；无进料口（解未收敛的中间态）返回 None 维持白板。
+        pipe 覆盖（Fanno 记账/声速闭合——精确）；零流量口返回 None。
+        只在解后报表/后处理路径调用，不进残差。
 
         验证锚点（2026-09-29 B/B2 实测，改本方法后跑孔板
         3e5→{2e5,1e5}、Cd=0.8、A=1e-4 应逐位复现）:
@@ -139,12 +139,21 @@ class ElementModel(ABC):
         if not ins:
             return None                  # 无进料（中间态）：维持白板
         p0_up = max(self._total_p(x, ctx, k) for k in ins)
+        # T0 一律取 port_T_out（2026-10-01 用户裁决）：射流**自身**的
+        # 输运总温（进料侧节点温度 + 本元件加热温升；多口件报流量
+        # 加权混合）。旧口径取口侧下游节点温度，在并联加热支路的混合
+        # 节点上会把腔温（他支流股掺混结果）冒充本支射流温度——密度
+        # 错、声速支 ps* 随之膨胀、隐含射流总压违反热二律（fuzz A0199
+        # 实测 +44%）。port_T_out 与 exit_state 同以 ṁ_j<0 为出料口
+        # 判据，签名与语义严丝合缝；亚临界/壅塞两支同源换口径，不留
+        # 半截。
+        t0_jet = self.port_T_out(x, ctx, j)
         from pysas.fluids.isentropic import matched_plane_state
         return matched_plane_state(
             -mdot,                       # |ṁ|
             self.comp.ports[j].area,     # A_port（出料口几何面积）
             self._total_p(x, ctx, j),    # 下游腔总压（压力匹配锚）
-            max(self._total_t(x, ctx, j), 10.0),   # T0（能量守恒）
+            max(t0_jet, 10.0),           # T0 = 射流自身输运总温（能量守恒）
             p0_up,                       # 进料联合上界（仅 ps_E 用）
             ctx.gas.R, ctx.gas.gamma, ctx.gas.cp())
 

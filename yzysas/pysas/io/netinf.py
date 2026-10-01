@@ -35,6 +35,61 @@ def load_netinf(path: str) -> tuple[Network, SolveContext]:
     return net, ctx
 
 
+def _validate_topology(nodes: list[Node], comps: list[Comp]) -> list[Node]:
+    """读入期拓扑校验（2026-10-01 用户裁决：校验放读入层，不进方程构造）。
+
+    报错（引用/约定错误——没得舍）:
+      节点 id 重复 / 元件 id 重复
+      端口引用未声明的节点 id（最常见 typo）
+      端口数与 PORT_COUNTS 约定不符（方程计数依赖端口数，不齐必炸）
+      同一元件多个口挂同一节点（初步建模即错误：零压差方程退化
+        0=0 雅可比奇异——JN 算例第一课；孔板两口同节点虽只是平凡
+        零流解，建模意图也必然是错的）
+    警告 + 舍去:
+      声明了但无任何端口引用的节点（孤立节点物理无害——连续性
+        0=0 恒成立；但可能是连线 typo，故打印 id 让用户核对）
+    返回：舍去孤立节点后的节点列表。
+    """
+    seen: set[int] = set()
+    for n in nodes:
+        if n.node_id in seen:
+            raise ValueError(f"节点 id 重复: {n.node_id}")
+        seen.add(n.node_id)
+    seen_c: set[int] = set()
+    for c in comps:
+        if c.comp_id in seen_c:
+            raise ValueError(f"元件 id 重复: {c.comp_id}")
+        seen_c.add(c.comp_id)
+
+    from pysas.datamodel.topology import PORT_COUNTS
+    referenced: set[int] = set()
+    for c in comps:
+        lo, hi = PORT_COUNTS.get(c.elem_type, (1, 99))
+        if not (lo <= len(c.ports) <= hi):
+            raise ValueError(
+                f"c{c.comp_id}（{c.elem_type.name}）端口数应为"
+                f" {lo}~{hi}，实给 {len(c.ports)}——方程计数依赖端口数")
+        per_comp: set[int] = set()
+        for j, p in enumerate(c.ports):
+            if p.node_id not in seen:
+                raise ValueError(
+                    f"c{c.comp_id} 口{j} 引用了未声明的节点 "
+                    f"{p.node_id}（检查 nodes 数组与 port.node 拼写）")
+            if p.node_id in per_comp:
+                raise ValueError(
+                    f"c{c.comp_id}（{c.elem_type.name}）的口 {j} 与其他口"
+                    f"挂同一节点 n{p.node_id}——同一元件的多个口应各接"
+                    f"独立节点（否则该元件方程退化/流量无意义）")
+            per_comp.add(p.node_id)
+            referenced.add(p.node_id)
+
+    orphans = sorted(seen - referenced)
+    if orphans:
+        print(f"[netinf] 警告：孤立节点 {orphans} 无任何端口引用，已舍去"
+              f"（若非本意，请检查端口连线）")
+    return [n for n in nodes if n.node_id in referenced]
+
+
 def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
     """netinf 字典（JSON 等价）→ (Network, SolveContext)。
 
@@ -68,6 +123,9 @@ def netinf_from_dict(data: dict) -> tuple[Network, SolveContext]:
             params=c["params"],
             model_path=c.get("model_path", ""),
         ))
+
+    # 拓扑校验（读入层，2026-10-01）：报错类直接抛；孤立节点警告+舍去
+    nodes = _validate_topology(nodes, comps)
 
     net = Network(nodes=nodes, comps=comps)
     net.n_interior = len(nodes)

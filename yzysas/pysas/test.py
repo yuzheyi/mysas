@@ -32,7 +32,7 @@ OUT_DIR = Path(r"e:\mywork\programDesign\mysas\yzysas\pysas\out")
 def main():
     # ---------- ① 读入 ----------
     #load_netinf有个总温ctx.boundary_T0问题后续得进行进一步商榷
-    net, ctx = load_netinf(r"e:\mywork\programDesign\mysas\yzysas\pysas\netinf.json")
+    net, ctx = load_netinf(r"e:\mywork\programDesign\mysas\yzysas\pysas\netinf_5port.json")
     print("① 拓扑读入（节点统一内部，边界 = 单口元件）")
     print(f"   节点 {len(net.nodes)} 个（全部进 x），元件 {len(net.comps)} 个")
     for n in net.nodes:

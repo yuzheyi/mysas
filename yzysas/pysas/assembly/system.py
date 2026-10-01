@@ -296,6 +296,12 @@ class NetworkSystem:
                         st_exit = model.exit_state(x, ctx, j)
                         if st_exit is not None:
                             st = st_exit
+                            # 报表总温同步为射流输运总温（2026-10-01
+                            # 口径裁决配套）：静参数四件套已是射流自身
+                            # 的，旁边配节点混合温度会让 (ps,Ts,Ma) 与
+                            # T0 描述两股不同流体——审计/后处理用报表
+                            # 值重构隐含总压将误判（fuzz A0199 教训）
+                            t0 = model.port_T_out(x, ctx, j)
                     states.append(PortState(
                         mass_flow=mdot, static_pressure=st.p,
                         static_temperature=st.T, total_pressure=p0,
