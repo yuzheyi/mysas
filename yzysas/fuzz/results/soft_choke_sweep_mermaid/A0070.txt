@@ -1,0 +1,64 @@
+flowchart LR
+N0(("n0<br/>15.14 kPa<br/>T=7.489e+04 K"))
+N1(("n1<br/>15.14 kPa<br/>T=3.009e+06 K"))
+N2(("n2<br/>15.14 kPa<br/>T=552 K"))
+N3(("n3<br/>62.84 kPa<br/>T=546.8 K"))
+N4(("n4<br/>42.31 kPa<br/>T=544.2 K"))
+N5(("n5<br/>62.65 kPa<br/>T=546.8 K"))
+N6(("n6<br/>220.5 kPa<br/>T=543.9 K"))
+C0["c0 PIPE<br/>L=0.5896 D=0.0001327<br/>A=1.38e-08/1.38e-08"]
+N0 -- "ṁ=1.456e-09" --> C0
+C0 -- "ṁ=-1.456e-09" --> N1
+C1["c1 AREA_CHANGE<br/>ζ=0.8968<br/>A=1.39e-05/1.57e-08"]
+N0 -- "ṁ=5.371e-07" --> C1
+C1 -- "ṁ=-5.371e-07" --> N2
+C2["c2 AREA_CHANGE<br/>ζ=0.8999<br/>A=6.50e-05/3.36e-07"]
+N0 -- "ṁ=1.153e-05" --> C2
+C2 -- "ṁ=-1.153e-05" --> N3
+C3["c3 AREA_CHANGE<br/>ζ=0.4754<br/>A=3.46e-03/4.31e-06"]
+N3 -- "ṁ=0.0002613" --> C3
+C3 -- "ṁ=-0.0002613" --> N4
+C4["c4 HEATER<br/>q=9034 W<br/>A=1.10e-04/1.10e-04"]
+C4 -- "ṁ=-0.01156" --> N2
+N5 -- "ṁ=0.01156" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.8649<br/>A=2.94e-03/2.94e-03"]
+C5 -- "ṁ=-0.9724" --> N2
+N6 -- "ṁ=0.9724" --> C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.8476<br/>A=3.65e-05/3.65e-05"]
+C6 -- "ṁ=-0.01181" --> N3
+N6 -- "ṁ=0.01181" --> C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.9487<br/>A=9.95e-04/9.95e-04"]
+N3 -- "ṁ=0.01156" --> C7
+C7 -- "ṁ=-0.01156" --> N5
+C8["c8 PIPE<br/>L=1.287 D=0.01664<br/>A=2.18e-04/2.18e-04"]
+C8 -- "ṁ=-0.05676" --> N4
+N6 -- "ṁ=0.05676" --> C8
+C9["c9 PIPE<br/>L=0.295 D=0.00624<br/>A=3.06e-05/3.06e-05"]
+C9 -- "ṁ=-1.207e-05" --> N0
+N6 -- "ṁ=1.207e-05" --> C9
+C10["c10 PIPE<br/>L=2.024 D=0.07534<br/>A=4.46e-03/4.46e-03"]
+N1 -- "ṁ=1.456e-09" --> C10
+C10 -- "ṁ=-1.456e-09" --> N2
+C11["c11 PRESSURE_BOUNDARY<br/>p0=2.205e+05 Pa<br/>T0=543.9 K"]
+C11 -- "ṁ=-1.041" --> N6
+C12["c12 PRESSURE_BOUNDARY<br/>p0=1.514e+04 Pa<br/>T0=753.8 K"]
+N2 -- "ṁ=0.984" --> C12
+C13["c13 PRESSURE_BOUNDARY<br/>p0=4.231e+04 Pa<br/>T0=382.9 K"]
+N4 -- "ṁ=0.05702" --> C13
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C4 softchoked
+class C5 softchoked
+class C6 softchoked
+class C8 softchoked
+class C11 pbound
+class C12 pbound
+class C13 pbound
+linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 10 stroke:#B71C1C,stroke-width:3px
+linkStyle 12 stroke:#B71C1C,stroke-width:3px
+linkStyle 16 stroke:#B71C1C,stroke-width:3px

@@ -1,0 +1,61 @@
+flowchart LR
+N0(("n0<br/>142.7 kPa<br/>T=601.9 K"))
+N1(("n1<br/>420.2 kPa<br/>T=601.9 K"))
+N2(("n2<br/>116.9 kPa<br/>T=601.9 K"))
+N3(("n3<br/>420.2 kPa<br/>T=601.9 K"))
+N4(("n4<br/>142.7 kPa<br/>T=601.9 K"))
+N5(("n5<br/>242 kPa<br/>T=601.9 K"))
+N6(("n6<br/>142.4 kPa<br/>T=601.9 K"))
+N7(("n7<br/>142.5 kPa<br/>T=4.585e+08 K"))
+N8(("n8<br/>142.7 kPa<br/>T=601.9 K"))
+N9(("n9<br/>420.2 kPa<br/>T=601.9 K"))
+N10(("n10<br/>485.5 kPa<br/>T=601.9 K"))
+C0["c0 PIPE<br/>L=4.679 D=0.03788<br/>A=1.13e-03/1.13e-03"]
+N0 --- C0
+N1 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.6976<br/>A=3.03e-04/3.03e-04"]
+N0 -- "ṁ=0.0006971" --> C1
+C1 -- "ṁ=-0.0006971" --> N2
+C2["c2 ORIFICE<br/>β=1 Cd=0.8562<br/>A=7.40e-04/7.40e-04"]
+C2 -- "ṁ=-0.0007801" --> N0
+N3 -- "ṁ=0.0007801" --> C2
+C3["c3 PIPE<br/>L=2.426 D=0.0007111<br/>A=3.97e-07/3.97e-07"]
+N1 --- C3
+N4 --- C3
+C4["c4 AREA_CHANGE<br/>ζ=1.849<br/>A=5.90e-04/5.93e-05"]
+N0 -- "ṁ=8.298e-05" --> C4
+C4 -- "ṁ=-8.298e-05" --> N5
+C5["c5 PIPE<br/>L=0.8004 D=0.04803<br/>A=1.81e-03/1.81e-03"]
+N5 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.7424<br/>A=6.46e-07/6.46e-07"]
+C6 -- "ṁ=-0.0007801" --> N3
+N7 -- "ṁ=0.0007801" --> C6
+C7["c7 PIPE<br/>L=0.6524 D=0.0004172<br/>A=1.37e-07/1.37e-07"]
+N3 --- C7
+N8 --- C7
+C8["c8 PIPE<br/>L=1.555 D=0.002778<br/>A=6.06e-06/6.06e-06"]
+N4 --- C8
+N9 --- C8
+C9["c9 HEATER<br/>q=9165 W<br/>A=4.66e-07/4.66e-07"]
+C9 -- "ṁ=-0.0009853" --> N7
+N10 -- "ṁ=0.0009853" --> C9
+C10["c10 PRESSURE_BOUNDARY<br/>p0=4.855e+05 Pa<br/>T0=491 K"]
+C10 -- "ṁ=-0.0007801" --> N10
+C11["c11 PRESSURE_BOUNDARY<br/>p0=1.169e+05 Pa<br/>T0=572.6 K"]
+N2 -- "ṁ=0.0006971" --> C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=2.42e+05 Pa<br/>T0=742 K"]
+N5 -- "ṁ=8.298e-05" --> C12
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C6 softchoked
+class C9 softchoked
+class C10 pbound
+class C11 pbound
+class C12 pbound
+linkStyle 12 stroke:#B71C1C,stroke-width:3px
+linkStyle 13 stroke:#B71C1C,stroke-width:3px
+linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 19 stroke:#B71C1C,stroke-width:3px

@@ -1,0 +1,24 @@
+flowchart LR
+N0(("n0<br/>208.2 kPa<br/>T=826.8 K"))
+N1(("n1<br/>71.39 kPa<br/>T=826.8 K"))
+N2(("n2<br/>37.36 kPa<br/>T=826.8 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.7597<br/>A=1.46e-06/1.46e-06"]
+N0 -- "ṁ=0.0003238" --> C0
+C0 -- "ṁ=-0.0003238" --> N1
+C1["c1 PIPE<br/>L=0.8303 D=0.001378<br/>A=1.49e-06/1.49e-06"]
+N0 -- "ṁ=0.000112" --> C1
+C1 -- "ṁ=-0.000112" --> N2
+C2["c2 PRESSURE_BOUNDARY<br/>p0=2.082e+05 Pa<br/>T0=826.8 K"]
+C2 -- "ṁ=-0.0004358" --> N0
+C3["c3 PRESSURE_BOUNDARY<br/>p0=7.139e+04 Pa<br/>T0=608.1 K"]
+N1 -- "ṁ=0.0003238" --> C3
+C4["c4 PRESSURE_BOUNDARY<br/>p0=3.736e+04 Pa<br/>T0=850.9 K"]
+N2 -- "ṁ=0.000112" --> C4
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C2 pbound
+class C3 pbound
+class C4 pbound
+linkStyle 1 stroke:#B71C1C,stroke-width:3px

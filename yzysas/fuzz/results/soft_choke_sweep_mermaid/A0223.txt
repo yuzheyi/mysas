@@ -1,0 +1,75 @@
+flowchart LR
+N0(("n0<br/>7383 kPa<br/>T=578.9 K"))
+N1(("n1<br/>285.4 kPa<br/>T=578.9 K"))
+N2(("n2<br/>7383 kPa<br/>T=578.9 K"))
+N3(("n3<br/>285.4 kPa<br/>T=578.9 K"))
+N4(("n4<br/>285.4 kPa<br/>T=578.9 K"))
+N5(("n5<br/>7383 kPa<br/>T=578.9 K"))
+N6(("n6<br/>7523 kPa<br/>T=6.406e+06 K"))
+N7(("n7<br/>7383 kPa<br/>T=578.9 K"))
+N8(("n8<br/>285.4 kPa<br/>T=578.9 K"))
+N9(("n9<br/>986.8 kPa<br/>T=578.9 K"))
+C0["c0 AREA_CHANGE<br/>ζ=0.5862<br/>A=3.95e-05/3.55e-08"]
+N0 -- "ṁ=1.194e-15" --> C0
+C0 -- "ṁ=-1.194e-15" --> N1
+C1["c1 ORIFICE<br/>β=1 Cd=0.7922<br/>A=3.02e-07/3.02e-07"]
+N1 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=4.886 D=0.0009413<br/>A=6.96e-07/6.96e-07"]
+C2 -- "ṁ=-0.0004836" --> N0
+N3 -- "ṁ=0.0004836" --> C2
+C3["c3 AREA_CHANGE<br/>ζ=1.793<br/>A=2.29e-05/2.41e-04"]
+C3 -- "ṁ=-21.17" --> N0
+N4 -- "ṁ=21.17" --> C3
+C4["c4 AREA_CHANGE<br/>ζ=1.984<br/>A=7.47e-08/2.04e-08"]
+N1 --- C4
+N5 --- C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.7942<br/>A=5.91e-03/5.91e-03"]
+C5 -- "ṁ=-21.17" --> N4
+N6 -- "ṁ=21.17" --> C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.5709<br/>A=6.44e-06/6.44e-06"]
+N1 -- "ṁ=3.858e-21" --> C6
+C6 -- "ṁ=-3.858e-21" --> N7
+C7["c7 PIPE<br/>L=8.62 D=0.0008051<br/>A=5.09e-07/5.09e-07"]
+C7 -- "ṁ=-0.0004836" --> N3
+N8 -- "ṁ=0.0004836" --> C7
+C8["c8 HEATER<br/>q=3427 W<br/>A=1.95e-03/1.95e-03"]
+C8 -- "ṁ=-3.491" --> N6
+N9 -- "ṁ=3.491" --> C8
+C9["c9 AREA_CHANGE<br/>ζ=1.229<br/>A=1.16e-04/1.95e-07"]
+N0 -- "ṁ=21.17" --> C9
+C9 -- "ṁ=-21.17" --> N6
+C10["c10 PIPE<br/>L=0.4221 D=0.000212<br/>A=3.53e-08/3.53e-08"]
+C10 -- "ṁ=-5.043e-05" --> N4
+N8 -- "ṁ=5.043e-05" --> C10
+C11["c11 PRESSURE_BOUNDARY<br/>p0=9.868e+05 Pa<br/>T0=656.5 K"]
+N9 -- "ṁ=0.000534" --> C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=2.854e+05 Pa<br/>T0=501.4 K"]
+C12 -- "ṁ=-0.000534" --> N8
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C2 softchoked
+class C3 softchoked
+class C5 softchoked
+class C7 softchoked
+class C8 softchoked
+class C9 softchoked
+class C10 softchoked
+class C11 pbound
+class C12 pbound
+linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 10 stroke:#B71C1C,stroke-width:3px
+linkStyle 11 stroke:#B71C1C,stroke-width:3px
+linkStyle 14 stroke:#B71C1C,stroke-width:3px
+linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 17 stroke:#B71C1C,stroke-width:3px
+linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 19 stroke:#B71C1C,stroke-width:3px
+linkStyle 20 stroke:#B71C1C,stroke-width:3px
+linkStyle 21 stroke:#B71C1C,stroke-width:3px

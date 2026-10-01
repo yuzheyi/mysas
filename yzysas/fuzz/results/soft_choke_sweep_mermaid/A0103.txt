@@ -1,0 +1,23 @@
+flowchart LR
+N0(("n0<br/>152.9 kPa<br/>T=624.9 K"))
+N1(("n1<br/>283.6 kPa<br/>T=624.9 K"))
+N2(("n2<br/>218.3 kPa<br/>T=624.9 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.5424<br/>A=2.69e-08/2.69e-08"]
+N0 --- C0
+N1 --- C0
+C1["c1 AREA_CHANGE<br/>ζ=0.8759<br/>A=3.32e-04/1.53e-04"]
+N1 --- C1
+N2 --- C1
+C2["c2 PRESSURE_BOUNDARY<br/>p0=2.836e+05 Pa<br/>T0=536.2 K"]
+N1 --- C2
+C3["c3 PRESSURE_BOUNDARY<br/>p0=1.529e+05 Pa<br/>T0=761.4 K"]
+N0 --- C3
+C4["c4 MASS_SOURCE<br/>ṁ=0.1628 kg/s<br/>T0=577.2 K"]
+N1 --- C4
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C2 pbound
+class C3 pbound
+class C4 msource

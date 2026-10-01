@@ -1,0 +1,54 @@
+flowchart LR
+N0(("n0<br/>177.1 kPa<br/>T=606.2 K"))
+N1(("n1<br/>177.1 kPa<br/>T=515.9 K"))
+N2(("n2<br/>255.7 kPa<br/>T=622.7 K"))
+N3(("n3<br/>255.7 kPa<br/>T=606.2 K"))
+N4(("n4<br/>38.55 kPa<br/>T=622.7 K"))
+N5(("n5<br/>177.1 kPa<br/>T=687.9 K"))
+N6(("n6<br/>177.1 kPa<br/>T=622.7 K"))
+N7(("n7<br/>255.7 kPa<br/>T=606.2 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.707<br/>A=8.68e-03/8.68e-03"]
+N0 -- "ṁ=2.76e-19" --> C0
+C0 -- "ṁ=-2.76e-19" --> N1
+C1["c1 AREA_CHANGE<br/>ζ=0.7366<br/>A=2.52e-04/4.83e-04"]
+C1 -- "ṁ=-0.05605" --> N1
+N2 -- "ṁ=0.05605" --> C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.9545<br/>A=1.04e-08/1.04e-08"]
+C2 -- "ṁ=-1.918e-18" --> N2
+N3 --- C2
+C3["c3 PIPE<br/>L=1.652 D=0.002008<br/>A=3.17e-06/3.17e-06"]
+N2 -- "ṁ=0.0003134" --> C3
+C3 -- "ṁ=-0.0003134" --> N4
+C4["c4 AREA_CHANGE<br/>ζ=0.9237<br/>A=1.59e-03/3.33e-03"]
+N2 -- "ṁ=0.6563" --> C4
+C4 -- "ṁ=-0.6563" --> N5
+C5["c5 ORIFICE<br/>β=1 Cd=0.8594<br/>A=1.94e-08/1.94e-08"]
+N2 -- "ṁ=6.467e-06" --> C5
+C5 -- "ṁ=-6.467e-06" --> N6
+C6["c6 ORIFICE<br/>β=1 Cd=0.7006<br/>A=2.17e-06/2.17e-06"]
+N3 --- C6
+N7 --- C6
+C7["c7 JUNCTION<br/>零压差绝热混合"]
+N1 -- "ṁ=0.05605" --> C7
+C7 -- "ṁ=-0.7124" --> N6
+N5 -- "ṁ=0.6563" --> C7
+C8["c8 PRESSURE_BOUNDARY<br/>p0=2.557e+05 Pa<br/>T0=625.6 K"]
+C8 -- "ṁ=-0.5264" --> N2
+C9["c9 PRESSURE_BOUNDARY<br/>p0=1.771e+05 Pa<br/>T0=396.9 K"]
+N6 -- "ṁ=0.7124" --> C9
+C10["c10 PRESSURE_BOUNDARY<br/>p0=3.855e+04 Pa<br/>T0=775.7 K"]
+N4 -- "ṁ=0.0003134" --> C10
+C11["c11 MASS_SOURCE<br/>ṁ=0.1863 kg/s<br/>T0=626.6 K"]
+C11 -- "ṁ=-0.1863" --> N2
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C7 softchoked
+class C8 pbound
+class C9 pbound
+class C10 pbound
+class C11 msource
+linkStyle 14 stroke:#B71C1C,stroke-width:3px
+linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 16 stroke:#B71C1C,stroke-width:3px

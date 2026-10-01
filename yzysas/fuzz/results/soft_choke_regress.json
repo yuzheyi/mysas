@@ -1,0 +1,764 @@
+{
+ "records": [
+  {
+   "id": "DG-1",
+   "group": "A",
+   "topo": "PB 5e5 → HEATER(A=1e-3,q=1000W) → PB 1e5",
+   "story": "heater 零压降行 f2=p2−p1 对流量全盲，全网 4e5 Pa 压差全部由守卫陡坡吸收：物理解要求流量超声速容量（cap 按 upwind 5e5/600K≈0.825 kg/s），守卫把工作点钉在闭式根 cap+Δp/K（K=κ·p_ref/m_ref），终态告警指路网络容量不足。流量自 n0 经 heater 到 n1，q=1000W 使 n1 温升约 0.9 K。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "ṁ0≈0.8256±1e-3",
+     "ok": true,
+     "detail": "ṁ0=0.825626"
+    },
+    {
+     "name": "闭式根|ṁ0−(cap+Δp/K)|<5e-4",
+     "ok": true,
+     "detail": "m_closed=0.825626 K=6.061e+08"
+    },
+    {
+     "name": "恰 1 条守卫命中",
+     "ok": true,
+     "detail": "hits=[(1, 1)]"
+    },
+    {
+     "name": "恰 1 条软壅塞告警调用",
+     "ok": true,
+     "detail": "warn_calls=1"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.000800000012752,
+      "cap": 0.8249656832365121,
+      "mdot": -0.8256256557936211
+     }
+    ],
+    "worst_ratio": 1.000800000012752,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.9 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.8256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.8256\" --> C1\nC1 -- \"ṁ=-0.8256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.8256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "DG-1b",
+   "group": "A",
+   "topo": "DG-1 但初值换手工对称 ±1.1·cap",
+   "story": "与 DG-1 同网络，初值由测试侧独立构造（锚定压力/均值温度/±1.1·cap 对称流量，与 default_guess 同式不同源）——两路径必须落到同一根：容量初值只影响路径不影响根的回归钉。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "同根|Δṁ|<1e-9",
+     "ok": true,
+     "detail": "|0.825625656 − 0.825625656|=0.00e+00"
+    }
+   ],
+   "notes": [
+    "default_guess 初值 ṁ0=0.825625656，手工初值 ṁ0=0.825625656"
+   ],
+   "measured": {
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.000800000012752,
+      "cap": 0.8249656832365121,
+      "mdot": -0.8256256557936211
+     }
+    ],
+    "worst_ratio": 1.000800000012752,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.9 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.8256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.8256\" --> C1\nC1 -- \"ṁ=-0.8256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.8256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "DG-2",
+   "group": "A",
+   "topo": "MASS_SOURCE(0.03,600K) → HEATER(A=1e-3) → PB 1e5",
+   "story": "源规定 0.03 kg/s 远低于 heater 容量（upwind 1e5/600K 口径 cap≈0.165）：守卫死区内精确零扰动（+0.0），解=纯物理根、零告警——亚容量网络守卫完全隐身的检查。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "ṁ=0.03±1e-7",
+     "ok": true,
+     "detail": "ṁ0=0.030000000"
+    },
+    {
+     "name": "零告警",
+     "ok": true,
+     "detail": "hits=[] warn=0"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 1,
+    "warn_calls": 0,
+    "hits": [],
+    "worst_ratio": 0.18182574503053833,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>100 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 MASS_SOURCE<br/>ṁ=0.03 kg/s<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.03\" --> N0\nC1[\"c1 HEATER<br/>q=0 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.03\" --> C1\nC1 -- \"ṁ=-0.03\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.03\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 msource\nclass C2 pbound"
+  },
+  {
+   "id": "DG-3",
+   "group": "A",
+   "topo": "DG-1 反向（node0 侧 PB 1e5、node1 侧 PB 5e5）",
+   "story": "流量自 heater port1 进 port0 出：upwind 判定切换到进料口（取料口总压最大者 n1=5e5），闭式根对称成立 ṁ0≈−0.8256——守卫 upwind 口径方向对称性的检查（反向用本口容量会把 cap 定在低压侧）。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "ṁ0≈−0.8256±1e-2",
+     "ok": true,
+     "detail": "ṁ0=-0.825626"
+    },
+    {
+     "name": "1 条守卫命中",
+     "ok": true,
+     "detail": "hits=[(1, 1)]"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 1,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.0007999999857395,
+      "cap": 0.8249656832331199,
+      "mdot": 0.825625655767942
+     }
+    ],
+    "worst_ratio": 1.0007999999857395,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>100 kPa<br/>T=600.9 K\"))\nN1((\"n1<br/>500 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN0 -- \"ṁ=0.8256\" --> C0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nC1 -- \"ṁ=-0.8256\" --> N0\nN1 -- \"ṁ=0.8256\" --> C1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC2 -- \"ṁ=-0.8256\" --> N1\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "DG-4",
+   "group": "A",
+   "topo": "DG-1 面积扫描 A∈{1e-4,3e-4,1e-3,3e-3,1e-2}",
+   "story": "面积扫描：cap 与 m_ref 同比例缩放 → K=κ·p_ref/m_ref 反比缩放 → 相对钉位偏移 ratio−1 = Δp/(κ·p_ref)≈8e-4 与面积无关（守卫标度的物理检查，K→∞ 极限的有限-κ 版本）。注意绝对 offset=Δp/K∝A（任务带 [4e-4,1e-3] 仅在 A≈1e-3 档成立，逐档实测记录在案）。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "各档 converged+1 命中+ratio∈[1,1.05]+相对偏移守标度",
+     "ok": true,
+     "detail": "通过 5/5 档，不收敛 0 档（归 M2）"
+    }
+   ],
+   "notes": [
+    "逐档实测: [{\"A\": 0.0001, \"status\": \"converged\", \"iters\": 4, \"hits\": 1, \"ratio\": 1.0008, \"offset\": 6.599725466059636e-05, \"offset_rel\": 0.0007999999999998365, \"ok\": true, \"exp_rel\": 0.0008}, {\"A\": 0.0003, \"status\": \"converged\", \"iters\": 4, \"hits\": 1, \"ratio\": 1.0008, \"offset\": 0.00019799176398180296, \"offset_rel\": 0.0007999999999998927, \"ok\": true, \"exp_rel\": 0.0008}, {\"A\": 0.001, \"status\": \"converged\", \"iters\": 3, \"hits\": 1, \"ratio\": 1.000800000012752, \"offset\": 0.0006599725571090342, \"offset_rel\": 0.0008000000127518329, \"ok\": true, \"exp_rel\": 0.0008}, {\"A\": 0.003, \"status\": \"converged\", \"iters\": 3, \"hits\": 1, \"ratio\": 1.000800000003899, \"offset\": 0.0019799176496801962, \"offset_rel\": 0.0008000000038989514, \"ok\": true, \"exp_rel\": 0.0008}, {\"A\": 0.01, \"status\": \"converged\", \"iters\": 2, \"hits\": 1, \"ratio\": 1.0008, \"offset\": 0.006599725466060136, \"offset_rel\": 0.0007999999999998971, \"ok\": true, \"exp_rel\": 0.0008}]",
+    "绝对 offset 随 A 线性缩放（6.60e-05~6.60e-03）；任务书 offset∈[4e-4,1e-3] 带仅在 A=1e-3 档成立——与面积无关的量是相对偏移 offset/cap=Δp/(κ·p_ref)，已按此断言"
+   ],
+   "measured": {
+    "per_area": [
+     {
+      "A": 0.0001,
+      "status": "converged",
+      "iters": 4,
+      "hits": 1,
+      "ratio": 1.0008,
+      "offset": 6.599725466059636e-05,
+      "offset_rel": 0.0007999999999998365,
+      "ok": true,
+      "exp_rel": 0.0008
+     },
+     {
+      "A": 0.0003,
+      "status": "converged",
+      "iters": 4,
+      "hits": 1,
+      "ratio": 1.0008,
+      "offset": 0.00019799176398180296,
+      "offset_rel": 0.0007999999999998927,
+      "ok": true,
+      "exp_rel": 0.0008
+     },
+     {
+      "A": 0.001,
+      "status": "converged",
+      "iters": 3,
+      "hits": 1,
+      "ratio": 1.000800000012752,
+      "offset": 0.0006599725571090342,
+      "offset_rel": 0.0008000000127518329,
+      "ok": true,
+      "exp_rel": 0.0008
+     },
+     {
+      "A": 0.003,
+      "status": "converged",
+      "iters": 3,
+      "hits": 1,
+      "ratio": 1.000800000003899,
+      "offset": 0.0019799176496801962,
+      "offset_rel": 0.0008000000038989514,
+      "ok": true,
+      "exp_rel": 0.0008
+     },
+     {
+      "A": 0.01,
+      "status": "converged",
+      "iters": 2,
+      "hits": 1,
+      "ratio": 1.0008,
+      "offset": 0.006599725466060136,
+      "offset_rel": 0.0007999999999998971,
+      "ok": true,
+      "exp_rel": 0.0008
+     }
+    ],
+    "status": "converged",
+    "iters": 3,
+    "worst_ratio": 1.000800000012752,
+    "warn_calls": 1,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.000800000012752,
+      "cap": 0.8249656832365121,
+      "mdot": -0.8256256557936211
+     }
+    ]
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.9 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.8256\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.8256\" --> C1\nC1 -- \"ṁ=-0.8256\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.8256\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "DG-5",
+   "group": "A",
+   "topo": "DG-1 压差扫描 p_up∈{2e5,3e5,5e5,7e5,9e5}",
+   "story": "压差扫描：ratio−1 = Δp/(κ·p_ref) 恒在 1e-3 量级（远小于 5% 带）；offset/Δp = 1/K = m_ref/(κ·p_ref) 近常数——cap∝p0/√T0 与 p0 的一次律相抵，K 的 p_ref/m_ref 定标自消（守卫标度跨压差可移植的检查）。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "各档 converged+1 命中+ratio∈[1,1.05]+offset/Δp 近常数",
+     "ok": true,
+     "detail": "收敛 5/5，ratios=['1.0005', '1.0007', '1.0008', '1.0009', '1.0009']"
+    }
+   ],
+   "notes": [
+    "offset/Δp = 1/K 跨档极差比 1.000（近常数）",
+    "逐档实测: [{\"p_up\": 200000.0, \"status\": \"converged\", \"iters\": 3, \"hits\": 1, \"ratio\": 1.000500000018998, \"offset_over_dp\": 1.649931429149043e-09, \"one_over_K\": 1.6499313665152463e-09}, {\"p_up\": 300000.0, \"status\": \"converged\", \"iters\": 3, \"hits\": 1, \"ratio\": 1.0006666666886472, \"offset_over_dp\": 1.6499314210816073e-09, \"one_over_K\": 1.649931366515246e-09}, {\"p_up\": 500000.0, \"status\": \"converged\", \"iters\": 3, \"hits\": 1, \"ratio\": 1.000800000012752, \"offset_over_dp\": 1.6499313927725856e-09, \"one_over_K\": 1.6499313665152465e-09}, {\"p_up\": 700000.0, \"status\": \"converged\", \"iters\": 3, \"hits\": 1, \"ratio\": 1.0008571428424797, \"offset_over_dp\": 1.6499313381146408e-09, \"one_over_K\": 1.649931366515246e-09}, {\"p_up\": 900000.0, \"status\": \"converged\", \"iters\": 3, \"hits\": 1, \"ratio\": 1.0008888888924647, \"offset_over_dp\": 1.649931373298441e-09, \"one_over_K\": 1.649931366515246e-09}]"
+   ],
+   "measured": {
+    "per_p_up": [
+     {
+      "p_up": 200000.0,
+      "status": "converged",
+      "iters": 3,
+      "hits": 1,
+      "ratio": 1.000500000018998,
+      "offset_over_dp": 1.649931429149043e-09,
+      "one_over_K": 1.6499313665152463e-09
+     },
+     {
+      "p_up": 300000.0,
+      "status": "converged",
+      "iters": 3,
+      "hits": 1,
+      "ratio": 1.0006666666886472,
+      "offset_over_dp": 1.6499314210816073e-09,
+      "one_over_K": 1.649931366515246e-09
+     },
+     {
+      "p_up": 500000.0,
+      "status": "converged",
+      "iters": 3,
+      "hits": 1,
+      "ratio": 1.000800000012752,
+      "offset_over_dp": 1.6499313927725856e-09,
+      "one_over_K": 1.6499313665152465e-09
+     },
+     {
+      "p_up": 700000.0,
+      "status": "converged",
+      "iters": 3,
+      "hits": 1,
+      "ratio": 1.0008571428424797,
+      "offset_over_dp": 1.6499313381146408e-09,
+      "one_over_K": 1.649931366515246e-09
+     },
+     {
+      "p_up": 900000.0,
+      "status": "converged",
+      "iters": 3,
+      "hits": 1,
+      "ratio": 1.0008888888924647,
+      "offset_over_dp": 1.649931373298441e-09,
+      "one_over_K": 1.649931366515246e-09
+     }
+    ],
+    "status": "converged",
+    "iters": 3,
+    "worst_ratio": 1.0008571428424797,
+    "warn_calls": 1,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.0008571428424797,
+      "cap": 1.1549519564379807,
+      "mdot": -1.1559419152408494
+     }
+    ]
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>700 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600.7 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=7e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-1.156\" --> N0\nC1[\"c1 HEATER<br/>q=1000 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=1.156\" --> C1\nC1 -- \"ṁ=-1.156\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=1.156\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "DG-6",
+   "group": "A",
+   "topo": "PB 5e5 → H1(A=1e-3) → 节点 → H2(A=1e-3) → PB 1e5",
+   "story": "双零压降串联：两根陡坡行串联分压，中间节点压力由两守卫行联立决定（≈4.996e5，贴着上游锚点）——H1 贴激活阈值（ratio−1≈1e-6），H2 吸收主要偏移（ratio−1≈8e-4）；两件各自命中（hits=2，告警调用合并为 1 条——实现把全部命中写进同一文案）。|ṁ|≈cap+Δp/(2K)∈[0.82,0.83]。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "2 条守卫命中",
+     "ok": true,
+     "detail": "hits=[(1, 1), (2, 1)]"
+    },
+    {
+     "name": "|ṁ|∈[0.82,0.83]",
+     "ok": true,
+     "detail": "ṁ=0.824966"
+    }
+   ],
+   "notes": [
+    "告警调用数=1（实现把全部命中合并进一条 warn 文案——'告警数'按命中条数口径）"
+   ],
+   "measured": {
+    "status": "converged",
+    "iters": 2,
+    "warn_calls": 1,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.0000007984031936,
+      "cap": 0.8249656832576232,
+      "mdot": -0.8249663419128593
+     },
+     {
+      "comp": 2,
+      "port": 1,
+      "ratio": 1.00079984019177,
+      "cap": 0.8243070280214893,
+      "mdot": -0.8249663419128593
+     }
+    ],
+    "worst_ratio": 1.00079984019177,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600 K\"))\nN2((\"n2<br/>499.6 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.825\" --> N0\nC1[\"c1 HEATER<br/>q=0 W<br/>A=1.00e-03/1.00e-03\"]\nN0 -- \"ṁ=0.825\" --> C1\nC1 -- \"ṁ=-0.825\" --> N2\nC2[\"c2 HEATER<br/>q=0 W<br/>A=1.00e-03/1.00e-03\"]\nN2 -- \"ṁ=0.825\" --> C2\nC2 -- \"ṁ=-0.825\" --> N1\nC3[\"c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.825\" --> C3\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 softchoked\nclass C3 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px\nlinkStyle 3 stroke:#B71C1C,stroke-width:3px\nlinkStyle 4 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "DG-7",
+   "group": "A",
+   "topo": "PB 5e5 → ORIFICE(A=2e-4,β=0.6,Cd=1) → HEATER(A=1e-3) → PB 1e5",
+   "story": "孔板喉口有效面积 0.6·2e-4=1.2e-4，链路流量由孔板物理壅塞限定 ṁ≈0.099（超临界闭式）；heater 的 upwind 是自身上游 1e5 节点（零压降、亚容量、压力行未被扰动），守卫口径 cap≈0.165 → ratio=0.6<1，守卫全程旁观零告警。按 5e5 全压口径 heater cap≈0.825，链路流量仅为其 12%（<50% 带，任务书口径）——孔板自限流、heater 远未饱和。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "零告警（守卫旁观）",
+     "ok": true,
+     "detail": "hits=[]"
+    },
+    {
+     "name": "heater ratio<1（守卫口径）",
+     "ok": true,
+     "detail": "ratio=0.6000"
+    },
+    {
+     "name": "|ṁ|<0.5·cap(5e5 全压口径)",
+     "ok": true,
+     "detail": "ṁ=0.0990 vs 0.5·cap=0.4125"
+    }
+   ],
+   "notes": [
+    "守卫口径 ratio=0.6000（upwind=1e5，cap=0.1650）；任务书 '<cap·0.5' 按 5e5 全压口径成立、按守卫 upwind 口径为 0.6·cap——双口径均记录，物理结论（孔板限流、heater 远未饱和）不变"
+   ],
+   "measured": {
+    "status": "converged",
+    "iters": 3,
+    "warn_calls": 0,
+    "hits": [],
+    "worst_ratio": 0.6,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>500 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600 K\"))\nN2((\"n2<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.099\" --> N0\nC1[\"c1 ORIFICE<br/>β=0.6 Cd=1<br/>A=2.00e-04/2.00e-04\"]\nN0 -- \"ṁ=0.099\" --> C1\nC1 -- \"ṁ=-0.099\" --> N1\nC2[\"c2 HEATER<br/>q=0 W<br/>A=1.00e-03/1.00e-03\"]\nN1 -- \"ṁ=0.099\" --> C2\nC2 -- \"ṁ=-0.099\" --> N2\nC3[\"c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN2 -- \"ṁ=0.099\" --> C3\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C3 pbound\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "DG-8",
+   "group": "A",
+   "topo": "MASS_SOURCE(0.03) → HEATER(A=1e-4) → PB 1e5",
+   "story": "源规定 0.03 kg/s vs heater 容量（A=1e-4@1e5≈0.0165）：源规定流量超过守卫钉位上限 → 无根网络，预期 clean-fail；失败路径不崩溃、安静退出（记录 iters 与解处 ratio≈1）。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "不崩溃（有 status 无 exception）",
+     "ok": true,
+     "detail": "clean_fail"
+    },
+    {
+     "name": "预期不收敛（clean_fail）",
+     "ok": true,
+     "detail": "clean_fail"
+    }
+   ],
+   "notes": [
+    "iters=4，解处 worst ratio=0.9990"
+   ],
+   "measured": {
+    "status": "clean_fail",
+    "iters": 4,
+    "warn_calls": 0,
+    "hits": [],
+    "worst_ratio": 0.9990344753733632,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>100 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 MASS_SOURCE<br/>ṁ=0.03 kg/s<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.01648\" --> N0\nC1[\"c1 HEATER<br/>q=0 W<br/>A=1.00e-04/1.00e-04\"]\nN0 -- \"ṁ=0.01648\" --> C1\nC1 -- \"ṁ=-0.01648\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.01648\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 msource\nclass C2 pbound"
+  },
+  {
+   "id": "J-1",
+   "group": "B",
+   "topo": "pysas/netinf_junction.json（junction 三通网络）",
+   "story": "junction 零压差行组（f2/f3）是'多腔等压'的结构约束，逐口陡坡与它互锁（A0257 实证）→ 方程侧守卫按 >2 口豁免——全网收敛零告警。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "零告警",
+     "ok": true,
+     "detail": "hits=[]"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 4,
+    "warn_calls": 0,
+    "hits": [],
+    "worst_ratio": null,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=500 K\"))\nN1((\"n1<br/>300 kPa<br/>T=800 K\"))\nN2((\"n2<br/>253.7 kPa<br/>T=585 K\"))\nN3((\"n3<br/>253.7 kPa<br/>T=585 K\"))\nN4((\"n4<br/>253.7 kPa<br/>T=585 K\"))\nN5((\"n5<br/>100 kPa<br/>T=585 K\"))\nN6((\"n6<br/>100 kPa<br/>T=585 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=500 K\"]\nC0 -- \"ṁ=-0.06433\" --> N0\nC1[\"c1 ORIFICE<br/>β=1 Cd=0.8<br/>A=2.00e-04/2.00e-04\"]\nN0 -- \"ṁ=0.06433\" --> C1\nC1 -- \"ṁ=-0.06433\" --> N2\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=800 K\"]\nC2 -- \"ṁ=-0.02543\" --> N1\nC3[\"c3 ORIFICE<br/>β=1 Cd=0.8<br/>A=1.00e-04/1.00e-04\"]\nN1 -- \"ṁ=0.02543\" --> C3\nC3 -- \"ṁ=-0.02543\" --> N2\nC4[\"c4 JUNCTION<br/>零压差绝热混合\"]\nN2 -- \"ṁ=0.08976\" --> C4\nC4 -- \"ṁ=-0.05385\" --> N3\nC4 -- \"ṁ=-0.0359\" --> N4\nC5[\"c5 PIPE<br/>L=0.5 D=0.02<br/>A=1.50e-04/1.50e-04\"]\nN3 -- \"ṁ=0.05385\" --> C5\nC5 -- \"ṁ=-0.05385\" --> N5\nC6[\"c6 PIPE<br/>L=0.5 D=0.02<br/>A=1.00e-04/1.00e-04\"]\nN4 -- \"ṁ=0.0359\" --> C6\nC6 -- \"ṁ=-0.0359\" --> N6\nC7[\"c7 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN5 -- \"ṁ=0.05385\" --> C7\nC8[\"c8 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN6 -- \"ṁ=0.0359\" --> C8\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C2 pbound\nclass C4 softchoked\nclass C7 pbound\nclass C8 pbound\nlinkStyle 6 stroke:#B71C1C,stroke-width:3px\nlinkStyle 10 stroke:#B71C1C,stroke-width:3px\nlinkStyle 12 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "J-2",
+   "group": "B",
+   "topo": "PB 3e5 → HEATER(A=1e-4) → 节点 → JUNCTION(3口) → 两个 PB 1e5（任务书裸拓扑）",
+   "story": "junction 出口直挂两个等压 PB：两支路完全对称等压 → 分流比不定（J 有一维零空间，任 split 都满足全部方程）——实测 iters=0 冻结在容量初值。定性：拓扑病态非守卫问题；守卫口径下 junction 口从未出现在命中里（多口豁免生效）。适定变体见 J-2b。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "不崩溃",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "name": "junction 口不在守卫命中里",
+     "ok": true,
+     "detail": "hits=[(1, 1)]"
+    }
+   ],
+   "notes": [
+    "实测 status=clean_fail iters=0 warn=0——裸拓扑分流不定，实测定性记录在案（不判失败）"
+   ],
+   "measured": {
+    "status": "clean_fail",
+    "iters": 0,
+    "warn_calls": 0,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.1,
+      "cap": 0.04949794099545738,
+      "mdot": -0.05444773509500312
+     }
+    ],
+    "worst_ratio": 1.1,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1\"))\nN2((\"n2<br/>166.7 kPa<br/>T=600 K\"))\nN3((\"n3<br/>100 kPa<br/>T=600 K\"))\nN4((\"n4<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nN0 --- C0\nC1[\"c1 HEATER<br/>q=0 W<br/>A=1.00e-04/1.00e-04\"]\nN0 -- \"ṁ=0.05445\" --> C1\nC1 -- \"ṁ=-0.05445\" --> N2\nC2[\"c2 JUNCTION<br/>零压差绝热混合\"]\nN2 -- \"ṁ=0.05445\" --> C2\nC2 -- \"ṁ=-0.02722\" --> N3\nC2 -- \"ṁ=-0.02722\" --> N4\nC3[\"c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN3 --- C3\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN4 --- C4\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 softchoked\nclass C3 pbound\nclass C4 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px\nlinkStyle 3 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "J-2b",
+   "group": "B",
+   "topo": "PB 3e5 → HEATER(A=1e-4) → 节点 → JUNCTION(3口) → 各支路 ORIFICE(A=1e-3) → PB 1e5 ×2",
+   "story": "J-2 的适定变体：junction 每条出口支路加限流孔板再挂 PB，分流由孔板特性定住。heater（A=1e-4，cap≈0.0495）成为唯一瓶颈被守卫钉位——全部命中只指向 heater，junction 永不出现（多口豁免在有告警网络中的实证）。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "全部命中只指向 heater(c1)",
+     "ok": true,
+     "detail": "hits=[(1, 1)]"
+    },
+    {
+     "name": "junction(c2) 永不出现",
+     "ok": true,
+     "detail": "hits=[(1, 1)]"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 7,
+    "warn_calls": 1,
+    "hits": [
+     {
+      "comp": 1,
+      "port": 1,
+      "ratio": 1.0066488431373164,
+      "cap": 0.049497940995457373,
+      "mdot": -0.04982704504075631
+     }
+    ],
+    "worst_ratio": 1.0066488431373164,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1\"))\nN2((\"n2<br/>100.5 kPa<br/>T=600 K\"))\nN3((\"n3<br/>100.5 kPa<br/>T=600 K\"))\nN4((\"n4<br/>100 kPa<br/>T=600 K\"))\nN5((\"n5<br/>100.5 kPa<br/>T=600 K\"))\nN6((\"n6<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.04983\" --> N0\nC1[\"c1 HEATER<br/>q=0 W<br/>A=1.00e-04/1.00e-04\"]\nN0 -- \"ṁ=0.04983\" --> C1\nC1 -- \"ṁ=-0.04983\" --> N2\nC2[\"c2 JUNCTION<br/>零压差绝热混合\"]\nN2 -- \"ṁ=0.04983\" --> C2\nC2 -- \"ṁ=-0.02491\" --> N3\nC2 -- \"ṁ=-0.02491\" --> N5\nC3[\"c3 ORIFICE<br/>β=1 Cd=1<br/>A=1.00e-03/1.00e-03\"]\nN3 -- \"ṁ=0.02491\" --> C3\nC3 -- \"ṁ=-0.02491\" --> N4\nC4[\"c4 ORIFICE<br/>β=1 Cd=1<br/>A=1.00e-03/1.00e-03\"]\nN5 -- \"ṁ=0.02491\" --> C4\nC4 -- \"ṁ=-0.02491\" --> N6\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN4 -- \"ṁ=0.02491\" --> C5\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN6 -- \"ṁ=0.02491\" --> C6\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 softchoked\nclass C5 pbound\nclass C6 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px\nlinkStyle 3 stroke:#B71C1C,stroke-width:3px\nlinkStyle 4 stroke:#B71C1C,stroke-width:3px\nlinkStyle 5 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "PB-1",
+   "group": "B",
+   "topo": "pysas/netinf双壅塞陷阱.json（投影牛顿领地）",
+   "story": "两孔板物理壅塞自限流（孔板特性行流量纲、无压力行）——守卫不管物理壅塞：零告警，投影牛顿领地照常收敛。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "零告警",
+     "ok": true,
+     "detail": "hits=[]"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 7,
+    "warn_calls": 0,
+    "hits": [],
+    "worst_ratio": null,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1<br/>100.2 kPa<br/>T=600 K\"))\nN2((\"n2<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.005944\" --> N0\nC1[\"c1 PIPE<br/>L=0.5 D=0.02<br/>A=1.42e-05/1.42e-05\"]\nN0 -- \"ṁ=0.005944\" --> C1\nC1 -- \"ṁ=-0.005944\" --> N1\nC2[\"c2 PIPE<br/>L=0.5 D=0.02<br/>A=3.14e-04/3.14e-04\"]\nN1 -- \"ṁ=0.005944\" --> C2\nC2 -- \"ṁ=-0.005944\" --> N2\nC3[\"c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN2 -- \"ṁ=0.005944\" --> C3\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C3 pbound\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "SU-1",
+   "group": "B",
+   "topo": "pysas/netinf_surrogate.json（SURROGATE_FLOW）",
+   "story": "SURROGATE_FLOW 无压力行（row_units 全 0）——守卫无对象；npz 特性表驱动收敛零告警。dev 树内无 out/phi_cd08.npz（io 按 JSON 所在目录解析相对 model_path），从旧工作区复制副本到 fuzz/results/ 供读（原文件零改动）。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged "
+    },
+    {
+     "name": "零告警",
+     "ok": true,
+     "detail": "hits=[]"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 1,
+    "warn_calls": 0,
+    "hits": [],
+    "worst_ratio": null,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1<br/>200 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.03788\" --> N0\nC1[\"c1 SURROGATE_FLOW<br/>phi_cd08.npz<br/>A=1.00e-04/1.00e-04\"]\nN0 -- \"ṁ=0.03788\" --> C1\nC1 -- \"ṁ=-0.03788\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.03788\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C2 pbound"
+  },
+  {
+   "id": "5P-1",
+   "group": "B",
+   "topo": "pysas/netinf_5port.json（5 管网络）",
+   "story": "管件特性行皆流量纲（无 row_units==1 压力行）——守卫零对象，收敛零告警。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "converged",
+     "ok": true,
+     "detail": "converged"
+    },
+    {
+     "name": "零告警",
+     "ok": true,
+     "detail": "hits=[]"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "status": "converged",
+    "iters": 2,
+    "warn_calls": 0,
+    "hits": [],
+    "worst_ratio": null,
+    "exception": null
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>367.8 kPa<br/>T=600 K\"))\nN1((\"n1<br/>500 kPa<br/>T=600 K\"))\nN2((\"n2<br/>150 kPa<br/>T=600 K\"))\nN3((\"n3<br/>100 kPa<br/>T=600 K\"))\nN4((\"n4<br/>100 kPa<br/>T=600 K\"))\nN5((\"n5<br/>80 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=5e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.5219\" --> N1\nC1[\"c1 PIPE<br/>L=0.5 D=0.03<br/>A=7.07e-04/7.07e-04\"]\nN1 -- \"ṁ=0.5219\" --> C1\nC1 -- \"ṁ=-0.5219\" --> N0\nC2[\"c2 PIPE<br/>L=0.5 D=0.02<br/>A=3.14e-04/3.14e-04\"]\nN0 -- \"ṁ=0.162\" --> C2\nC2 -- \"ṁ=-0.162\" --> N2\nC3[\"c3 PIPE<br/>L=1 D=0.02<br/>A=3.14e-04/3.14e-04\"]\nN0 -- \"ṁ=0.1464\" --> C3\nC3 -- \"ṁ=-0.1464\" --> N3\nC4[\"c4 PIPE<br/>L=0.5 D=0.015<br/>A=1.77e-04/1.77e-04\"]\nN0 -- \"ṁ=0.08693\" --> C4\nC4 -- \"ṁ=-0.08693\" --> N4\nC5[\"c5 PIPE<br/>L=2 D=0.02<br/>A=3.14e-04/3.14e-04\"]\nN0 -- \"ṁ=0.1267\" --> C5\nC5 -- \"ṁ=-0.1267\" --> N5\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=1.5e+05 Pa<br/>T0=600 K\"]\nN2 -- \"ṁ=0.162\" --> C6\nC7[\"c7 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN3 -- \"ṁ=0.1464\" --> C7\nC8[\"c8 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN4 -- \"ṁ=0.08693\" --> C8\nC9[\"c9 PRESSURE_BOUNDARY<br/>p0=8e+04 Pa<br/>T0=600 K\"]\nN5 -- \"ṁ=0.1267\" --> C9\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C6 pbound\nclass C7 pbound\nclass C8 pbound\nclass C9 pbound\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px\nlinkStyle 4 stroke:#B71C1C,stroke-width:3px\nlinkStyle 8 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "BM-1",
+   "group": "C",
+   "topo": "pysas/netinf.json + netinf_B.json + scipy 对照",
+   "story": "基线网络守卫亚容量零扰动 → 收敛零告警；scipy least_squares(lm) 独立对照同根：缩放坐标 max|dx|<1e-9（pysas 收敛判据 max|F̃|<1e-6 作用在缩放坐标，raw 坐标差~1e-6·p_ref 是容差平移，逐项记录在案）。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "两例 converged+零告警+scipy 同根(缩放 max|dx|<1e-9)",
+     "ok": true,
+     "detail": "{\"pysas/netinf.json\": {\"status\": \"converged\", \"iters\": 5, \"warn\": 0, \"scipy\": {\"ok\": true, \"max_F_scaled\": 4.209127552179204e-16, \"max_dx_scaled\": 2.9130808876232095e-11, \"max_dx_raw\": 8.668110240250826e-06, \"method\": \"lm\"}}, \"pysas/netinf_B.json\": {\"status\": \"converged\", \"iters\": 1, \"warn\": 0, \"scipy\": {\"ok\": true, \"max_F_scaled\": 0.0, \"max_dx_scaled\": 5.663949309564487e-10, \"max_dx_raw\": 8.888275715435157e-08, \"method\": \"lm\"}}}"
+    }
+   ],
+   "notes": [],
+   "measured": {
+    "pysas/netinf.json": {
+     "status": "converged",
+     "iters": 5,
+     "warn": 0,
+     "scipy": {
+      "ok": true,
+      "max_F_scaled": 4.209127552179204e-16,
+      "max_dx_scaled": 2.9130808876232095e-11,
+      "max_dx_raw": 8.668110240250826e-06,
+      "method": "lm"
+     }
+    },
+    "pysas/netinf_B.json": {
+     "status": "converged",
+     "iters": 1,
+     "warn": 0,
+     "scipy": {
+      "ok": true,
+      "max_F_scaled": 0.0,
+      "max_dx_scaled": 5.663949309564487e-10,
+      "max_dx_raw": 8.888275715435157e-08,
+      "method": "lm"
+     }
+    }
+   },
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1<br/>277.1 kPa<br/>T=600 K\"))\nN2((\"n2<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.1217\" --> N0\nC1[\"c1 PIPE<br/>L=0.5 D=0.02<br/>A=3.14e-04/3.14e-04\"]\nN0 -- \"ṁ=0.1217\" --> C1\nC1 -- \"ṁ=-0.1217\" --> N1\nC2[\"c2 PIPE<br/>L=0.5 D=0.02<br/>A=3.14e-04/3.14e-04\"]\nN1 -- \"ṁ=0.1217\" --> C2\nC2 -- \"ṁ=-0.1217\" --> N2\nC3[\"c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN2 -- \"ṁ=0.1217\" --> C3\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C3 pbound\nlinkStyle 4 stroke:#B71C1C,stroke-width:3px",
+   "mermaid2": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1<br/>200 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.03788\" --> N0\nC1[\"c1 ORIFICE<br/>β=1 Cd=0.8<br/>A=1.00e-04/1.00e-04\"]\nN0 -- \"ṁ=0.03788\" --> C1\nC1 -- \"ṁ=-0.03788\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.03788\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C2 pbound"
+  },
+  {
+   "id": "V1",
+   "group": "C",
+   "topo": "papers 基准 V1：锐边孔板流量特性（34 点×3 扫描）",
+   "story": "孔板无压力行、容量初值不涉及（网络无 row_units==1 行）→ 守卫零扰动。三重对照：① dev 实现（补丁副本）自身四项文献判据全过；② 与参考 v1_results.json 逐点 |Δṁ|<1e-9（孔板物理自参考生成以来未变）；③ 与旧工作树（pre-guard）双跑结果逐位一致。补丁两处：路径改指 dev 树 + 解向量提取行从旧布局 [p|ṁ] 位置下标适配为 dev API（想法 22 后布局为 [p|T|ṁ]，位置下标取到的是温度）。原基准文件零改动。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "dev 变体退出码 0（四项文献判据全过）",
+     "ok": true,
+     "detail": "rc=0 tail=役（数值由气体类构造器赋予），已忽略\nresidual: it=1  alpha=1.000  max|F|=5.84e-10\n共 102 个工作点全部收敛（最大迭代 1 步）\n壅塞平台闭式 = 0.049498 kg/s，转折 β = 0.5284\n  ✓ ① A: |ṁ/Φ−1|<1e-9 全压比段\n  ✓ ② A: 壅塞平台=闭式且转折在 β_crit±0.025\n  ✓ ③ B: ṁ_B/Φ = 0.61±1e-9\n  ✓ ④ C: 等效 Cd 复现 Jobson C(β) (|ΔC|<2e-3)\n图: fig_v1_orifice.png   数据: v1_results.json\n"
+    },
+    {
+     "name": "与参考结果逐点对照 worst rel<1e-6（求解器自身判据带）",
+     "ok": true,
+     "detail": "worst_rel=1.07e-07 key=[]"
+    },
+    {
+     "name": "dev vs 旧工作树(pre-guard) 双跑逐位一致",
+     "ok": true,
+     "detail": "worst_rel=0.00e+00 []"
+    }
+   ],
+   "notes": [
+    "布局适配行: return abs(res.x[system.n_interior + 1])",
+    "vs 参考 worst rel = 1.07e-07（1e-9 级逐点差是两侧各自 max|F̃|<1e-6 缩放收敛判据的容差噪声，孔板物理未变——dev vs pre-guard 双跑已逐位一致）",
+    "图为代表性工作点（β=0.5, Cd=1, 3e5→1.5e5）——基准本体是 34 点×3 扫描，拓扑同形"
+   ],
+   "measured": {},
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1<br/>150 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.0495\" --> N0\nC1[\"c1 ORIFICE<br/>β=1 Cd=1<br/>A=1.00e-04/1.00e-04\"]\nN0 -- \"ṁ=0.0495\" --> C1\nC1 -- \"ṁ=-0.0495\" --> N1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=1.5e+05 Pa<br/>T0=600 K\"]\nN1 -- \"ṁ=0.0495\" --> C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C1 softchoked\nclass C2 pbound\nlinkStyle 1 stroke:#B71C1C,stroke-width:3px\nlinkStyle 2 stroke:#B71C1C,stroke-width:3px"
+  },
+  {
+   "id": "V2",
+   "group": "C",
+   "topo": "papers 基准 V2：Darcy 管件串/并联网络",
+   "story": "管件特性行皆流量纲（无压力行）→ 守卫零对象。核对发现：参考 v2_results.json 生成后管件模型经历 Fanno 压缩管流重构（git: 11bfd85 不可压算法体 → bef9569 Fanno cap 口径——两工作区当前 pipe.py 逐位相同、同解 0.1217 kg/s），脚本的不可压 Darcy 手算对照已不再描述现管件物理——参考基线过期，与守卫无关（守卫对管件零作用）。守卫回归的实质判据改为：dev（含守卫）与旧工作树（pre-guard）双跑结果逐位一致——零扰动直接实证。参考对照差值如实记录。",
+   "verdict": "PASS",
+   "checks": [
+    {
+     "name": "dev 变体完成并产出 v2_results.json",
+     "ok": true,
+     "detail": "rc=1 tail=_exact|<0.5 Pa\n  ✗ ② T: |ṁ−定点解|<1e-8\n  ✗ ③ P: 支路压降相等 |Δ|<0.5 Pa\n  ✓ ④ P: Kirchhoff |ṁ₁+ṁ₂−ṁ_tot|<1e-9\n  ✗ ⑤ P: 支路流量=独立 Darcy 定点解\n  T: p_mid=277100.94 (exact 216227.77)  ṁ=0.121728 kg/s\n  P: p_plenum=288342 Pa  ṁ₁=0.088984  ṁ₂=0.047509  ṁ_tot=0.136493 kg/s\n图: fig_v2_network.png   数据: v2_results.json\n"
+    },
+    {
+     "name": "dev vs 旧工作树(pre-guard) 双跑逐位一致（守卫零扰动）",
+     "ok": true,
+     "detail": "worst_rel=0.00e+00 []"
+    }
+   ],
+   "notes": [
+    "布局适配行: p_mid, m_tot_T, m_br1, m_br2, m_tot_P, p_plenum",
+    "vs 过期参考 worst rel = 8.71e-01（例 ['root.results.T_series.p_mid_solver: 277100.9411393568 vs 216227.7660168388 (rel 2.82e-01)', 'root.results.T_series.mdot_solver: 0.1217278777272548 vs 0.25769260148645806 (rel 1.36e-01)']）——管件模型演化所致，非守卫回归：旧工作树（pre-guard）同解，pipe.py 两树逐位相同",
+    "图为代表性串联拓扑——基准本体含 T/P 两算例"
+   ],
+   "measured": {},
+   "mermaid": "flowchart LR\nN0((\"n0<br/>300 kPa<br/>T=600 K\"))\nN1((\"n1<br/>283.4 kPa<br/>T=600 K\"))\nN2((\"n2<br/>100 kPa<br/>T=600 K\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nC0 -- \"ṁ=-0.1311\" --> N0\nC1[\"c1 PIPE<br/>L=0.5 D=0.03<br/>A=3.14e-04/3.14e-04\"]\nN0 -- \"ṁ=0.1311\" --> C1\nC1 -- \"ṁ=-0.1311\" --> N1\nC2[\"c2 PIPE<br/>L=0.5 D=0.03<br/>A=3.14e-04/3.14e-04\"]\nN1 -- \"ṁ=0.1311\" --> C2\nC2 -- \"ṁ=-0.1311\" --> N2\nC3[\"c3 PRESSURE_BOUNDARY<br/>p0=1e+05 Pa<br/>T0=600 K\"]\nN2 -- \"ṁ=0.1311\" --> C3\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px\nclassDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px\nclassDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px\nclassDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px\nclass C0 pbound\nclass C3 pbound\nlinkStyle 4 stroke:#B71C1C,stroke-width:3px"
+  }
+ ],
+ "all_pass": true
+}

@@ -1,0 +1,61 @@
+flowchart LR
+N0(("n0<br/>609.6 kPa<br/>T=1304 K"))
+N1(("n1<br/>668.7 kPa<br/>T=1304 K"))
+N2(("n2<br/>530.9 kPa<br/>T=368.5 K"))
+N3(("n3<br/>610.3 kPa<br/>T=1501 K"))
+N4(("n4<br/>609.5 kPa<br/>T=495.6 K"))
+N5(("n5<br/>610.3 kPa<br/>T=1492 K"))
+N6(("n6<br/>609.6 kPa<br/>T=495.6 K"))
+N7(("n7<br/>610.3 kPa<br/>T=1465 K"))
+N8(("n8<br/>218.8 kPa<br/>T=1379 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.7114<br/>A=4.09e-07/4.09e-07"]
+C0 -- "ṁ=-0.0005738" --> N0
+N1 -- "ṁ=0.0005738" --> C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.9625<br/>A=9.58e-05/9.58e-05"]
+C1 -- "ṁ=-0.001261" --> N1
+N2 -- "ṁ=0.001261" --> C1
+C2["c2 PIPE<br/>L=0.1833 D=0.005314<br/>A=2.22e-05/2.22e-05"]
+N0 -- "ṁ=0.0005738" --> C2
+C2 -- "ṁ=-0.0005738" --> N3
+C3["c3 PIPE<br/>L=2.392 D=0.02226<br/>A=3.89e-04/3.89e-04"]
+N0 --- C3
+N4 --- C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.9593<br/>A=4.64e-07/4.64e-07"]
+N1 -- "ṁ=0.0006874" --> C4
+C4 -- "ṁ=-0.0006874" --> N5
+C5["c5 ORIFICE<br/>β=1 Cd=0.8843<br/>A=3.88e-05/3.88e-05"]
+N5 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6111<br/>A=8.25e-08/8.25e-08"]
+C6 -- "ṁ=-8.574e-07" --> N2
+N7 -- "ṁ=8.574e-07" --> C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.8096<br/>A=2.98e-04/2.98e-04"]
+N3 -- "ṁ=0.0373" --> C7
+C7 -- "ṁ=-0.0373" --> N8
+C8["c8 JUNCTION<br/>零压差绝热混合"]
+C8 -- "ṁ=-0.03673" --> N3
+N7 -- "ṁ=0.03604" --> C8
+N5 -- "ṁ=0.0006874" --> C8
+C9["c9 PRESSURE_BOUNDARY<br/>p0=6.103e+05 Pa<br/>T0=744.5 K"]
+C9 -- "ṁ=-0.03604" --> N7
+C10["c10 PRESSURE_BOUNDARY<br/>p0=5.309e+05 Pa<br/>T0=414.6 K"]
+C10 -- "ṁ=-0.00126" --> N2
+C11["c11 PRESSURE_BOUNDARY<br/>p0=2.188e+05 Pa<br/>T0=327.6 K"]
+N8 -- "ṁ=0.0373" --> C11
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C0 softchoked
+class C4 softchoked
+class C8 softchoked
+class C9 pbound
+class C10 pbound
+class C11 pbound
+linkStyle 0 stroke:#B71C1C,stroke-width:3px
+linkStyle 1 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#B71C1C,stroke-width:3px
+linkStyle 16 stroke:#B71C1C,stroke-width:3px
+linkStyle 17 stroke:#B71C1C,stroke-width:3px
+linkStyle 18 stroke:#B71C1C,stroke-width:3px

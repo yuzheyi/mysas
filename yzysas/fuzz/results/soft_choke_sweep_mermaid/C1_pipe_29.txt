@@ -1,0 +1,17 @@
+flowchart LR
+N0(("n0<br/>300 kPa<br/>T=600 K"))
+N1(("n1<br/>135 kPa<br/>T=600 K"))
+C0["c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K"]
+C0 -- "ṁ=-0.03917" --> N0
+C1["c1 PIPE<br/>L=0.5 D=0.01128<br/>A=1.00e-04/1.00e-04"]
+N0 -- "ṁ=0.03917" --> C1
+C1 -- "ṁ=-0.03917" --> N1
+C2["c2 PRESSURE_BOUNDARY<br/>p0=1.35e+05 Pa<br/>T0=600 K"]
+N1 -- "ṁ=0.03917" --> C2
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C0 pbound
+class C2 pbound
+linkStyle 2 stroke:#B71C1C,stroke-width:3px

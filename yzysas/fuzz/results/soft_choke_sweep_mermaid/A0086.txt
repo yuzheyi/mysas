@@ -1,0 +1,58 @@
+flowchart LR
+N0(("n0<br/>65.54 kPa<br/>T=778.8 K"))
+N1(("n1<br/>451.3 kPa<br/>T=778.8 K"))
+N2(("n2<br/>484.8 kPa<br/>T=778.8 K"))
+N3(("n3<br/>484.9 kPa<br/>T=778.8 K"))
+N4(("n4<br/>65.54 kPa<br/>T=778.8 K"))
+N5(("n5<br/>445.9 kPa<br/>T=778.8 K"))
+N6(("n6<br/>65.54 kPa<br/>T=778.8 K"))
+N7(("n7<br/>65.54 kPa<br/>T=778.8 K"))
+N8(("n8<br/>65.54 kPa<br/>T=778.8 K"))
+N9(("n9<br/>65.54 kPa<br/>T=778.8 K"))
+C0["c0 PIPE<br/>L=0.9392 D=0.01229<br/>A=1.19e-04/1.19e-04"]
+C0 -- "ṁ=-0.006537" --> N0
+N1 -- "ṁ=0.006537" --> C0
+C1["c1 AREA_CHANGE<br/>ζ=1.386<br/>A=1.58e-06/3.10e-08"]
+N0 --- C1
+N2 --- C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.9527<br/>A=5.07e-05/5.07e-05"]
+N0 -- "ṁ=0.02266" --> C2
+C2 -- "ṁ=-0.02266" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.959<br/>A=6.31e-05/6.31e-05"]
+N3 -- "ṁ=0.02266" --> C3
+C3 -- "ṁ=-0.02266" --> N4
+C4["c4 PIPE<br/>L=0.171 D=0.003072<br/>A=7.41e-06/7.41e-06"]
+C4 -- "ṁ=-0.01612" --> N0
+N5 -- "ṁ=0.01612" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.7321<br/>A=7.35e-06/7.35e-06"]
+N2 --- C5
+N6 --- C5
+C6["c6 HEATER<br/>q=7088 W<br/>A=5.21e-04/5.21e-04"]
+N6 --- C6
+N7 --- C6
+C7["c7 AREA_CHANGE<br/>ζ=1.537<br/>A=5.23e-03/3.31e-04"]
+N3 --- C7
+N8 --- C7
+C8["c8 PIPE<br/>L=0.5173 D=0.0004062<br/>A=1.30e-07/1.30e-07"]
+N3 --- C8
+N9 --- C8
+C9["c9 PRESSURE_BOUNDARY<br/>p0=4.513e+05 Pa<br/>T0=879.6 K"]
+C9 -- "ṁ=-0.006537" --> N1
+C10["c10 PRESSURE_BOUNDARY<br/>p0=6.554e+04 Pa<br/>T0=741.8 K"]
+N4 -- "ṁ=0.02266" --> C10
+C11["c11 MASS_SOURCE<br/>ṁ=0.129 kg/s<br/>T0=714.9 K"]
+C11 -- "ṁ=-0.01612" --> N5
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C2 softchoked
+class C4 softchoked
+class C9 pbound
+class C10 pbound
+class C11 msource
+linkStyle 4 stroke:#B71C1C,stroke-width:3px
+linkStyle 5 stroke:#B71C1C,stroke-width:3px
+linkStyle 7 stroke:#B71C1C,stroke-width:3px
+linkStyle 8 stroke:#B71C1C,stroke-width:3px
+linkStyle 9 stroke:#B71C1C,stroke-width:3px

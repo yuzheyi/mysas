@@ -1,0 +1,90 @@
+flowchart LR
+N0(("n0<br/>151.2 kPa<br/>T=591.5 K"))
+N1(("n1<br/>151.2 kPa<br/>T=591.5 K"))
+N2(("n2<br/>151.2 kPa<br/>T=591.5 K"))
+N3(("n3<br/>151.2 kPa<br/>T=591.5 K"))
+N4(("n4<br/>151.2 kPa<br/>T=591.5 K"))
+N5(("n5<br/>151.2 kPa<br/>T=591.5 K"))
+N6(("n6<br/>209.9 kPa<br/>T=591.5 K"))
+N7(("n7<br/>151.2 kPa<br/>T=591.5 K"))
+N8(("n8<br/>92.46 kPa<br/>T=591.5 K"))
+N9(("n9<br/>151.2 kPa<br/>T=591.5 K"))
+N10(("n10<br/>151.2 kPa<br/>T=591.5 K"))
+N11(("n11<br/>151.2 kPa<br/>T=591.5 K"))
+C0["c0 PIPE<br/>L=6.853 D=0.0001603<br/>A=2.02e-08/2.02e-08"]
+N0 --- C0
+N1 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.9304<br/>A=6.12e-03/6.12e-03"]
+N0 --- C1
+N2 --- C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.7357<br/>A=5.01e-03/5.01e-03"]
+N0 --- C2
+N3 --- C2
+C3["c3 PIPE<br/>L=2.504 D=0.01511<br/>A=1.79e-04/1.79e-04"]
+N1 --- C3
+N4 --- C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.6105<br/>A=2.43e-03/2.43e-03"]
+N0 --- C4
+N5 --- C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.5224<br/>A=9.75e-05/9.75e-05"]
+N1 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6354<br/>A=6.38e-05/6.38e-05"]
+N5 --- C6
+N7 --- C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.9601<br/>A=1.06e-08/1.06e-08"]
+N7 --- C7
+N8 --- C7
+C8["c8 AREA_CHANGE<br/>ζ=1.746<br/>A=1.09e-03/1.12e-08"]
+N7 --- C8
+N9 --- C8
+C9["c9 AREA_CHANGE<br/>ζ=1.724<br/>A=1.51e-07/4.50e-05"]
+N3 --- C9
+N10 --- C9
+C10["c10 PIPE<br/>L=2.168 D=0.01909<br/>A=2.86e-04/2.86e-04"]
+N3 --- C10
+N11 --- C10
+C11["c11 ORIFICE<br/>β=1 Cd=0.5836<br/>A=6.57e-04/6.57e-04"]
+N7 --- C11
+N10 --- C11
+C12["c12 ORIFICE<br/>β=1 Cd=0.8029<br/>A=1.64e-06/1.64e-06"]
+N3 --- C12
+N4 --- C12
+C13["c13 AREA_CHANGE<br/>ζ=1.759<br/>A=1.28e-06/5.37e-07"]
+N2 --- C13
+N5 --- C13
+C14["c14 ORIFICE<br/>β=1 Cd=0.6404<br/>A=8.56e-08/8.56e-08"]
+N1 --- C14
+N9 --- C14
+C15["c15 AREA_CHANGE<br/>ζ=1.804<br/>A=2.73e-03/3.57e-05"]
+N5 --- C15
+N11 --- C15
+C16["c16 ORIFICE<br/>β=1 Cd=0.6097<br/>A=1.14e-03/1.14e-03"]
+N7 --- C16
+N11 --- C16
+C17["c17 ORIFICE<br/>β=1 Cd=0.5277<br/>A=1.41e-05/1.41e-05"]
+N1 --- C17
+N11 --- C17
+C18["c18 ORIFICE<br/>β=1 Cd=0.5736<br/>A=1.67e-05/1.67e-05"]
+N2 --- C18
+N11 --- C18
+C19["c19 ORIFICE<br/>β=1 Cd=0.7049<br/>A=1.18e-04/1.18e-04"]
+N0 --- C19
+N7 --- C19
+C20["c20 JUNCTION<br/>零压差绝热混合"]
+N7 --- C20
+N5 --- C20
+N0 --- C20
+C21["c21 PRESSURE_BOUNDARY<br/>p0=2.099e+05 Pa<br/>T0=778.3 K"]
+N6 --- C21
+C22["c22 PRESSURE_BOUNDARY<br/>p0=9.246e+04 Pa<br/>T0=489.2 K"]
+N8 --- C22
+C23["c23 MASS_SOURCE<br/>ṁ=-0.2811 kg/s<br/>T0=507.1 K"]
+N10 --- C23
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C21 pbound
+class C22 pbound
+class C23 msource

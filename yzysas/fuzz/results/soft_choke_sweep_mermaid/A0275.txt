@@ -1,0 +1,63 @@
+flowchart LR
+N0(("n0<br/>166.9 kPa<br/>T=585.7 K"))
+N1(("n1<br/>166.6 kPa<br/>T=2.242e+07 K"))
+N2(("n2<br/>201 kPa<br/>T=585.7 K"))
+N3(("n3<br/>166.9 kPa<br/>T=585.7 K"))
+N4(("n4<br/>119.3 kPa<br/>T=585.7 K"))
+N5(("n5<br/>166.6 kPa<br/>T=585.7 K"))
+N6(("n6<br/>166.6 kPa<br/>T=585.7 K"))
+N7(("n7<br/>180 kPa<br/>T=585.7 K"))
+N8(("n8<br/>166.9 kPa<br/>T=585.7 K"))
+N9(("n9<br/>166.6 kPa<br/>T=585.7 K"))
+C0["c0 PIPE<br/>L=7.314 D=0.001182<br/>A=1.10e-06/1.10e-06"]
+C0 -- "ṁ=-6.509e-10" --> N0
+N1 -- "ṁ=6.509e-10" --> C0
+C1["c1 HEATER<br/>q=7230 W<br/>A=9.04e-07/9.04e-07"]
+C1 -- "ṁ=-0.0003333" --> N1
+N2 -- "ṁ=0.0003333" --> C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.9328<br/>A=3.47e-04/3.47e-04"]
+N1 -- "ṁ=0.0003235" --> C2
+C2 -- "ṁ=-0.0003235" --> N3
+C3["c3 AREA_CHANGE<br/>ζ=0.7416<br/>A=4.07e-05/2.95e-04"]
+N3 -- "ṁ=0.0003642" --> C3
+C3 -- "ṁ=-0.0003642" --> N4
+C4["c4 ORIFICE<br/>β=1 Cd=0.6367<br/>A=1.16e-04/1.16e-04"]
+C4 -- "ṁ=-4.067e-05" --> N3
+N5 -- "ṁ=4.067e-05" --> C4
+C5["c5 PIPE<br/>L=2.413 D=0.003601<br/>A=1.02e-05/1.02e-05"]
+N3 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.699<br/>A=9.94e-06/9.94e-06"]
+C6 -- "ṁ=-4.067e-05" --> N5
+N7 -- "ṁ=4.067e-05" --> C6
+C7["c7 AREA_CHANGE<br/>ζ=1.864<br/>A=2.73e-03/9.79e-05"]
+N7 -- "ṁ=0.0003136" --> C7
+C7 -- "ṁ=-0.0003136" --> N8
+C8["c8 AREA_CHANGE<br/>ζ=1.826<br/>A=1.00e-06/9.30e-03"]
+C8 -- "ṁ=-1.583e-07" --> N0
+N9 -- "ṁ=1.583e-07" --> C8
+C9["c9 PIPE<br/>L=0.3479 D=0.0004487<br/>A=1.58e-07/1.58e-07"]
+N0 -- "ṁ=1.59e-07" --> C9
+C9 -- "ṁ=-1.59e-07" --> N4
+C10["c10 AREA_CHANGE<br/>ζ=0.539<br/>A=4.51e-07/2.61e-06"]
+N8 -- "ṁ=1.583e-07" --> C10
+C10 -- "ṁ=-1.583e-07" --> N9
+C11["c11 AREA_CHANGE<br/>ζ=1.232<br/>A=1.20e-05/2.33e-03"]
+C11 -- "ṁ=-0.0003134" --> N1
+N8 -- "ṁ=0.0003134" --> C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=2.01e+05 Pa<br/>T0=455.6 K"]
+C12 -- "ṁ=-1.006e-05" --> N2
+C13["c13 PRESSURE_BOUNDARY<br/>p0=1.193e+05 Pa<br/>T0=745 K"]
+N4 -- "ṁ=0.0003643" --> C13
+C14["c14 PRESSURE_BOUNDARY<br/>p0=1.8e+05 Pa<br/>T0=556.3 K"]
+C14 -- "ṁ=-0.0003543" --> N7
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C1 softchoked
+class C12 pbound
+class C13 pbound
+class C14 pbound
+linkStyle 2 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#B71C1C,stroke-width:3px

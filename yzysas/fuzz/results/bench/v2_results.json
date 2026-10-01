@@ -1,0 +1,30 @@
+{
+ "benchmark": "V2 Darcy pipe friction + parallel network",
+ "solver": "pysas M1 (damped discrete Newton, scaled)",
+ "results": {
+  "T_series": {
+   "p_mid_solver": 277100.9411393568,
+   "p_mid_exact": 216227.7660168379,
+   "mdot_solver": 600.0000000000001,
+   "mdot_fixed_point": 0.2576926014863638
+  },
+  "P_parallel": {
+   "p_plenum": 288341.6716331709,
+   "mdot_branch1": 600.0000000000064,
+   "mdot_branch2": 0.13649348280506826,
+   "mdot_total": 0.08898412975327023,
+   "darcy_dp_branch1": 437124878813.6792,
+   "darcy_dp_branch2": 82474.58754863152,
+   "dp_network": 11658.328366829082,
+   "mdot_branch1_hand": 0.09385463615938948,
+   "mdot_branch2_hand": 0.049430778685273215
+  }
+ },
+ "checks": {
+  "① T: |p_mid−p_exact|<0.5 Pa": false,
+  "② T: |ṁ−定点解|<1e-8": false,
+  "③ P: 支路压降相等 |Δ|<0.5 Pa": false,
+  "④ P: Kirchhoff |ṁ₁+ṁ₂−ṁ_tot|<1e-9": false,
+  "⑤ P: 支路流量=独立 Darcy 定点解": false
+ }
+}

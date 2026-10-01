@@ -1,0 +1,88 @@
+flowchart LR
+N0(("n0<br/>173.5 kPa<br/>T=634.7 K"))
+N1(("n1<br/>491.1 kPa<br/>T=634.7 K"))
+N2(("n2<br/>131.7 kPa<br/>T=-1.738e+05 K"))
+N3(("n3<br/>131.7 kPa<br/>T=1253 K"))
+N4(("n4<br/>486.9 kPa<br/>T=634.7 K"))
+N5(("n5<br/>145.2 kPa<br/>T=634.7 K"))
+N6(("n6<br/>131.7 kPa<br/>T=-927.9 K"))
+N7(("n7<br/>131.7 kPa<br/>T=-297.7 K"))
+N8(("n8<br/>131.7 kPa<br/>T=634.7 K"))
+N9(("n9<br/>131.7 kPa<br/>T=1252 K"))
+C0["c0 AREA_CHANGE<br/>ζ=0.9811<br/>A=3.87e-08/7.57e-04"]
+C0 -- "ṁ=-5.139e-05" --> N0
+N1 -- "ṁ=5.139e-05" --> C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.6283<br/>A=3.81e-05/3.81e-05"]
+N1 -- "ṁ=0.01888" --> C1
+C1 -- "ṁ=-0.01888" --> N2
+C2["c2 HEATER<br/>q=7196 W<br/>A=3.31e-07/3.31e-07"]
+N2 -- "ṁ=0.0003997" --> C2
+C2 -- "ṁ=-0.0003997" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.9971<br/>A=7.89e-03/7.89e-03"]
+C3 -- "ṁ=-6.146" --> N2
+N4 -- "ṁ=6.146" --> C3
+C4["c4 AREA_CHANGE<br/>ζ=1.811<br/>A=8.70e-05/7.01e-03"]
+N0 -- "ṁ=5.139e-05" --> C4
+C4 -- "ṁ=-5.139e-05" --> N5
+C5["c5 ORIFICE<br/>β=1 Cd=0.6847<br/>A=6.35e-07/6.35e-07"]
+N5 -- "ṁ=5.139e-05" --> C5
+C5 -- "ṁ=-5.139e-05" --> N6
+C6["c6 AREA_CHANGE<br/>ζ=0.7506<br/>A=3.37e-06/5.01e-04"]
+C6 -- "ṁ=-0.03416" --> N6
+N7 -- "ṁ=0.03416" --> C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.8105<br/>A=1.07e-08/1.07e-08"]
+N4 -- "ṁ=3.032e-05" --> C7
+C7 -- "ṁ=-3.032e-05" --> N8
+C8["c8 AREA_CHANGE<br/>ζ=1.482<br/>A=1.99e-06/4.80e-08"]
+N6 -- "ṁ=0.0002625" --> C8
+C8 -- "ṁ=-0.0002625" --> N9
+C9["c9 PIPE<br/>L=3.226 D=0.009946<br/>A=7.77e-05/7.77e-05"]
+C9 -- "ṁ=-0.03461" --> N7
+N9 -- "ṁ=0.03461" --> C9
+C10["c10 AREA_CHANGE<br/>ζ=0.8832<br/>A=5.04e-07/2.49e-03"]
+C10 -- "ṁ=-3.032e-05" --> N7
+N8 -- "ṁ=3.032e-05" --> C10
+C11["c11 ORIFICE<br/>β=1 Cd=0.6781<br/>A=2.70e-04/2.70e-04"]
+C11 -- "ṁ=-0.01893" --> N1
+N4 -- "ṁ=0.01893" --> C11
+C12["c12 PIPE<br/>L=2.037 D=0.00742<br/>A=4.32e-05/4.32e-05"]
+C12 -- "ṁ=-0.0004814" --> N2
+N7 -- "ṁ=0.0004814" --> C12
+C13["c13 ORIFICE<br/>β=1 Cd=0.8071<br/>A=7.55e-05/7.55e-05"]
+N3 -- "ṁ=0.03434" --> C13
+C13 -- "ṁ=-0.03434" --> N9
+C14["c14 ORIFICE<br/>β=1 Cd=0.5491<br/>A=1.60e-05/1.60e-05"]
+C14 -- "ṁ=-0.03394" --> N3
+N6 -- "ṁ=0.03394" --> C14
+C15["c15 PRESSURE_BOUNDARY<br/>p0=4.869e+05 Pa<br/>T0=634.8 K"]
+C15 -- "ṁ=-6.165" --> N4
+C16["c16 PRESSURE_BOUNDARY<br/>p0=1.317e+05 Pa<br/>T0=649.8 K"]
+N2 -- "ṁ=6.165" --> C16
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C0 softchoked
+class C3 softchoked
+class C6 softchoked
+class C7 softchoked
+class C9 softchoked
+class C12 softchoked
+class C13 softchoked
+class C14 softchoked
+class C15 pbound
+class C16 pbound
+linkStyle 0 stroke:#B71C1C,stroke-width:3px
+linkStyle 3 stroke:#B71C1C,stroke-width:3px
+linkStyle 6 stroke:#B71C1C,stroke-width:3px
+linkStyle 12 stroke:#B71C1C,stroke-width:3px
+linkStyle 14 stroke:#B71C1C,stroke-width:3px
+linkStyle 15 stroke:#B71C1C,stroke-width:3px
+linkStyle 17 stroke:#B71C1C,stroke-width:3px
+linkStyle 18 stroke:#B71C1C,stroke-width:3px
+linkStyle 19 stroke:#B71C1C,stroke-width:3px
+linkStyle 24 stroke:#B71C1C,stroke-width:3px
+linkStyle 26 stroke:#B71C1C,stroke-width:3px
+linkStyle 27 stroke:#B71C1C,stroke-width:3px
+linkStyle 28 stroke:#B71C1C,stroke-width:3px
+linkStyle 29 stroke:#B71C1C,stroke-width:3px

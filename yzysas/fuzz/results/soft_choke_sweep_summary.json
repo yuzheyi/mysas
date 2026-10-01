@@ -1,0 +1,98 @@
+{
+ "n_cases": 395,
+ "per_group": {
+  "A": {
+   "n": 300,
+   "converged": 44,
+   "warn": 4
+  },
+  "C": {
+   "n": 95,
+   "converged": 84,
+   "warn": 0
+  }
+ },
+ "status_counts": {
+  "clean_fail": 261,
+  "converged": 128,
+  "assemble_error": 6
+ },
+ "converged": 128,
+ "converge_rate": 0.3241,
+ "warn_case_ids": [
+  "A0004",
+  "A0093",
+  "A0171",
+  "A0203"
+ ],
+ "n_warn_cases": 4,
+ "ratio_quantiles": {
+  "P50": 0.03744160217712915,
+  "P90": 1.0183947422837758,
+  "MAX": 24.07397973664212,
+  "MAX_ALL_INCL_UNCONVERGED": 9769.092650978444
+ },
+ "scipy_suspects": [
+  {
+   "case_id": "A0016",
+   "max_dx_scaled": 7.238167023648767e-05,
+   "max_dx_raw": 0.04342900214192014
+  },
+  {
+   "case_id": "A0034",
+   "max_dx_scaled": 0.26045009844578804,
+   "max_dx_raw": 2165.431477491278
+  },
+  {
+   "case_id": "A0063",
+   "max_dx_scaled": 4.452104803420731e-05,
+   "max_dx_raw": 0.026712628820519058
+  },
+  {
+   "case_id": "A0119",
+   "max_dx_scaled": 0.08960501480945027,
+   "max_dx_raw": 53.76300888567016
+  },
+  {
+   "case_id": "A0181",
+   "max_dx_scaled": 102.02599795805915,
+   "max_dx_raw": 61215.59877483549
+  },
+  {
+   "case_id": "A0260",
+   "max_dx_scaled": 7.903700290901039e-05,
+   "max_dx_raw": 0.047422201745405346
+  }
+ ],
+ "scipy_not_ok_ids": [
+  "A0004",
+  "A0005",
+  "A0052",
+  "A0061",
+  "A0062",
+  "A0066",
+  "A0093",
+  "A0101",
+  "A0127",
+  "A0143",
+  "A0150",
+  "A0165",
+  "A0171",
+  "A0187",
+  "A0199",
+  "A0203",
+  "A0226",
+  "A0231",
+  "A0233",
+  "A0245",
+  "A0253",
+  "A0263",
+  "A0273",
+  "A0284",
+  "C4_04_or_pipe_rev",
+  "C4_05_pipe_or_pipe_fwd",
+  "C4_05_pipe_or_pipe_rev"
+ ],
+ "scipy_enabled": true,
+ "elapsed_s": 214.7
+}

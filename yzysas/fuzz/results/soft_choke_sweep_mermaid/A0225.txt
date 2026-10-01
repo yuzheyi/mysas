@@ -1,0 +1,81 @@
+flowchart LR
+N0(("n0<br/>161.3 kPa<br/>T=610.4 K"))
+N1(("n1<br/>161.3 kPa<br/>T=610.4 K"))
+N2(("n2<br/>202.2 kPa<br/>T=610.4 K"))
+N3(("n3<br/>161.3 kPa<br/>T=610.4 K"))
+N4(("n4<br/>161.3 kPa<br/>T=610.4 K"))
+N5(("n5<br/>169 kPa<br/>T=610.4 K"))
+N6(("n6<br/>161.3 kPa<br/>T=610.4 K"))
+N7(("n7<br/>161.3 kPa<br/>T=610.4 K"))
+N8(("n8<br/>161.3 kPa<br/>T=610.4 K"))
+N9(("n9<br/>112.8 kPa<br/>T=610.4 K"))
+C0["c0 AREA_CHANGE<br/>ζ=1.865<br/>A=1.10e-05/1.37e-08"]
+N0 --- C0
+N1 --- C0
+C1["c1 AREA_CHANGE<br/>ζ=0.9467<br/>A=1.90e-03/6.54e-04"]
+N0 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=0.2714 D=0.03679<br/>A=1.06e-03/1.06e-03"]
+N1 --- C2
+N3 --- C2
+C3["c3 AREA_CHANGE<br/>ζ=1.83<br/>A=9.66e-05/5.84e-05"]
+N3 --- C3
+N4 --- C3
+C4["c4 PIPE<br/>L=3.872 D=0.0006928<br/>A=3.77e-07/3.77e-07"]
+N3 --- C4
+N5 --- C4
+C5["c5 PIPE<br/>L=1.146 D=0.000782<br/>A=4.80e-07/4.80e-07"]
+N5 --- C5
+N6 --- C5
+C6["c6 PIPE<br/>L=0.1171 D=0.007937<br/>A=4.95e-05/4.95e-05"]
+N3 --- C6
+N7 --- C6
+C7["c7 AREA_CHANGE<br/>ζ=1.267<br/>A=6.83e-06/7.87e-06"]
+N6 --- C7
+N8 --- C7
+C8["c8 AREA_CHANGE<br/>ζ=1.717<br/>A=8.93e-04/8.22e-07"]
+N0 --- C8
+N9 --- C8
+C9["c9 PIPE<br/>L=0.1438 D=0.001064<br/>A=8.89e-07/8.89e-07"]
+N3 --- C9
+N8 --- C9
+C10["c10 ORIFICE<br/>β=1 Cd=0.9657<br/>A=7.05e-03/7.05e-03"]
+N4 --- C10
+N7 --- C10
+C11["c11 ORIFICE<br/>β=1 Cd=0.6543<br/>A=2.75e-07/2.75e-07"]
+N7 --- C11
+N9 --- C11
+C12["c12 PIPE<br/>L=6.017 D=0.003951<br/>A=1.23e-05/1.23e-05"]
+N0 --- C12
+N7 --- C12
+C13["c13 ORIFICE<br/>β=1 Cd=0.9778<br/>A=9.73e-03/9.73e-03"]
+N0 --- C13
+N4 --- C13
+C14["c14 ORIFICE<br/>β=1 Cd=0.6117<br/>A=4.96e-05/4.96e-05"]
+N3 --- C14
+N6 --- C14
+C15["c15 PIPE<br/>L=0.2372 D=0.0007237<br/>A=4.11e-07/4.11e-07"]
+N7 --- C15
+N8 --- C15
+C16["c16 ORIFICE<br/>β=1 Cd=0.5334<br/>A=1.26e-04/1.26e-04"]
+N2 --- C16
+N7 --- C16
+C17["c17 ORIFICE<br/>β=1 Cd=0.5287<br/>A=1.78e-05/1.78e-05"]
+N4 --- C17
+N5 --- C17
+C18["c18 PRESSURE_BOUNDARY<br/>p0=2.022e+05 Pa<br/>T0=703 K"]
+N2 --- C18
+C19["c19 PRESSURE_BOUNDARY<br/>p0=1.69e+05 Pa<br/>T0=718.4 K"]
+N5 --- C19
+C20["c20 PRESSURE_BOUNDARY<br/>p0=1.128e+05 Pa<br/>T0=345.2 K"]
+N9 --- C20
+C21["c21 MASS_SOURCE<br/>ṁ=0.2041 kg/s<br/>T0=674.9 K"]
+N5 --- C21
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C18 pbound
+class C19 pbound
+class C20 pbound
+class C21 msource

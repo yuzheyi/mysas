@@ -1,0 +1,65 @@
+flowchart LR
+N0(("n0<br/>433.7 kPa<br/>T=340.5 K"))
+N1(("n1<br/>442.3 kPa<br/>T=340.5 K"))
+N2(("n2<br/>442.3 kPa<br/>T=340.5 K"))
+N3(("n3<br/>442.3 kPa<br/>T=340.5 K"))
+N4(("n4<br/>442.3 kPa<br/>T=340.5 K"))
+N5(("n5<br/>442.3 kPa<br/>T=340.5 K"))
+N6(("n6<br/>442.3 kPa<br/>T=340.5 K"))
+N7(("n7<br/>442.3 kPa<br/>T=340.5 K"))
+N8(("n8<br/>450.9 kPa<br/>T=340.5 K"))
+C0["c0 PIPE<br/>L=1.32 D=0.03401<br/>A=9.08e-04/9.08e-04"]
+N0 --- C0
+N1 --- C0
+C1["c1 AREA_CHANGE<br/>ζ=1.985<br/>A=1.09e-06/6.65e-06"]
+N1 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=0.168 D=0.003902<br/>A=1.20e-05/1.20e-05"]
+N0 --- C2
+N3 --- C2
+C3["c3 AREA_CHANGE<br/>ζ=1.82<br/>A=7.39e-04/2.64e-06"]
+N0 --- C3
+N4 --- C3
+C4["c4 AREA_CHANGE<br/>ζ=0.7776<br/>A=2.05e-05/2.19e-03"]
+N1 --- C4
+N5 --- C4
+C5["c5 HEATER<br/>q=3679 W<br/>A=2.53e-05/2.53e-05"]
+N1 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6856<br/>A=6.37e-05/6.37e-05"]
+N3 --- C6
+N7 --- C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.5434<br/>A=5.41e-06/5.41e-06"]
+N5 --- C7
+N8 --- C7
+C8["c8 ORIFICE<br/>β=1 Cd=0.6981<br/>A=1.48e-07/1.48e-07"]
+N4 --- C8
+N5 --- C8
+C9["c9 AREA_CHANGE<br/>ζ=0.4339<br/>A=5.59e-04/3.16e-05"]
+N5 --- C9
+N7 --- C9
+C10["c10 ORIFICE<br/>β=1 Cd=0.9445<br/>A=1.86e-07/1.86e-07"]
+N6 --- C10
+N8 --- C10
+C11["c11 AREA_CHANGE<br/>ζ=1.282<br/>A=1.59e-06/6.01e-04"]
+N4 --- C11
+N7 --- C11
+C12["c12 PIPE<br/>L=2.574 D=0.05088<br/>A=2.03e-03/2.03e-03"]
+N1 --- C12
+N7 --- C12
+C13["c13 AREA_CHANGE<br/>ζ=0.7994<br/>A=2.41e-06/1.03e-06"]
+N1 --- C13
+N4 --- C13
+C14["c14 PRESSURE_BOUNDARY<br/>p0=4.509e+05 Pa<br/>T0=399.2 K"]
+N8 --- C14
+C15["c15 PRESSURE_BOUNDARY<br/>p0=4.337e+05 Pa<br/>T0=318.7 K"]
+N0 --- C15
+C16["c16 MASS_SOURCE<br/>ṁ=0.2111 kg/s<br/>T0=303.7 K"]
+N3 --- C16
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+classDef msource fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+classDef booster fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+classDef softchoked fill:#FFCDD2,stroke:#B71C1C,stroke-width:2.5px
+class C14 pbound
+class C15 pbound
+class C16 msource
