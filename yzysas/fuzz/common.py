@@ -38,7 +38,7 @@ np.seterr(all="ignore")
 from pysas.assembly import NetworkSystem
 from pysas.datamodel import ElemType
 from pysas.io import build_models, netinf_from_dict
-from pysas.solver import default_guess, solve
+from pysas.solver import initial_guess, solve
 
 GAMMA = 1.4          # 空气（IdealGas 缺省）；审计公式与 ctx.gas 同源读取
 SEED = 20260930      # 固定种子：全部随机层可复现
@@ -67,7 +67,7 @@ def run_solve(case: dict) -> dict:
             net, ctx, sys_ = build_system(case)
             out.update(net=net, ctx=ctx, sys_=sys_)
             out["stage"] = "solve"
-            x0 = default_guess(sys_, ctx)
+            x0 = initial_guess(sys_, ctx)   # 等价旧 default_guess（策略 default）
             res = solve(sys_, x0, ctx)
             out["stage"] = "postprocess"
             out["status"] = "converged" if res.report.converged else "clean_fail"

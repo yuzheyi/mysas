@@ -221,8 +221,8 @@ def run_task2() -> list[dict]:
 # ============================================================ 任务三
 def init_variants(sysm, ctx) -> dict[str, np.ndarray]:
     """四组初值：a default_guess / b 零流量 / c ×0.5 / c ×2（流量段）。"""
-    from pysas.solver import default_guess
-    base = default_guess(sysm, ctx)
+    from pysas.solver import initial_guess
+    base = initial_guess(sysm, ctx)   # 等价旧 default_guess（策略 default）
     lo = sysm.n_interior + sysm.n_T
     out = {"a_default": base.copy(), "b_zeroflow": base.copy(),
            "c_half": base.copy(), "c_double": base.copy()}

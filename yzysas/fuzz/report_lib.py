@@ -40,7 +40,7 @@ np.seterr(all="ignore")
 
 from pysas.assembly import NetworkSystem             # noqa: E402
 from pysas.io import build_models, netinf_from_dict  # noqa: E402
-from pysas.solver import default_guess, solve        # noqa: E402
+from pysas.solver import initial_guess, solve        # noqa: E402
 from pysas.solver.scaling import ScaledProblem, make_scaling  # noqa: E402
 
 SOFT_CHOKE_KAPPA = 1.0e3   # 回归基准值（与 system.SOFT_CHOKE_KAPPA 同款）
@@ -137,7 +137,7 @@ def solve_case(case: dict, x0: np.ndarray | None = None) -> dict:
             out.update(net=net, ctx=ctx, sysm=sysm)
             out["stage"] = "solve"
             if x0 is None:
-                x0 = default_guess(sysm, ctx)
+                x0 = initial_guess(sysm, ctx)   # 等价旧 default_guess（策略 default）
             with warnings.catch_warnings(record=True) as wlist:
                 warnings.simplefilter("always")
                 res = solve(sysm, x0, ctx)

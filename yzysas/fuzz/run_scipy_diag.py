@@ -61,7 +61,7 @@ def main() -> int:
         dead = [dead[i] for i in idx]
     print(f"重启全灭 {len(dead)} 例 → scipy 独立求解分诊", flush=True)
 
-    from pysas.solver import default_guess
+    from pysas.solver import initial_guess
     out_rows = []
     n_solvable = n_nosol = 0
     for d in dead:
@@ -71,7 +71,7 @@ def main() -> int:
         try:
             with contextlib.redirect_stdout(buf):
                 net, ctx, sys_ = common.build_system(case)
-                base = default_guess(sys_, ctx)
+                base = initial_guess(sys_, ctx)   # 等价旧 default_guess（策略 default）
         except Exception as e:                           # noqa: BLE001
             out_rows.append({"case_id": d["case_id"],
                              "class": "assemble_error", "err": str(e)})

@@ -32,8 +32,8 @@ RESULTS_DIR = HERE / "results"
 
 def restart_guesses(sys_, ctx, m_ref, rng):
     """yield (tag, x0)：default_guess 打底的四种重启初值。"""
-    from pysas.solver import default_guess
-    base = default_guess(sys_, ctx).copy()
+    from pysas.solver import initial_guess
+    base = initial_guess(sys_, ctx).copy()   # 等价旧 default_guess（策略 default）
     n_p = sys_.n_interior
     anchored = {}
     for model in sys_.models.values():
