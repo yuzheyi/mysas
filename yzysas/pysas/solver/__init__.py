@@ -28,7 +28,7 @@ from pysas.solver.newton import damped_newton
 from pysas.solver.scaling import Scaling, ScaledProblem, make_scaling
 
 __all__ = [
-    "solve", "SolveResult", "default_guess",
+    "solve", "SolveResult", "initial_guess",
     "Scaling", "ScaledProblem", "make_scaling",
     "damped_newton", "discrete_newton", "fd_jacobian",
 ]
@@ -49,15 +49,36 @@ class SolveResult:
         return self.report.converged
 
 
-def default_guess(system, ctx) -> np.ndarray:
-    """缺省初值：锚定节点 p0/T0 = 自报锚定值，其余取均值（压力无锚 →
-    1e5 Pa，温度无锚 → T0_default），各口 ṁ = 0。
+def initial_guess(system, ctx, strategy: str = "default",
+                  warm=None) -> np.ndarray:
+    """统一初值入口（三层结构，2026-10-02 重构，default_guess 已删）：
+    初值生产解耦成可插拔策略，服务双探针重启器与想法 7 NN 热启动）：
 
-    锚定值由元件自报（anchor_P_values/anchor_T_values，见 base.py）——
-    新元件实现接口即可，此处零改动。为什么边界节点要钉真值：
-    若也取均值，孔板起点恰在 β=1、管在 Δp=0 的导数奇异点，牛顿方向
-    失真（C 算例迭代 0 步即死的实证）。
+      层1 基础场   锚定节点钉自报值、其余取均值（压力无锚 → 1e5 Pa，
+                  温度无锚 → 源温均值/T0_default），各口 ṁ = 0
+      层2 元件自报 守卫对象端口 ±1.1·声速容量（软壅塞配套，见下）
+      层3 策略后处理
+        "default"   层1+层2（= 旧 default_guess，全量回归逐位不变）
+        "zero_flow" 仅层1——压平网络（全网同压）的精确起步点：
+                    零流量+均压+均温就是解（双探针 flatline 第一步）
+        "warm"      返回 warm 向量副本（探针跳回原网络/暖启动接力）
+        "nn"        神经网络代理出初值（想法 7 ⭐ 待验证，留槽）
+
+    锚定值由元件自报（anchor_P_values/T_supply，见 base.py）——新元件
+    实现接口即可，此处零改动。为什么边界节点要钉真值：若也取均值，
+    孔板起点恰在 β=1、管在 Δp=0 的导数奇异点，牛顿方向失真（C 算例
+    迭代 0 步即死的实证）。
     """
+    if strategy == "warm":
+        if warm is None:
+            raise ValueError("strategy='warm' 需给 warm 向量（上一步解）")
+        return np.array(warm, dtype=float).copy()
+    if strategy == "nn":
+        raise NotImplementedError(
+            "nn 热启动是想法 7（⭐ 待验证）——槽位预留，代理模型"
+            "就绪后接入层3")
+
+    # ---- 层1：基础场 ----
     x0 = np.zeros(system.n)
     specs = {}
     for model in system.models.values():
@@ -77,6 +98,9 @@ def default_guess(system, ctx) -> np.ndarray:
     mean_T = (float(np.mean(supplies)) if supplies else ctx.T0_default)
     for nid in system.T_ids:
         x0[system.T_idx_of_node[nid]] = mean_T
+
+    if strategy == "zero_flow":
+        return x0      # 层1 即止：无压差网络的零流量解（探针 flatline）
 
     # 容量初值（2026-10-01，软壅塞配套——头脑风暴三路审查定稿）：
     # 零压降元件（软壅塞守卫的对象）在 m=0 起步时压力行对流量全盲
@@ -157,7 +181,7 @@ def solve(system, x0, ctx, settings: SolverSettings | None = None, *,
     problem = ScaledProblem(system, ctx, scaling)
 
     if x0 is None:
-        x0 = default_guess(system, ctx)
+        x0 = initial_guess(system, ctx)
     x0_t = scaling.to_scaled(np.asarray(x0, dtype=float))
 
     # ---------- 投影牛顿：压力可行域下界（2026-09-26） ----------

@@ -37,7 +37,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from pysas.assembly import NetworkSystem          # noqa: E402
 from pysas.io import load_netinf, netinf_from_dict, build_models  # noqa: E402
 from pysas.solver import (                       # noqa: E402
-    solve, default_guess, make_scaling, ScaledProblem, fd_jacobian)
+    solve, initial_guess, make_scaling, ScaledProblem, fd_jacobian)
 from pysas.datamodel.solver import (              # noqa: E402
     NewtonOptions, DiscreteNewtonOptions, SolverSettings)
 
@@ -450,7 +450,7 @@ def main():
         ("H", sysH, ctxH, "sol", resH),
     ]:
         x0_use = res.x.copy() if x0 == "sol" else (
-            x0 if x0 is not None else default_guess(system, ctx))
+            x0 if x0 is not None else initial_guess(system, ctx))
         sol = root(system.residual, x0_use, args=(ctx,), method="lm",
                    options={"ftol": 1.0e-12, "xtol": 1.0e-12})
         scale = np.maximum(np.abs(res.x), 1.0)
@@ -718,6 +718,29 @@ def main():
     check("JN 出口 T0 = 流量加权混合温度",
           min(500.0, 650.0) < T0_out < max(500.0, 650.0),
           f"T0_out={T0_out:.2f}（500/650 混合）")
+
+    # ================= IG: initial_guess 策略层（2026-10-02 重构） =================
+    # 三层结构：层1 基础场 + 层2 容量初值 + 层3 策略。验收三件事：
+    # zero_flow 零流量精确起步、warm 副本隔离且能暖启动、nn 留槽报错。
+    # 用 B 算例（单孔板）即可。
+    print("\nIG initial_guess 策略层（B 算例：单孔板 3e5→2e5）")
+    xg_zero = initial_guess(sysB, ctxB, strategy="zero_flow")
+    m_seg0 = xg_zero[sysB.n_interior + sysB.n_T:]
+    check("IG zero_flow 流量段全零（压平网络精确起步）",
+          np.all(m_seg0 == 0.0))
+    res_w = solve(sysB, initial_guess(sysB, ctxB, strategy="warm",
+                                      warm=resB.x), ctxB)
+    check("IG warm 暖启动收敛（解向量接力）", res_w.converged,
+          f"iters={res_w.report.iters}")
+    src = resB.x.copy()
+    xg_w = initial_guess(sysB, ctxB, strategy="warm", warm=src)
+    xg_w[0] = -1.0                                   # 改副本不得污染源
+    check("IG warm 返回副本（源向量隔离）", src[0] == resB.x[0])
+    try:
+        initial_guess(sysB, ctxB, strategy="nn")
+        check("IG nn 留槽报错（想法 7 未接入）", False)
+    except NotImplementedError:
+        check("IG nn 留槽报错（想法 7 未接入）", True)
 
     # ================= 汇总 =================
     print("\n" + "=" * 60)

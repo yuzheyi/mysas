@@ -32,7 +32,7 @@ OUT_DIR = Path(r"e:\mywork\programDesign\mysas\yzysas\pysas\out")
 def main():
     # ---------- ① 读入 ----------
     #load_netinf有个总温ctx.boundary_T0问题后续得进行进一步商榷
-    net, ctx = load_netinf(r"e:\mywork\programDesign\mysas\yzysas\pysas\netinf_5port.json")
+    net, ctx = load_netinf(r"e:\mywork\programDesign\mysas\yzysas\pysas\netinf.json")
     print("① 拓扑读入（节点统一内部，边界 = 单口元件）")
     print(f"   节点 {len(net.nodes)} 个（全部进 x），元件 {len(net.comps)} 个")
     for n in net.nodes:
@@ -49,13 +49,13 @@ def main():
           f"（{sys_.n_interior} 节点 + {sys_.n_m} 端口）")
 
     # ---------- ③ 求解 ----------
-    # 初值：default_guess（边界节点钉 p0_spec，其余取均值，各口 ṁ=0）；
+    # 初值：initial_guess（边界节点钉 p0_spec，其余取均值，各口 ṁ=0）；
     # 五口网络 15 个流量位不再手写——x0 策略已沉淀进 solver
 
     # 需要改成网络初始化， 目前是直接调用pysas_solve，后续需要改成网络初始化
     #初始化可以选择不同的方法，现在是最粗暴的平均
-    from pysas.solver import default_guess, solve as pysas_solve
-    x0 = default_guess(sys_, ctx)
+    from pysas.solver import initial_guess, solve as pysas_solve
+    x0 = initial_guess(sys_, ctx)
     assert x0.size == sys_.n, f"x0 长度 {x0.size} != n {sys_.n}"
 
     # ftol/xtol 必须收紧：lm 默认容差把能量行的 ε 正则（~1e-8 量级）
