@@ -1,0 +1,83 @@
+{
+ "gas": {
+  "type": "IdealGas",
+  "T0_default": 600.0
+ },
+ "nodes": [
+  {
+   "id": 0
+  },
+  {
+   "id": 1
+  },
+  {
+   "id": 2
+  },
+  {
+   "id": 3
+  }
+ ],
+ "comps": [
+  {
+   "id": 0,
+   "type": "MASS_SOURCE",
+   "ports": [
+    {
+     "area": 0.0,
+     "node": 0
+    }
+   ],
+   "params": [
+    0.1,
+    600.0
+   ]
+  },
+  {
+   "id": 1,
+   "type": "JUNCTION",
+   "ports": [
+    {
+     "area": 0.0001,
+     "node": 0
+    },
+    {
+     "area": 0.0001,
+     "node": 1
+    },
+    {
+     "area": 0.0001,
+     "node": 2
+    }
+   ],
+   "params": []
+  },
+  {
+   "id": 2,
+   "type": "MASS_SOURCE",
+   "ports": [
+    {
+     "area": 0.0,
+     "node": 1
+    }
+   ],
+   "params": [
+    -0.05,
+    600.0
+   ]
+  },
+  {
+   "id": 3,
+   "type": "MASS_SOURCE",
+   "ports": [
+    {
+     "area": 0.0,
+     "node": 2
+    }
+   ],
+   "params": [
+    -0.05,
+    600.0
+   ]
+  }
+ ]
+}

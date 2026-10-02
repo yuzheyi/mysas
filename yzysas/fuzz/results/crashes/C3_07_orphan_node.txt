@@ -1,0 +1,24 @@
+case: C3_07_orphan_node
+case_json: cases/C3_07_orphan_node.json
+stage/status: solve_error
+
+Traceback (most recent call last):
+  File "E:\mywork\programDesign\mysas_dev\yzysas\fuzz\common.py", line 71, in run_solve
+    res = solve(sys_, x0, ctx)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "E:\mywork\programDesign\mysas_dev\yzysas\pysas\solver\__init__.py", line 136, in solve
+    x_t, report = discrete_newton(problem.residual, x0_t, opts,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\mywork\programDesign\mysas_dev\yzysas\pysas\solver\discrete.py", line 59, in discrete_newton
+    return damped_newton(f, jac, x0, opts.newton, on_step=on_step,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\mywork\programDesign\mysas_dev\yzysas\pysas\solver\newton.py", line 56, in damped_newton
+    F = f(x)
+        ^^^^
+  File "E:\mywork\programDesign\mysas_dev\yzysas\pysas\solver\scaling.py", line 147, in residual
+    F = self.system.residual(self.scaling.to_raw(x_tilde), self.ctx)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\mywork\programDesign\mysas_dev\yzysas\pysas\assembly\system.py", line 206, in residual
+    x[self.m_idx_of_port[cid_j]] for cid_j in self.ports_on_node[nid])
+                                              ~~~~~~~~~~~~~~~~~~^^^^^
+KeyError: 2

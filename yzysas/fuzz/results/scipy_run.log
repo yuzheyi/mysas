@@ -1,0 +1,26 @@
+重启全灭 20 例 → scipy 独立求解分诊
+  A0046: MARGINAL                 best|F̃|=2.153e-03 (rand2/trf)
+  A0089: LIKELY_NO_SOLUTION       best|F̃|=2.144e-01 (rand2/lm)
+  A0102: MARGINAL                 best|F̃|=3.166e-04 (rand1/lm)
+  A0109: MARGINAL                 best|F̃|=4.934e-04 (rand1/trf)
+  A0111: LIKELY_NO_SOLUTION       best|F̃|=2.299e-01 (rand2/lm)
+  A0117: LIKELY_NO_SOLUTION       best|F̃|=4.500e-02 (base/lm)
+  A0121: LIKELY_NO_SOLUTION       best|F̃|=1.493e+01 (base/trf)
+  A0132: MARGINAL                 best|F̃|=7.517e-03 (rand2/trf)
+  A0140: MARGINAL                 best|F̃|=1.957e-06 (rand1/lm)
+  A0160: MARGINAL                 best|F̃|=2.553e-05 (rand0/lm)
+  A0180: MARGINAL                 best|F̃|=2.844e-06 (rand0/trf)
+  A0198: MARGINAL                 best|F̃|=3.356e-05 (base/lm)
+  A0203: LIKELY_NO_SOLUTION       best|F̃|=8.167e-02 (rand0/trf)
+  A0205: LIKELY_NO_SOLUTION       best|F̃|=9.929e-02 (base/lm)
+  A0210: LIKELY_NO_SOLUTION       best|F̃|=7.438e-02 (rand2/trf)
+  A0218: LIKELY_NO_SOLUTION       best|F̃|=1.363e-02 (rand1/trf)
+  A0220: LIKELY_NO_SOLUTION       best|F̃|=3.289e-01 (base/trf)
+  A0241: LIKELY_NO_SOLUTION       best|F̃|=2.034e-02 (rand1/lm)
+  A0289: MARGINAL                 best|F̃|=8.289e-03 (rand0/lm)
+  A0294: MARGINAL                 best|F̃|=2.268e-05 (rand0/lm)
+{
+ "n_dead": 20,
+ "n_solvable_pysas_missed": 0,
+ "n_likely_no_solution": 10
+}

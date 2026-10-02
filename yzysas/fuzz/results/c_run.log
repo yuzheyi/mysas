@@ -1,0 +1,38 @@
+
+== C1_backpressure_sweep ==
+  [                    PASS] orifice  status=-  收敛 33/33  粗扫最大步幅=0.032  细化区间 [280000, 275000]  细化最大步幅=0.0016619302355356247
+  [                    PASS] pipe  status=-  收敛 33/33  粗扫最大步幅=0.303  细化区间 [265000, 260000]  细化最大步幅=0.016287350290475233
+
+== C2_extreme_area_series ==
+  [SOLVABLE_DEFAULT_GUESS_MISS(P1)] C2_01_A1e-2_A1e-6  status=clean_fail
+  [SOLVABLE_DEFAULT_GUESS_MISS(P1)] C2_02_pratio005  status=clean_fail
+  [SOLVABLE_DEFAULT_GUESS_MISS(P1)] C2_03_or_pipe_or  status=clean_fail
+  [SOLVABLE_DEFAULT_GUESS_MISS(P1)] C2_04_three_stage  status=clean_fail
+  [SOLVABLE_DEFAULT_GUESS_MISS(P1)] C2_05_cd1_extreme  status=clean_fail
+  [                    PASS] C2_06_known_dual_choke  status=converged
+
+== C3_zero_dp ==
+  [                    PASS] C3_01_pipe  status=converged  max|ṁ|=0.000e+00  判据=3.421e-02·1e-9
+  [                    PASS] C3_02_orifice  status=converged  max|ṁ|=0.000e+00  判据=3.960e-02·1e-9
+  [                    PASS] C3_03_areachange  status=converged  max|ṁ|=0.000e+00  判据=4.950e-01·1e-9
+  [                    PASS] C3_04_pipe_orifice  status=converged  max|ṁ|=0.000e+00  判据=3.960e-02·1e-9
+  [                    PASS] C3_05_junction_3pb  status=converged  max|ṁ|=0.000e+00  判据=4.950e-02·1e-9
+  [                    PASS] C3_06_dT0_same_p  status=converged  max|ṁ|=0.000e+00  判据=3.960e-02·1e-9
+  [         CRASH(real-bug)] C3_07_orphan_node  status=solve_error
+
+== C4_flow_reversal ==
+  [                    PASS] C4_01_orifice  status=-  流量反对称相对偏差=0.00e+00  镜像Δp0=0.00e+00
+  [                    PASS] C4_02_pipe  status=-  流量反对称相对偏差=0.00e+00  镜像Δp0=0.00e+00
+  [PASS(direction-sensitive-by-design)] C4_03_areachange  status=-  流量反对称相对偏差=8.94e-01  ṁf=0.4355(cap期望0.4355)  ṁr=0.8250(cap期望0.8250)
+  [SUSPECT(direction-sensitivity)] C4_04_or_pipe  status=-  流量反对称相对偏差=1.88e-03
+  [                    PASS] C4_05_pipe_or_pipe  status=-  流量反对称相对偏差=1.70e-14  镜像Δp0=3.00e-05
+
+== C5_all_flow_boundary ==
+  [      PASS(assert-fired)] C5_01_ms_or_ms  status=assemble_error
+  [      PASS(assert-fired)] C5_02_ms_deadend  status=assemble_error
+  [      PASS(assert-fired)] C5_03_ms_pipe_ms  status=assemble_error
+  [      PASS(assert-fired)] C5_04_ms_junction  status=assemble_error
+  [      PASS(assert-fired)] C5_05_ms_extract_only  status=assemble_error
+  [   PASS(design-behavior)] C5_06_surrogate_no_file  status=assemble_error
+
+C 层判定汇总：FAIL 0 项；明细见 fuzz/results/c_torture.json
