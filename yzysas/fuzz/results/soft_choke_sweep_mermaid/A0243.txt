@@ -1,0 +1,67 @@
+flowchart LR
+N0(("n0<br/>244.7 kPa<br/>T=321.8 K"))
+N1(("n1<br/>221.1 kPa<br/>T=321.8 K"))
+N2(("n2<br/>218.1 kPa<br/>T=321.8 K"))
+N3(("n3<br/>437.7 kPa<br/>T=321.8 K"))
+N4(("n4<br/>244.7 kPa<br/>T=321.9 K"))
+N5(("n5<br/>58.2 kPa<br/>T=321.8 K"))
+N6(("n6<br/>385.7 kPa<br/>T=321.8 K"))
+N7(("n7<br/>108.6 kPa<br/>T=321.8 K"))
+C0["c0 PIPE<br/>L=2.748 D=0.0111<br/>A=9.68e-05/9.68e-05"]
+N0 -- "ṁ=0.01587" --> C0
+C0 -- "ṁ=-0.01587" --> N1
+C1["c1 PIPE<br/>L=5.481 D=0.008557<br/>A=5.75e-05/5.75e-05"]
+N1 -- "ṁ=0.001519" --> C1
+C1 -- "ṁ=-0.001519" --> N2
+C2["c2 ORIFICE<br/>β=1 Cd=0.7151<br/>A=2.20e-07/2.20e-07"]
+C2 -- "ṁ=-0.0001553" --> N2
+N3 -- "ṁ=0.0001553" --> C2
+C3["c3 ORIFICE<br/>β=1 Cd=0.9671<br/>A=1.10e-04/1.10e-04"]
+C3 -- "ṁ=-7.442e-05" --> N0
+N4 -- "ṁ=7.442e-05" --> C3
+C4["c4 PIPE<br/>L=1.583 D=0.0003027<br/>A=7.19e-08/7.19e-08"]
+N3 -- "ṁ=4.636e-06" --> C4
+C4 -- "ṁ=-4.636e-06" --> N5
+C5["c5 PIPE<br/>L=0.1921 D=0.0005952<br/>A=2.78e-07/2.78e-07"]
+C5 -- "ṁ=-7.442e-05" --> N4
+N6 -- "ṁ=7.442e-05" --> C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.5996<br/>A=5.68e-06/5.68e-06"]
+N2 -- "ṁ=0.001675" --> C6
+C6 -- "ṁ=-0.001675" --> N7
+C7["c7 PIPE<br/>L=0.8165 D=0.008284<br/>A=5.39e-05/5.39e-05"]
+N1 -- "ṁ=0.0183" --> C7
+C7 -- "ṁ=-0.0183" --> N5
+C8["c8 ORIFICE<br/>β=1 Cd=0.961<br/>A=3.95e-07/3.95e-07"]
+N6 -- "ṁ=0.0003295" --> C8
+C8 -- "ṁ=-0.0003295" --> N7
+C9["c9 PIPE<br/>L=0.2068 D=0.0006556<br/>A=3.38e-07/3.38e-07"]
+N3 -- "ṁ=5.311e-05" --> C9
+C9 -- "ṁ=-5.311e-05" --> N6
+C10["c10 AREA_CHANGE<br/>ζ=1.942<br/>A=9.80e-04/4.00e-06"]
+C10 -- "ṁ=-0.003949" --> N1
+N3 -- "ṁ=0.003949" --> C10
+C11["c11 AREA_CHANGE<br/>ζ=0.7381<br/>A=7.92e-03/1.28e-04"]
+N0 -- "ṁ=0.03783" --> C11
+C11 -- "ṁ=-0.03783" --> N5
+C12["c12 BOOSTER<br/>p: 2.447e+05→3.857e+05 Pa<br/>增压比 π=1.576"]
+C12 -- "ṁ=-0.05363" --> N0
+C12 -- "ṁ=-0.0003508" --> N6
+C13["c13 PRESSURE_BOUNDARY<br/>p0=4.377e+05 Pa<br/>T0=321.8 K"]
+C13 -- "ṁ=-0.004162" --> N3
+C14["c14 PRESSURE_BOUNDARY<br/>p0=5.82e+04 Pa<br/>T0=331.6 K"]
+N5 -- "ṁ=0.05614" --> C14
+C15["c15 PRESSURE_BOUNDARY<br/>p0=1.086e+05 Pa<br/>T0=745.8 K"]
+N7 -- "ṁ=0.002004" --> C15
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C12 booster
+class C13 pbound
+class C14 pbound
+class C15 pbound
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px

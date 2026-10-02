@@ -1,0 +1,56 @@
+flowchart LR
+N0(("n0<br/>113.4 kPa<br/>T=783.6 K"))
+N1(("n1<br/>113.4 kPa<br/>T=783.6 K"))
+N2(("n2<br/>499 kPa<br/>T=783.6 K"))
+N3(("n3<br/>256.9 kPa<br/>T=783.6 K"))
+N4(("n4<br/>499.2 kPa<br/>T=783.6 K"))
+N5(("n5<br/>113.4 kPa<br/>T=783.6 K"))
+N6(("n6<br/>113.4 kPa<br/>T=783.6 K"))
+N7(("n7<br/>515.8 kPa<br/>T=783.6 K"))
+N8(("n8<br/>378.8 kPa<br/>T=783.6 K"))
+N9(("n9<br/>850.9 kPa<br/>T=783.6 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.9878<br/>A=3.43e-03/3.43e-03"]
+N0 -- "ṁ=0.001364" --> C0
+C0 -- "ṁ=-0.001364" --> N1
+C1["c1 PIPE<br/>L=3.14 D=0.01346<br/>A=1.42e-04/1.42e-04"]
+C1 -- "ṁ=-0.001364" --> N0
+N2 -- "ṁ=0.001364" --> C1
+C2["c2 AREA_CHANGE<br/>ζ=1.817<br/>A=1.23e-08/2.33e-06"]
+N2 -- "ṁ=1.902e-05" --> C2
+C2 -- "ṁ=-1.902e-05" --> N3
+C3["c3 PIPE<br/>L=0.3233 D=0.004007<br/>A=1.26e-05/1.26e-05"]
+N0 --- C3
+N4 --- C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.8546<br/>A=1.25e-08/1.25e-08"]
+C4 -- "ṁ=-0.001383" --> N2
+N5 -- "ṁ=0.001383" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.5125<br/>A=4.53e-07/4.53e-07"]
+N1 --- C5
+N6 --- C5
+C6["c6 PIPE<br/>L=2.041 D=0.03075<br/>A=7.42e-04/7.42e-04"]
+C6 -- "ṁ=-0.001383" --> N5
+N7 -- "ṁ=0.001383" --> C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.6828<br/>A=6.91e-06/6.91e-06"]
+C7 -- "ṁ=-0.001383" --> N7
+N8 -- "ṁ=0.001383" --> C7
+C8["c8 ORIFICE<br/>β=1 Cd=0.7878<br/>A=2.95e-05/2.95e-05"]
+N8 --- C8
+N9 --- C8
+C9["c9 PRESSURE_BOUNDARY<br/>p0=3.788e+05 Pa<br/>T0=773.3 K"]
+C9 -- "ṁ=-0.001383" --> N8
+C10["c10 PRESSURE_BOUNDARY<br/>p0=2.569e+05 Pa<br/>T0=743.5 K"]
+N3 -- "ṁ=1.902e-05" --> C10
+C11["c11 PRESSURE_BOUNDARY<br/>p0=1.134e+05 Pa<br/>T0=833.9 K"]
+N1 -- "ṁ=0.001364" --> C11
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C2 softchoked
+class C4 softchoked
+class C9 pbound
+class C10 pbound
+class C11 pbound
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px

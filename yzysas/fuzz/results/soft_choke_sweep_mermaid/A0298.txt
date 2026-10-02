@@ -1,0 +1,67 @@
+flowchart LR
+N0(("n0<br/>471.8 kPa<br/>T=742.2 K"))
+N1(("n1<br/>458.2 kPa<br/>T=734.2 K"))
+N2(("n2<br/>546.2 kPa<br/>T=742.2 K"))
+N3(("n3<br/>970.5 kPa<br/>T=735 K"))
+N4(("n4<br/>483.3 kPa<br/>T=544.8 K"))
+N5(("n5<br/>963.3 kPa<br/>T=735 K"))
+N6(("n6<br/>467.5 kPa<br/>T=544.8 K"))
+N7(("n7<br/>468.4 kPa<br/>T=544.8 K"))
+N8(("n8<br/>967.3 kPa<br/>T=544.8 K"))
+N9(("n9<br/>670.6 kPa<br/>T=2392 K"))
+N10(("n10<br/>458.2 kPa<br/>T=544.8 K"))
+N11(("n11<br/>458.2 kPa<br/>T=544.8 K"))
+C0["c0 PIPE<br/>L=0.1624 D=0.0001302<br/>A=1.33e-08/1.33e-08"]
+C0 -- "ṁ=-4.969e-07" --> N0
+N1 -- "ṁ=4.969e-07" --> C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.92<br/>A=4.10e-03/4.10e-03"]
+N0 -- "ṁ=0.2421" --> C1
+C1 -- "ṁ=-0.2421" --> N2
+C2["c2 HEATER<br/>q=1871 W<br/>A=1.67e-04/1.67e-04"]
+C2 -- "ṁ=-0.2421" --> N0
+N3 -- "ṁ=0.2421" --> C2
+C3["c3 AREA_CHANGE<br/>ζ=0.7787<br/>A=2.80e-04/1.10e-04"]
+C3 -- "ṁ=-3.47e-18" --> N2
+N4 -- "ṁ=2.648e-18" --> C3
+C4["c4 AREA_CHANGE<br/>ζ=1.329<br/>A=6.06e-04/2.59e-05"]
+C4 -- "ṁ=-0.03685" --> N1
+N5 -- "ṁ=0.03685" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.8303<br/>A=2.20e-03/2.20e-03"]
+N2 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6554<br/>A=9.19e-04/9.19e-04"]
+N0 --- C6
+N7 --- C6
+C7["c7 AREA_CHANGE<br/>ζ=0.7806<br/>A=4.11e-05/5.35e-04"]
+N3 --- C7
+N8 --- C7
+C8["c8 AREA_CHANGE<br/>ζ=0.9658<br/>A=1.76e-04/4.03e-06"]
+N1 -- "ṁ=0.0004684" --> C8
+C8 -- "ṁ=-0.0004684" --> N9
+C9["c9 ORIFICE<br/>β=1 Cd=0.7509<br/>A=4.40e-03/4.40e-03"]
+N1 --- C9
+N10 --- C9
+C10["c10 PIPE<br/>L=0.2734 D=0.005016<br/>A=1.98e-05/1.98e-05"]
+N10 --- C10
+N11 --- C10
+C11["c11 PIPE<br/>L=0.2263 D=0.04547<br/>A=1.62e-03/1.62e-03"]
+C11 -- "ṁ=-0.2421" --> N3
+N5 -- "ṁ=0.2421" --> C11
+C12["c12 BOOSTER<br/>p: 4.582e+05→5.462e+05 Pa<br/>增压比 π=1.192<br/>T0=705.2 K"]
+N1 -- "ṁ=0.03638" --> C12
+N2 -- "ṁ=0.2421" --> C12
+C13["c13 PRESSURE_BOUNDARY<br/>p0=9.633e+05 Pa<br/>T0=729.3 K"]
+C13 -- "ṁ=-0.2789" --> N5
+C14["c14 PRESSURE_BOUNDARY<br/>p0=6.706e+05 Pa<br/>T0=360.2 K"]
+N9 -- "ṁ=0.0004684" --> C14
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C2 softchoked
+class C12 booster
+class C13 pbound
+class C14 pbound
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px

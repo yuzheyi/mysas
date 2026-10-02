@@ -1,0 +1,59 @@
+flowchart LR
+N0(("n0<br/>500.1 kPa<br/>T=638.3 K"))
+N1(("n1<br/>716.8 kPa<br/>T=638.3 K"))
+N2(("n2<br/>751.3 kPa<br/>T=638.3 K"))
+N3(("n3<br/>500.1 kPa<br/>T=638.3 K"))
+N4(("n4<br/>1.036e+04 kPa<br/>T=1.342e+08 K"))
+N5(("n5<br/>7589 kPa<br/>T=638.3 K"))
+N6(("n6<br/>984.8 kPa<br/>T=637 K"))
+C0["c0 AREA_CHANGE<br/>ζ=1.131<br/>A=3.05e-08/7.85e-07"]
+N0 -- "ṁ=0.3555" --> C0
+C0 -- "ṁ=-0.3555" --> N1
+C1["c1 PIPE<br/>L=0.2022 D=0.004458<br/>A=1.56e-05/1.56e-05"]
+N1 -- "ṁ=0.3534" --> C1
+C1 -- "ṁ=-0.3534" --> N2
+C2["c2 ORIFICE<br/>β=1 Cd=0.5452<br/>A=1.79e-03/1.79e-03"]
+N2 -- "ṁ=0.3509" --> C2
+C2 -- "ṁ=-0.3509" --> N3
+C3["c3 PIPE<br/>L=0.3101 D=0.0006274<br/>A=3.09e-07/3.09e-07"]
+N1 -- "ṁ=0.002174" --> C3
+C3 -- "ṁ=-0.002174" --> N4
+C4["c4 PIPE<br/>L=0.5749 D=0.03222<br/>A=8.16e-04/8.16e-04"]
+C4 -- "ṁ=-0.3555" --> N0
+N5 -- "ṁ=0.3555" --> C4
+C5["c5 HEATER<br/>q=7166 W<br/>A=9.93e-04/9.93e-04"]
+C5 -- "ṁ=-1.563" --> N4
+N6 -- "ṁ=1.563" --> C5
+C6["c6 PIPE<br/>L=0.4558 D=0.1021<br/>A=8.19e-03/8.19e-03"]
+N4 -- "ṁ=0.3555" --> C6
+C6 -- "ṁ=-0.3555" --> N5
+C7["c7 PIPE<br/>L=3.504 D=0.001183<br/>A=1.10e-06/1.10e-06"]
+N2 -- "ṁ=0.002483" --> C7
+C7 -- "ṁ=-0.002483" --> N4
+C8["c8 PRESSURE_BOUNDARY<br/>p0=9.848e+05 Pa<br/>T0=525.6 K"]
+C8 -- "ṁ=-0.3509" --> N6
+C9["c9 PRESSURE_BOUNDARY<br/>p0=5.001e+05 Pa<br/>T0=748.3 K"]
+N3 -- "ṁ=0.3509" --> C9
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 softchoked
+class C1 softchoked
+class C3 softchoked
+class C5 softchoked
+class C6 softchoked
+class C7 softchoked
+class C8 pbound
+class C9 pbound
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px

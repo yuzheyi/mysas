@@ -1,0 +1,33 @@
+flowchart LR
+N0(("n0<br/>509.9 kPa<br/>T=715.8 K"))
+N1(("n1<br/>482.1 kPa<br/>T=715.8 K"))
+N2(("n2<br/>509.9 kPa<br/>T=715.7 K"))
+N3(("n3<br/>509.9 kPa<br/>T=715.8 K"))
+C0["c0 PIPE<br/>L=0.6895 D=0.003697<br/>A=1.07e-05/1.07e-05"]
+N0 -- "ṁ=0.001765" --> C0
+C0 -- "ṁ=-0.001765" --> N1
+C1["c1 AREA_CHANGE<br/>ζ=0.8161<br/>A=1.13e-08/1.44e-08"]
+C1 -- "ṁ=-4.587e-06" --> N1
+N2 -- "ṁ=4.587e-06" --> C1
+C2["c2 PIPE<br/>L=4.217 D=0.001842<br/>A=2.67e-06/2.67e-06"]
+C2 -- "ṁ=-2.15e-10" --> N2
+N3 -- "ṁ=2.15e-10" --> C2
+C3["c3 ORIFICE<br/>β=1 Cd=0.7401<br/>A=4.59e-03/4.59e-03"]
+N0 -- "ṁ=4.587e-06" --> C3
+C3 -- "ṁ=-4.587e-06" --> N2
+C4["c4 ORIFICE<br/>β=1 Cd=0.7828<br/>A=4.67e-03/4.67e-03"]
+C4 -- "ṁ=-0.00177" --> N0
+N3 -- "ṁ=0.00177" --> C4
+C5["c5 PIPE<br/>L=2.122 D=0.0003576<br/>A=1.00e-07/1.00e-07"]
+C5 -- "ṁ=-3.853e-07" --> N1
+N3 -- "ṁ=3.853e-07" --> C5
+C6["c6 PRESSURE_BOUNDARY<br/>p0=5.099e+05 Pa<br/>T0=715.8 K"]
+C6 -- "ṁ=-0.00177" --> N3
+C7["c7 PRESSURE_BOUNDARY<br/>p0=4.821e+05 Pa<br/>T0=625.9 K"]
+N1 -- "ṁ=0.00177" --> C7
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C6 pbound
+class C7 pbound

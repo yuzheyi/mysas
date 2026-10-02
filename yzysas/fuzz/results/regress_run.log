@@ -1,0 +1,20 @@
+代号      组  verdict  conv   iters  hits  warn  worst_ratio
+DG-1    A  PASS     converged 3      1     1     1.0008
+DG-1b   A  PASS     converged 3      1     1     1.0008
+DG-2    A  PASS     converged 1      0     0     0.1818
+DG-3    A  PASS     converged 3      1     1     1.0008
+DG-4    A  PASS     converged 3      1     1     1.0008
+DG-5    A  PASS     converged 3      1     1     1.0009
+DG-6    A  PASS     converged 2      2     1     1.0008
+DG-7    A  PASS     converged 3      0     0     0.6000
+DG-8    A  PASS     clean_fail 4      0     0     0.9990
+J-1     B  PASS     converged 4      0     0     —
+J-2     B  PASS     clean_fail 0      1     0     1.1000
+J-2b    B  PASS     converged 7      1     1     1.0066
+PB-1    B  PASS     converged 7      0     0     —
+SU-1    B  PASS     converged 1      0     0     —
+5P-1    B  PASS     converged 2      0     0     —
+BM-1    C  PASS     —      —      0     —     —
+V1      C  PASS     —      —      0     —     —
+V2      C  PASS     —      —      0     —     —
+ALL PASS

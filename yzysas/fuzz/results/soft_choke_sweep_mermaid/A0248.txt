@@ -1,0 +1,121 @@
+flowchart LR
+N0(("n0<br/>130.1 kPa<br/>T=713.8 K"))
+N1(("n1<br/>1750 kPa<br/>T=1128 K"))
+N2(("n2<br/>225.5 kPa<br/>T=731 K"))
+N3(("n3<br/>130.1 kPa<br/>T=701.9 K"))
+N4(("n4<br/>130.1 kPa<br/>T=680.1 K"))
+N5(("n5<br/>525.3 kPa<br/>T=719.5 K"))
+N6(("n6<br/>130.1 kPa<br/>T=705.6 K"))
+N7(("n7<br/>130.1 kPa<br/>T=702.8 K"))
+N8(("n8<br/>211.1 kPa<br/>T=701.9 K"))
+N9(("n9<br/>130.1 kPa<br/>T=713.8 K"))
+N10(("n10<br/>209.6 kPa<br/>T=731 K"))
+C0["c0 PIPE<br/>L=0.9354 D=0.0003549<br/>A=9.89e-08/9.89e-08"]
+C0 -- "ṁ=-0.0001592" --> N0
+N1 -- "ṁ=0.0001592" --> C0
+C1["c1 PIPE<br/>L=4.685 D=0.001936<br/>A=2.94e-06/2.94e-06"]
+C1 -- "ṁ=-0.02626" --> N0
+N2 -- "ṁ=0.02626" --> C1
+C2["c2 HEATER<br/>q=6333 W<br/>A=2.52e-04/2.52e-04"]
+N0 -- "ṁ=0.03114" --> C2
+C2 -- "ṁ=-0.03114" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.7242<br/>A=2.71e-03/2.71e-03"]
+C3 -- "ṁ=-6.235e-05" --> N3
+N4 -- "ṁ=6.235e-05" --> C3
+C4["c4 PIPE<br/>L=0.1663 D=0.0009965<br/>A=7.80e-07/7.80e-07"]
+N1 -- "ṁ=0.001652" --> C4
+C4 -- "ṁ=-0.001652" --> N5
+C5["c5 PIPE<br/>L=1.111 D=0.0002924<br/>A=6.71e-08/6.71e-08"]
+C5 -- "ṁ=-6.235e-05" --> N4
+N6 -- "ṁ=6.235e-05" --> C5
+C6["c6 PIPE<br/>L=0.1796 D=0.002664<br/>A=5.58e-06/5.58e-06"]
+N3 -- "ṁ=0.04436" --> C6
+C6 -- "ṁ=-0.04436" --> N7
+C7["c7 ORIFICE<br/>β=1 Cd=0.6662<br/>A=1.23e-08/1.23e-08"]
+C7 -- "ṁ=-0.0002968" --> N7
+N8 -- "ṁ=0.0002968" --> C7
+C8["c8 ORIFICE<br/>β=1 Cd=0.5203<br/>A=1.72e-08/1.72e-08"]
+C8 -- "ṁ=-2.675e-05" --> N5
+N9 -- "ṁ=2.675e-05" --> C8
+C9["c9 AREA_CHANGE<br/>ζ=1.942<br/>A=1.52e-07/8.25e-05"]
+N1 -- "ṁ=0.0025" --> C9
+C9 -- "ṁ=-0.0025" --> N10
+C10["c10 ORIFICE<br/>β=1 Cd=0.9679<br/>A=1.77e-08/1.77e-08"]
+N6 -- "ṁ=3.661e-05" --> C10
+C10 -- "ṁ=-3.661e-05" --> N9
+C11["c11 PIPE<br/>L=1.627 D=0.001494<br/>A=1.75e-06/1.75e-06"]
+N1 -- "ṁ=0.008537" --> C11
+C11 -- "ṁ=-0.008537" --> N9
+C12["c12 ORIFICE<br/>β=1 Cd=0.7172<br/>A=4.97e-07/4.97e-07"]
+N0 -- "ṁ=0.04848" --> C12
+C12 -- "ṁ=-0.04848" --> N10
+C13["c13 ORIFICE<br/>β=1 Cd=0.9717<br/>A=7.08e-04/7.08e-04"]
+C13 -- "ṁ=-0.04465" --> N0
+N7 -- "ṁ=0.04465" --> C13
+C14["c14 ORIFICE<br/>β=1 Cd=0.9673<br/>A=1.09e-03/1.09e-03"]
+C14 -- "ṁ=-0.05098" --> N2
+N10 -- "ṁ=0.05098" --> C14
+C15["c15 ORIFICE<br/>β=1 Cd=0.6379<br/>A=3.29e-07/3.29e-07"]
+C15 -- "ṁ=-0.008547" --> N0
+N9 -- "ṁ=0.008547" --> C15
+C16["c16 AREA_CHANGE<br/>ζ=1.288<br/>A=5.70e-08/3.73e-05"]
+C16 -- "ṁ=-0.001508" --> N3
+N6 -- "ṁ=0.001508" --> C16
+C17["c17 PIPE<br/>L=0.6224 D=0.08768<br/>A=6.04e-03/6.04e-03"]
+C17 -- "ṁ=-0.01165" --> N3
+N8 -- "ṁ=0.01165" --> C17
+C18["c18 ORIFICE<br/>β=1 Cd=0.6596<br/>A=2.79e-06/2.79e-06"]
+C18 -- "ṁ=-0.001678" --> N2
+N5 -- "ṁ=0.001678" --> C18
+C19["c19 PRESSURE_BOUNDARY<br/>p0=2.255e+05 Pa<br/>T0=790.3 K"]
+N2 -- "ṁ=0.0264" --> C19
+C20["c20 PRESSURE_BOUNDARY<br/>p0=1.301e+05 Pa<br/>T0=370.6 K"]
+C20 -- "ṁ=-0.001607" --> N6
+C21["c21 PRESSURE_BOUNDARY<br/>p0=2.111e+05 Pa<br/>T0=317 K"]
+C21 -- "ṁ=-0.01195" --> N8
+C22["c22 MASS_SOURCE<br/>ṁ=0.08434 kg/s<br/>T0=698.7 K"]
+C22 -- "ṁ=-0.01285" --> N1
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 softchoked
+class C1 softchoked
+class C4 softchoked
+class C5 softchoked
+class C6 softchoked
+class C7 softchoked
+class C8 softchoked
+class C9 softchoked
+class C10 softchoked
+class C11 softchoked
+class C12 softchoked
+class C15 softchoked
+class C16 softchoked
+class C19 pbound
+class C20 pbound
+class C21 pbound
+class C22 msource
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 3 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 14 stroke:#E53935,stroke-width:3px
+linkStyle 15 stroke:#E53935,stroke-width:3px
+linkStyle 16 stroke:#E53935,stroke-width:3px
+linkStyle 17 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px
+linkStyle 20 stroke:#E53935,stroke-width:3px
+linkStyle 21 stroke:#E53935,stroke-width:3px
+linkStyle 22 stroke:#E53935,stroke-width:3px
+linkStyle 23 stroke:#E53935,stroke-width:3px
+linkStyle 24 stroke:#E53935,stroke-width:3px
+linkStyle 25 stroke:#E53935,stroke-width:3px
+linkStyle 30 stroke:#E53935,stroke-width:3px
+linkStyle 31 stroke:#E53935,stroke-width:3px
+linkStyle 32 stroke:#E53935,stroke-width:3px

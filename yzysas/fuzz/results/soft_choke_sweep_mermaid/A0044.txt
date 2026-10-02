@@ -1,0 +1,47 @@
+flowchart LR
+N0(("n0<br/>347.5 kPa<br/>T=720.6 K"))
+N1(("n1<br/>371.2 kPa<br/>T=720.6 K"))
+N2(("n2<br/>347.5 kPa<br/>T=720.6 K"))
+N3(("n3<br/>696.2 kPa<br/>T=720.6 K"))
+N4(("n4<br/>270.2 kPa<br/>T=720.6 K"))
+N5(("n5<br/>347.5 kPa<br/>T=720.6 K"))
+N6(("n6<br/>347.5 kPa<br/>T=720.6 K"))
+N7(("n7<br/>52.53 kPa<br/>T=720.6 K"))
+C0["c0 HEATER<br/>q=5094 W<br/>A=6.94e-06/6.94e-06"]
+C0 -- "ṁ=-0.008003" --> N0
+N1 -- "ṁ=0.008003" --> C0
+C1["c1 AREA_CHANGE<br/>ζ=0.8255<br/>A=2.04e-07/1.86e-08"]
+N0 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=0.8757 D=0.0001944<br/>A=2.97e-08/2.97e-08"]
+N0 --- C2
+N3 --- C2
+C3["c3 AREA_CHANGE<br/>ζ=1.026<br/>A=6.58e-03/1.83e-03"]
+N0 --- C3
+N4 --- C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.5907<br/>A=3.33e-03/3.33e-03"]
+N2 --- C4
+N5 --- C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.8343<br/>A=8.54e-05/8.54e-05"]
+N4 --- C5
+N6 --- C5
+C6["c6 AREA_CHANGE<br/>ζ=1.438<br/>A=2.71e-03/9.56e-08"]
+N4 --- C6
+N7 --- C6
+C7["c7 BOOSTER<br/>p: 3.712e+05→6.962e+05 Pa<br/>增压比 π=1.876"]
+N1 --- C7
+N3 --- C7
+C8["c8 PRESSURE_BOUNDARY<br/>p0=2.702e+05 Pa<br/>T0=869.8 K"]
+N4 --- C8
+C9["c9 PRESSURE_BOUNDARY<br/>p0=5.253e+04 Pa<br/>T0=571.3 K"]
+N7 --- C9
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 softchoked
+class C7 booster
+class C8 pbound
+class C9 pbound
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px

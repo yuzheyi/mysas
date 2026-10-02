@@ -1,0 +1,63 @@
+{
+ "gas": {
+  "type": "IdealGas",
+  "T0_default": 600.0
+ },
+ "nodes": [
+  {
+   "id": 0
+  },
+  {
+   "id": 1
+  }
+ ],
+ "comps": [
+  {
+   "id": 0,
+   "type": "PRESSURE_BOUNDARY",
+   "ports": [
+    {
+     "area": 0.0,
+     "node": 0
+    }
+   ],
+   "params": [
+    300000.0,
+    600.0
+   ]
+  },
+  {
+   "id": 1,
+   "type": "PIPE",
+   "ports": [
+    {
+     "area": 0.0001,
+     "node": 0
+    },
+    {
+     "area": 0.0001,
+     "node": 1
+    }
+   ],
+   "params": [
+    0.5,
+    0.011283791670955126,
+    1e-06
+   ]
+  },
+  {
+   "id": 2,
+   "type": "PRESSURE_BOUNDARY",
+   "ports": [
+    {
+     "area": 0.0,
+     "node": 1
+    }
+   ],
+   "params": [
+    140000.0,
+    600.0
+   ]
+  }
+ ]
+}

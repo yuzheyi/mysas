@@ -1,0 +1,59 @@
+flowchart LR
+N0(("n0<br/>110.8 kPa<br/>T=539.3 K"))
+N1(("n1<br/>164.9 kPa<br/>T=539.3 K"))
+N2(("n2<br/>164.9 kPa<br/>T=539.3 K"))
+N3(("n3<br/>164.9 kPa<br/>T=539.3 K"))
+N4(("n4<br/>164.9 kPa<br/>T=539.3 K"))
+N5(("n5<br/>164.9 kPa<br/>T=539.3 K"))
+N6(("n6<br/>164.9 kPa<br/>T=539.3 K"))
+N7(("n7<br/>219 kPa<br/>T=539.3 K"))
+N8(("n8<br/>164.9 kPa<br/>T=539.3 K"))
+N9(("n9<br/>164.9 kPa<br/>T=539.3 K"))
+N10(("n10<br/>164.9 kPa<br/>T=539.3 K"))
+N11(("n11<br/>164.9 kPa<br/>T=539.3 K"))
+C0["c0 HEATER<br/>q=4530 W<br/>A=5.52e-07/5.52e-07"]
+C0 -- "ṁ=-0.0002314" --> N0
+N1 -- "ṁ=0.0002314" --> C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.6846<br/>A=1.91e-03/1.91e-03"]
+N1 --- C1
+N2 --- C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.8664<br/>A=2.49e-07/2.49e-07"]
+N1 --- C2
+N3 --- C2
+C3["c3 AREA_CHANGE<br/>ζ=0.3449<br/>A=5.70e-06/4.34e-05"]
+N0 --- C3
+N4 --- C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.9332<br/>A=9.97e-04/9.97e-04"]
+N0 --- C4
+N5 --- C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.7904<br/>A=6.88e-05/6.88e-05"]
+N3 --- C5
+N6 --- C5
+C6["c6 AREA_CHANGE<br/>ζ=0.7779<br/>A=7.30e-04/5.94e-04"]
+N2 --- C6
+N7 --- C6
+C7["c7 PIPE<br/>L=1.403 D=0.001676<br/>A=2.21e-06/2.21e-06"]
+N4 --- C7
+N8 --- C7
+C8["c8 PIPE<br/>L=0.2361 D=0.003607<br/>A=1.02e-05/1.02e-05"]
+N1 --- C8
+N9 --- C8
+C9["c9 AREA_CHANGE<br/>ζ=0.7902<br/>A=6.03e-06/2.15e-03"]
+N7 --- C9
+N10 --- C9
+C10["c10 ORIFICE<br/>β=1 Cd=0.85<br/>A=4.98e-05/4.98e-05"]
+N4 --- C10
+N11 --- C10
+C11["c11 PRESSURE_BOUNDARY<br/>p0=2.19e+05 Pa<br/>T0=390.6 K"]
+N7 --- C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=1.108e+05 Pa<br/>T0=688 K"]
+N0 --- C12
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 softchoked
+class C11 pbound
+class C12 pbound
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px

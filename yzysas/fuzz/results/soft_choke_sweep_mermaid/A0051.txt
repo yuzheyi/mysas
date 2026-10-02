@@ -1,0 +1,61 @@
+flowchart LR
+N0(("n0<br/>1.619e+04 kPa<br/>T=744 K"))
+N1(("n1<br/>354.8 kPa<br/>T=8.007e+08 K"))
+N2(("n2<br/>217.7 kPa<br/>T=744 K"))
+N3(("n3<br/>217.7 kPa<br/>T=744 K"))
+N4(("n4<br/>567.7 kPa<br/>T=744 K"))
+N5(("n5<br/>217.7 kPa<br/>T=744 K"))
+N6(("n6<br/>217.7 kPa<br/>T=744 K"))
+N7(("n7<br/>329.2 kPa<br/>T=744 K"))
+N8(("n8<br/>217.7 kPa<br/>T=744 K"))
+N9(("n9<br/>753.3 kPa<br/>T=744 K"))
+N10(("n10<br/>329.2 kPa<br/>T=744 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.878<br/>A=1.87e-07/1.87e-07"]
+N0 -- "ṁ=0.01482" --> C0
+C0 -- "ṁ=-0.01482" --> N1
+C1["c1 PIPE<br/>L=0.2639 D=0.11<br/>A=9.50e-03/9.50e-03"]
+N1 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=1.336 D=0.04991<br/>A=1.96e-03/1.96e-03"]
+C2 -- "ṁ=-0.01482" --> N0
+N3 -- "ṁ=0.01482" --> C2
+C3["c3 ORIFICE<br/>β=1 Cd=0.5598<br/>A=1.62e-07/1.62e-07"]
+C3 -- "ṁ=-7.45e-05" --> N1
+N4 -- "ṁ=7.45e-05" --> C3
+C4["c4 HEATER<br/>q=7743 W<br/>A=4.43e-04/4.43e-04"]
+C4 -- "ṁ=-1.18e-11" --> N1
+N5 -- "ṁ=1.18e-11" --> C4
+C5["c5 AREA_CHANGE<br/>ζ=0.3332<br/>A=2.63e-05/1.02e-06"]
+C5 -- "ṁ=-0.01482" --> N3
+N6 -- "ṁ=0.01482" --> C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.9519<br/>A=2.98e-03/2.98e-03"]
+N1 --- C6
+N7 --- C6
+C7["c7 AREA_CHANGE<br/>ζ=0.3721<br/>A=4.78e-03/1.18e-04"]
+N0 --- C7
+N8 --- C7
+C8["c8 PIPE<br/>L=2.922 D=0.004139<br/>A=1.35e-05/1.35e-05"]
+N5 --- C8
+N9 --- C8
+C9["c9 ORIFICE<br/>β=1 Cd=0.7432<br/>A=4.12e-03/4.12e-03"]
+N1 --- C9
+N10 --- C9
+C10["c10 PRESSURE_BOUNDARY<br/>p0=5.677e+05 Pa<br/>T0=767.2 K"]
+C10 -- "ṁ=-7.45e-05" --> N4
+C11["c11 PRESSURE_BOUNDARY<br/>p0=3.548e+05 Pa<br/>T0=857 K"]
+N1 -- "ṁ=0.0149" --> C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=2.177e+05 Pa<br/>T0=607.9 K"]
+C12 -- "ṁ=-0.01482" --> N6
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C0 softchoked
+class C5 softchoked
+class C10 pbound
+class C11 pbound
+class C12 pbound
+linkStyle 0 stroke:#E53935,stroke-width:3px
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px

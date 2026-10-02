@@ -1,0 +1,55 @@
+flowchart LR
+N0(("n0<br/>262.5 kPa<br/>T=780.9 K"))
+N1(("n1<br/>264 kPa<br/>T=782.7 K"))
+N2(("n2<br/>262.4 kPa<br/>T=633.4 K"))
+N3(("n3<br/>324.9 kPa<br/>T=784.5 K"))
+N4(("n4<br/>312.4 kPa<br/>T=786.4 K"))
+N5(("n5<br/>261 kPa<br/>T=779.1 K"))
+N6(("n6<br/>167.2 kPa<br/>T=633.4 K"))
+N7(("n7<br/>167.2 kPa<br/>T=1927 K"))
+N8(("n8<br/>184.9 kPa<br/>T=633.4 K"))
+N9(("n9<br/>258.1 kPa<br/>T=633.4 K"))
+N10(("n10<br/>955 kPa<br/>T=1907 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.7424<br/>A=8.50e-04/8.50e-04"]
+C0 -- "ṁ=-1.769e-05" --> N0
+N1 -- "ṁ=1.769e-05" --> C0
+C1["c1 AREA_CHANGE<br/>ζ=0.6443<br/>A=4.77e-05/3.04e-03"]
+C1 -- "ṁ=-7.221e-22" --> N1
+N2 --- C1
+C2["c2 ORIFICE<br/>β=1 Cd=0.676<br/>A=4.30e-08/4.30e-08"]
+C2 -- "ṁ=-1.769e-05" --> N1
+N3 -- "ṁ=1.769e-05" --> C2
+C3["c3 ORIFICE<br/>β=1 Cd=0.59<br/>A=3.21e-04/3.21e-04"]
+C3 -- "ṁ=-1.769e-05" --> N3
+N4 -- "ṁ=1.769e-05" --> C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.5793<br/>A=3.62e-07/3.62e-07"]
+N0 -- "ṁ=1.769e-05" --> C4
+C4 -- "ṁ=-1.769e-05" --> N5
+C5["c5 AREA_CHANGE<br/>ζ=1.764<br/>A=1.21e-08/2.98e-06"]
+N4 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.9428<br/>A=1.77e-07/1.77e-07"]
+N5 -- "ṁ=1.769e-05" --> C6
+C6 -- "ṁ=-1.769e-05" --> N7
+C7["c7 ORIFICE<br/>β=1 Cd=0.8079<br/>A=4.96e-08/4.96e-08"]
+N4 --- C7
+N8 --- C7
+C8["c8 ORIFICE<br/>β=1 Cd=0.6221<br/>A=6.38e-07/6.38e-07"]
+N0 --- C8
+N9 --- C8
+C9["c9 PIPE<br/>L=0.1306 D=0.004548<br/>A=1.62e-05/1.62e-05"]
+C9 -- "ṁ=-0.004552" --> N7
+N10 -- "ṁ=0.004552" --> C9
+C10["c10 PRESSURE_BOUNDARY<br/>p0=9.55e+05 Pa<br/>T0=842.4 K"]
+C10 -- "ṁ=-0.004552" --> N10
+C11["c11 PRESSURE_BOUNDARY<br/>p0=1.672e+05 Pa<br/>T0=492.8 K"]
+N7 -- "ṁ=0.004569" --> C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=3.124e+05 Pa<br/>T0=564.9 K"]
+C12 -- "ṁ=-1.769e-05" --> N4
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C10 pbound
+class C11 pbound
+class C12 pbound

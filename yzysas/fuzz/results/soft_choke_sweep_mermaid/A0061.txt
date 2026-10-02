@@ -1,0 +1,48 @@
+flowchart LR
+N0(("n0<br/>229.7 kPa<br/>T=718.9 K"))
+N1(("n1<br/>212.9 kPa<br/>T=805.4 K"))
+N2(("n2<br/>212.9 kPa<br/>T=726.9 K"))
+N3(("n3<br/>212.9 kPa<br/>T=805.4 K"))
+N4(("n4<br/>212.9 kPa<br/>T=726.9 K"))
+N5(("n5<br/>181.9 kPa<br/>T=805.4 K"))
+N6(("n6<br/>181.9 kPa<br/>T=726.9 K"))
+N7(("n7<br/>212.9 kPa<br/>T=726.9 K"))
+C0["c0 PIPE<br/>L=0.3405 D=0.0004251<br/>A=1.42e-07/1.42e-07"]
+N0 -- "ṁ=1.297e-06" --> C0
+C0 -- "ṁ=-1.297e-06" --> N1
+C1["c1 PIPE<br/>L=0.9365 D=0.0018<br/>A=2.54e-06/2.54e-06"]
+N1 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=0.8079 D=0.002339<br/>A=4.30e-06/4.30e-06"]
+N0 -- "ṁ=0.0001864" --> C2
+C2 -- "ṁ=-0.0001864" --> N3
+C3["c3 ORIFICE<br/>β=1 Cd=0.7503<br/>A=7.07e-07/7.07e-07"]
+N1 -- "ṁ=6.206e-24" --> C3
+C3 -- "ṁ=-6.15e-24" --> N4
+C4["c4 PIPE<br/>L=0.1883 D=0.004729<br/>A=1.76e-05/1.76e-05"]
+N1 -- "ṁ=0.004074" --> C4
+C4 -- "ṁ=-0.004074" --> N5
+C5["c5 ORIFICE<br/>β=1 Cd=0.6465<br/>A=4.32e-03/4.32e-03"]
+N5 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6425<br/>A=8.62e-06/8.62e-06"]
+N1 --- C6
+N7 --- C6
+C7["c7 JUNCTION<br/>零压差绝热混合"]
+N4 -- "ṁ=6.15e-24" --> C7
+N3 -- "ṁ=0.004073" --> C7
+C7 -- "ṁ=-0.004073" --> N1
+C8["c8 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=718.9 K"]
+C8 -- "ṁ=-0.0001877" --> N0
+C9["c9 PRESSURE_BOUNDARY<br/>p0=2.129e+05 Pa<br/>T0=809.6 K"]
+C9 -- "ṁ=-0.003886" --> N3
+C10["c10 PRESSURE_BOUNDARY<br/>p0=1.819e+05 Pa<br/>T0=652.2 K"]
+N5 -- "ṁ=0.004074" --> C10
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C8 pbound
+class C9 pbound
+class C10 pbound
+linkStyle 9 stroke:#E53935,stroke-width:3px

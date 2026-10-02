@@ -1,0 +1,49 @@
+flowchart LR
+N0(("n0<br/>546.9 kPa<br/>T=569.6 K"))
+N1(("n1<br/>355.3 kPa<br/>T=569.6 K"))
+N2(("n2<br/>119.5 kPa<br/>T=569.6 K"))
+N3(("n3<br/>311 kPa<br/>T=569.6 K"))
+N4(("n4<br/>354.9 kPa<br/>T=569.6 K"))
+N5(("n5<br/>354.9 kPa<br/>T=569.6 K"))
+N6(("n6<br/>311.4 kPa<br/>T=569.6 K"))
+N7(("n7<br/>328 kPa<br/>T=569.6 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.7313<br/>A=1.44e-06/1.44e-06"]
+N7 --- C0
+N2 --- C0
+C1["c1 AREA_CHANGE<br/>ζ=1.441<br/>A=1.89e-04/1.07e-08"]
+N2 -- "ṁ=2.987e-07" --> C1
+C1 -- "ṁ=-2.987e-07" --> N6
+C2["c2 AREA_CHANGE<br/>ζ=1.115<br/>A=7.30e-06/8.44e-06"]
+N6 -- "ṁ=2.987e-07" --> C2
+C2 -- "ṁ=-2.987e-07" --> N4
+C3["c3 HEATER<br/>q=1674 W<br/>A=1.87e-06/1.87e-06"]
+C3 -- "ṁ=-0.003338" --> N4
+N5 -- "ṁ=0.003338" --> C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.9158<br/>A=1.01e-06/1.01e-06"]
+C4 -- "ṁ=-0.003338" --> N5
+N3 -- "ṁ=0.003338" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.7426<br/>A=5.08e-04/5.08e-04"]
+C5 -- "ṁ=-0.003338" --> N3
+N1 -- "ṁ=0.003338" --> C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.8749<br/>A=6.29e-03/6.29e-03"]
+C6 -- "ṁ=-0.003338" --> N1
+N0 -- "ṁ=0.003338" --> C6
+C7["c7 PRESSURE_BOUNDARY<br/>p0=5.469e+05 Pa<br/>T0=790.3 K"]
+C7 -- "ṁ=-0.003338" --> N0
+C8["c8 PRESSURE_BOUNDARY<br/>p0=1.195e+05 Pa<br/>T0=502.1 K"]
+C8 -- "ṁ=-2.987e-07" --> N2
+C9["c9 MASS_SOURCE<br/>ṁ=-0.2136 kg/s<br/>T0=416.5 K"]
+N4 -- "ṁ=0.003338" --> C9
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C3 softchoked
+class C4 softchoked
+class C7 pbound
+class C8 pbound
+class C9 msource
+linkStyle 6 stroke:#E53935,stroke-width:3px
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 8 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px

@@ -1,0 +1,71 @@
+flowchart LR
+N0(("n0<br/>486.3 kPa<br/>T=641.7 K"))
+N1(("n1<br/>486.3 kPa<br/>T=641.7 K"))
+N2(("n2<br/>486.3 kPa<br/>T=641.7 K"))
+N3(("n3<br/>486.3 kPa<br/>T=641.7 K"))
+N4(("n4<br/>486.3 kPa<br/>T=641.7 K"))
+N5(("n5<br/>568.2 kPa<br/>T=641.7 K"))
+N6(("n6<br/>486.3 kPa<br/>T=641.7 K"))
+N7(("n7<br/>252.6 kPa<br/>T=641.7 K"))
+N8(("n8<br/>486.3 kPa<br/>T=641.7 K"))
+N9(("n9<br/>638.2 kPa<br/>T=641.7 K"))
+N10(("n10<br/>486.3 kPa<br/>T=641.7 K"))
+N11(("n11<br/>486.3 kPa<br/>T=641.7 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.7692<br/>A=1.62e-07/1.62e-07"]
+N0 --- C0
+N1 --- C0
+C1["c1 PIPE<br/>L=0.2001 D=0.01383<br/>A=1.50e-04/1.50e-04"]
+N1 --- C1
+N2 --- C1
+C2["c2 AREA_CHANGE<br/>ζ=0.7422<br/>A=4.47e-04/1.05e-04"]
+N2 --- C2
+N3 --- C2
+C3["c3 AREA_CHANGE<br/>ζ=0.4152<br/>A=4.22e-04/2.74e-04"]
+N2 --- C3
+N4 --- C3
+C4["c4 PIPE<br/>L=2.881 D=0.07237<br/>A=4.11e-03/4.11e-03"]
+N0 --- C4
+N5 --- C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.6064<br/>A=1.54e-06/1.54e-06"]
+N2 --- C5
+N6 --- C5
+C6["c6 HEATER<br/>q=4823 W<br/>A=1.41e-05/1.41e-05"]
+N6 -- "ṁ=0.01585" --> C6
+C6 -- "ṁ=-0.01585" --> N7
+C7["c7 ORIFICE<br/>β=1 Cd=0.5144<br/>A=8.05e-05/8.05e-05"]
+N5 --- C7
+N8 --- C7
+C8["c8 PIPE<br/>L=0.2724 D=0.1004<br/>A=7.92e-03/7.92e-03"]
+N4 --- C8
+N9 --- C8
+C9["c9 PIPE<br/>L=6.633 D=0.002642<br/>A=5.48e-06/5.48e-06"]
+N0 --- C9
+N10 --- C9
+C10["c10 AREA_CHANGE<br/>ζ=1.146<br/>A=8.72e-07/3.01e-04"]
+N5 --- C10
+N11 --- C10
+C11["c11 ORIFICE<br/>β=1 Cd=0.583<br/>A=1.23e-04/1.23e-04"]
+N3 --- C11
+N10 --- C11
+C12["c12 PIPE<br/>L=2.848 D=0.001117<br/>A=9.79e-07/9.79e-07"]
+N6 --- C12
+N9 --- C12
+C13["c13 PRESSURE_BOUNDARY<br/>p0=6.382e+05 Pa<br/>T0=775 K"]
+N9 --- C13
+C14["c14 PRESSURE_BOUNDARY<br/>p0=2.526e+05 Pa<br/>T0=674.3 K"]
+N7 --- C14
+C15["c15 PRESSURE_BOUNDARY<br/>p0=5.682e+05 Pa<br/>T0=581.7 K"]
+N5 --- C15
+C16["c16 MASS_SOURCE<br/>ṁ=0.1546 kg/s<br/>T0=535.9 K"]
+N1 --- C16
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C6 softchoked
+class C13 pbound
+class C14 pbound
+class C15 pbound
+class C16 msource
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px

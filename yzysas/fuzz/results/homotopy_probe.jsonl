@@ -1,0 +1,522 @@
+{"case_id": "A0001", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.545}
+{"case_id": "A0001", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [10], "total_s": 0.43}
+{"case_id": "A0002", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.035}
+{"case_id": "A0002", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.032}
+{"case_id": "A0003", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.153}
+{"case_id": "A0003", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.059}
+{"case_id": "A0006", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.617}
+{"case_id": "A0006", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.085}
+{"case_id": "A0007", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [7, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1], "total_s": 0.969}
+{"case_id": "A0007", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.03}
+{"case_id": "A0008", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.05}
+{"case_id": "A0008", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.046}
+{"case_id": "A0009", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 0.439}
+{"case_id": "A0009", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 3], "total_s": 0.407}
+{"case_id": "A0010", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.093}
+{"case_id": "A0010", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.081}
+{"case_id": "A0012", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.027}
+{"case_id": "A0012", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.041}
+{"case_id": "A0013", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.124}
+{"case_id": "A0013", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [11, 1], "total_s": 1.477}
+{"case_id": "A0014", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.133}
+{"case_id": "A0014", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.131}
+{"case_id": "A0015", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.12}
+{"case_id": "A0015", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.102}
+{"case_id": "A0017", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.205}
+{"case_id": "A0017", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.054}
+{"case_id": "A0018", "probe": "backpressure", "lost_at": 2, "converged_final": false, "iters_per_step": [6, 0], "total_s": 0.3}
+{"case_id": "A0018", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 6], "total_s": 0.246}
+{"case_id": "A0019", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [50], "total_s": 2.631}
+{"case_id": "A0019", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.052}
+{"case_id": "A0020", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [10, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], "total_s": 2.049}
+{"case_id": "A0020", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 6], "total_s": 0.21}
+{"case_id": "A0021", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.063}
+{"case_id": "A0021", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.161}
+{"case_id": "A0022", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.126}
+{"case_id": "A0022", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.134}
+{"case_id": "A0023", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.088}
+{"case_id": "A0023", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [1, 0], "total_s": 0.121}
+{"case_id": "A0024", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.742}
+{"case_id": "A0024", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 13], "total_s": 1.398}
+{"case_id": "A0025", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.155}
+{"case_id": "A0025", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.179}
+{"case_id": "A0026", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.141}
+{"case_id": "A0026", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.145}
+{"case_id": "A0027", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [26], "total_s": 1.331}
+{"case_id": "A0027", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.043}
+{"case_id": "A0028", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.079}
+{"case_id": "A0028", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.062}
+{"case_id": "A0029", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.065}
+{"case_id": "A0029", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.153}
+{"case_id": "A0030", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.088}
+{"case_id": "A0030", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.057}
+{"case_id": "A0031", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.039}
+{"case_id": "A0031", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 7], "total_s": 0.306}
+{"case_id": "A0032", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.152}
+{"case_id": "A0032", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.414}
+{"case_id": "A0033", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.108}
+{"case_id": "A0033", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.061}
+{"case_id": "A0035", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [12, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "total_s": 0.726}
+{"case_id": "A0035", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.036}
+{"case_id": "A0036", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.072}
+{"case_id": "A0036", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.122}
+{"case_id": "A0037", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.026}
+{"case_id": "A0037", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.063}
+{"case_id": "A0038", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [8], "total_s": 1.474}
+{"case_id": "A0038", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 5], "total_s": 0.875}
+{"case_id": "A0039", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.164}
+{"case_id": "A0039", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 50], "total_s": 1.23}
+{"case_id": "A0040", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.13}
+{"case_id": "A0040", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.085}
+{"case_id": "A0041", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.086}
+{"case_id": "A0041", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [2], "total_s": 0.148}
+{"case_id": "A0042", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "total_s": 0.81}
+{"case_id": "A0042", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [13, 1], "total_s": 0.454}
+{"case_id": "A0043", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.249}
+{"case_id": "A0043", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.244}
+{"case_id": "A0044", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.081}
+{"case_id": "A0044", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.083}
+{"case_id": "A0045", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.843}
+{"case_id": "A0045", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 4], "total_s": 0.697}
+{"case_id": "A0046", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.037}
+{"case_id": "A0046", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.072}
+{"case_id": "A0047", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.108}
+{"case_id": "A0047", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.065}
+{"case_id": "A0048", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.116}
+{"case_id": "A0048", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.075}
+{"case_id": "A0049", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.078}
+{"case_id": "A0049", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.072}
+{"case_id": "A0050", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.102}
+{"case_id": "A0050", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.073}
+{"case_id": "A0051", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.16}
+{"case_id": "A0051", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.073}
+{"case_id": "A0053", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [11, 4, 9, 5, 5, 5, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3], "total_s": 7.158}
+{"case_id": "A0053", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.151}
+{"case_id": "A0054", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.354}
+{"case_id": "A0054", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.289}
+{"case_id": "A0055", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.043}
+{"case_id": "A0055", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.024}
+{"case_id": "A0056", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.108}
+{"case_id": "A0056", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.048}
+{"case_id": "A0057", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [9], "total_s": 0.353}
+{"case_id": "A0057", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 7], "total_s": 0.262}
+{"case_id": "A0058", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.074}
+{"case_id": "A0058", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.072}
+{"case_id": "A0059", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [12], "total_s": 0.536}
+{"case_id": "A0059", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.138}
+{"case_id": "A0060", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [9], "total_s": 1.872}
+{"case_id": "A0060", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [15], "total_s": 3.011}
+{"case_id": "A0064", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.087}
+{"case_id": "A0064", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 1], "total_s": 0.114}
+{"case_id": "A0065", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.251}
+{"case_id": "A0065", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.324}
+{"case_id": "A0067", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.1}
+{"case_id": "A0067", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.1}
+{"case_id": "A0068", "probe": "backpressure", "lost_at": 2, "converged_final": false, "iters_per_step": [8, 4], "total_s": 0.734}
+{"case_id": "A0068", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.059}
+{"case_id": "A0069", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.043}
+{"case_id": "A0069", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.042}
+{"case_id": "A0070", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.626}
+{"case_id": "A0070", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.097}
+{"case_id": "A0071", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [17], "total_s": 0.623}
+{"case_id": "A0071", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.042}
+{"case_id": "A0072", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.074}
+{"case_id": "A0072", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.157}
+{"case_id": "A0074", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [8], "total_s": 1.552}
+{"case_id": "A0074", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.491}
+{"case_id": "A0075", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.057}
+{"case_id": "A0075", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.121}
+{"case_id": "A0076", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.287}
+{"case_id": "A0076", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.204}
+{"case_id": "A0077", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.342}
+{"case_id": "A0077", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.147}
+{"case_id": "A0078", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.102}
+{"case_id": "A0078", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 8], "total_s": 0.442}
+{"case_id": "A0079", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [4], "total_s": 0.125}
+{"case_id": "A0079", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 7], "total_s": 0.198}
+{"case_id": "A0080", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.054}
+{"case_id": "A0080", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.116}
+{"case_id": "A0081", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.098}
+{"case_id": "A0081", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [1, 0], "total_s": 0.145}
+{"case_id": "A0082", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.165}
+{"case_id": "A0082", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.085}
+{"case_id": "A0083", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.067}
+{"case_id": "A0083", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.094}
+{"case_id": "A0084", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.469}
+{"case_id": "A0084", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.137}
+{"case_id": "A0085", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.148}
+{"case_id": "A0085", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [2], "total_s": 0.186}
+{"case_id": "A0086", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.161}
+{"case_id": "A0086", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [10], "total_s": 1.013}
+{"case_id": "A0087", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.081}
+{"case_id": "A0087", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.197}
+{"case_id": "A0088", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.058}
+{"case_id": "A0088", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [2], "total_s": 0.129}
+{"case_id": "A0089", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.187}
+{"case_id": "A0089", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.095}
+{"case_id": "A0090", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.835}
+{"case_id": "A0090", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [4], "total_s": 0.715}
+{"case_id": "A0091", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.09}
+{"case_id": "A0091", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 8], "total_s": 0.22}
+{"case_id": "A0092", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.061}
+{"case_id": "A0092", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.067}
+{"case_id": "A0094", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 1.125}
+{"case_id": "A0094", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [7], "total_s": 1.53}
+{"case_id": "A0096", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [6], "total_s": 0.378}
+{"case_id": "A0096", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 1], "total_s": 0.205}
+{"case_id": "A0097", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.132}
+{"case_id": "A0097", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.082}
+{"case_id": "A0098", "probe": "backpressure", "lost_at": 2, "converged_final": false, "iters_per_step": [9, 0], "total_s": 0.414}
+{"case_id": "A0098", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 29], "total_s": 1.499}
+{"case_id": "A0099", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [6], "total_s": 0.229}
+{"case_id": "A0099", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.041}
+{"case_id": "A0100", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [26], "total_s": 0.946}
+{"case_id": "A0100", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.044}
+{"case_id": "A0102", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [23], "total_s": 3.926}
+{"case_id": "A0102", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.086}
+{"case_id": "A0103", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [4], "total_s": 0.082}
+{"case_id": "A0103", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 1], "total_s": 0.058}
+{"case_id": "A0104", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.112}
+{"case_id": "A0104", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [8, 3], "total_s": 0.907}
+{"case_id": "A0105", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.222}
+{"case_id": "A0105", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [8], "total_s": 0.751}
+{"case_id": "A0106", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.128}
+{"case_id": "A0106", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [2], "total_s": 0.103}
+{"case_id": "A0107", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.181}
+{"case_id": "A0107", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.086}
+{"case_id": "A0108", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [6, 1, 1, 1, 1, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], "total_s": 2.133}
+{"case_id": "A0108", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [6, 2], "total_s": 0.445}
+{"case_id": "A0109", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.057}
+{"case_id": "A0109", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 1], "total_s": 0.202}
+{"case_id": "A0110", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.024}
+{"case_id": "A0110", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.039}
+{"case_id": "A0111", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.05}
+{"case_id": "A0111", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.028}
+{"case_id": "A0112", "probe": "backpressure", "lost_at": 2, "converged_final": false, "iters_per_step": [30, 9], "total_s": 4.786}
+{"case_id": "A0112", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.074}
+{"case_id": "A0113", "probe": "backpressure", "lost_at": 11, "converged_final": false, "iters_per_step": [16, 7, 7, 6, 6, 11, 9, 7, 10, 6, 5], "total_s": 15.884}
+{"case_id": "A0113", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 11], "total_s": 1.826}
+{"case_id": "A0114", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.096}
+{"case_id": "A0114", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.082}
+{"case_id": "A0115", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [10], "total_s": 0.374}
+{"case_id": "A0115", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 12], "total_s": 0.418}
+{"case_id": "A0116", "probe": "backpressure", "lost_at": 2, "converged_final": false, "iters_per_step": [8, 1], "total_s": 1.017}
+{"case_id": "A0116", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [5, 0], "total_s": 0.494}
+{"case_id": "A0117", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.078}
+{"case_id": "A0117", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.166}
+{"case_id": "A0118", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.171}
+{"case_id": "A0118", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.067}
+{"case_id": "A0120", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.102}
+{"case_id": "A0120", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.088}
+{"case_id": "A0121", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.113}
+{"case_id": "A0121", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [8], "total_s": 1.049}
+{"case_id": "A0122", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.238}
+{"case_id": "A0122", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [4], "total_s": 0.405}
+{"case_id": "A0123", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.18}
+{"case_id": "A0123", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 5], "total_s": 0.687}
+{"case_id": "A0124", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 0.145}
+{"case_id": "A0124", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.03}
+{"case_id": "A0125", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.067}
+{"case_id": "A0125", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.086}
+{"case_id": "A0126", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.052}
+{"case_id": "A0126", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.052}
+{"case_id": "A0128", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.652}
+{"case_id": "A0128", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.088}
+{"case_id": "A0129", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.232}
+{"case_id": "A0129", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.143}
+{"case_id": "A0130", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.022}
+{"case_id": "A0130", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.021}
+{"case_id": "A0131", "probe": "backpressure", "lost_at": 2, "converged_final": false, "iters_per_step": [16, 5], "total_s": 3.027}
+{"case_id": "A0131", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.4}
+{"case_id": "A0132", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [11], "total_s": 3.375}
+{"case_id": "A0132", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 10], "total_s": 3.837}
+{"case_id": "A0133", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.041}
+{"case_id": "A0133", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.045}
+{"case_id": "A0135", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [12, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], "total_s": 4.825}
+{"case_id": "A0135", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.079}
+{"case_id": "A0136", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.335}
+{"case_id": "A0136", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [10, 5], "total_s": 1.617}
+{"case_id": "A0137", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [4, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2], "total_s": 1.266}
+{"case_id": "A0137", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [2, 12], "total_s": 0.374}
+{"case_id": "A0138", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.035}
+{"case_id": "A0138", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.047}
+{"case_id": "A0139", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.322}
+{"case_id": "A0139", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [1, 0], "total_s": 0.125}
+{"case_id": "A0140", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [4], "total_s": 0.216}
+{"case_id": "A0140", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.105}
+{"case_id": "A0141", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [50], "total_s": 1.235}
+{"case_id": "A0141", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.03}
+{"case_id": "A0142", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [9], "total_s": 1.437}
+{"case_id": "A0142", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.105}
+{"case_id": "A0144", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [11], "total_s": 2.117}
+{"case_id": "A0144", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [3], "total_s": 0.377}
+{"case_id": "A0145", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.253}
+{"case_id": "A0145", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.175}
+{"case_id": "A0146", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.056}
+{"case_id": "A0146", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.067}
+{"case_id": "A0147", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.06}
+{"case_id": "A0147", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.056}
+{"case_id": "A0148", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.048}
+{"case_id": "A0148", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.036}
+{"case_id": "A0149", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 1.337}
+{"case_id": "A0149", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.509}
+{"case_id": "A0151", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [6], "total_s": 1.497}
+{"case_id": "A0151", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.176}
+{"case_id": "A0152", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], "total_s": 2.021}
+{"case_id": "A0152", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 8], "total_s": 0.249}
+{"case_id": "A0153", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.058}
+{"case_id": "A0153", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.045}
+{"case_id": "A0154", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 0.579}
+{"case_id": "A0154", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.322}
+{"case_id": "A0155", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.119}
+{"case_id": "A0155", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.068}
+{"case_id": "A0156", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.126}
+{"case_id": "A0156", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.149}
+{"case_id": "A0157", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [13], "total_s": 1.027}
+{"case_id": "A0157", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 11], "total_s": 0.524}
+{"case_id": "A0158", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.067}
+{"case_id": "A0158", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.085}
+{"case_id": "A0159", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.092}
+{"case_id": "A0159", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.079}
+{"case_id": "A0160", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.095}
+{"case_id": "A0160", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 5], "total_s": 0.508}
+{"case_id": "A0162", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 2.196}
+{"case_id": "A0162", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.339}
+{"case_id": "A0163", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [13], "total_s": 1.257}
+{"case_id": "A0163", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.072}
+{"case_id": "A0164", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [50], "total_s": 1.168}
+{"case_id": "A0164", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.031}
+{"case_id": "A0166", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 1.044}
+{"case_id": "A0166", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 3], "total_s": 1.085}
+{"case_id": "A0167", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [16], "total_s": 1.392}
+{"case_id": "A0167", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 7], "total_s": 0.646}
+{"case_id": "A0168", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.689}
+{"case_id": "A0168", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 11], "total_s": 0.843}
+{"case_id": "A0169", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.399}
+{"case_id": "A0169", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.141}
+{"case_id": "A0170", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.098}
+{"case_id": "A0170", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.068}
+{"case_id": "A0172", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.144}
+{"case_id": "A0172", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [5, 0], "total_s": 0.399}
+{"case_id": "A0173", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.2}
+{"case_id": "A0173", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [8, 1], "total_s": 0.583}
+{"case_id": "A0174", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [19], "total_s": 2.182}
+{"case_id": "A0174", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.286}
+{"case_id": "A0175", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.109}
+{"case_id": "A0175", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.055}
+{"case_id": "A0176", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.568}
+{"case_id": "A0176", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 14], "total_s": 1.719}
+{"case_id": "A0177", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.109}
+{"case_id": "A0177", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.077}
+{"case_id": "A0178", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [6], "total_s": 0.374}
+{"case_id": "A0178", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 7], "total_s": 0.743}
+{"case_id": "A0179", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.11}
+{"case_id": "A0179", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 1], "total_s": 0.187}
+{"case_id": "A0180", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.092}
+{"case_id": "A0180", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.096}
+{"case_id": "A0182", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [6], "total_s": 0.756}
+{"case_id": "A0182", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [7], "total_s": 0.398}
+{"case_id": "A0183", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 0.564}
+{"case_id": "A0183", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.225}
+{"case_id": "A0184", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.033}
+{"case_id": "A0184", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.067}
+{"case_id": "A0185", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [3], "total_s": 0.417}
+{"case_id": "A0185", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 16], "total_s": 2.146}
+{"case_id": "A0186", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.153}
+{"case_id": "A0186", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.112}
+{"case_id": "A0188", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.082}
+{"case_id": "A0188", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 10], "total_s": 0.698}
+{"case_id": "A0190", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [12, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7], "total_s": 9.986}
+{"case_id": "A0190", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 13], "total_s": 0.973}
+{"case_id": "A0191", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [16], "total_s": 0.727}
+{"case_id": "A0191", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 12], "total_s": 0.579}
+{"case_id": "A0192", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [13], "total_s": 1.777}
+{"case_id": "A0192", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 9], "total_s": 1.38}
+{"case_id": "A0193", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.116}
+{"case_id": "A0193", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.114}
+{"case_id": "A0194", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [4], "total_s": 0.422}
+{"case_id": "A0194", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 10], "total_s": 1.009}
+{"case_id": "A0195", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.141}
+{"case_id": "A0195", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.09}
+{"case_id": "A0197", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 1.05}
+{"case_id": "A0197", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.311}
+{"case_id": "A0198", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.073}
+{"case_id": "A0198", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.068}
+{"case_id": "A0200", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [8], "total_s": 0.493}
+{"case_id": "A0200", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 9], "total_s": 0.56}
+{"case_id": "A0201", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.238}
+{"case_id": "A0201", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.112}
+{"case_id": "A0202", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [8, 7, 6, 6, 6, 5, 5, 5, 5, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3], "total_s": 4.776}
+{"case_id": "A0202", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.06}
+{"case_id": "A0205", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.083}
+{"case_id": "A0205", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.075}
+{"case_id": "A0206", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.106}
+{"case_id": "A0206", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.127}
+{"case_id": "A0207", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [15], "total_s": 0.363}
+{"case_id": "A0207", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.037}
+{"case_id": "A0208", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.057}
+{"case_id": "A0208", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [7], "total_s": 0.3}
+{"case_id": "A0209", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.082}
+{"case_id": "A0209", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.083}
+{"case_id": "A0210", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.039}
+{"case_id": "A0210", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.039}
+{"case_id": "A0211", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [9], "total_s": 0.935}
+{"case_id": "A0211", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [24], "total_s": 2.063}
+{"case_id": "A0212", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.128}
+{"case_id": "A0212", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.122}
+{"case_id": "A0213", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.04}
+{"case_id": "A0213", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.033}
+{"case_id": "A0214", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [4], "total_s": 0.356}
+{"case_id": "A0214", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.071}
+{"case_id": "A0215", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.146}
+{"case_id": "A0215", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.15}
+{"case_id": "A0216", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.305}
+{"case_id": "A0216", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.134}
+{"case_id": "A0217", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.375}
+{"case_id": "A0217", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [6, 1], "total_s": 0.354}
+{"case_id": "A0218", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [9], "total_s": 0.35}
+{"case_id": "A0218", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 12], "total_s": 0.503}
+{"case_id": "A0219", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.134}
+{"case_id": "A0219", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.361}
+{"case_id": "A0220", "probe": "backpressure", "lost_at": 14, "converged_final": false, "iters_per_step": [7, 6, 4, 6, 5, 5, 6, 7, 6, 5, 6, 3, 6, 1], "total_s": 2.295}
+{"case_id": "A0220", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 8], "total_s": 0.25}
+{"case_id": "A0221", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.091}
+{"case_id": "A0221", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.097}
+{"case_id": "A0222", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [4], "total_s": 0.638}
+{"case_id": "A0222", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.114}
+{"case_id": "A0223", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.201}
+{"case_id": "A0223", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.214}
+{"case_id": "A0224", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [10, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2], "total_s": 2.281}
+{"case_id": "A0224", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.069}
+{"case_id": "A0225", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [10], "total_s": 3.118}
+{"case_id": "A0225", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 2], "total_s": 0.79}
+{"case_id": "A0227", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.084}
+{"case_id": "A0227", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.073}
+{"case_id": "A0228", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [50], "total_s": 1.454}
+{"case_id": "A0228", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.039}
+{"case_id": "A0229", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.11}
+{"case_id": "A0229", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.313}
+{"case_id": "A0230", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.228}
+{"case_id": "A0230", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.204}
+{"case_id": "A0232", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.147}
+{"case_id": "A0232", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.114}
+{"case_id": "A0234", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.18}
+{"case_id": "A0234", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.178}
+{"case_id": "A0235", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.073}
+{"case_id": "A0235", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.135}
+{"case_id": "A0236", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.069}
+{"case_id": "A0236", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 3], "total_s": 0.271}
+{"case_id": "A0237", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.278}
+{"case_id": "A0237", "probe": "flatline", "lost_at": null, "converged_final": true, "iters_per_step": [0, 9], "total_s": 0.872}
+{"case_id": "A0238", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [15], "total_s": 0.867}
+{"case_id": "A0238", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [8], "total_s": 0.488}
+{"case_id": "A0239", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.129}
+{"case_id": "A0239", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.056}
+{"case_id": "A0240", "probe": "backpressure", "lost_at": null, "converged_final": true, "iters_per_step": [31, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], "total_s": 1.385}
+{"case_id": "A0240", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.031}
+{"case_id": "A0241", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.074}
+{"case_id": "A0241", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.067}
+{"case_id": "A0242", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.143}
+{"case_id": "A0242", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 12], "total_s": 1.54}
+{"case_id": "A0244", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.207}
+{"case_id": "A0244", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.217}
+{"case_id": "A0246", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.057}
+{"case_id": "A0246", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 5], "total_s": 0.304}
+{"case_id": "A0247", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [9], "total_s": 0.274}
+{"case_id": "A0247", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 8], "total_s": 0.26}
+{"case_id": "A0248", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [12], "total_s": 3.441}
+{"case_id": "A0248", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [2], "total_s": 0.644}
+{"case_id": "A0249", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [8], "total_s": 0.695}
+{"case_id": "A0249", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 19], "total_s": 1.875}
+{"case_id": "A0250", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.103}
+{"case_id": "A0250", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 8], "total_s": 0.893}
+{"case_id": "A0252", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.265}
+{"case_id": "A0252", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.075}
+{"case_id": "A0254", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.074}
+{"case_id": "A0254", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.076}
+{"case_id": "A0255", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.146}
+{"case_id": "A0255", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.076}
+{"case_id": "A0256", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.588}
+{"case_id": "A0256", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.084}
+{"case_id": "A0258", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.118}
+{"case_id": "A0258", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.164}
+{"case_id": "A0259", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.123}
+{"case_id": "A0259", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.078}
+{"case_id": "A0261", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.206}
+{"case_id": "A0261", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.088}
+{"case_id": "A0262", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.156}
+{"case_id": "A0262", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [5], "total_s": 0.676}
+{"case_id": "A0264", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.209}
+{"case_id": "A0264", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.126}
+{"case_id": "A0265", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.338}
+{"case_id": "A0265", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.102}
+{"case_id": "A0266", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [13], "total_s": 1.501}
+{"case_id": "A0266", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 8], "total_s": 1.033}
+{"case_id": "A0267", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [50], "total_s": 1.222}
+{"case_id": "A0267", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.031}
+{"case_id": "A0268", "probe": "backpressure", "lost_at": 2, "converged_final": false, "iters_per_step": [4, 1], "total_s": 0.221}
+{"case_id": "A0268", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 1], "total_s": 0.098}
+{"case_id": "A0270", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [10], "total_s": 1.026}
+{"case_id": "A0270", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [9, 13], "total_s": 1.956}
+{"case_id": "A0271", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [12], "total_s": 0.737}
+{"case_id": "A0271", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 5], "total_s": 0.324}
+{"case_id": "A0272", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.205}
+{"case_id": "A0272", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 9], "total_s": 1.817}
+{"case_id": "A0274", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.119}
+{"case_id": "A0274", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.11}
+{"case_id": "A0275", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [17], "total_s": 3.024}
+{"case_id": "A0275", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.113}
+{"case_id": "A0276", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.36}
+{"case_id": "A0276", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [2], "total_s": 0.461}
+{"case_id": "A0277", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [9], "total_s": 0.678}
+{"case_id": "A0277", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.218}
+{"case_id": "A0278", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.282}
+{"case_id": "A0278", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.197}
+{"case_id": "A0279", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.075}
+{"case_id": "A0279", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [1], "total_s": 0.076}
+{"case_id": "A0280", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.12}
+{"case_id": "A0280", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.104}
+{"case_id": "A0281", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.331}
+{"case_id": "A0281", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 50], "total_s": 9.797}
+{"case_id": "A0282", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 1.623}
+{"case_id": "A0282", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 9], "total_s": 2.014}
+{"case_id": "A0283", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [26], "total_s": 1.619}
+{"case_id": "A0283", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 49], "total_s": 2.677}
+{"case_id": "A0285", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.082}
+{"case_id": "A0285", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.079}
+{"case_id": "A0287", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.108}
+{"case_id": "A0287", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.167}
+{"case_id": "A0288", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [8], "total_s": 0.293}
+{"case_id": "A0288", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 4], "total_s": 0.195}
+{"case_id": "A0289", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.106}
+{"case_id": "A0289", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.078}
+{"case_id": "A0290", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.057}
+{"case_id": "A0290", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.07}
+{"case_id": "A0291", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.108}
+{"case_id": "A0291", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 4], "total_s": 0.39}
+{"case_id": "A0292", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.228}
+{"case_id": "A0292", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.078}
+{"case_id": "A0293", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.044}
+{"case_id": "A0293", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.039}
+{"case_id": "A0294", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [1], "total_s": 0.094}
+{"case_id": "A0294", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.128}
+{"case_id": "A0295", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [50], "total_s": 1.61}
+{"case_id": "A0295", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [2, 0], "total_s": 0.085}
+{"case_id": "A0296", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.136}
+{"case_id": "A0296", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [0], "total_s": 0.148}
+{"case_id": "A0297", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.05}
+{"case_id": "A0297", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.06}
+{"case_id": "A0298", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [6], "total_s": 0.946}
+{"case_id": "A0298", "probe": "flatline", "lost_at": 0, "converged_final": false, "iters_per_step": [5], "total_s": 0.741}
+{"case_id": "A0300", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [0], "total_s": 0.021}
+{"case_id": "A0300", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 0], "total_s": 0.033}
+{"case_id": "C2_01_A1e-2_A1e-6", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.109}
+{"case_id": "C2_01_A1e-2_A1e-6", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 8], "total_s": 0.164}
+{"case_id": "C2_02_pratio005", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [2], "total_s": 0.058}
+{"case_id": "C2_02_pratio005", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 11], "total_s": 0.233}
+{"case_id": "C2_03_or_pipe_or", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [8], "total_s": 0.239}
+{"case_id": "C2_03_or_pipe_or", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 2], "total_s": 0.095}
+{"case_id": "C2_04_three_stage", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [7], "total_s": 0.177}
+{"case_id": "C2_04_three_stage", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 7], "total_s": 0.185}
+{"case_id": "C2_05_cd1_extreme", "probe": "backpressure", "lost_at": 1, "converged_final": false, "iters_per_step": [5], "total_s": 0.109}
+{"case_id": "C2_05_cd1_extreme", "probe": "flatline", "lost_at": 1, "converged_final": false, "iters_per_step": [0, 8], "total_s": 0.172}

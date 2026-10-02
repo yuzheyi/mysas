@@ -1,0 +1,63 @@
+flowchart LR
+N0(("n0<br/>551.3 kPa<br/>T=558.4 K"))
+N1(("n1<br/>625.3 kPa<br/>T=558.4 K"))
+N2(("n2<br/>551.3 kPa<br/>T=558.4 K"))
+N3(("n3<br/>551.3 kPa<br/>T=558.4 K"))
+N4(("n4<br/>551.3 kPa<br/>T=558.4 K"))
+N5(("n5<br/>551.3 kPa<br/>T=558.4 K"))
+N6(("n6<br/>427.1 kPa<br/>T=558.4 K"))
+N7(("n7<br/>551.3 kPa<br/>T=558.4 K"))
+N8(("n8<br/>551.3 kPa<br/>T=558.4 K"))
+N9(("n9<br/>601.6 kPa<br/>T=558.4 K"))
+N10(("n10<br/>551.3 kPa<br/>T=558.4 K"))
+N11(("n11<br/>551.3 kPa<br/>T=558.4 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.6648<br/>A=8.13e-03/8.13e-03"]
+N8 --- C0
+N6 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.9716<br/>A=5.44e-03/5.44e-03"]
+N6 --- C1
+N4 --- C1
+C2["c2 AREA_CHANGE<br/>ζ=0.4125<br/>A=9.63e-07/4.23e-08"]
+N4 --- C2
+N0 --- C2
+C3["c3 AREA_CHANGE<br/>ζ=1.646<br/>A=1.16e-05/1.70e-04"]
+N0 --- C3
+N9 --- C3
+C4["c4 PIPE<br/>L=0.2398 D=0.0002321<br/>A=4.23e-08/4.23e-08"]
+N9 --- C4
+N10 --- C4
+C5["c5 PIPE<br/>L=0.1184 D=0.001916<br/>A=2.88e-06/2.88e-06"]
+N10 --- C5
+N7 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.591<br/>A=2.39e-03/2.39e-03"]
+N7 --- C6
+N11 --- C6
+C7["c7 AREA_CHANGE<br/>ζ=1.148<br/>A=8.84e-04/3.54e-05"]
+N11 --- C7
+N3 --- C7
+C8["c8 AREA_CHANGE<br/>ζ=0.3366<br/>A=8.49e-08/7.94e-05"]
+N3 --- C8
+N5 --- C8
+C9["c9 AREA_CHANGE<br/>ζ=0.7941<br/>A=5.02e-04/1.06e-08"]
+N5 --- C9
+N1 --- C9
+C10["c10 AREA_CHANGE<br/>ζ=0.4319<br/>A=2.48e-07/7.91e-06"]
+N1 --- C10
+N2 --- C10
+C11["c11 JUNCTION<br/>零压差绝热混合"]
+N0 --- C11
+N4 --- C11
+N8 --- C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=6.253e+05 Pa<br/>T0=785.1 K"]
+N1 --- C12
+C13["c13 PRESSURE_BOUNDARY<br/>p0=4.271e+05 Pa<br/>T0=446.7 K"]
+N6 --- C13
+C14["c14 PRESSURE_BOUNDARY<br/>p0=6.016e+05 Pa<br/>T0=443.3 K"]
+N9 --- C14
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C12 pbound
+class C13 pbound
+class C14 pbound

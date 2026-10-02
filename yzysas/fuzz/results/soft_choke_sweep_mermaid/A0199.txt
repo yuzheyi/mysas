@@ -1,0 +1,59 @@
+flowchart LR
+N0(("n0<br/>220.9 kPa<br/>T=592.5 K"))
+N1(("n1<br/>14 kPa<br/>T=2008 K"))
+N2(("n2<br/>247.1 kPa<br/>T=592.5 K"))
+N3(("n3<br/>247.1 kPa<br/>T=592.5 K"))
+N4(("n4<br/>14 kPa<br/>T=592.5 K"))
+N5(("n5<br/>364.4 kPa<br/>T=592.5 K"))
+N6(("n6<br/>247.1 kPa<br/>T=592.5 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.7847<br/>A=5.41e-07/5.41e-07"]
+N0 -- "ṁ=0.0001557" --> C0
+C0 -- "ṁ=-0.0001557" --> N1
+C1["c1 PIPE<br/>L=5.266 D=0.004439<br/>A=1.55e-05/1.55e-05"]
+C1 -- "ṁ=-0.00143" --> N1
+N2 -- "ṁ=0.00143" --> C1
+C2["c2 PIPE<br/>L=0.2236 D=0.0001826<br/>A=2.62e-08/2.62e-08"]
+C2 -- "ṁ=-1.289e-06" --> N1
+N3 -- "ṁ=1.289e-06" --> C2
+C3["c3 HEATER<br/>q=9367 W<br/>A=5.74e-03/5.74e-03"]
+C3 -- "ṁ=-0.004996" --> N1
+N4 -- "ṁ=0.004996" --> C3
+C4["c4 ORIFICE<br/>β=1 Cd=0.5046<br/>A=3.45e-05/3.45e-05"]
+C4 -- "ṁ=-0.009996" --> N3
+N5 -- "ṁ=0.009996" --> C4
+C5["c5 ORIFICE<br/>β=1 Cd=0.6067<br/>A=3.25e-08/3.25e-08"]
+N2 --- C5
+N6 --- C5
+C6["c6 ORIFICE<br/>β=1 Cd=0.6715<br/>A=1.23e-05/1.23e-05"]
+C6 -- "ṁ=-0.004996" --> N4
+N5 -- "ṁ=0.004996" --> C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.9198<br/>A=6.35e-03/6.35e-03"]
+C7 -- "ṁ=-0.001874" --> N2
+N3 -- "ṁ=0.001874" --> C7
+C8["c8 ORIFICE<br/>β=1 Cd=0.6112<br/>A=2.50e-07/2.50e-07"]
+C8 -- "ṁ=-9.114e-05" --> N0
+N5 -- "ṁ=9.114e-05" --> C8
+C9["c9 ORIFICE<br/>β=1 Cd=0.9762<br/>A=3.20e-05/3.20e-05"]
+C9 -- "ṁ=-0.00812" --> N0
+N3 -- "ṁ=0.00812" --> C9
+C10["c10 BOOSTER<br/>p: 2.471e+05→3.644e+05 Pa<br/>增压比 π=1.475"]
+N2 -- "ṁ=0.0004447" --> C10
+C10 -- "ṁ=-0.01508" --> N5
+C11["c11 PRESSURE_BOUNDARY<br/>p0=2.209e+05 Pa<br/>T0=499 K"]
+N0 -- "ṁ=0.008055" --> C11
+C12["c12 PRESSURE_BOUNDARY<br/>p0=1.4e+04 Pa<br/>T0=686 K"]
+N1 -- "ṁ=0.006583" --> C12
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C1 softchoked
+class C2 softchoked
+class C6 softchoked
+class C10 booster
+class C11 pbound
+class C12 pbound
+linkStyle 1 stroke:#E53935,stroke-width:3px
+linkStyle 2 stroke:#E53935,stroke-width:3px
+linkStyle 4 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px

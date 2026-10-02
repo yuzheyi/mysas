@@ -1,0 +1,62 @@
+flowchart LR
+N0(("n0<br/>240.5 kPa<br/>T=644.4 K"))
+N1(("n1<br/>1201 kPa<br/>T=644.4 K"))
+N2(("n2<br/>183.8 kPa<br/>T=644.4 K"))
+N3(("n3<br/>634.5 kPa<br/>T=644.4 K"))
+N4(("n4<br/>183.8 kPa<br/>T=644.4 K"))
+N5(("n5<br/>638.3 kPa<br/>T=644.4 K"))
+N6(("n6<br/>1202 kPa<br/>T=644.4 K"))
+N7(("n7<br/>328.9 kPa<br/>T=644.4 K"))
+N8(("n8<br/>183.8 kPa<br/>T=644.4 K"))
+N9(("n9<br/>610.4 kPa<br/>T=644.4 K"))
+C0["c0 AREA_CHANGE<br/>ζ=1.255<br/>A=6.48e-08/1.96e-07"]
+N5 --- C0
+N0 --- C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.9027<br/>A=2.32e-03/2.32e-03"]
+N0 -- "ṁ=0.1572" --> C1
+C1 -- "ṁ=-0.1572" --> N7
+C2["c2 AREA_CHANGE<br/>ζ=1.937<br/>A=2.30e-04/5.67e-07"]
+N7 -- "ṁ=0.0001242" --> C2
+C2 -- "ṁ=-0.0001242" --> N4
+C3["c3 AREA_CHANGE<br/>ζ=0.8961<br/>A=2.33e-03/1.81e-08"]
+C3 -- "ṁ=-1.76e-05" --> N4
+N9 -- "ṁ=1.76e-05" --> C3
+C4["c4 PIPE<br/>L=3.44 D=0.0008455<br/>A=5.61e-07/5.61e-07"]
+N9 -- "ṁ=5.66e-05" --> C4
+C4 -- "ṁ=-5.66e-05" --> N8
+C5["c5 ORIFICE<br/>β=1 Cd=0.8812<br/>A=1.70e-08/1.70e-08"]
+N8 -- "ṁ=5.66e-05" --> C5
+C5 -- "ṁ=-5.66e-05" --> N1
+C6["c6 ORIFICE<br/>β=1 Cd=0.7004<br/>A=3.24e-08/3.24e-08"]
+N1 -- "ṁ=5.66e-05" --> C6
+C6 -- "ṁ=-5.66e-05" --> N2
+C7["c7 PIPE<br/>L=2.381 D=0.002477<br/>A=4.82e-06/4.82e-06"]
+N2 -- "ṁ=5.66e-05" --> C7
+C7 -- "ṁ=-5.66e-05" --> N6
+C8["c8 ORIFICE<br/>β=1 Cd=0.5277<br/>A=1.85e-04/1.85e-04"]
+N6 -- "ṁ=5.66e-05" --> C8
+C8 -- "ṁ=-5.66e-05" --> N3
+C9["c9 BOOSTER<br/>p: 3.289e+05→6.104e+05 Pa<br/>增压比 π=1.856"]
+N7 -- "ṁ=0.1571" --> C9
+C9 -- "ṁ=-7.42e-05" --> N9
+C10["c10 PRESSURE_BOUNDARY<br/>p0=6.345e+05 Pa<br/>T0=601.8 K"]
+N3 -- "ṁ=5.66e-05" --> C10
+C11["c11 PRESSURE_BOUNDARY<br/>p0=1.838e+05 Pa<br/>T0=839.9 K"]
+N4 -- "ṁ=0.0001418" --> C11
+C12["c12 MASS_SOURCE<br/>ṁ=0.1572 kg/s<br/>T0=491.4 K"]
+C12 -- "ṁ=-0.1572" --> N0
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C5 softchoked
+class C9 softchoked
+class C10 pbound
+class C11 pbound
+class C12 msource
+linkStyle 7 stroke:#E53935,stroke-width:3px
+linkStyle 9 stroke:#E53935,stroke-width:3px
+linkStyle 10 stroke:#E53935,stroke-width:3px
+linkStyle 11 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
+linkStyle 18 stroke:#E53935,stroke-width:3px

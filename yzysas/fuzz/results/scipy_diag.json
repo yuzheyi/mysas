@@ -1,0 +1,127 @@
+{
+ "n_dead": 20,
+ "n_solvable_pysas_missed": 0,
+ "n_likely_no_solution": 10,
+ "rows": [
+  {
+   "case_id": "A0046",
+   "class": "MARGINAL",
+   "best_scaled_residual": 0.00215267113470277,
+   "best_start": "rand2/trf"
+  },
+  {
+   "case_id": "A0089",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.21442649674059724,
+   "best_start": "rand2/lm"
+  },
+  {
+   "case_id": "A0102",
+   "class": "MARGINAL",
+   "best_scaled_residual": 0.00031663006233710676,
+   "best_start": "rand1/lm"
+  },
+  {
+   "case_id": "A0109",
+   "class": "MARGINAL",
+   "best_scaled_residual": 0.0004934018367333816,
+   "best_start": "rand1/trf"
+  },
+  {
+   "case_id": "A0111",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.2298976977963026,
+   "best_start": "rand2/lm"
+  },
+  {
+   "case_id": "A0117",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.0450043210702348,
+   "best_start": "base/lm"
+  },
+  {
+   "case_id": "A0121",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 14.927197243339425,
+   "best_start": "base/trf"
+  },
+  {
+   "case_id": "A0132",
+   "class": "MARGINAL",
+   "best_scaled_residual": 0.007516832160085777,
+   "best_start": "rand2/trf"
+  },
+  {
+   "case_id": "A0140",
+   "class": "MARGINAL",
+   "best_scaled_residual": 1.9567532442027474e-06,
+   "best_start": "rand1/lm"
+  },
+  {
+   "case_id": "A0160",
+   "class": "MARGINAL",
+   "best_scaled_residual": 2.553472379087062e-05,
+   "best_start": "rand0/lm"
+  },
+  {
+   "case_id": "A0180",
+   "class": "MARGINAL",
+   "best_scaled_residual": 2.8436268397496024e-06,
+   "best_start": "rand0/trf"
+  },
+  {
+   "case_id": "A0198",
+   "class": "MARGINAL",
+   "best_scaled_residual": 3.356476287502354e-05,
+   "best_start": "base/lm"
+  },
+  {
+   "case_id": "A0203",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.08166715222901408,
+   "best_start": "rand0/trf"
+  },
+  {
+   "case_id": "A0205",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.0992875098823627,
+   "best_start": "base/lm"
+  },
+  {
+   "case_id": "A0210",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.07438129959217778,
+   "best_start": "rand2/trf"
+  },
+  {
+   "case_id": "A0218",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.013632443420944506,
+   "best_start": "rand1/trf"
+  },
+  {
+   "case_id": "A0220",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.3288964596835503,
+   "best_start": "base/trf"
+  },
+  {
+   "case_id": "A0241",
+   "class": "LIKELY_NO_SOLUTION",
+   "best_scaled_residual": 0.020338621607702577,
+   "best_start": "rand1/lm"
+  },
+  {
+   "case_id": "A0289",
+   "class": "MARGINAL",
+   "best_scaled_residual": 0.008289428010867931,
+   "best_start": "rand0/lm"
+  },
+  {
+   "case_id": "A0294",
+   "class": "MARGINAL",
+   "best_scaled_residual": 2.2675303950998565e-05,
+   "best_start": "rand0/lm"
+  }
+ ]
+}

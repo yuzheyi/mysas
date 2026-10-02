@@ -1,0 +1,1037 @@
+{
+ "task1_k_decomp": [
+  {
+   "case_id": "A0171",
+   "status": "converged",
+   "iters": 5,
+   "warn_calls": 1,
+   "K": 168540000.0,
+   "p_ref_guard": 469750.0,
+   "m_ref_guard": 2.7871,
+   "m_ref_drivers": [
+    {
+     "comp": 0,
+     "port": 1,
+     "elem": "ORIFICE",
+     "cap_at_ref": 2.7871
+    },
+    {
+     "comp": 0,
+     "port": 0,
+     "elem": "ORIFICE",
+     "cap_at_ref": 2.7871
+    },
+    {
+     "comp": 3,
+     "port": 1,
+     "elem": "BOOSTER",
+     "cap_at_ref": 0.065252
+    }
+   ],
+   "hits": [
+    {
+     "comp": 1,
+     "port": 1,
+     "elem": "HEATER",
+     "mdot": 0.0004028,
+     "cap": 1.6732e-05,
+     "ratio": 24.074,
+     "dp_across": 65069.0,
+     "theo_pin": 0.0004028,
+     "theo_ratio": 24.074,
+     "close_resid": 5.22e-15,
+     "dp_over_pref": 0.13852,
+     "mref_over_cap": 166580.0,
+     "ratio_minus1_pred": 23.074,
+     "nodes": [
+      1,
+      2
+     ],
+     "p_nodes": [
+      469748.5623973526,
+      404679.08911747066
+     ]
+    }
+   ],
+   "counterfactual": [
+    {
+     "surrogate": "ORIFICE(A=2.4663e-08, Cd=1)",
+     "status": "clean_fail",
+     "iters": 50,
+     "warn_calls": 0,
+     "worst_ratio": null
+    }
+   ],
+   "mermaid": "flowchart LR\nN0((\"n0<br/>279 kPa<br/>T=783.1 K\"))\nN1((\"n1<br/>469.7 kPa<br/>T=783.1 K\"))\nN2((\"n2<br/>404.7 kPa<br/>T=1047 K\"))\nC0[\"c0 ORIFICE<br/>β=1 Cd=0.5081<br/>A=8.41e-03/8.41e-03\"]\nC0 -- \"ṁ=-2.87\" --> N0\nN1 -- \"ṁ=2.87\" --> C0\nC1[\"c1 HEATER<br/>q=107.2 W<br/>A=2.47e-08/2.47e-08\"]\nN1 -- \"ṁ=0.0004028\" --> C1\nC1 -- \"ṁ=-0.0004028\" --> N2\nC2[\"c2 PIPE<br/>L=0.111 D=0.0004403<br/>A=1.52e-07/1.52e-07\"]\nC2 -- \"ṁ=-2.528e-05\" --> N0\nN2 -- \"ṁ=2.528e-05\" --> C2\nC3[\"c3 BOOSTER<br/>p: 2.79e+05→4.697e+05 Pa<br/>增压比 π=1.684\"]\nN0 -- \"ṁ=2.87\" --> C3\nC3 -- \"ṁ=-2.589\" --> N1\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=4.047e+05 Pa<br/>T0=846.5 K\"]\nN2 -- \"ṁ=0.0003775\" --> C4\nC5[\"c5 MASS_SOURCE<br/>ṁ=0.2818 kg/s<br/>T0=783.1 K\"]\nC5 -- \"ṁ=-0.2818\" --> N1\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C1 softchoked\nclass C3 softchoked\nclass C4 pbound\nclass C5 msource\nlinkStyle 2 stroke:#E53935,stroke-width:3px\nlinkStyle 3 stroke:#E53935,stroke-width:3px\nlinkStyle 6 stroke:#E53935,stroke-width:3px\nlinkStyle 7 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "case_id": "A0093",
+   "status": "converged",
+   "iters": 4,
+   "warn_calls": 1,
+   "K": 1205800000.0,
+   "p_ref_guard": 366490.0,
+   "m_ref_guard": 0.30395,
+   "m_ref_drivers": [
+    {
+     "comp": 1,
+     "port": 1,
+     "elem": "HEATER",
+     "cap_at_ref": 0.30395
+    },
+    {
+     "comp": 1,
+     "port": 0,
+     "elem": "HEATER",
+     "cap_at_ref": 0.30395
+    },
+    {
+     "comp": 3,
+     "port": 1,
+     "elem": "BOOSTER",
+     "cap_at_ref": 0.062494
+    }
+   ],
+   "hits": [
+    {
+     "comp": 1,
+     "port": 1,
+     "elem": "HEATER",
+     "mdot": 0.22334,
+     "cap": 0.22333,
+     "ratio": 1.0001,
+     "dp_across": 13589.0,
+     "theo_pin": 0.22334,
+     "theo_ratio": 1.0001,
+     "close_resid": 5.55e-17,
+     "dp_over_pref": 0.037079,
+     "mref_over_cap": 1.361,
+     "ratio_minus1_pred": 5.0464e-05,
+     "nodes": [
+      2,
+      1
+     ],
+     "p_nodes": [
+      243308.86041854916,
+      229720.01321923538
+     ]
+    }
+   ],
+   "counterfactual": [
+    {
+     "surrogate": "ORIFICE(A=0.00048636, Cd=1)",
+     "status": "converged",
+     "iters": 1,
+     "warn_calls": 0,
+     "worst_ratio": null,
+     "mdot_same_port": 0.10569,
+     "ratio_vs_guard": 0.47324,
+     "dp_across": 13589.0,
+     "cap_at_upwind": 0.19525,
+     "mdot_over_cap": 0.54134
+    }
+   ],
+   "mermaid": "flowchart LR\nN0((\"n0<br/>197.3 kPa<br/>T=458.6 K\"))\nN1((\"n1<br/>229.7 kPa<br/>T=500.6 K\"))\nN2((\"n2<br/>243.3 kPa<br/>T=458.6 K\"))\nN3((\"n3<br/>366.5 kPa<br/>T=458.6 K\"))\nC0[\"c0 AREA_CHANGE<br/>ζ=1.183<br/>A=8.26e-04/2.30e-07\"]\nC0 -- \"ṁ=-8.723e-05\" --> N0\nN2 -- \"ṁ=8.723e-05\" --> C0\nC1[\"c1 HEATER<br/>q=9768 W<br/>A=4.86e-04/4.86e-04\"]\nN2 -- \"ṁ=0.2233\" --> C1\nC1 -- \"ṁ=-0.2233\" --> N1\nC2[\"c2 ORIFICE<br/>β=1 Cd=0.803<br/>A=1.46e-05/1.46e-05\"]\nC2 -- \"ṁ=-0.007915\" --> N1\nN3 -- \"ṁ=0.007915\" --> C2\nC3[\"c3 BOOSTER<br/>p: 2.433e+05→3.665e+05 Pa<br/>增压比 π=1.506\"]\nC3 -- \"ṁ=-0.2234\" --> N2\nC3 -- \"ṁ=-0.007915\" --> N3\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=355.5 K\"]\nN1 -- \"ṁ=0.2313\" --> C4\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=1.973e+05 Pa<br/>T0=561.7 K\"]\nN0 -- \"ṁ=8.723e-05\" --> C5\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C1 softchoked\nclass C3 softchoked\nclass C4 pbound\nclass C5 pbound\nlinkStyle 2 stroke:#E53935,stroke-width:3px\nlinkStyle 3 stroke:#E53935,stroke-width:3px\nlinkStyle 6 stroke:#E53935,stroke-width:3px"
+  },
+  {
+   "case_id": "A0203",
+   "status": "converged",
+   "iters": 4,
+   "warn_calls": 1,
+   "K": 691970000.0,
+   "p_ref_guard": 321090.0,
+   "m_ref_guard": 0.46402,
+   "m_ref_drivers": [
+    {
+     "comp": 0,
+     "port": 1,
+     "elem": "PIPE",
+     "cap_at_ref": 0.46402
+    },
+    {
+     "comp": 0,
+     "port": 0,
+     "elem": "PIPE",
+     "cap_at_ref": 0.46402
+    },
+    {
+     "comp": 3,
+     "port": 1,
+     "elem": "HEATER",
+     "cap_at_ref": 0.013204
+    }
+   ],
+   "hits": [
+    {
+     "comp": 3,
+     "port": 1,
+     "elem": "HEATER",
+     "mdot": 0.013318,
+     "cap": 0.013204,
+     "ratio": 1.0086,
+     "dp_across": 78667.0,
+     "theo_pin": 0.013318,
+     "theo_ratio": 1.0086,
+     "close_resid": 1.2e-15,
+     "dp_over_pref": 0.245,
+     "mref_over_cap": 35.142,
+     "ratio_minus1_pred": 0.0086097,
+     "nodes": [
+      0,
+      4
+     ],
+     "p_nodes": [
+      242420.310545393,
+      321087.12137540226
+     ]
+    }
+   ],
+   "counterfactual": [
+    {
+     "surrogate": "ORIFICE(A=3.0445e-05, Cd=1)",
+     "status": "converged",
+     "iters": 3,
+     "warn_calls": 0,
+     "worst_ratio": null,
+     "mdot_same_port": 0.011595,
+     "ratio_vs_guard": 0.87059,
+     "dp_across": 78667.0,
+     "cap_at_upwind": 0.016129,
+     "mdot_over_cap": 0.71887
+    }
+   ],
+   "mermaid": "flowchart LR\nN0((\"n0<br/>242.4 kPa<br/>T=915.2 K\"))\nN1((\"n1<br/>242.4 kPa<br/>T=849.8 K\"))\nN2((\"n2<br/>242.4 kPa<br/>T=849.8 K\"))\nN3((\"n3<br/>242.4 kPa<br/>T=849.8 K\"))\nN4((\"n4<br/>321.1 kPa<br/>T=895.2 K\"))\nN5((\"n5<br/>242.4 kPa<br/>T=849.8 K\"))\nC0[\"c0 PIPE<br/>L=2.082 D=0.04122<br/>A=1.33e-03/1.33e-03\"]\nN0 --- C0\nN1 --- C0\nC1[\"c1 ORIFICE<br/>β=1 Cd=0.9741<br/>A=1.66e-07/1.66e-07\"]\nN0 --- C1\nN2 --- C1\nC2[\"c2 AREA_CHANGE<br/>ζ=0.6533<br/>A=4.04e-08/3.71e-03\"]\nN2 --- C2\nN3 --- C2\nC3[\"c3 HEATER<br/>q=267.5 W<br/>A=3.04e-05/3.04e-05\"]\nC3 -- \"ṁ=-0.01332\" --> N0\nN4 -- \"ṁ=0.01332\" --> C3\nC4[\"c4 AREA_CHANGE<br/>ζ=1.916<br/>A=1.91e-06/3.07e-03\"]\nN1 --- C4\nN5 --- C4\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=3.211e+05 Pa<br/>T0=895.2 K\"]\nC5 -- \"ṁ=-0.01332\" --> N4\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=2.424e+05 Pa<br/>T0=804.4 K\"]\nN0 -- \"ṁ=0.01332\" --> C6\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C3 softchoked\nclass C5 pbound\nclass C6 pbound\nlinkStyle 6 stroke:#E53935,stroke-width:3px\nlinkStyle 7 stroke:#E53935,stroke-width:3px"
+  }
+ ],
+ "task2_assemble": [
+  {
+   "case_id": "C5_01_ms_or_ms",
+   "exception": "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）",
+   "class": "design_intended",
+   "verdict": "设计内拦截（组装期适定性校验，预期行为）",
+   "stage_line": "组装期（NetworkSystem 构造/netinf 读入）",
+   "source": "C 层边界酷刑产线（run_c_torture 设计例）",
+   "mermaid": "flowchart LR\nN0((\"n0\"))\nN1((\"n1\"))\nN2((\"n2\"))\nC0[\"c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K\"]\nN0 --- C0\nC1[\"c1 ORIFICE<br/>β=1 Cd=0.8<br/>A=1.00e-04/1.00e-04\"]\nN0 --- C1\nN1 --- C1\nC2[\"c2 MASS_SOURCE<br/>ṁ=-0.1 kg/s<br/>T0=600 K\"]\nN1 --- C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 msource\nclass C2 msource",
+   "tb_tail": [
+    "  File \"E:\\mywork\\programDesign\\mysas_dev\\yzysas\\pysas\\assembly\\system.py\", line 149, in _build_indices",
+    "    raise ValueError(",
+    "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）"
+   ]
+  },
+  {
+   "case_id": "C5_02_ms_deadend",
+   "exception": "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）",
+   "class": "design_intended",
+   "verdict": "设计内拦截（组装期适定性校验，预期行为）",
+   "stage_line": "组装期（NetworkSystem 构造/netinf 读入）",
+   "source": "C 层边界酷刑产线（run_c_torture 设计例）",
+   "mermaid": "flowchart LR\nN0((\"n0\"))\nN1((\"n1\"))\nC0[\"c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K\"]\nN0 --- C0\nC1[\"c1 ORIFICE<br/>β=1 Cd=0.8<br/>A=1.00e-04/1.00e-04\"]\nN0 --- C1\nN1 --- C1\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 msource",
+   "tb_tail": [
+    "  File \"E:\\mywork\\programDesign\\mysas_dev\\yzysas\\pysas\\assembly\\system.py\", line 149, in _build_indices",
+    "    raise ValueError(",
+    "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）"
+   ]
+  },
+  {
+   "case_id": "C5_03_ms_pipe_ms",
+   "exception": "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）",
+   "class": "design_intended",
+   "verdict": "设计内拦截（组装期适定性校验，预期行为）",
+   "stage_line": "组装期（NetworkSystem 构造/netinf 读入）",
+   "source": "C 层边界酷刑产线（run_c_torture 设计例）",
+   "mermaid": "flowchart LR\nN0((\"n0\"))\nN1((\"n1\"))\nN2((\"n2\"))\nC0[\"c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K\"]\nN0 --- C0\nC1[\"c1 PIPE<br/>L=1 D=0.01128<br/>A=1.00e-04/1.00e-04\"]\nN0 --- C1\nN1 --- C1\nC2[\"c2 MASS_SOURCE<br/>ṁ=-0.1 kg/s<br/>T0=600 K\"]\nN1 --- C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 msource\nclass C2 msource",
+   "tb_tail": [
+    "  File \"E:\\mywork\\programDesign\\mysas_dev\\yzysas\\pysas\\assembly\\system.py\", line 149, in _build_indices",
+    "    raise ValueError(",
+    "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）"
+   ]
+  },
+  {
+   "case_id": "C5_04_ms_junction",
+   "exception": "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）",
+   "class": "design_intended",
+   "verdict": "设计内拦截（组装期适定性校验，预期行为）",
+   "stage_line": "组装期（NetworkSystem 构造/netinf 读入）",
+   "source": "C 层边界酷刑产线（run_c_torture 设计例）",
+   "mermaid": "flowchart LR\nN0((\"n0\"))\nN1((\"n1\"))\nN2((\"n2\"))\nN3((\"n3\"))\nC0[\"c0 MASS_SOURCE<br/>ṁ=0.1 kg/s<br/>T0=600 K\"]\nN0 --- C0\nC1[\"c1 JUNCTION<br/>零压差绝热混合\"]\nN0 --- C1\nN1 --- C1\nN2 --- C1\nC2[\"c2 MASS_SOURCE<br/>ṁ=-0.05 kg/s<br/>T0=600 K\"]\nN1 --- C2\nC3[\"c3 MASS_SOURCE<br/>ṁ=-0.05 kg/s<br/>T0=600 K\"]\nN2 --- C3\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 msource\nclass C2 msource\nclass C3 msource",
+   "tb_tail": [
+    "  File \"E:\\mywork\\programDesign\\mysas_dev\\yzysas\\pysas\\assembly\\system.py\", line 149, in _build_indices",
+    "    raise ValueError(",
+    "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）"
+   ]
+  },
+  {
+   "case_id": "C5_05_ms_extract_only",
+   "exception": "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）",
+   "class": "design_intended",
+   "verdict": "设计内拦截（组装期适定性校验，预期行为）",
+   "stage_line": "组装期（NetworkSystem 构造/netinf 读入）",
+   "source": "C 层边界酷刑产线（run_c_torture 设计例）",
+   "mermaid": "flowchart LR\nN0((\"n0\"))\nN1((\"n1\"))\nC0[\"c0 MASS_SOURCE<br/>ṁ=-0.1 kg/s<br/>T0=600 K\"]\nN0 --- C0\nC1[\"c1 AREA_CHANGE<br/>ζ=1<br/>A=1.00e-04/1.00e-03\"]\nN0 --- C1\nN1 --- C1\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 msource",
+   "tb_tail": [
+    "  File \"E:\\mywork\\programDesign\\mysas_dev\\yzysas\\pysas\\assembly\\system.py\", line 149, in _build_indices",
+    "    raise ValueError(",
+    "ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（纯压差/全流量网络）。至少挂 1 个压力锚定元件（如 PRESSURE_BOUNDARY）"
+   ]
+  },
+  {
+   "case_id": "C5_06_surrogate_no_file",
+   "exception": "ValueError: 代理模型文件不存在: 'fuzz/__no_such_model__.npz'",
+   "class": "design_intended",
+   "verdict": "设计内拦截（组装期适定性校验，预期行为）",
+   "stage_line": "组装期（NetworkSystem 构造/netinf 读入）",
+   "source": "C 层边界酷刑产线（run_c_torture 设计例）",
+   "mermaid": "flowchart LR\nN0((\"n0\"))\nN1((\"n1\"))\nN2((\"n2\"))\nC0[\"c0 PRESSURE_BOUNDARY<br/>p0=3e+05 Pa<br/>T0=600 K\"]\nN0 --- C0\nC1[\"c1 SURROGATE_FLOW<br/>__no_such_model__.npz<br/>A=1.00e-04/1.00e-04\"]\nN0 --- C1\nN1 --- C1\nC2[\"c2 PRESSURE_BOUNDARY<br/>p0=2e+05 Pa<br/>T0=600 K\"]\nN1 --- C2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 pbound\nclass C2 pbound",
+   "tb_tail": [
+    "  File \"E:\\mywork\\programDesign\\mysas_dev\\yzysas\\pysas\\elements\\surrogate\\model_bank.py\", line 34, in load_model",
+    "    raise ValueError(f\"代理模型文件不存在: {model_path!r}\")",
+    "ValueError: 代理模型文件不存在: 'fuzz/__no_such_model__.npz'"
+   ]
+  }
+ ],
+ "task3_init_sens": {
+  "family": [
+   "A0004",
+   "A0005",
+   "A0052",
+   "A0061",
+   "A0062",
+   "A0093",
+   "A0101",
+   "A0127",
+   "A0171",
+   "A0187",
+   "A0199",
+   "A0203",
+   "A0245",
+   "A0253"
+  ],
+  "rows": [
+   {
+    "case_id": "A0004",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 11,
+      "warn_calls": 1,
+      "worst_ratio": 1.0208,
+      "n_hits": 1,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 11,
+      "warn_calls": 1,
+      "worst_ratio": 1.0208,
+      "n_hits": 1,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 11,
+      "warn_calls": 1,
+      "worst_ratio": 1.0208,
+      "n_hits": 1,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 11,
+      "warn_calls": 1,
+      "worst_ratio": 1.0208,
+      "n_hits": 1,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 0.0,
+     "a_default|c_half": 0.0,
+     "a_default|c_double": 0.0,
+     "b_zeroflow|c_half": 0.0,
+     "b_zeroflow|c_double": 0.0,
+     "c_half|c_double": 0.0
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>549.8 kPa<br/>T=502.9 K\"))\nN1((\"n1<br/>136.1 kPa<br/>T=623.4 K\"))\nN2((\"n2<br/>571 kPa<br/>T=502.9 K\"))\nN3((\"n3<br/>113.1 kPa<br/>T=623.4 K\"))\nN4((\"n4<br/>600.9 kPa<br/>T=637.8 K\"))\nC0[\"c0 HEATER<br/>q=253.2 W<br/>A=5.02e-06/5.02e-06\"]\nN0 -- \"ṁ=0.005082\" --> C0\nC0 -- \"ṁ=-0.005082\" --> N1\nC1[\"c1 AREA_CHANGE<br/>ζ=1.449<br/>A=1.50e-05/2.11e-05\"]\nC1 -- \"ṁ=-0.005082\" --> N0\nN2 -- \"ṁ=0.005082\" --> C1\nC2[\"c2 ORIFICE<br/>β=1 Cd=0.5517<br/>A=3.22e-04/3.22e-04\"]\nN1 -- \"ṁ=0.03007\" --> C2\nC2 -- \"ṁ=-0.03007\" --> N3\nC3[\"c3 ORIFICE<br/>β=1 Cd=0.5145<br/>A=5.05e-05/5.05e-05\"]\nC3 -- \"ṁ=-0.02499\" --> N1\nN4 -- \"ṁ=0.02499\" --> C3\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=6.009e+05 Pa<br/>T0=637.8 K\"]\nC4 -- \"ṁ=-0.02499\" --> N4\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=1.131e+05 Pa<br/>T0=821 K\"]\nN3 -- \"ṁ=0.03007\" --> C5\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=5.71e+05 Pa<br/>T0=502.9 K\"]\nC6 -- \"ṁ=-0.005082\" --> N2\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C0 softchoked\nclass C3 softchoked\nclass C4 pbound\nclass C5 pbound\nclass C6 pbound\nlinkStyle 0 stroke:#E53935,stroke-width:3px\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 6 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0005",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 8,
+      "warn_calls": 0,
+      "worst_ratio": 1.2791e-23,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 8,
+      "warn_calls": 0,
+      "worst_ratio": 4.8445e-25,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 9,
+      "warn_calls": 0,
+      "worst_ratio": 2.5986e-22,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 8,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 30.5,
+     "a_default|c_half": 59.52,
+     "a_default|c_double": 0.4767,
+     "b_zeroflow|c_half": 90.02,
+     "b_zeroflow|c_double": 30.42,
+     "c_half|c_double": 59.6
+    },
+    "same_root": false,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>171.4 kPa<br/>T=977.3 K\"))\nN1((\"n1<br/>171.4 kPa<br/>T=745.8 K\"))\nN2((\"n2<br/>332.6 kPa<br/>T=865.7 K\"))\nN3((\"n3<br/>334 kPa<br/>T=1.731e+04 K\"))\nN4((\"n4<br/>313.7 kPa<br/>T=693.7 K\"))\nN5((\"n5<br/>171.4 kPa<br/>T=1.915e+04 K\"))\nC0[\"c0 HEATER<br/>q=440.4 W<br/>A=1.48e-03/1.48e-03\"]\nN0 -- \"ṁ=1.271e-23\" --> C0\nC0 -- \"ṁ=-4.186e-24\" --> N1\nC1[\"c1 AREA_CHANGE<br/>ζ=1.37<br/>A=3.23e-04/9.55e-08\"]\nC1 -- \"ṁ=-4.358e-05\" --> N0\nN2 -- \"ṁ=4.358e-05\" --> C1\nC2[\"c2 ORIFICE<br/>β=1 Cd=0.905<br/>A=5.30e-08/5.30e-08\"]\nC2 -- \"ṁ=-7.456e-08\" --> N2\nN3 -- \"ṁ=7.456e-08\" --> C2\nC3[\"c3 AREA_CHANGE<br/>ζ=0.7525<br/>A=1.82e-08/1.28e-05\"]\nC3 -- \"ṁ=-4.697e-06\" --> N0\nN4 -- \"ṁ=4.697e-06\" --> C3\nC4[\"c4 PIPE<br/>L=0.1789 D=0.000148<br/>A=1.72e-08/1.72e-08\"]\nC4 -- \"ṁ=-7.456e-08\" --> N3\nN5 -- \"ṁ=7.456e-08\" --> C4\nC5[\"c5 ORIFICE<br/>β=1 Cd=0.987<br/>A=1.30e-07/1.30e-07\"]\nN0 -- \"ṁ=7.456e-08\" --> C5\nC5 -- \"ṁ=-7.456e-08\" --> N5\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=3.326e+05 Pa<br/>T0=856.9 K\"]\nC6 -- \"ṁ=-4.351e-05\" --> N2\nC7[\"c7 PRESSURE_BOUNDARY<br/>p0=3.137e+05 Pa<br/>T0=693.6 K\"]\nC7 -- \"ṁ=-4.697e-06\" --> N4\nC8[\"c8 PRESSURE_BOUNDARY<br/>p0=1.714e+05 Pa<br/>T0=686.8 K\"]\nN0 -- \"ṁ=4.82e-05\" --> C8\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C4 softchoked\nclass C6 pbound\nclass C7 pbound\nclass C8 pbound\nlinkStyle 8 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0052",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 6,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 6,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 6,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 6,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 0.0,
+     "a_default|c_half": 0.0,
+     "a_default|c_double": 0.0,
+     "b_zeroflow|c_half": 0.0,
+     "b_zeroflow|c_double": 0.0,
+     "c_half|c_double": 0.0
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>231.4 kPa<br/>T=427.6 K\"))\nN1((\"n1<br/>351.4 kPa<br/>T=427.6 K\"))\nN2((\"n2<br/>231.4 kPa<br/>T=554.2 K\"))\nN3((\"n3<br/>231.4 kPa<br/>T=427.6 K\"))\nN4((\"n4<br/>231.4 kPa<br/>T=554.2 K\"))\nC0[\"c0 AREA_CHANGE<br/>ζ=1.919<br/>A=5.68e-06/1.54e-03\"]\nC0 -- \"ṁ=-0.001635\" --> N0\nN1 -- \"ṁ=0.001635\" --> C0\nC1[\"c1 AREA_CHANGE<br/>ζ=1.983<br/>A=3.15e-05/6.57e-08\"]\nC1 -- \"ṁ=-1.887e-34\" --> N0\nN2 --- C1\nC2[\"c2 AREA_CHANGE<br/>ζ=1.06<br/>A=7.83e-03/1.59e-04\"]\nN0 -- \"ṁ=0.001635\" --> C2\nC2 -- \"ṁ=-0.001635\" --> N3\nC3[\"c3 HEATER<br/>q=8969 W<br/>A=2.42e-05/2.42e-05\"]\nN2 --- C3\nN4 --- C3\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=3.514e+05 Pa<br/>T0=427.6 K\"]\nC4 -- \"ṁ=-0.001635\" --> N1\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=2.314e+05 Pa<br/>T0=680.8 K\"]\nN3 -- \"ṁ=0.001635\" --> C5\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C4 pbound\nclass C5 pbound"
+   },
+   {
+    "case_id": "A0061",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 8,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 8,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 1,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 8,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 1.187e-09,
+     "a_default|c_double": 9.286e-10,
+     "b_zeroflow|c_double": 2.586e-10
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>229.7 kPa<br/>T=718.9 K\"))\nN1((\"n1<br/>212.9 kPa<br/>T=805.4 K\"))\nN2((\"n2<br/>212.9 kPa<br/>T=726.9 K\"))\nN3((\"n3<br/>212.9 kPa<br/>T=805.4 K\"))\nN4((\"n4<br/>212.9 kPa<br/>T=726.9 K\"))\nN5((\"n5<br/>181.9 kPa<br/>T=805.4 K\"))\nN6((\"n6<br/>181.9 kPa<br/>T=726.9 K\"))\nN7((\"n7<br/>212.9 kPa<br/>T=726.9 K\"))\nC0[\"c0 PIPE<br/>L=0.3405 D=0.0004251<br/>A=1.42e-07/1.42e-07\"]\nN0 -- \"ṁ=1.297e-06\" --> C0\nC0 -- \"ṁ=-1.297e-06\" --> N1\nC1[\"c1 PIPE<br/>L=0.9365 D=0.0018<br/>A=2.54e-06/2.54e-06\"]\nN1 --- C1\nN2 --- C1\nC2[\"c2 PIPE<br/>L=0.8079 D=0.002339<br/>A=4.30e-06/4.30e-06\"]\nN0 -- \"ṁ=0.0001864\" --> C2\nC2 -- \"ṁ=-0.0001864\" --> N3\nC3[\"c3 ORIFICE<br/>β=1 Cd=0.7503<br/>A=7.07e-07/7.07e-07\"]\nN1 -- \"ṁ=6.206e-24\" --> C3\nC3 -- \"ṁ=-6.15e-24\" --> N4\nC4[\"c4 PIPE<br/>L=0.1883 D=0.004729<br/>A=1.76e-05/1.76e-05\"]\nN1 -- \"ṁ=0.004074\" --> C4\nC4 -- \"ṁ=-0.004074\" --> N5\nC5[\"c5 ORIFICE<br/>β=1 Cd=0.6465<br/>A=4.32e-03/4.32e-03\"]\nN5 --- C5\nN6 --- C5\nC6[\"c6 ORIFICE<br/>β=1 Cd=0.6425<br/>A=8.62e-06/8.62e-06\"]\nN1 --- C6\nN7 --- C6\nC7[\"c7 JUNCTION<br/>零压差绝热混合\"]\nN4 -- \"ṁ=6.15e-24\" --> C7\nN3 -- \"ṁ=0.004073\" --> C7\nC7 -- \"ṁ=-0.004073\" --> N1\nC8[\"c8 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=718.9 K\"]\nC8 -- \"ṁ=-0.0001877\" --> N0\nC9[\"c9 PRESSURE_BOUNDARY<br/>p0=2.129e+05 Pa<br/>T0=809.6 K\"]\nC9 -- \"ṁ=-0.003886\" --> N3\nC10[\"c10 PRESSURE_BOUNDARY<br/>p0=1.819e+05 Pa<br/>T0=652.2 K\"]\nN5 -- \"ṁ=0.004074\" --> C10\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C8 pbound\nclass C9 pbound\nclass C10 pbound\nlinkStyle 9 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0062",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 6,
+      "warn_calls": 0,
+      "worst_ratio": 0.059127,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 50,
+      "warn_calls": 0,
+      "worst_ratio": 0.064744,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 7,
+      "warn_calls": 0,
+      "worst_ratio": 0.059127,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 5,
+      "warn_calls": 0,
+      "worst_ratio": 0.059127,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|c_half": 1.736e-06,
+     "a_default|c_double": 0.0001225,
+     "c_half|c_double": 0.0001242
+    },
+    "same_root": false,
+    "negative_list": false,
+    "reverse": true,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>145.2 kPa<br/>T=333.3 K\"))\nN1((\"n1<br/>145.2 kPa<br/>T=333.4 K\"))\nN2((\"n2<br/>299.8 kPa<br/>T=333.3 K\"))\nC0[\"c0 HEATER<br/>q=171.2 W<br/>A=5.42e-05/5.42e-05\"]\nN0 -- \"ṁ=0.001031\" --> C0\nC0 -- \"ṁ=-0.001031\" --> N1\nC1[\"c1 PIPE<br/>L=1.22 D=0.1008<br/>A=7.98e-03/7.98e-03\"]\nC1 -- \"ṁ=-4.866\" --> N1\nN2 -- \"ṁ=4.866\" --> C1\nC2[\"c2 ORIFICE<br/>β=1 Cd=0.561<br/>A=2.77e-06/2.77e-06\"]\nC2 -- \"ṁ=-0.001031\" --> N0\nN2 -- \"ṁ=0.001031\" --> C2\nC3[\"c3 PRESSURE_BOUNDARY<br/>p0=2.998e+05 Pa<br/>T0=333.3 K\"]\nC3 -- \"ṁ=-4.867\" --> N2\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=1.452e+05 Pa<br/>T0=502.1 K\"]\nN1 -- \"ṁ=4.867\" --> C4\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C1 softchoked\nclass C3 pbound\nclass C4 pbound\nlinkStyle 2 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0093",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 4,
+      "warn_calls": 1,
+      "worst_ratio": 1.0001,
+      "n_hits": 1,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 0,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 0,
+      "warn_calls": 0,
+      "worst_ratio": 0.82844,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 2,
+      "warn_calls": 1,
+      "worst_ratio": 1.0001,
+      "n_hits": 1,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|c_double": 0.0008445
+    },
+    "same_root": false,
+    "negative_list": false,
+    "reverse": true,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>197.3 kPa<br/>T=458.6 K\"))\nN1((\"n1<br/>229.7 kPa<br/>T=500.6 K\"))\nN2((\"n2<br/>243.3 kPa<br/>T=458.6 K\"))\nN3((\"n3<br/>366.5 kPa<br/>T=458.6 K\"))\nC0[\"c0 AREA_CHANGE<br/>ζ=1.183<br/>A=8.26e-04/2.30e-07\"]\nC0 -- \"ṁ=-8.723e-05\" --> N0\nN2 -- \"ṁ=8.723e-05\" --> C0\nC1[\"c1 HEATER<br/>q=9768 W<br/>A=4.86e-04/4.86e-04\"]\nN2 -- \"ṁ=0.2233\" --> C1\nC1 -- \"ṁ=-0.2233\" --> N1\nC2[\"c2 ORIFICE<br/>β=1 Cd=0.803<br/>A=1.46e-05/1.46e-05\"]\nC2 -- \"ṁ=-0.007915\" --> N1\nN3 -- \"ṁ=0.007915\" --> C2\nC3[\"c3 BOOSTER<br/>p: 2.433e+05→3.665e+05 Pa<br/>增压比 π=1.506\"]\nC3 -- \"ṁ=-0.2234\" --> N2\nC3 -- \"ṁ=-0.007915\" --> N3\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=2.297e+05 Pa<br/>T0=355.5 K\"]\nN1 -- \"ṁ=0.2313\" --> C4\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=1.973e+05 Pa<br/>T0=561.7 K\"]\nN0 -- \"ṁ=8.723e-05\" --> C5\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C1 softchoked\nclass C3 softchoked\nclass C4 pbound\nclass C5 pbound\nlinkStyle 2 stroke:#E53935,stroke-width:3px\nlinkStyle 3 stroke:#E53935,stroke-width:3px\nlinkStyle 6 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0101",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 4,
+      "warn_calls": 0,
+      "worst_ratio": 9.8729e-23,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 2,
+      "warn_calls": 0,
+      "worst_ratio": 2.9534e-22,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 8,
+      "warn_calls": 0,
+      "worst_ratio": 8.8389e-22,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 3,
+      "warn_calls": 0,
+      "worst_ratio": 6.7698e-23,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 0.03228,
+     "a_default|c_half": 0.2846,
+     "a_default|c_double": 0.006804,
+     "b_zeroflow|c_half": 0.3151,
+     "b_zeroflow|c_double": 0.03234,
+     "c_half|c_double": 0.2846
+    },
+    "same_root": false,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>251.4 kPa<br/>T=679.6 K\"))\nN1((\"n1<br/>251.4 kPa<br/>T=643.5 K\"))\nN2((\"n2<br/>295.3 kPa<br/>T=681.5 K\"))\nN3((\"n3<br/>251.4 kPa<br/>T=572.5 K\"))\nN4((\"n4<br/>287.4 kPa<br/>T=681.2 K\"))\nC0[\"c0 AREA_CHANGE<br/>ζ=0.6077<br/>A=2.29e-06/3.61e-05\"]\nN0 -- \"ṁ=5.902e-07\" --> C0\nC0 -- \"ṁ=-5.902e-07\" --> N1\nC1[\"c1 PIPE<br/>L=0.3222 D=0.0002488<br/>A=4.86e-08/4.86e-08\"]\nC1 -- \"ṁ=-5.902e-07\" --> N0\nN2 -- \"ṁ=5.902e-07\" --> C1\nC2[\"c2 HEATER<br/>q=2702 W<br/>A=1.86e-05/1.86e-05\"]\nC2 -- \"ṁ=-1.927e-24\" --> N1\nN3 -- \"ṁ=7.784e-25\" --> C2\nC3[\"c3 AREA_CHANGE<br/>ζ=1.351<br/>A=1.40e-07/3.14e-08\"]\nN2 -- \"ṁ=4.178e-06\" --> C3\nC3 -- \"ṁ=-4.178e-06\" --> N4\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=2.953e+05 Pa<br/>T0=681.8 K\"]\nC4 -- \"ṁ=-4.768e-06\" --> N2\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=2.514e+05 Pa<br/>T0=579.5 K\"]\nN1 -- \"ṁ=0.2082\" --> C5\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=2.874e+05 Pa<br/>T0=368.9 K\"]\nN4 -- \"ṁ=4.178e-06\" --> C6\nC7[\"c7 MASS_SOURCE<br/>ṁ=0.2082 kg/s<br/>T0=643.5 K\"]\nC7 -- \"ṁ=-0.2082\" --> N1\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C4 pbound\nclass C5 pbound\nclass C6 pbound\nclass C7 msource"
+   },
+   {
+    "case_id": "A0127",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 12,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 12,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 12,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 12,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 0.0,
+     "a_default|c_half": 0.0,
+     "a_default|c_double": 0.0,
+     "b_zeroflow|c_half": 0.0,
+     "b_zeroflow|c_double": 0.0,
+     "c_half|c_double": 0.0
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>404.3 kPa<br/>T=306.9 K\"))\nN1((\"n1<br/>545.1 kPa<br/>T=306.7 K\"))\nN2((\"n2<br/>802.7 kPa<br/>T=306.9 K\"))\nN3((\"n3<br/>290.9 kPa<br/>T=306.9 K\"))\nN4((\"n4<br/>802.8 kPa<br/>T=306.9 K\"))\nN5((\"n5<br/>802.8 kPa<br/>T=306.9 K\"))\nC0[\"c0 AREA_CHANGE<br/>ζ=0.6083<br/>A=1.84e-08/2.93e-08\"]\nC0 -- \"ṁ=-1.299e-05\" --> N0\nN1 -- \"ṁ=1.299e-05\" --> C0\nC1[\"c1 AREA_CHANGE<br/>ζ=0.9618<br/>A=1.94e-05/9.29e-07\"]\nC1 -- \"ṁ=-0.001721\" --> N0\nN2 -- \"ṁ=0.001721\" --> C1\nC2[\"c2 AREA_CHANGE<br/>ζ=0.5998<br/>A=2.75e-06/3.13e-06\"]\nN2 -- \"ṁ=0.005094\" --> C2\nC2 -- \"ṁ=-0.005094\" --> N3\nC3[\"c3 PIPE<br/>L=4.176 D=0.02643<br/>A=5.48e-04/5.48e-04\"]\nC3 -- \"ṁ=-0.006815\" --> N2\nN4 -- \"ṁ=0.006815\" --> C3\nC4[\"c4 ORIFICE<br/>β=1 Cd=0.9442<br/>A=8.38e-04/8.38e-04\"]\nC4 -- \"ṁ=-0.006815\" --> N4\nN5 -- \"ṁ=0.006815\" --> C4\nC5[\"c5 BOOSTER<br/>p: 4.043e+05→8.028e+05 Pa<br/>增压比 π=1.986\"]\nN0 -- \"ṁ=0.001734\" --> C5\nC5 -- \"ṁ=-0.006815\" --> N5\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=5.451e+05 Pa<br/>T0=306.6 K\"]\nC6 -- \"ṁ=-1.299e-05\" --> N1\nC7[\"c7 PRESSURE_BOUNDARY<br/>p0=2.909e+05 Pa<br/>T0=551.2 K\"]\nN3 -- \"ṁ=0.005094\" --> C7\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C5 booster\nclass C6 pbound\nclass C7 pbound\nlinkStyle 5 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0171",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 5,
+      "warn_calls": 1,
+      "worst_ratio": 24.074,
+      "n_hits": 1,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 0,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 0,
+      "warn_calls": 0,
+      "worst_ratio": 0.55,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 5,
+      "warn_calls": 1,
+      "worst_ratio": 24.074,
+      "n_hits": 1,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|c_double": 4.306e-07
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": true,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>279 kPa<br/>T=783.1 K\"))\nN1((\"n1<br/>469.7 kPa<br/>T=783.1 K\"))\nN2((\"n2<br/>404.7 kPa<br/>T=1047 K\"))\nC0[\"c0 ORIFICE<br/>β=1 Cd=0.5081<br/>A=8.41e-03/8.41e-03\"]\nC0 -- \"ṁ=-2.87\" --> N0\nN1 -- \"ṁ=2.87\" --> C0\nC1[\"c1 HEATER<br/>q=107.2 W<br/>A=2.47e-08/2.47e-08\"]\nN1 -- \"ṁ=0.0004028\" --> C1\nC1 -- \"ṁ=-0.0004028\" --> N2\nC2[\"c2 PIPE<br/>L=0.111 D=0.0004403<br/>A=1.52e-07/1.52e-07\"]\nC2 -- \"ṁ=-2.528e-05\" --> N0\nN2 -- \"ṁ=2.528e-05\" --> C2\nC3[\"c3 BOOSTER<br/>p: 2.79e+05→4.697e+05 Pa<br/>增压比 π=1.684\"]\nN0 -- \"ṁ=2.87\" --> C3\nC3 -- \"ṁ=-2.589\" --> N1\nC4[\"c4 PRESSURE_BOUNDARY<br/>p0=4.047e+05 Pa<br/>T0=846.5 K\"]\nN2 -- \"ṁ=0.0003775\" --> C4\nC5[\"c5 MASS_SOURCE<br/>ṁ=0.2818 kg/s<br/>T0=783.1 K\"]\nC5 -- \"ṁ=-0.2818\" --> N1\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C1 softchoked\nclass C3 softchoked\nclass C4 pbound\nclass C5 msource\nlinkStyle 2 stroke:#E53935,stroke-width:3px\nlinkStyle 3 stroke:#E53935,stroke-width:3px\nlinkStyle 6 stroke:#E53935,stroke-width:3px\nlinkStyle 7 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0187",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 3,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 3,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 3,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 3,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 0.0,
+     "a_default|c_half": 0.0,
+     "a_default|c_double": 0.0,
+     "b_zeroflow|c_half": 0.0,
+     "b_zeroflow|c_double": 0.0,
+     "c_half|c_double": 0.0
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>383.3 kPa<br/>T=650.2 K\"))\nN1((\"n1<br/>383.3 kPa<br/>T=650.2 K\"))\nN2((\"n2<br/>383.3 kPa<br/>T=535.4 K\"))\nN3((\"n3<br/>383.3 kPa<br/>T=650.1 K\"))\nN4((\"n4<br/>383.3 kPa<br/>T=650.2 K\"))\nN5((\"n5<br/>470.2 kPa<br/>T=535.4 K\"))\nC0[\"c0 AREA_CHANGE<br/>ζ=1.749<br/>A=1.19e-05/7.60e-07\"]\nN0 -- \"ṁ=1.654e-12\" --> C0\nC0 -- \"ṁ=-1.654e-12\" --> N1\nC1[\"c1 PIPE<br/>L=1.611 D=0.00156<br/>A=1.91e-06/1.91e-06\"]\nC1 -- \"ṁ=-1.654e-12\" --> N0\nN2 -- \"ṁ=1.654e-12\" --> C1\nC2[\"c2 AREA_CHANGE<br/>ζ=1.072<br/>A=2.64e-05/1.19e-07\"]\nN1 -- \"ṁ=7.249e-13\" --> C2\nC2 -- \"ṁ=-7.249e-13\" --> N3\nC3[\"c3 HEATER<br/>q=6975 W<br/>A=2.63e-03/2.63e-03\"]\nN1 --- C3\nN4 --- C3\nC4[\"c4 PIPE<br/>L=2.793 D=0.0008137<br/>A=5.20e-07/5.20e-07\"]\nC4 -- \"ṁ=-3.766e-05\" --> N2\nN5 -- \"ṁ=3.766e-05\" --> C4\nC5[\"c5 AREA_CHANGE<br/>ζ=1.185<br/>A=4.48e-03/1.60e-07\"]\nN1 -- \"ṁ=9.292e-13\" --> C5\nC5 -- \"ṁ=-9.292e-13\" --> N2\nC6[\"c6 AREA_CHANGE<br/>ζ=0.4215<br/>A=2.69e-03/1.87e-05\"]\nC6 -- \"ṁ=-7.249e-13\" --> N2\nN3 -- \"ṁ=7.249e-13\" --> C6\nC7[\"c7 PRESSURE_BOUNDARY<br/>p0=4.702e+05 Pa<br/>T0=535.1 K\"]\nC7 -- \"ṁ=-3.766e-05\" --> N5\nC8[\"c8 PRESSURE_BOUNDARY<br/>p0=3.833e+05 Pa<br/>T0=765.2 K\"]\nN2 -- \"ṁ=3.766e-05\" --> C8\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C7 pbound\nclass C8 pbound"
+   },
+   {
+    "case_id": "A0199",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 14,
+      "warn_calls": 0,
+      "worst_ratio": 0.037442,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 10,
+      "warn_calls": 0,
+      "worst_ratio": 0.037442,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 11,
+      "warn_calls": 0,
+      "worst_ratio": 0.037442,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 14,
+      "warn_calls": 0,
+      "worst_ratio": 0.037442,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 5.438e-07,
+     "a_default|c_half": 4.652e-07,
+     "a_default|c_double": 5.772e-10,
+     "b_zeroflow|c_half": 1.009e-06,
+     "b_zeroflow|c_double": 5.444e-07,
+     "c_half|c_double": 4.646e-07
+    },
+    "same_root": false,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>220.9 kPa<br/>T=592.5 K\"))\nN1((\"n1<br/>14 kPa<br/>T=2008 K\"))\nN2((\"n2<br/>247.1 kPa<br/>T=592.5 K\"))\nN3((\"n3<br/>247.1 kPa<br/>T=592.5 K\"))\nN4((\"n4<br/>14 kPa<br/>T=592.5 K\"))\nN5((\"n5<br/>364.4 kPa<br/>T=592.5 K\"))\nN6((\"n6<br/>247.1 kPa<br/>T=592.5 K\"))\nC0[\"c0 ORIFICE<br/>β=1 Cd=0.7847<br/>A=5.41e-07/5.41e-07\"]\nN0 -- \"ṁ=0.0001557\" --> C0\nC0 -- \"ṁ=-0.0001557\" --> N1\nC1[\"c1 PIPE<br/>L=5.266 D=0.004439<br/>A=1.55e-05/1.55e-05\"]\nC1 -- \"ṁ=-0.00143\" --> N1\nN2 -- \"ṁ=0.00143\" --> C1\nC2[\"c2 PIPE<br/>L=0.2236 D=0.0001826<br/>A=2.62e-08/2.62e-08\"]\nC2 -- \"ṁ=-1.289e-06\" --> N1\nN3 -- \"ṁ=1.289e-06\" --> C2\nC3[\"c3 HEATER<br/>q=9367 W<br/>A=5.74e-03/5.74e-03\"]\nC3 -- \"ṁ=-0.004996\" --> N1\nN4 -- \"ṁ=0.004996\" --> C3\nC4[\"c4 ORIFICE<br/>β=1 Cd=0.5046<br/>A=3.45e-05/3.45e-05\"]\nC4 -- \"ṁ=-0.009996\" --> N3\nN5 -- \"ṁ=0.009996\" --> C4\nC5[\"c5 ORIFICE<br/>β=1 Cd=0.6067<br/>A=3.25e-08/3.25e-08\"]\nN2 --- C5\nN6 --- C5\nC6[\"c6 ORIFICE<br/>β=1 Cd=0.6715<br/>A=1.23e-05/1.23e-05\"]\nC6 -- \"ṁ=-0.004996\" --> N4\nN5 -- \"ṁ=0.004996\" --> C6\nC7[\"c7 ORIFICE<br/>β=1 Cd=0.9198<br/>A=6.35e-03/6.35e-03\"]\nC7 -- \"ṁ=-0.001874\" --> N2\nN3 -- \"ṁ=0.001874\" --> C7\nC8[\"c8 ORIFICE<br/>β=1 Cd=0.6112<br/>A=2.50e-07/2.50e-07\"]\nC8 -- \"ṁ=-9.114e-05\" --> N0\nN5 -- \"ṁ=9.114e-05\" --> C8\nC9[\"c9 ORIFICE<br/>β=1 Cd=0.9762<br/>A=3.20e-05/3.20e-05\"]\nC9 -- \"ṁ=-0.00812\" --> N0\nN3 -- \"ṁ=0.00812\" --> C9\nC10[\"c10 BOOSTER<br/>p: 2.471e+05→3.644e+05 Pa<br/>增压比 π=1.475\"]\nN2 -- \"ṁ=0.0004447\" --> C10\nC10 -- \"ṁ=-0.01508\" --> N5\nC11[\"c11 PRESSURE_BOUNDARY<br/>p0=2.209e+05 Pa<br/>T0=499 K\"]\nN0 -- \"ṁ=0.008055\" --> C11\nC12[\"c12 PRESSURE_BOUNDARY<br/>p0=1.4e+04 Pa<br/>T0=686 K\"]\nN1 -- \"ṁ=0.006583\" --> C12\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C1 softchoked\nclass C2 softchoked\nclass C6 softchoked\nclass C10 booster\nclass C11 pbound\nclass C12 pbound\nlinkStyle 1 stroke:#E53935,stroke-width:3px\nlinkStyle 2 stroke:#E53935,stroke-width:3px\nlinkStyle 4 stroke:#E53935,stroke-width:3px\nlinkStyle 12 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0203",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 4,
+      "warn_calls": 1,
+      "worst_ratio": 1.0086,
+      "n_hits": 1,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 0,
+      "warn_calls": 0,
+      "worst_ratio": 0.0,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": false,
+      "status": "clean_fail",
+      "iters": 0,
+      "warn_calls": 0,
+      "worst_ratio": 0.55,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 4,
+      "warn_calls": 1,
+      "worst_ratio": 1.0086,
+      "n_hits": 1,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|c_double": 1.389e-10
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": true,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>242.4 kPa<br/>T=915.2 K\"))\nN1((\"n1<br/>242.4 kPa<br/>T=849.8 K\"))\nN2((\"n2<br/>242.4 kPa<br/>T=849.8 K\"))\nN3((\"n3<br/>242.4 kPa<br/>T=849.8 K\"))\nN4((\"n4<br/>321.1 kPa<br/>T=895.2 K\"))\nN5((\"n5<br/>242.4 kPa<br/>T=849.8 K\"))\nC0[\"c0 PIPE<br/>L=2.082 D=0.04122<br/>A=1.33e-03/1.33e-03\"]\nN0 --- C0\nN1 --- C0\nC1[\"c1 ORIFICE<br/>β=1 Cd=0.9741<br/>A=1.66e-07/1.66e-07\"]\nN0 --- C1\nN2 --- C1\nC2[\"c2 AREA_CHANGE<br/>ζ=0.6533<br/>A=4.04e-08/3.71e-03\"]\nN2 --- C2\nN3 --- C2\nC3[\"c3 HEATER<br/>q=267.5 W<br/>A=3.04e-05/3.04e-05\"]\nC3 -- \"ṁ=-0.01332\" --> N0\nN4 -- \"ṁ=0.01332\" --> C3\nC4[\"c4 AREA_CHANGE<br/>ζ=1.916<br/>A=1.91e-06/3.07e-03\"]\nN1 --- C4\nN5 --- C4\nC5[\"c5 PRESSURE_BOUNDARY<br/>p0=3.211e+05 Pa<br/>T0=895.2 K\"]\nC5 -- \"ṁ=-0.01332\" --> N4\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=2.424e+05 Pa<br/>T0=804.4 K\"]\nN0 -- \"ṁ=0.01332\" --> C6\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C3 softchoked\nclass C5 pbound\nclass C6 pbound\nlinkStyle 6 stroke:#E53935,stroke-width:3px\nlinkStyle 7 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0245",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 18,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 18,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 18,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 18,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 0.0,
+     "a_default|c_half": 0.0,
+     "a_default|c_double": 0.0,
+     "b_zeroflow|c_half": 0.0,
+     "b_zeroflow|c_double": 0.0,
+     "c_half|c_double": 0.0
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>618.2 kPa<br/>T=354 K\"))\nN1((\"n1<br/>619.2 kPa<br/>T=354 K\"))\nN2((\"n2<br/>420.7 kPa<br/>T=476.3 K\"))\nN3((\"n3<br/>213.4 kPa<br/>T=361.5 K\"))\nN4((\"n4<br/>425.2 kPa<br/>T=355.1 K\"))\nN5((\"n5<br/>69.78 kPa<br/>T=355.1 K\"))\nN6((\"n6<br/>317.9 kPa<br/>T=355.1 K\"))\nN7((\"n7<br/>256.9 kPa<br/>T=355.1 K\"))\nN8((\"n8<br/>618.2 kPa<br/>T=354 K\"))\nC0[\"c0 ORIFICE<br/>β=1 Cd=0.9001<br/>A=3.38e-05/3.38e-05\"]\nC0 -- \"ṁ=-0.003375\" --> N0\nN1 -- \"ṁ=0.003375\" --> C0\nC1[\"c1 ORIFICE<br/>β=1 Cd=0.7895<br/>A=1.22e-06/1.22e-06\"]\nN1 -- \"ṁ=0.001217\" --> C1\nC1 -- \"ṁ=-0.001217\" --> N2\nC2[\"c2 ORIFICE<br/>β=1 Cd=0.7801<br/>A=1.97e-04/1.97e-04\"]\nN2 -- \"ṁ=0.1195\" --> C2\nC2 -- \"ṁ=-0.1195\" --> N3\nC3[\"c3 ORIFICE<br/>β=1 Cd=0.5455<br/>A=2.13e-06/2.13e-06\"]\nC3 -- \"ṁ=-0.001059\" --> N3\nN4 -- \"ṁ=0.001059\" --> C3\nC4[\"c4 ORIFICE<br/>β=1 Cd=0.8247<br/>A=2.02e-06/2.02e-06\"]\nN0 -- \"ṁ=0.002216\" --> C4\nC4 -- \"ṁ=-0.002216\" --> N5\nC5[\"c5 PIPE<br/>L=2.364 D=0.06121<br/>A=2.94e-03/2.94e-03\"]\nN4 -- \"ṁ=2.31\" --> C5\nC5 -- \"ṁ=-2.31\" --> N6\nC6[\"c6 ORIFICE<br/>β=1 Cd=0.7191<br/>A=5.85e-03/5.85e-03\"]\nN6 -- \"ṁ=2.31\" --> C6\nC6 -- \"ṁ=-2.31\" --> N7\nC7[\"c7 ORIFICE<br/>β=1 Cd=0.9083<br/>A=8.28e-06/8.28e-06\"]\nC7 -- \"ṁ=-0.009985\" --> N5\nN8 -- \"ṁ=0.009985\" --> C7\nC8[\"c8 PIPE<br/>L=3.344 D=0.01622<br/>A=2.07e-04/2.07e-04\"]\nN1 -- \"ṁ=0.009985\" --> C8\nC8 -- \"ṁ=-0.009985\" --> N8\nC9[\"c9 PIPE<br/>L=0.1992 D=0.07112<br/>A=3.97e-03/3.97e-03\"]\nC9 -- \"ṁ=-2.135\" --> N3\nN7 -- \"ṁ=2.135\" --> C9\nC10[\"c10 PIPE<br/>L=0.6595 D=0.0007815<br/>A=4.80e-07/4.80e-07\"]\nN1 -- \"ṁ=0.0001217\" --> C10\nC10 -- \"ṁ=-0.0001217\" --> N6\nC11[\"c11 PIPE<br/>L=2.528 D=0.08497<br/>A=5.67e-03/5.67e-03\"]\nN4 -- \"ṁ=4.582\" --> C11\nC11 -- \"ṁ=-4.582\" --> N5\nC12[\"c12 PIPE<br/>L=5.458 D=0.002735<br/>A=5.88e-06/5.88e-06\"]\nN0 -- \"ṁ=0.001159\" --> C12\nC12 -- \"ṁ=-0.001159\" --> N4\nC13[\"c13 AREA_CHANGE<br/>ζ=1.811<br/>A=1.21e-06/1.05e-05\"]\nN1 -- \"ṁ=0.001606\" --> C13\nC13 -- \"ṁ=-0.001606\" --> N5\nC14[\"c14 ORIFICE<br/>β=1 Cd=0.5851<br/>A=5.42e-04/5.42e-04\"]\nC14 -- \"ṁ=-0.1748\" --> N5\nN7 -- \"ṁ=0.1748\" --> C14\nC15[\"c15 PIPE<br/>L=2.309 D=0.07919<br/>A=4.92e-03/4.92e-03\"]\nN1 -- \"ṁ=5.848\" --> C15\nC15 -- \"ṁ=-5.848\" --> N4\nC16[\"c16 BOOSTER<br/>p: 2.134e+05→4.252e+05 Pa<br/>增压比 π=1.993\"]\nN3 -- \"ṁ=2.256\" --> C16\nC16 -- \"ṁ=-1.044\" --> N4\nC17[\"c17 PRESSURE_BOUNDARY<br/>p0=6.192e+05 Pa<br/>T0=354 K\"]\nC17 -- \"ṁ=-5.864\" --> N1\nC18[\"c18 PRESSURE_BOUNDARY<br/>p0=4.207e+05 Pa<br/>T0=477.5 K\"]\nC18 -- \"ṁ=-0.1182\" --> N2\nC19[\"c19 PRESSURE_BOUNDARY<br/>p0=6.978e+04 Pa<br/>T0=871.3 K\"]\nN5 -- \"ṁ=4.771\" --> C19\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C7 softchoked\nclass C9 softchoked\nclass C13 softchoked\nclass C14 softchoked\nclass C16 softchoked\nclass C17 pbound\nclass C18 pbound\nclass C19 pbound\nlinkStyle 9 stroke:#E53935,stroke-width:3px\nlinkStyle 11 stroke:#E53935,stroke-width:3px\nlinkStyle 14 stroke:#E53935,stroke-width:3px\nlinkStyle 18 stroke:#E53935,stroke-width:3px\nlinkStyle 21 stroke:#E53935,stroke-width:3px\nlinkStyle 23 stroke:#E53935,stroke-width:3px\nlinkStyle 26 stroke:#E53935,stroke-width:3px\nlinkStyle 28 stroke:#E53935,stroke-width:3px\nlinkStyle 31 stroke:#E53935,stroke-width:3px\nlinkStyle 32 stroke:#E53935,stroke-width:3px\nlinkStyle 33 stroke:#E53935,stroke-width:3px"
+   },
+   {
+    "case_id": "A0253",
+    "variants": {
+     "a_default": {
+      "converged": true,
+      "status": "converged",
+      "iters": 34,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "b_zeroflow": {
+      "converged": true,
+      "status": "converged",
+      "iters": 34,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_half": {
+      "converged": true,
+      "status": "converged",
+      "iters": 34,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     },
+     "c_double": {
+      "converged": true,
+      "status": "converged",
+      "iters": 34,
+      "warn_calls": 0,
+      "worst_ratio": null,
+      "n_hits": 0,
+      "exception": null
+     }
+    },
+    "pair_dx_scaled": {
+     "a_default|b_zeroflow": 0.0,
+     "a_default|c_half": 0.0,
+     "a_default|c_double": 0.0,
+     "b_zeroflow|c_half": 0.0,
+     "b_zeroflow|c_double": 0.0,
+     "c_half|c_double": 0.0
+    },
+    "same_root": true,
+    "negative_list": false,
+    "reverse": false,
+    "mermaid_a": "flowchart LR\nN0((\"n0<br/>589.5 kPa<br/>T=706.3 K\"))\nN1((\"n1<br/>280.2 kPa<br/>T=706.3 K\"))\nN2((\"n2<br/>394.7 kPa<br/>T=706.3 K\"))\nN3((\"n3<br/>226.2 kPa<br/>T=727.4 K\"))\nN4((\"n4<br/>489.5 kPa<br/>T=727.4 K\"))\nC0[\"c0 ORIFICE<br/>β=1 Cd=0.6641<br/>A=6.85e-07/6.85e-07\"]\nN0 -- \"ṁ=0.000408\" --> C0\nC0 -- \"ṁ=-0.000408\" --> N1\nC1[\"c1 PIPE<br/>L=0.3783 D=0.01932<br/>A=2.93e-04/2.93e-04\"]\nC1 -- \"ṁ=-0.1557\" --> N1\nN2 -- \"ṁ=0.1557\" --> C1\nC2[\"c2 ORIFICE<br/>β=1 Cd=0.8692<br/>A=1.20e-08/1.20e-08\"]\nN1 -- \"ṁ=3.574e-06\" --> C2\nC2 -- \"ṁ=-3.574e-06\" --> N3\nC3[\"c3 ORIFICE<br/>β=1 Cd=0.9148<br/>A=7.15e-05/7.15e-05\"]\nN0 -- \"ṁ=0.04514\" --> C3\nC3 -- \"ṁ=-0.04514\" --> N4\nC4[\"c4 PIPE<br/>L=8.037 D=0.03774<br/>A=1.12e-03/1.12e-03\"]\nC4 -- \"ṁ=-0.4887\" --> N3\nN4 -- \"ṁ=0.4887\" --> C4\nC5[\"c5 BOOSTER<br/>p: 2.802e+05→3.947e+05 Pa<br/>增压比 π=1.409\"]\nN1 -- \"ṁ=0.1561\" --> C5\nC5 -- \"ṁ=-0.1557\" --> N2\nC6[\"c6 PRESSURE_BOUNDARY<br/>p0=5.895e+05 Pa<br/>T0=706.3 K\"]\nC6 -- \"ṁ=-0.04555\" --> N0\nC7[\"c7 PRESSURE_BOUNDARY<br/>p0=2.262e+05 Pa<br/>T0=517.1 K\"]\nN3 -- \"ṁ=0.4887\" --> C7\nC8[\"c8 PRESSURE_BOUNDARY<br/>p0=4.895e+05 Pa<br/>T0=729.6 K\"]\nC8 -- \"ṁ=-0.4435\" --> N4\nclassDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00\nclassDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A\nclassDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1\nclassDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000\nclass C1 softchoked\nclass C4 softchoked\nclass C5 softchoked\nclass C6 pbound\nclass C7 pbound\nclass C8 pbound\nlinkStyle 2 stroke:#E53935,stroke-width:3px\nlinkStyle 8 stroke:#E53935,stroke-width:3px\nlinkStyle 10 stroke:#E53935,stroke-width:3px\nlinkStyle 11 stroke:#E53935,stroke-width:3px"
+   }
+  ],
+  "negative_list": [],
+  "n_reverse": 4,
+  "n_same_root": 9,
+  "n_diff_root": 5
+ }
+}

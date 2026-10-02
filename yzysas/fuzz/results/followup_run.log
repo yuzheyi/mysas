@@ -1,0 +1,28 @@
+[t1] 三告警例 K 分解 + 反事实 …
+  A0171: K=168540000.0 ratio=24.074 theo_ratio=24.074 close=5.22e-15 cf=[('clean_fail', None)]
+  A0093: K=1205800000.0 ratio=1.0001 theo_ratio=1.0001 close=5.55e-17 cf=[('converged', 0.54134)]
+  A0203: K=691970000.0 ratio=1.0086 theo_ratio=1.0086 close=1.2e-15 cf=[('converged', 0.71887)]
+[t2] assemble_error 分诊 …
+  C5_01_ms_or_ms: design_intended — ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（
+  C5_02_ms_deadend: design_intended — ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（
+  C5_03_ms_pipe_ms: design_intended — ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（
+  C5_04_ms_junction: design_intended — ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（
+  C5_05_ms_extract_only: design_intended — ValueError: 网络无压力锚定元件（无元件报 anchor_P_values）：绝对压力水平无锚定，方程组奇异（
+  C5_06_surrogate_no_file: design_intended — ValueError: 代理模型文件不存在: 'fuzz/__no_such_model__.npz'
+[t3] 初值敏感性对照（sample=全部）…
+  A0004: a_default=C(11,w1,r=1.0208) b_zeroflow=C(11,w1,r=1.0208) c_half=C(11,w1,r=1.0208) c_double=C(11,w1,r=1.0208)  pair_dx={'a_default|b_zeroflow': 0.0, 'a_default|c_half': 0.0, 'a_default|c_double': 0.0, 'b_zeroflow|c_half': 0.0, 'b_zeroflow|c_double': 0.0, 'c_half|c_double': 0.0}
+  A0005: a_default=C(8,w0,r=1.2791e-23) b_zeroflow=C(8,w0,r=4.8445e-25) c_half=C(9,w0,r=2.5986e-22) c_double=C(8,w0,r=0.0)  pair_dx={'a_default|b_zeroflow': 30.5, 'a_default|c_half': 59.52, 'a_default|c_double': 0.4767, 'b_zeroflow|c_half': 90.02, 'b_zeroflow|c_double': 30.42, 'c_half|c_double': 59.6}
+  A0052: a_default=C(6,w0,r=0.0) b_zeroflow=C(6,w0,r=0.0) c_half=C(6,w0,r=0.0) c_double=C(6,w0,r=0.0)  pair_dx={'a_default|b_zeroflow': 0.0, 'a_default|c_half': 0.0, 'a_default|c_double': 0.0, 'b_zeroflow|c_half': 0.0, 'b_zeroflow|c_double': 0.0, 'c_half|c_double': 0.0}
+  A0061: a_default=C(8,w0,r=None) b_zeroflow=C(8,w0,r=None) c_half=clea(1,w0,r=None) c_double=C(8,w0,r=None)  pair_dx={'a_default|b_zeroflow': 1.187e-09, 'a_default|c_double': 9.286e-10, 'b_zeroflow|c_double': 2.586e-10}
+  A0062: a_default=C(6,w0,r=0.059127) b_zeroflow=clea(50,w0,r=0.064744) c_half=C(7,w0,r=0.059127) c_double=C(5,w0,r=0.059127)  pair_dx={'a_default|c_half': 1.736e-06, 'a_default|c_double': 0.0001225, 'c_half|c_double': 0.0001242}
+  A0093: a_default=C(4,w1,r=1.0001) b_zeroflow=clea(0,w0,r=0.0) c_half=clea(0,w0,r=0.82844) c_double=C(2,w1,r=1.0001)  pair_dx={'a_default|c_double': 0.0008445}
+  A0101: a_default=C(4,w0,r=9.8729e-23) b_zeroflow=C(2,w0,r=2.9534e-22) c_half=C(8,w0,r=8.8389e-22) c_double=C(3,w0,r=6.7698e-23)  pair_dx={'a_default|b_zeroflow': 0.03228, 'a_default|c_half': 0.2846, 'a_default|c_double': 0.006804, 'b_zeroflow|c_half': 0.3151, 'b_zeroflow|c_double': 0.03234, 'c_half|c_double': 0.2846}
+  A0127: a_default=C(12,w0,r=None) b_zeroflow=C(12,w0,r=None) c_half=C(12,w0,r=None) c_double=C(12,w0,r=None)  pair_dx={'a_default|b_zeroflow': 0.0, 'a_default|c_half': 0.0, 'a_default|c_double': 0.0, 'b_zeroflow|c_half': 0.0, 'b_zeroflow|c_double': 0.0, 'c_half|c_double': 0.0}
+  A0171: a_default=C(5,w1,r=24.074) b_zeroflow=clea(0,w0,r=0.0) c_half=clea(0,w0,r=0.55) c_double=C(5,w1,r=24.074)  pair_dx={'a_default|c_double': 4.306e-07}
+  A0187: a_default=C(3,w0,r=0.0) b_zeroflow=C(3,w0,r=0.0) c_half=C(3,w0,r=0.0) c_double=C(3,w0,r=0.0)  pair_dx={'a_default|b_zeroflow': 0.0, 'a_default|c_half': 0.0, 'a_default|c_double': 0.0, 'b_zeroflow|c_half': 0.0, 'b_zeroflow|c_double': 0.0, 'c_half|c_double': 0.0}
+  A0199: a_default=C(14,w0,r=0.037442) b_zeroflow=C(10,w0,r=0.037442) c_half=C(11,w0,r=0.037442) c_double=C(14,w0,r=0.037442)  pair_dx={'a_default|b_zeroflow': 5.438e-07, 'a_default|c_half': 4.652e-07, 'a_default|c_double': 5.772e-10, 'b_zeroflow|c_half': 1.009e-06, 'b_zeroflow|c_double': 5.444e-07, 'c_half|c_double': 4.646e-07}
+  A0203: a_default=C(4,w1,r=1.0086) b_zeroflow=clea(0,w0,r=0.0) c_half=clea(0,w0,r=0.55) c_double=C(4,w1,r=1.0086)  pair_dx={'a_default|c_double': 1.389e-10}
+  A0245: a_default=C(18,w0,r=None) b_zeroflow=C(18,w0,r=None) c_half=C(18,w0,r=None) c_double=C(18,w0,r=None)  pair_dx={'a_default|b_zeroflow': 0.0, 'a_default|c_half': 0.0, 'a_default|c_double': 0.0, 'b_zeroflow|c_half': 0.0, 'b_zeroflow|c_double': 0.0, 'c_half|c_double': 0.0}
+  A0253: a_default=C(34,w0,r=None) b_zeroflow=C(34,w0,r=None) c_half=C(34,w0,r=None) c_double=C(34,w0,r=None)  pair_dx={'a_default|b_zeroflow': 0.0, 'a_default|c_half': 0.0, 'a_default|c_double': 0.0, 'b_zeroflow|c_half': 0.0, 'b_zeroflow|c_double': 0.0, 'c_half|c_double': 0.0}
+  负面清单(b过a不过)=[]  反向(a过b不过)=4例  同根=9 不同根=5
+已写出 E:\mywork\programDesign\mysas_dev\yzysas\fuzz\results\soft_choke_followup.json

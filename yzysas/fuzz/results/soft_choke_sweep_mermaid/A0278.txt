@@ -1,0 +1,62 @@
+flowchart LR
+N0(("n0<br/>283.1 kPa<br/>T=604.5 K"))
+N1(("n1<br/>283.1 kPa<br/>T=604.5 K"))
+N2(("n2<br/>283.1 kPa<br/>T=604.5 K"))
+N3(("n3<br/>392.7 kPa<br/>T=604.5 K"))
+N4(("n4<br/>173.5 kPa<br/>T=604.5 K"))
+N5(("n5<br/>283.1 kPa<br/>T=604.5 K"))
+N6(("n6<br/>283.1 kPa<br/>T=604.5 K"))
+N7(("n7<br/>283.1 kPa<br/>T=604.5 K"))
+N8(("n8<br/>283.1 kPa<br/>T=604.5 K"))
+C0["c0 ORIFICE<br/>β=1 Cd=0.693<br/>A=4.35e-08/4.35e-08"]
+N0 --- C0
+N1 --- C0
+C1["c1 AREA_CHANGE<br/>ζ=1.728<br/>A=6.13e-07/4.73e-06"]
+N0 --- C1
+N2 --- C1
+C2["c2 AREA_CHANGE<br/>ζ=1.537<br/>A=3.18e-04/1.64e-08"]
+N1 --- C2
+N3 --- C2
+C3["c3 PIPE<br/>L=0.201 D=0.0007322<br/>A=4.21e-07/4.21e-07"]
+N2 --- C3
+N4 --- C3
+C4["c4 PIPE<br/>L=5.84 D=0.0002362<br/>A=4.38e-08/4.38e-08"]
+N3 --- C4
+N5 --- C4
+C5["c5 PIPE<br/>L=0.3058 D=0.06867<br/>A=3.70e-03/3.70e-03"]
+N3 --- C5
+N6 --- C5
+C6["c6 AREA_CHANGE<br/>ζ=1.911<br/>A=6.43e-06/1.50e-06"]
+N2 --- C6
+N7 --- C6
+C7["c7 PIPE<br/>L=1.09 D=0.0003349<br/>A=8.81e-08/8.81e-08"]
+N3 --- C7
+N8 --- C7
+C8["c8 ORIFICE<br/>β=1 Cd=0.992<br/>A=1.37e-07/1.37e-07"]
+N4 --- C8
+N8 --- C8
+C9["c9 PIPE<br/>L=9.152 D=0.0001728<br/>A=2.35e-08/2.35e-08"]
+N2 --- C9
+N6 --- C9
+C10["c10 PIPE<br/>L=0.4238 D=0.01245<br/>A=1.22e-04/1.22e-04"]
+N1 --- C10
+N2 --- C10
+C11["c11 PIPE<br/>L=5.267 D=0.001657<br/>A=2.16e-06/2.16e-06"]
+N4 --- C11
+N5 --- C11
+C12["c12 PIPE<br/>L=1.626 D=0.0003484<br/>A=9.53e-08/9.53e-08"]
+N0 --- C12
+N5 --- C12
+C13["c13 ORIFICE<br/>β=1 Cd=0.7764<br/>A=8.96e-04/8.96e-04"]
+N5 --- C13
+N6 --- C13
+C14["c14 PRESSURE_BOUNDARY<br/>p0=3.927e+05 Pa<br/>T0=749.1 K"]
+N3 --- C14
+C15["c15 PRESSURE_BOUNDARY<br/>p0=1.735e+05 Pa<br/>T0=460 K"]
+N4 --- C15
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C14 pbound
+class C15 pbound

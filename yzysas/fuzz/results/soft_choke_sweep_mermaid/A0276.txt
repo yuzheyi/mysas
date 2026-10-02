@@ -1,0 +1,59 @@
+flowchart LR
+N0(("n0<br/>796 kPa<br/>T=497 K"))
+N1(("n1<br/>161.8 kPa<br/>T=497 K"))
+N2(("n2<br/>161.8 kPa<br/>T=497 K"))
+N3(("n3<br/>407.4 kPa<br/>T=497 K"))
+N4(("n4<br/>796 kPa<br/>T=497 K"))
+N5(("n5<br/>161.8 kPa<br/>T=497 K"))
+N6(("n6<br/>796 kPa<br/>T=497 K"))
+N7(("n7<br/>161.8 kPa<br/>T=497 K"))
+N8(("n8<br/>401.1 kPa<br/>T=497 K"))
+N9(("n9<br/>643.6 kPa<br/>T=497 K"))
+N10(("n10<br/>2.384e+06 kPa<br/>T=497 K"))
+C0["c0 PIPE<br/>L=2.138 D=0.01013<br/>A=8.06e-05/8.06e-05"]
+C0 -- "ṁ=-0.0001392" --> N0
+N1 -- "ṁ=0.0001392" --> C0
+C1["c1 ORIFICE<br/>β=1 Cd=0.8876<br/>A=3.33e-06/3.33e-06"]
+N0 --- C1
+N2 --- C1
+C2["c2 PIPE<br/>L=8.09 D=0.001021<br/>A=8.18e-07/8.18e-07"]
+N0 -- "ṁ=0.0001392" --> C2
+C2 -- "ṁ=-0.0001392" --> N3
+C3["c3 AREA_CHANGE<br/>ζ=0.7357<br/>A=5.68e-04/4.24e-07"]
+N2 --- C3
+N4 --- C3
+C4["c4 PIPE<br/>L=1.531 D=0.008833<br/>A=6.13e-05/6.13e-05"]
+N3 -- "ṁ=0.000418" --> C4
+C4 -- "ṁ=-0.000418" --> N5
+C5["c5 PIPE<br/>L=1.372 D=0.004841<br/>A=1.84e-05/1.84e-05"]
+N2 --- C5
+N6 --- C5
+C6["c6 PIPE<br/>L=7.898 D=0.000133<br/>A=1.39e-08/1.39e-08"]
+C6 -- "ṁ=-0.0002789" --> N3
+N7 -- "ṁ=0.0002789" --> C6
+C7["c7 ORIFICE<br/>β=1 Cd=0.6638<br/>A=2.36e-05/2.36e-05"]
+N5 --- C7
+N8 --- C7
+C8["c8 PIPE<br/>L=5.078 D=0.01037<br/>A=8.44e-05/8.44e-05"]
+C8 -- "ṁ=-0.0001392" --> N1
+N9 -- "ṁ=0.0001392" --> C8
+C9["c9 PIPE<br/>L=2.485 D=0.0001705<br/>A=2.28e-08/2.28e-08"]
+C9 -- "ṁ=-0.0002789" --> N7
+N10 -- "ṁ=0.0002789" --> C9
+C10["c10 PRESSURE_BOUNDARY<br/>p0=6.436e+05 Pa<br/>T0=795.4 K"]
+C10 -- "ṁ=-0.0001392" --> N9
+C11["c11 PRESSURE_BOUNDARY<br/>p0=1.618e+05 Pa<br/>T0=311.4 K"]
+N5 -- "ṁ=0.000418" --> C11
+C12["c12 MASS_SOURCE<br/>ṁ=0.07139 kg/s<br/>T0=384.1 K"]
+C12 -- "ṁ=-0.0002789" --> N10
+classDef pbound fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#7B3F00
+classDef msource fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#6A1B9A
+classDef booster fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#0D47A1
+classDef softchoked fill:#FFCDD2,stroke:#D32F2F,stroke-width:2.5px,color:#8B0000
+class C6 softchoked
+class C10 pbound
+class C11 pbound
+class C12 msource
+linkStyle 5 stroke:#E53935,stroke-width:3px
+linkStyle 12 stroke:#E53935,stroke-width:3px
+linkStyle 13 stroke:#E53935,stroke-width:3px
