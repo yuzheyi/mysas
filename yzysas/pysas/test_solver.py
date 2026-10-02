@@ -742,6 +742,46 @@ def main():
     except NotImplementedError:
         check("IG nn 留槽报错（想法 7 未接入）", True)
 
+    # ================= RS: #19 双探针重启器（2026-10-02） =================
+    # restart=False 默认语义不变；restart=True 仅在 clean_fail 后介入，
+    # 救活标注来源，全败语义=原失败。B 算例 default 直解即收敛 →
+    # restart=True 不应触发任何探针（restart 字段保持 None）。
+    # 「全败=clean_fail 不变」与「23 例救活集逐例复现」由
+    # fuzz/run_restart_regress.py 固定回归覆盖（真实随机网络口径，
+    # 自包含单元无法复刻 default 失败的病态——简单网络 default 初值
+    # 覆盖面即收敛，强造失败例只会测到探针无关的路径）。
+    print("\nRS 双探针重启器（B 算例机制语义）")
+    res_rs = solve(sysB, initial_guess(sysB, ctxB), ctxB, restart=True)
+    check("RS default 即收敛时不触发探针（restart=None）",
+          res_rs.converged and res_rs.restart is None,
+          f"restart={res_rs.restart}")
+    check("RS SolveResult.restart 字段默认 None",
+          resB.restart is None)
+
+    # 探针状态复原验证：等压 PB 网络（1e5→1e5）压平态=原态，
+    # flatline 两步退化成 default 直解（必收敛），但探针路径仍会
+    # 改写 PB 再复原——验证 try/finally 无状态泄漏。
+    net_rs, ctx_rs = netinf_from_dict({
+        "nodes": [{"id": 0}, {"id": 1}],
+        "comps": [
+            {"id": 0, "type": "PRESSURE_BOUNDARY",
+             "ports": [{"area": 1e-3, "node": 0}],
+             "params": [1.0e5, 300.0]},
+            {"id": 1, "type": "ORIFICE",
+             "ports": [{"area": 1e-4, "node": 0},
+                       {"area": 1e-4, "node": 1}],
+             "params": [1.0, 0.8]},
+            {"id": 2, "type": "PRESSURE_BOUNDARY",
+             "ports": [{"area": 1e-3, "node": 1}],
+             "params": [1.0e5, 300.0]},
+        ]})
+    sys_rs = NetworkSystem(net_rs, build_models(net_rs))
+    res_eq = solve(sys_rs, initial_guess(sys_rs, ctx_rs), ctx_rs)
+    pb_vals = [m.p0_spec for m in sys_rs.models.values()
+               if m.__class__.__name__ == "PressureBoundaryModel"]
+    check("RS 求解后 PB 实例值未被扰动（无状态泄漏）",
+          pb_vals == [1.0e5, 1.0e5], f"pb={pb_vals}")
+
     # ================= 汇总 =================
     print("\n" + "=" * 60)
     if FAILURES:

@@ -36,13 +36,19 @@ __all__ = [
 
 @dataclass
 class SolveResult:
-    """solve() 返回：解 + 报告 + 缩放层（诊断/复算用）。"""
+    """solve() 返回：解 + 报告 + 缩放层（诊断/复算用）。
+
+    restart 字段（2026-10-02 #19 双探针重启器）：None = 默认初值一次
+    成功；"flatline"/"backpressure" = 默认尝试失败后由对应探针救活
+    （报表层可按此分口径统计救活例；软壅塞告警照常对该解生效）。
+    """
 
     x: np.ndarray           # 原始坐标解 [p0 内部节点 | ṁ 各端口]
     x_scaled: np.ndarray    # 缩放坐标解（量级 O(1)，sanity check 用）
     report: NewtonReport    # 迭代报告（判据在缩放坐标上）
     scaling: Scaling        # 本轮缩放层
     max_F_raw: float        # 原始量纲 max|F|（物理单位核对用）
+    restart: str | None = None   # 救活来源探针（None=默认即成）
 
     @property
     def converged(self) -> bool:
@@ -159,13 +165,18 @@ def initial_guess(system, ctx, strategy: str = "default",
 
 def solve(system, x0, ctx, settings: SolverSettings | None = None, *,
           p_ref: float | None = None, m_ref: float | None = None,
-          on_step=None) -> SolveResult:
+          on_step=None, restart: bool = False) -> SolveResult:
     """统一入口：NetworkSystem + 初值（原始坐标）→ SolveResult。
 
     settings=None 用离散牛顿默认设置；mode=0 纯牛顿需要解析雅可比（悬置）、
     mode=2 同伦延拓是 M2 内容——两者均未实现，显式报错。
     p_ref/m_ref 可手动覆盖缩放参考量（默认 make_scaling 自估）。
     on_step(it, alpha, resid) 每接受一步回调一次（轨迹诊断用）。
+    restart=False（默认）语义与历史版本完全一致；restart=True 且首次
+    尝试 clean_fail 时，顺序跑双探针（flatline → backpressure，见
+    _restart_probes docstring），救活则返回标注 restart 字段的结果，
+    全败则原样返回首次结果（失败语义不变——不会把失败变成功，只会
+    把"能救活的失败"变成功）。
     """
     mode = settings.mode if settings is not None else 1
     if mode == 0:
@@ -175,6 +186,30 @@ def solve(system, x0, ctx, settings: SolverSettings | None = None, *,
     if mode == 2:
         raise NotImplementedError("同伦延拓（mode=2）是 M2 内容")
 
+    res = _solve_once(system, x0, ctx, settings,
+                      p_ref=p_ref, m_ref=m_ref, on_step=on_step)
+
+    # ---------- #19 双探针重启器（opt-in，2026-10-02） ----------
+    # 首次尝试 clean_fail 且调用方显式开启时，顺序跑两探针（先便宜
+    # 后贵）。救活则复用探针终解的 SolveResult（restart 字段标注
+    # 来源）；全败原样返回首解——失败语义不变。assemble_error/
+    # solve_error（异常路径）不重启：异常不是初值问题，重启掩盖不了。
+    if restart and not res.report.converged:
+        for probe_name, rescued in _restart_probes(system, x0, ctx,
+                                                   settings,
+                                                   p_ref=p_ref,
+                                                   m_ref=m_ref):
+            if rescued is not None and rescued.report.converged:
+                rescued.restart = probe_name
+                # 探针在告警抑制上下文内求解，救活解的软壅塞终态
+                # 告警在此补报（口径与默认路径一致：收敛解上报一次）
+                _warn_soft_choke(system, rescued.x, ctx)
+                return rescued
+    return res
+
+
+def _solve_once(system, x0, ctx, settings, *, p_ref, m_ref, on_step):
+    """单次求解（solve 的历史本体，重启器的不变式基元）。"""
     opts = settings.discrete if settings is not None else DiscreteNewtonOptions()
 
     scaling = make_scaling(system, ctx, p_ref=p_ref, m_ref=m_ref)
@@ -216,29 +251,121 @@ def solve(system, x0, ctx, settings: SolverSettings | None = None, *,
 
     x = scaling.to_raw(x_t)
     F_raw = system.residual(x, ctx)
+    max_F = float(np.max(np.abs(F_raw))) if F_raw.size else 0.0
 
-    # ---------- 软壅塞终态告警（2026-10-02 用户裁决） ----------
-    # 解上守卫仍激活 = 网络物理上要求某口流量超过声速容量（非物理），
-    # 兜底陡坡把它钉在 cap+Δp/K 让计算走得下去——使用者应回头修网络
-    # （面积/压差/拓扑）。只在解处查一次且仅收敛时报：residual 里报
-    # 会被 FD 雅可比 n+1 次调用刷屏，且容量初值故意 1.1×cap 越 kink、
-    # 首残差必然"激活"——那是机制不是病；判定与方程侧共用
-    # _comp_overloads（含全部豁免规则），两者永远同条件。
+    # 软壅塞终态告警只在收敛解上报（口径见 solve 历史注释）。
     if report.converged:
-        hits = []
-        for comp in sorted(system.net.comps, key=lambda c: c.comp_id):
-            model = system.models[comp.comp_id]
-            for i, cap, m_a in system._comp_overloads(model, comp, x, ctx):
-                hits.append((comp.comp_id, i, m_a, cap))
-        if hits:
-            detail = "; ".join(
-                f"c{cid}口{i}: ṁ={m_a:.3g} > cap={cap:.3g} kg/s"
-                for cid, i, m_a, cap in hits)
-            warnings.warn(
-                "软壅塞兜底在解处仍激活（非物理解——某口流量被钉在声速"
-                f"容量附近）：{detail}。网络物理容量不足，请检查元件"
-                "面积/压差设置（求解器已强行收敛以便调试）",
-                RuntimeWarning)
-    return SolveResult(
-        x=x, x_scaled=x_t, report=report, scaling=scaling,
-        max_F_raw=float(np.max(np.abs(F_raw))) if F_raw.size else 0.0)
+        _warn_soft_choke(system, x, ctx)
+    return SolveResult(x=x, x_scaled=x_t, report=report,
+                       scaling=scaling, max_F_raw=max_F)
+
+
+def _warn_soft_choke(system, x, ctx) -> None:
+    """软壅塞终态告警（原 solve 尾部逻辑抽出，_solve_once/探针共用）。"""
+    hits = []
+    for comp in sorted(system.net.comps, key=lambda c: c.comp_id):
+        model = system.models[comp.comp_id]
+        for i, cap, m_a in system._comp_overloads(model, comp, x, ctx):
+            hits.append((comp.comp_id, i, m_a, cap))
+    if hits:
+        detail = "; ".join(
+            f"c{cid}口{i}: ṁ={m_a:.3g} > cap={cap:.3g} kg/s"
+            for cid, i, m_a, cap in hits)
+        warnings.warn(
+            "软壅塞兜底在解处仍激活（非物理解——某口流量被钉在声速"
+            f"容量附近）：{detail}。网络物理容量不足，请检查元件"
+            "面积/压差设置（求解器已强行收敛以便调试）",
+            RuntimeWarning)
+
+
+# ==================== #19 双探针重启器（M2 轻量版） ====================
+
+def _restart_probes(system, x0, ctx, settings, *, p_ref, m_ref):
+    """双探针生成器：yield (probe_name, SolveResult | None)。
+
+    依据（HOMOTOPY_PROBE.md，2026-10-02）：261 例 clean_fail 中
+    flatline 救 16、backpressure 救 13，并集 23（8.8%），救活集合
+    高度互补，零人工根污染。机制类比 SPICE source stepping
+    （Kundert 2003）：探针即"把源从易解水平 ramp 回目标值"。
+
+    探针1 flatline（两步）：
+      PB 全部压平到锚压均值 p̄ → 该退化问题的 default 初值起步求解
+      （纯 PB 网络此时零流量+均压+均温是精确解；含 MASS_SOURCE 时
+      容量初值避死区）→ 拿到 x̄ 后 PB 复原、warm 跳回原问题。
+      赌 x̄ 落在原问题吸引域（实测 16 例成立）。
+
+    探针2 backpressure（20 步）：
+      PB 压力从 p̄ 线性回拧到原值（λ=k/20），步步以上一步解暖启。
+      路径存在但一步跳太远的算例由它接住（实测 13 例）。
+
+    边界修改走 model 层（运行时改 model.p0_spec 即时生效，不重建
+    网络——residual 读实例属性）；try/finally 保证复原，探针间与
+    探针后状态零污染。x0 非 None 时首次失败初值对探针无意义——
+    探针有各自的初值策略（zero_flow/warm 链），一律忽略 x0。
+    """
+    from pysas.elements.boundary import PressureBoundaryModel
+
+    pbs = [m for m in system.models.values()
+           if isinstance(m, PressureBoundaryModel)]
+    if not pbs:
+        return                       # 无 PB（不可能过适定性断言，保险）
+    p_bar = float(np.mean([m.p0_spec for m in pbs]))
+    p_orig = [m.p0_spec for m in pbs]
+
+    def _set_pb(vals) -> None:
+        for m, v in zip(pbs, vals):
+            m.p0_spec = v
+
+    def _quiet(x_init):
+        """安静求解（吞逐迭代 print + 软壅塞告警——告警只在最终
+        返回解上报一次，中间步的兜底激活是机制不是病）。"""
+        import contextlib
+        import io
+        buf = io.StringIO()
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            with contextlib.redirect_stdout(buf):
+                return _solve_once(system, x_init, ctx, settings,
+                                   p_ref=p_ref, m_ref=m_ref, on_step=None)
+
+    # ---- 探针1 flatline：压平（退化问题易解）→ 跳回 ----
+    # 首步初值用 default（层1+层2 容量初值）而非 zero_flow：含
+    # MASS_SOURCE 的网络压平后根不是零流量，且 m=0 死区使守卫对象
+    # 元件压力行对流量盲（容量初值正是为此设计）——与实验
+    # run_homotopy_probe 逐例对齐（default 初值即实测救活集的口径）。
+    try:
+        _set_pb([p_bar] * len(pbs))
+        r1 = _quiet(initial_guess(system, ctx))
+        if r1.report.converged:
+            _set_pb(p_orig)
+            r2 = _quiet(initial_guess(system, ctx,
+                                      strategy="warm", warm=r1.x))
+            if r2.report.converged:
+                yield "flatline", r2
+                return
+    finally:
+        _set_pb(p_orig)              # 复原（无论成败）
+    yield "flatline", None
+
+    # ---- 探针2 backpressure：20 步回拧、步步暖启 ----
+    N = 20
+    x_prev = None
+    try:
+        for k in range(1, N + 1):
+            lam = k / N
+            _set_pb([p_bar + lam * (p0 - p_bar) for p0 in p_orig])
+            if x_prev is None:
+                x_start = initial_guess(system, ctx)   # 首步 default（同上）
+            else:
+                x_start = initial_guess(system, ctx,
+                                        strategy="warm", warm=x_prev)
+            rk = _quiet(x_start)
+            if not rk.report.converged:
+                break                # 链断：该入口不可行
+            x_prev = rk.x
+        if x_prev is not None and k == N:
+            yield "backpressure", rk
+            return
+    finally:
+        _set_pb(p_orig)
+    yield "backpressure", None
